@@ -1,9 +1,9 @@
 ## Rahvaviisid
 
-#### BE rakenduse vajadused:
+#### API vajadused:
 
 1) Node.js
 
-#### FE rakenduse vajadused:
+#### Veebirakenduse vajadused:
 
 1) Node.js
