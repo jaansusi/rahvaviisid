@@ -1,4 +1,4 @@
-import {RahvaviisidapiApplication} from '../..';
+import {EkmViisidApiApplication} from '../..';
 import {
   createRestAppClient,
   givenHttpServerConfig,
@@ -14,7 +14,7 @@ export async function setupApplication(): Promise<AppWithClient> {
     // port: +process.env.PORT,
   });
 
-  const app = new RahvaviisidapiApplication({
+  const app = new EkmViisidApiApplication({
     rest: restConfig,
   });
 
@@ -27,6 +27,6 @@ export async function setupApplication(): Promise<AppWithClient> {
 }
 
 export interface AppWithClient {
-  app: RahvaviisidapiApplication;
+  app: EkmViisidApiApplication;
   client: Client;
 }

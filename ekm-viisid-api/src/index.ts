@@ -1,9 +1,9 @@
-import {ApplicationConfig, RahvaviisidapiApplication} from './application';
+import {ApplicationConfig, EkmViisidApiApplication} from './application';
 
 export * from './application';
 
 export async function main(options: ApplicationConfig = {}) {
-  const app = new RahvaviisidapiApplication(options);
+  const app = new EkmViisidApiApplication(options);
   await app.boot();
   await app.start();
 

@@ -1,9 +1,9 @@
 import {Client} from '@loopback/testlab';
-import {RahvaviisidapiApplication} from '../..';
+import {EkmViisidApiApplication} from '../..';
 import {setupApplication} from './test-helper';
 
 describe('HomePage', () => {
-  let app: RahvaviisidapiApplication;
+  let app: EkmViisidApiApplication;
   let client: Client;
 
   before('setupApplication', async () => {
