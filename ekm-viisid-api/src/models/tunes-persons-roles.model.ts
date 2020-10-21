@@ -1,0 +1,106 @@
+import {Entity, model, property} from '@loopback/repository';
+
+@model({
+  settings: {
+    idInjection: false,
+    postgresql: {schema: 'folk_tune', table: 'tunes_persons_roles'}
+  }
+})
+export class TunesPersonsRoles extends Entity {
+  @property({
+    type: 'number',
+    required: true,
+    scale: 0,
+    id: 1,
+    postgresql: {columnName: 'id', dataType: 'integer', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'NO'},
+  })
+  id: number;
+
+  @property({
+    type: 'number',
+    required: true,
+    scale: 0,
+    postgresql: {columnName: 'tune_id', dataType: 'integer', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'NO'},
+  })
+  tuneId: number;
+
+  @property({
+    type: 'number',
+    scale: 0,
+    postgresql: {columnName: 'person_id', dataType: 'integer', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'YES'},
+  })
+  personId?: number;
+
+  @property({
+    type: 'string',
+    length: 1000,
+    postgresql: {columnName: 'name_origin', dataType: 'character varying', dataLength: 1000, dataPrecision: null, dataScale: null, nullable: 'YES'},
+  })
+  nameOrigin?: string;
+
+  @property({
+    type: 'number',
+    scale: 0,
+    postgresql: {columnName: 'person_age', dataType: 'smallint', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'YES'},
+  })
+  personAge?: number;
+
+  @property({
+    type: 'number',
+    required: true,
+    scale: 0,
+    postgresql: {columnName: 'tune_person_role_type_id', dataType: 'smallint', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'NO'},
+  })
+  tunePersonRoleTypeId: number;
+
+  @property({
+    type: 'number',
+    required: true,
+    scale: 0,
+    postgresql: {columnName: 'action_start_year', dataType: 'smallint', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'NO'},
+  })
+  actionStartYear: number;
+
+  @property({
+    type: 'number',
+    scale: 0,
+    postgresql: {columnName: 'action_end_year', dataType: 'smallint', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'YES'},
+  })
+  actionEndYear?: number;
+
+  @property({
+    type: 'string',
+    postgresql: {columnName: 'remarks', dataType: 'text', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'YES'},
+  })
+  remarks?: string;
+
+  @property({
+    type: 'date',
+    required: true,
+    postgresql: {columnName: 'created', dataType: 'timestamp without time zone', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'NO'},
+  })
+  created: string;
+
+  @property({
+    type: 'date',
+    required: true,
+    postgresql: {columnName: 'modified', dataType: 'timestamp without time zone', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'NO'},
+  })
+  modified: string;
+
+  // Define well-known properties here
+
+  // Indexer property to allow additional data
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [prop: string]: any;
+
+  constructor(data?: Partial<TunesPersonsRoles>) {
+    super(data);
+  }
+}
+
+export interface TunesPersonsRolesRelations {
+  // describe navigational properties here
+}
+
+export type TunesPersonsRolesWithRelations = TunesPersonsRoles & TunesPersonsRolesRelations;
