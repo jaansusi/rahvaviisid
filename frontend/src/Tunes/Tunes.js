@@ -42,7 +42,7 @@ class Tunes extends React.Component {
           <thead>
             <tr>
               <td>Id</td>
-              <td>Kataloog</td>
+              <td>Tekstiviide</td>
               <td>Märkused</td>
             </tr>
           </thead>

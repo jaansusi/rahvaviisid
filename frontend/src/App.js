@@ -1,43 +1,32 @@
 import React from 'react';
-import Persons from './Persons/Persons';
+import PersonWrapper from './Persons/PersonWrapper';
 import Tunes from './Tunes/Tunes';
+import Header from './Header/Header';
 import './App.css';
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Link
-} from "react-router-dom";
+  Route
+} from 'react-router-dom';
 
 function App() {
   return (
     <Router>
       <div>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/persons">Isikud</Link>
-          </li>
-          <li>
-            <Link to="/tunes">Viisid</Link>
-          </li>
-        </ul>
-
-        <hr />
-
-        <Switch>
-          <Route exact path="/">
-            <div>Home</div>
-          </Route>
-          <Route path="/persons">
-            <Persons />
-          </Route>
-          <Route path="/tunes">
-            <Tunes />
-          </Route>
-        </Switch>
+        <Header />
+        <div id="body">
+          <Switch>
+            <Route exact path="/">
+              <div>Home</div>
+            </Route>
+            <Route exact path="/persons">
+              <PersonWrapper />
+            </Route>
+            <Route path="/tunes">
+              <Tunes />
+            </Route>
+          </Switch>
+        </div>
       </div>
     </Router>
   );
