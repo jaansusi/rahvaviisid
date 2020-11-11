@@ -19,7 +19,7 @@ function App() {
             <Route exact path="/">
               <div>Home</div>
             </Route>
-            <Route exact path="/persons">
+            <Route path="/persons">
               <PersonWrapper />
             </Route>
             <Route path="/tunes">

@@ -8,14 +8,13 @@ import {
 
 const PersonWrapper = () => {
   let { path, url } = useRouteMatch();
-  console.log(path);
-  // to-do: There must be a better way to do this
-  if (path === '/persons')
-    return (
-      <PersonsList url={url} />
-    );
+
   return (
     <>
+      <Route exact path={url}>
+        <PersonsList />
+      </Route>
+
       <Route exact path={`${path}/:id`}>
         <Person />
       </Route>

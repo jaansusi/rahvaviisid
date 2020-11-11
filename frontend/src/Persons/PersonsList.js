@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
-    Link
+    Link,
+    useRouteMatch
 } from 'react-router-dom';
 
 const PersonsList = (props) => {
-    let [ items, setItems ] = useState([]);
-    fetch("http://localhost:3000/persons")
+    let { url } = useRouteMatch();
+    let [items, setItems] = useState([]);
+    useEffect(() => {
+        fetch("http://localhost:3000/persons")
         .then(res => res.json())
         .then(
             (result) => {
@@ -15,6 +18,7 @@ const PersonsList = (props) => {
                 console.error(error);
             }
         );
+    }, []);
     return (
         <table border="1">
             <thead>
@@ -34,7 +38,7 @@ const PersonsList = (props) => {
                         <td>{item.givenName}</td>
                         <td>{item.surname}</td>
                         <td>
-                            <Link to={`${props.url}` + item.id}>Vaata</Link>
+                            <Link to={`${url}/` + item.id}>Vaata</Link>
                         </td>
                     </tr>
                 ))}
