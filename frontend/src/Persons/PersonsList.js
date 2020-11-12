@@ -3,47 +3,46 @@ import {
     Link,
     useRouteMatch
 } from 'react-router-dom';
+import SortableTable from '../Components/SortableTable';
 
 const PersonsList = (props) => {
     let { url } = useRouteMatch();
-    let [items, setItems] = useState([]);
+    let [data, setData] = useState([]);
     useEffect(() => {
         fetch("http://localhost:3000/persons")
-        .then(res => res.json())
-        .then(
-            (result) => {
-                setItems(result);
-            },
-            (error) => {
-                console.error(error);
-            }
-        );
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    setData(result);
+                    console.log(result);
+                },
+                (error) => {
+                    console.error(error);
+                }
+            );
     }, []);
+    let headers = [
+        'Pid',
+        'Perekonnanimi',
+        'Eesnimi',
+        'Hüüdnimi',
+        'Sünniaasta',
+        'Surma-aasta',
+        'Sugu',
+        'Tegevused'
+    ];
+    let getters = [
+        x => x.pid,
+        x => x.surname,
+        x => x.givenName,
+        x => x.nickname,
+        x => x.birthYear,
+        x => x.deathYear,
+        x => x.sexId,
+        x => <Link to={`${url}/` + x.id}>Vaata</Link>
+    ];
     return (
-        <table border="1">
-            <thead>
-                <tr>
-                    <td>Id</td>
-                    <td>Pid</td>
-                    <td>Eesnimi</td>
-                    <td>Perekonnanimi</td>
-                    <td>Tegevused</td>
-                </tr>
-            </thead>
-            <tbody>
-                {items.map(item => (
-                    <tr key={item.id}>
-                        <td>{item.id}</td>
-                        <td>{item.pid}</td>
-                        <td>{item.givenName}</td>
-                        <td>{item.surname}</td>
-                        <td>
-                            <Link to={`${url}/` + item.id}>Vaata</Link>
-                        </td>
-                    </tr>
-                ))}
-            </tbody>
-        </table>
+        <SortableTable tableHeaders={headers} dataGetters={getters} url={url} tableData={data}  />
     );
 
 }

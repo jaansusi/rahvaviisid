@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import {
+  Link,
+  useRouteMatch
+} from 'react-router-dom';
+import SortableTable from '../Components/SortableTable';
 
 const Tunes = (() => {
-  let [items, setItems] = useState([]);
+  let { url } = useRouteMatch();
+  let [data, setData] = useState([]);
 
   useEffect(() => {
     fetch("http://localhost:3000/tunes")
@@ -9,29 +15,36 @@ const Tunes = (() => {
       .then(
         (result) => {
           console.log(result);
-          setItems(result);
+          setData(result);
         }
       )
   }, []);
+
+  let headers = [
+    'Viisiviide',
+    'Tekstiviide',
+    'Heliviide',
+    'Videoviide',
+    'Kartoteek',
+    'Rahvas',
+    'Keel',
+    'Maa',
+    'Tegevused'
+  ];
+
+  let getters = [
+    x => x.tuneReference,
+    x => x.catalogue,
+    x => x.soundReference,
+    x => x.videoReference,
+    x => x.catalogue,
+    x => x.nationId,
+    x => x.languageId,
+    x => x.countryId,
+    x => <Link to='#'>Vaata</Link>
+  ];
   return (
-    <table border="1">
-      <thead>
-        <tr>
-          <td>Id</td>
-          <td>Tekstiviide</td>
-          <td>Märkused</td>
-        </tr>
-      </thead>
-      <tbody>
-        {items.map(item => (
-          <tr key={item.name}>
-            <td>{item.id}</td>
-            <td>{item.catalogue}</td>
-            <td>{item.remarks}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <SortableTable tableHeaders={headers} dataGetters={getters} url={url} tableData={data} />
   );
 });
 
