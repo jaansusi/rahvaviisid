@@ -4,7 +4,7 @@ import './SortableTable.css';
 const SortableTable = ((props) => {
 
     return (
-        <table border="1">
+        <table className='sortable-table'>
             <thead>
                 <tr>
                     {
