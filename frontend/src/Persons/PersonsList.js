@@ -4,8 +4,9 @@ import {
     useRouteMatch
 } from 'react-router-dom';
 import SortableTable from '../Components/SortableTable';
+import Actions from '../Components/Actions';
 
-const PersonsList = (props) => {
+const PersonsList = () => {
     let { url } = useRouteMatch();
     let [data, setData] = useState([]);
     useEffect(() => {
@@ -38,7 +39,7 @@ const PersonsList = (props) => {
         x => x.birthYear,
         x => x.deathYear,
         x => x.sexId,
-        x => <Link to={`${url}/` + x.id}>Vaata</Link>
+        x => <Actions url={url} id={x.id} />
     ];
     return (
         <SortableTable tableHeaders={headers} dataGetters={getters} url={url} tableData={data}  />

@@ -4,6 +4,7 @@ import {
   useRouteMatch
 } from 'react-router-dom';
 import SortableTable from '../Components/SortableTable';
+import Actions from '../Components/Actions';
 
 const Tunes = (() => {
   let { url } = useRouteMatch();
@@ -40,7 +41,7 @@ const Tunes = (() => {
     x => x.nationId,
     x => x.languageId,
     x => x.countryId,
-    x => <Link to='#'>Vaata</Link>
+    x => <Actions url={url} id={x.id} />
   ];
   return (
     <SortableTable tableHeaders={headers} dataGetters={getters} url={url} tableData={data} />

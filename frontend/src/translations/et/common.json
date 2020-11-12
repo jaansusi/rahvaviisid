@@ -3,5 +3,14 @@
         "home": "Kodu",
         "persons": "Isikud",
         "tunes": "Viisid"
+    },
+    "action": {
+        "view": "Vaata",
+        "edit": "Muuda"
+    },
+    "person": {
+        "pid": "PID",
+        "givenName": "Eesnimi",
+        "surname": "Perekonnanimi"
     }
 }

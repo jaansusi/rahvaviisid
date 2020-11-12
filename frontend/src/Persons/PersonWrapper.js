@@ -1,6 +1,7 @@
 import React from 'react';
 import PersonsList from './PersonsList';
 import Person from './Person';
+import PersonEdit from './PersonEdit';
 import {
   Route,
   useRouteMatch
@@ -17,6 +18,9 @@ const PersonWrapper = () => {
 
       <Route exact path={`${path}/:id`}>
         <Person />
+      </Route>
+      <Route exact path={`${path}/edit/:id`}>
+        <PersonEdit />
       </Route>
     </>
   );
