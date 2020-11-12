@@ -14,7 +14,6 @@ const PersonsList = (props) => {
             .then(
                 (result) => {
                     setData(result);
-                    console.log(result);
                 },
                 (error) => {
                     console.error(error);

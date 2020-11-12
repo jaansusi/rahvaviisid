@@ -8,21 +8,21 @@ const SortableTable = ((props) => {
             <thead>
                 <tr>
                     {
-                        props.tableHeaders.map(x => {
-                            return (<th>{x}</th>)
+                        props.tableHeaders.map((x, i) => {
+                            return (<th key={i}>{x}</th>)
                         })
                     }
                 </tr>
             </thead>
             <tbody>
                 {
-                    props.tableData.map(item => {
+                    props.tableData.map((item, i) => {
                         return (
-                            <tr>
+                            <tr key={i}>
                                 {
-                                    props.dataGetters.map(x => {
+                                    props.dataGetters.map((x, j) => {
                                         return (
-                                            <td>{x(item)}</td>
+                                            <td key={j}>{x(item)}</td>
                                         )
                                     })
                                 }
