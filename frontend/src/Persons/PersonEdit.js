@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 const PersonEdit = (() => {
     let { id } = useParams();
     let [data, setData] = useState({})
-    const { t, i18n } = useTranslation('common');
+    const { t } = useTranslation('common');
 
     useEffect(() => {
         fetch("http://localhost:3000/persons/" + id)
@@ -27,7 +27,7 @@ const PersonEdit = (() => {
                     <tbody>
                         <tr>
                             <td><span>{t('person.pid')}</span></td>
-                            <td><input type='text' name='pid' value={data.pid == undefined ? '' : data.pid} /></td>
+                            <td><input type='text' name='pid' value={data.pid === undefined ? '' : data.pid} /></td>
                         </tr>
                         <tr>
                             <td><span>{t('person.givenName')}</span></td>

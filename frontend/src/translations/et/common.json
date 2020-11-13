@@ -5,12 +5,30 @@
         "tunes": "Viisid"
     },
     "action": {
+        "actions": "Tegevused",
         "view": "Vaata",
         "edit": "Muuda"
+    },
+    "date": {
+        "created": "Loodud"
     },
     "person": {
         "pid": "PID",
         "givenName": "Eesnimi",
-        "surname": "Perekonnanimi"
+        "surname": "Perekonnanimi",
+        "nickname": "Hüüdnimi",
+        "birthYear": "Sünniaasta",
+        "deathYear": "Surma-aasta",
+        "sex": "Sugu"
+    },
+    "tune": {
+        "tuneReference": "Viisiviide",
+        "textReference": "Tekstiviide",
+        "soundReference": "Heliviide",
+        "videoReference": "Videoviide",
+        "catalogue": "Kartoteek",
+        "nation": "Rahvas",
+        "language": "Keel",
+        "country": "Maa"
     }
 }

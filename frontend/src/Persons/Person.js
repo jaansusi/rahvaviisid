@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import {
     useParams
 } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const Person = (() => {
+    const { t } = useTranslation('common');
     let { id } = useParams();
     let [data, setData] = useState({})
 
@@ -22,19 +24,19 @@ const Person = (() => {
         <table border="1">
             <tbody>
                 <tr>
-                    <th>PID</th>
+                    <th>{t('person.pid')}</th>
                     <td>{data.pid}</td>
                 </tr>
                 <tr>
-                    <th>Eesnimi</th>
+                    <th>{t('person.givenName')}</th>
                     <td>{data.givenName}</td>
                 </tr>
                 <tr>
-                    <th>Perekonnanimi</th>
+                    <th>{t('person.surname')}</th>
                     <td>{data.surname}</td>
                 </tr>
                 <tr>
-                    <th>Kirje loodud</th>
+                    <th>{t('date.created')}</th>
                     <td>{data.created}</td>
                 </tr>
             </tbody>

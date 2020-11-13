@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import {
     Link
 } from "react-router-dom";
@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import './Actions.css';
 
 const Actions = (({ url, id }) => {
-    const { t, i18n } = useTranslation('common');
+    const { t } = useTranslation('common');
     return (
         <>
             <Link className='action-link' to={`${url}/` + id}>{t('action.view')}</Link>

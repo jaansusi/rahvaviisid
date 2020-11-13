@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import {
-    Link,
     useRouteMatch
 } from 'react-router-dom';
 import SortableTable from '../Components/SortableTable';
 import Actions from '../Components/Actions';
+import { useTranslation } from "react-i18next";
 
 const PersonsList = () => {
+    const { t } = useTranslation('common');
     let { url } = useRouteMatch();
     let [data, setData] = useState([]);
     useEffect(() => {
@@ -22,14 +23,14 @@ const PersonsList = () => {
             );
     }, []);
     let headers = [
-        'Pid',
-        'Perekonnanimi',
-        'Eesnimi',
-        'Hüüdnimi',
-        'Sünniaasta',
-        'Surma-aasta',
-        'Sugu',
-        'Tegevused'
+        t('person.pid'),
+        t('person.surname'),
+        t('person.givenName'),
+        t('person.nickname'),
+        t('person.birthYear'),
+        t('person.deathYear'),
+        t('person.sex'),
+        t('action.actions')
     ];
     let getters = [
         x => x.pid,

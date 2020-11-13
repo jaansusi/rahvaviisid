@@ -5,12 +5,30 @@
         "tunes": "Tunes"
     },
     "action": {
+        "actions": "Actions",
         "view": "View",
         "edit": "Edit"
+    },
+    "date": {
+        "created": "Created"
     },
     "person": {
         "pid": "PID",
         "givenName": "Given name",
-        "surname": "Surname"
+        "surname": "Surname",
+        "nickname": "Nickname",
+        "birthYear": "Birth year",
+        "deathYear": "Death year",
+        "sex": "Sex"
+    },
+    "tune": {
+        "tuneReference": "Tune reference",
+        "textReference": "Text reference",
+        "soundReference": "Sound reference",
+        "videoReference": "Video reference",
+        "catalogue": "Catalogue",
+        "nation": "Nation",
+        "language": "Language",
+        "country": "Country"
     }
 }

@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Link,
   useRouteMatch
 } from 'react-router-dom';
 import SortableTable from '../Components/SortableTable';
 import Actions from '../Components/Actions';
+import { useTranslation } from "react-i18next";
 
 const Tunes = (() => {
+  const { t } = useTranslation('common');
   let { url } = useRouteMatch();
   let [data, setData] = useState([]);
 
@@ -21,15 +22,15 @@ const Tunes = (() => {
   }, []);
 
   let headers = [
-    'Viisiviide',
-    'Tekstiviide',
-    'Heliviide',
-    'Videoviide',
-    'Kartoteek',
-    'Rahvas',
-    'Keel',
-    'Maa',
-    'Tegevused'
+    t('tune.tuneReference'),
+    t('tune.textReference'),
+    t('tune.soundReference'),
+    t('tune.videoReference'),
+    t('tune.catalogue'),
+    t('tune.nation'),
+    t('tune.language'),
+    t('tune.country'),
+    t('action.actions')
   ];
 
   let getters = [
