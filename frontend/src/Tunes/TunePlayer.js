@@ -11,8 +11,6 @@ const TunePlayer = (() => {
     synthControl.setTune(visualObj, false);
   }, [abcValue]);
 
-  
-
   return (
     <>
       <textarea cols="120" rows="12" id="abcText" defaultValue={abcValue} onChange={((e) => setAbcValue(e.currentTarget.value))}></textarea>
