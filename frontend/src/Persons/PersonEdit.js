@@ -3,6 +3,7 @@ import {
     useParams
 } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import config from '../config';
 
 const PersonEdit = (() => {
     let { id } = useParams();
@@ -10,7 +11,7 @@ const PersonEdit = (() => {
     const { t } = useTranslation('common');
 
     useEffect(() => {
-        fetch("http://localhost:3000/persons/" + id)
+        fetch(config.apiUrl + '/persons/' + id)
             .then(res => res.json())
             .then(
                 (result) => {

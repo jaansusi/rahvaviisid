@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {
     useRouteMatch
 } from 'react-router-dom';
+import config from '../config';
 import SortableTable from '../Components/SortableTable';
 import Actions from '../Components/Actions';
 import { useTranslation } from "react-i18next";
@@ -11,7 +12,7 @@ const PersonsList = () => {
     let { url } = useRouteMatch();
     let [data, setData] = useState([]);
     useEffect(() => {
-        fetch("http://localhost:3000/persons")
+        fetch(config.apiUrl + '/persons')
             .then(res => res.json())
             .then(
                 (result) => {

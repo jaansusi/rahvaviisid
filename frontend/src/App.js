@@ -1,7 +1,8 @@
 import React from 'react';
 import PersonWrapper from './Persons/PersonWrapper';
-import Tunes from './Tunes/Tunes';
+import TuneWrapper from './Tunes/TuneWrapper';
 import Header from './Header/Header';
+import Home from './Home/Home';
 import './App.css';
 import {
   BrowserRouter as Router,
@@ -17,13 +18,13 @@ function App() {
         <div id="body">
           <Switch>
             <Route exact path="/">
-              <div>Home</div>
+              <Home />
             </Route>
             <Route path="/persons">
               <PersonWrapper />
             </Route>
             <Route path="/tunes">
-              <Tunes />
+              <TuneWrapper />
             </Route>
           </Switch>
         </div>

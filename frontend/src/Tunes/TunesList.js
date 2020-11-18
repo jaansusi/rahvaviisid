@@ -4,15 +4,16 @@ import {
 } from 'react-router-dom';
 import SortableTable from '../Components/SortableTable';
 import Actions from '../Components/Actions';
+import config from '../config';
 import { useTranslation } from "react-i18next";
 
-const Tunes = (() => {
+const TunesList = (() => {
   const { t } = useTranslation('common');
   let { url } = useRouteMatch();
   let [data, setData] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/tunes")
+    fetch(config.apiUrl + '/tunes')
       .then(res => res.json())
       .then(
         (result) => {
@@ -49,4 +50,4 @@ const Tunes = (() => {
   );
 });
 
-export default Tunes;
+export default TunesList;

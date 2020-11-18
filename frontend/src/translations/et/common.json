@@ -12,6 +12,9 @@
     "date": {
         "created": "Loodud"
     },
+    "home": {
+        "home": "Kodu"
+    },
     "person": {
         "pid": "PID",
         "givenName": "Eesnimi",

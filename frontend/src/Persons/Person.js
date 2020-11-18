@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {
     useParams
 } from "react-router-dom";
+import config from '../config';
 import { useTranslation } from "react-i18next";
 
 const Person = (() => {
@@ -10,7 +11,7 @@ const Person = (() => {
     let [data, setData] = useState({})
 
     useEffect(() => {
-        fetch("http://localhost:3000/persons/" + id)
+        fetch(config.apiUrl + '/persons/' + id)
             .then(res => res.json())
             .then(
                 (result) => {

@@ -12,6 +12,9 @@
     "date": {
         "created": "Created"
     },
+    "home": {
+        "home": "Home"
+    },
     "person": {
         "pid": "PID",
         "givenName": "Given name",
