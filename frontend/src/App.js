@@ -2,6 +2,7 @@ import React from 'react';
 import PersonWrapper from './Persons/PersonWrapper';
 import TuneWrapper from './Tunes/TuneWrapper';
 import Header from './Header/Header';
+import Classificators from './Classificators/Classificators';
 import Home from './Home/Home';
 import { Helmet } from "react-helmet";
 import './App.css';
@@ -32,6 +33,9 @@ function App() {
               </Route>
               <Route path="/tunes">
                 <TuneWrapper />
+              </Route>
+              <Route path="/classificators">
+                <Classificators />
               </Route>
             </Switch>
           </div>

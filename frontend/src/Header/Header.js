@@ -11,14 +11,19 @@ const Header = (() => {
                 <button onClick={() => i18n.changeLanguage('et')}>est</button>
                 <button onClick={() => i18n.changeLanguage('en')}>eng</button>
             </div>
-            <div className="header-link">
-                <Link to="/">{t('common.home')}</Link>
-            </div>
-            <div className="header-link">
-                <Link to="/persons">{t('common.persons')}</Link>
-            </div>
-            <div className="header-link">
-                <Link to="/tunes">{t('common.tunes')}</Link>
+            <div className="link-container">
+                <div className="header-link">
+                    <Link to="/">{t('common.home')}</Link>
+                </div>
+                <div className="header-link">
+                    <Link to="/persons">{t('common.persons')}</Link>
+                </div>
+                <div className="header-link">
+                    <Link to="/tunes">{t('common.tunes')}</Link>
+                </div>
+                <div className="header-link">
+                    <Link to="/classificators">{t('common.classificators')}</Link>
+                </div>
             </div>
         </div>
     );

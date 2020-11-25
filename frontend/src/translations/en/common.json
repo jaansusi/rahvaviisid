@@ -2,7 +2,8 @@
     "common": {
         "home": "Home",
         "persons": "Persons",
-        "tunes": "Tunes"
+        "tunes": "Tunes",
+        "classificators": "Classificators"
     },
     "action": {
         "actions": "Actions",

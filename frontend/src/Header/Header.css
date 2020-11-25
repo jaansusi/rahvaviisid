@@ -4,10 +4,16 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    width: 100vw;
+}
+
+.link-container {
+    width: 30vw;
+    display: flex;
 }
 
 .header-link {
-    width: 5vw;
+    flex: 1;
 }
 
 .language-container {

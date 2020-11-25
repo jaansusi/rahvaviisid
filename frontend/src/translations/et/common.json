@@ -2,7 +2,8 @@
     "common": {
         "home": "Kodu",
         "persons": "Isikud",
-        "tunes": "Viisid"
+        "tunes": "Viisid",
+        "classificators": "Klassifikaatorid"
     },
     "action": {
         "actions": "Tegevused",
@@ -16,15 +17,18 @@
         "home": "Kodu"
     },
     "person": {
+        "person": "Isik",
         "pid": "PID",
         "givenName": "Eesnimi",
         "surname": "Perekonnanimi",
         "nickname": "Hüüdnimi",
         "birthYear": "Sünniaasta",
         "deathYear": "Surma-aasta",
-        "sex": "Sugu"
+        "sex": "Sugu",
+        "role": "Isiku roll"
     },
     "tune": {
+        "tune": "Viis",
         "tuneReference": "Viisiviide",
         "textReference": "Tekstiviide",
         "soundReference": "Heliviide",
@@ -32,6 +36,54 @@
         "catalogue": "Kartoteek",
         "nation": "Rahvas",
         "language": "Keel",
-        "country": "Maa"
+        "country": "Riik",
+        "state": "Seisund",
+        "genre": "Liik"
+    },
+    "user": {
+        "role": "Kasutaja roll"
+    },
+    "place": {
+        "place": "Koht",
+        "type": "Liik",
+        "parish": "Kihelkond",
+        "municipality": "Vald",
+        "village": "Küla"
+    },
+    "performance": {
+        "performance": "Esitus",
+        "actual": {
+            "type": "Tegeliku esituse liik",
+            "action": "Tegeliku tegevuse liik"
+        },
+        "traditional": {
+            "type": "Traditsioonilise esituse liik",
+            "action": "Traditsioonilise tegevuse liik"
+        }
+    },
+    "song": {
+        "song": "Laul",
+        "genre": "Liik",
+        "topic": "Teema",
+        "verse": "Värsivorm"
+    },
+    "attribute": {
+        "attribute": "Tunnus",
+        "text-form": "Teksti vorm",
+        "tune-form": "Viisi vorm",
+        "sound-range": "Heliulatus",
+        "rhythm-type": "Rütmitüüp"
+    },
+    "transcription": {
+        "transcription": "Noodistus",
+        "source": "Noodistuse alus",
+        "person-role": "Tegija roll"
+    },
+    "coding": {
+        "coding": "Kodeering",
+        "key-signature": "Võtmemärk",
+        "support-sound": "Tugiheli",
+        "pitch": "Kõrgus",
+        "measure": "Taktimõõt"
     }
 }
