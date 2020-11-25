@@ -4,7 +4,6 @@ import {
 } from 'react-router-dom';
 import config from '../config';
 import SortableTable from '../Components/SortableTable';
-import Actions from '../Components/Actions';
 import { useTranslation } from "react-i18next";
 
 const PersonsList = () => {
@@ -30,8 +29,7 @@ const PersonsList = () => {
         t('person.nickname'),
         t('person.birthYear'),
         t('person.deathYear'),
-        t('person.sex'),
-        t('action.actions')
+        t('person.sex')
     ];
     let getters = [
         x => x.pid,
@@ -40,8 +38,7 @@ const PersonsList = () => {
         x => x.nickname,
         x => x.birthYear,
         x => x.deathYear,
-        x => x.sexId,
-        x => <Actions url={url} id={x.id} />
+        x => x.sexId
     ];
     return (
         <SortableTable tableHeaders={headers} dataGetters={getters} url={url} tableData={data}  />

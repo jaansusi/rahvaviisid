@@ -16,13 +16,13 @@ const Header = (() => {
                     <Link to="/">{t('common.home')}</Link>
                 </div>
                 <div className="header-link">
-                    <Link to="/persons">{t('common.persons')}</Link>
+                    <Link to="/isikud">{t('common.persons')}</Link>
                 </div>
                 <div className="header-link">
-                    <Link to="/tunes">{t('common.tunes')}</Link>
+                    <Link to="/viisid">{t('common.tunes')}</Link>
                 </div>
                 <div className="header-link">
-                    <Link to="/classificators">{t('common.classificators')}</Link>
+                    <Link to="/klassifikaatorid">{t('common.classificators')}</Link>
                 </div>
             </div>
         </div>

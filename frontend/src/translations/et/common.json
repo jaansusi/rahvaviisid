@@ -3,7 +3,13 @@
         "home": "Kodu",
         "persons": "Isikud",
         "tunes": "Viisid",
-        "classificators": "Klassifikaatorid"
+        "classificators": "Klassifikaatorid",
+        "created": "Loodud",
+        "modified": "Muudetud",
+        "title": "Nimetus",
+        "active": "On aktiivne",
+        "description": "Kirjeldus",
+        "back": "Tagasi"
     },
     "action": {
         "actions": "Tegevused",

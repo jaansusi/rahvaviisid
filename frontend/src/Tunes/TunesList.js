@@ -3,7 +3,6 @@ import {
   useRouteMatch
 } from 'react-router-dom';
 import SortableTable from '../Components/SortableTable';
-import Actions from '../Components/Actions';
 import config from '../config';
 import { useTranslation } from "react-i18next";
 
@@ -30,8 +29,7 @@ const TunesList = (() => {
     t('tune.catalogue'),
     t('tune.nation'),
     t('tune.language'),
-    t('tune.country'),
-    t('action.actions')
+    t('tune.country')
   ];
 
   let getters = [
@@ -42,8 +40,7 @@ const TunesList = (() => {
     x => x.catalogue,
     x => x.nationId,
     x => x.languageId,
-    x => x.countryId,
-    x => <Actions url={url} id={x.id} />
+    x => x.countryId
   ];
   return (
     <SortableTable tableHeaders={headers} dataGetters={getters} url={url} tableData={data} />
