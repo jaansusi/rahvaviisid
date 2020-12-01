@@ -9,7 +9,8 @@
         "title": "Nimetus",
         "active": "On aktiivne",
         "description": "Kirjeldus",
-        "back": "Tagasi"
+        "back": "Tagasi",
+        "remarks": "Märkused"
     },
     "action": {
         "actions": "Tegevused",
