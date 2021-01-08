@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {
   useRouteMatch
 } from 'react-router-dom';
-import SortableTable from '../Components/SortableTable';
+import SortableTable from '../Components/SortableTable/SortableTable';
 import config from '../config';
 import { useTranslation } from "react-i18next";
 

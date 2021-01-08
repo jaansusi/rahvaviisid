@@ -5,7 +5,7 @@ const config = {
   name: 'db',
   connector: 'postgresql',
   url: '',
-  host: '192.168.1.27',
+  host: '192.168.69.27',
   port: 5432,
   user: 'local_dev_username',
   password: 'local_dev_password',

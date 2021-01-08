@@ -1,5 +1,5 @@
 import React from 'react';
-import Actions from '../Components/Actions';
+import Actions from '../Actions/Actions';
 import { useTranslation } from "react-i18next";
 import './SortableTable.css';
 

@@ -5,7 +5,7 @@ import {
     Link
 } from 'react-router-dom';
 import config from '../../config';
-import SortableTable from '../../Components/SortableTable';
+import SortableTable from '../../Components/SortableTable/SortableTable';
 import { useTranslation } from "react-i18next";
 import typeMapper from './ClassificatorTypeMap';
 
@@ -17,6 +17,15 @@ const ClassificatorTypeList = (() => {
     let { classificator } = useParams();
     let typeMap = typeMapper(t);
     let currentClassificator = typeMap[classificator];
+
+    currentClassificator.headers = currentClassificator.headers !== undefined ? currentClassificator.headers : [
+        t('common.title'), t('common.active'), t('common.created'), t('common.modified')
+    ];
+    currentClassificator.getters = currentClassificator.getters !== undefined ? currentClassificator.getters : [
+        x => x.title, x => x.isActive, x => x.created, x => x.modified
+    ];
+    
+    
     useEffect(() => {
         fetch(config.apiUrl + '/' + currentClassificator.apiPath)
             .then(res => res.json())
