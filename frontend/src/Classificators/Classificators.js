@@ -21,7 +21,7 @@ const Classificators = (() => {
             <Link className='action-link' to={`${path}/kasutaja-roll`}>{t('user.role')}</Link>
             <Link className='action-link' to={`${path}/sugu`}>{t('person.sex')}</Link>
             <h3>{t('place.place')}</h3>
-            <Link className='action-link' to={`${path}/kohaliik`}>{t('place.type')}</Link>
+            <Link className='action-link' to={`${path}/koha-liik`}>{t('place.type')}</Link>
             <Link className='action-link' to={`${path}/kihelkond`}>{t('place.parish')}</Link>
             <Link className='action-link' to={`${path}/vald`}>{t('place.municipality')}</Link>
             <Link className='action-link' to={`${path}/kyla`}>{t('place.village')}</Link>

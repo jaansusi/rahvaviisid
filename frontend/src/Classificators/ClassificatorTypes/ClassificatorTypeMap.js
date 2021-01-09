@@ -18,19 +18,19 @@ const typeMapper = ((t) => {
         'riik': {
             'apiPath': 'countries'
         },
-        'viisiseisund': {
+        'viisi-seisund': {
             'apiPath': 'tune-states'
         },
-        'viisiliik': {
+        'viisi-liik': {
             'apiPath': 'tune-genres'
         },
 
         // Person classificators
 
-        'viisitegijaroll': {
+        'viisi-tegija-roll': {
             'apiPath': 'tune-person-role-types'
         },
-        'kasutajaroll': {
+        'kasutaja-roll': {
             'apiPath': 'user-role-types'
         },
         'sugu': {
@@ -39,7 +39,7 @@ const typeMapper = ((t) => {
 
         // Place classificators
 
-        'kohaliik': {
+        'koha-liik': {
             'apiPath': 'tune-place-types'
         },
         'kihelkond': {

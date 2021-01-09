@@ -4,8 +4,6 @@
         "persons": "Isikud",
         "tunes": "Viisid",
         "classificators": "Klassifikaatorid",
-        "created": "Loodud",
-        "modified": "Muudetud",
         "title": "Nimetus",
         "active": "On aktiivne",
         "description": "Kirjeldus",
@@ -18,7 +16,8 @@
         "edit": "Muuda"
     },
     "date": {
-        "created": "Loodud"
+        "created": "Loodud",
+        "modified": "Muudetud"
     },
     "home": {
         "home": "Kodu"
@@ -92,5 +91,8 @@
         "support-sound": "Tugiheli",
         "pitch": "Kõrgus",
         "measure": "Taktimõõt"
+    },
+    "edit": {
+        "save": "Salvesta"
     }
 }

@@ -25,7 +25,6 @@ const ClassificatorTypeList = (() => {
         x => x.title, x => x.isActive, x => x.created, x => x.modified
     ];
     
-    
     useEffect(() => {
         fetch(config.apiUrl + '/' + currentClassificator.apiPath)
             .then(res => res.json())

@@ -1,11 +1,12 @@
 import React from 'react';
 import PersonsList from './PersonsList';
-import Person from './Person';
-import PersonEdit from './PersonEdit';
+import PersonMap from './PersonMap';
 import {
   Route,
   useRouteMatch
 } from 'react-router-dom';
+import ViewComponent from '../Components/ViewComponent/ViewComponent';
+import EditComponent from '../Components/EditComponent/EditComponent';
 
 const PersonWrapper = () => {
   let { path, url } = useRouteMatch();
@@ -15,12 +16,11 @@ const PersonWrapper = () => {
       <Route exact path={url}>
         <PersonsList />
       </Route>
-
       <Route exact path={`${path}/:id`}>
-        <Person />
+        <ViewComponent map={PersonMap} />
       </Route>
       <Route exact path={`${path}/edit/:id`}>
-        <PersonEdit />
+        <EditComponent map={PersonMap} />
       </Route>
     </>
   );

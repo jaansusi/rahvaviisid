@@ -5,7 +5,7 @@ import {
 import config from '../config';
 import { useTranslation } from "react-i18next";
 
-const Person = (() => {
+const PersonView = (() => {
     const { t } = useTranslation('common');
     let { id } = useParams();
     let [data, setData] = useState({})
@@ -45,4 +45,4 @@ const Person = (() => {
     );
 });
 
-export default Person;
+export default PersonView;

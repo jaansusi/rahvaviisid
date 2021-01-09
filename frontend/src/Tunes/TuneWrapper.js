@@ -1,6 +1,6 @@
 import React from 'react';
 import TunesList from './TunesList';
-import Tune from './Tune';
+import Tune from './TuneView';
 // import TuneEdit from './TuneEdit';
 import {
   Route,
@@ -8,6 +8,8 @@ import {
 } from 'react-router-dom';
 import './TuneWrapper.css';
 import 'abcjs/abcjs-audio.css';
+import EditComponent from '../Components/EditComponent/EditComponent';
+import TuneMap from './TuneMap';
 
 const TuneWrapper = () => {
   let { path, url } = useRouteMatch();
@@ -21,9 +23,9 @@ const TuneWrapper = () => {
       <Route exact path={`${path}/:id`}>
         <Tune />
       </Route>
-      {/* <Route exact path={`${path}/edit/:id`}>
-        <TuneEdit />
-      </Route> */}
+      <Route exact path={`${path}/edit/:id`}>
+        <EditComponent map={TuneMap} />
+      </Route>
     </>
   );
 }
