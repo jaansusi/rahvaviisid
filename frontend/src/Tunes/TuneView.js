@@ -6,8 +6,8 @@ import TuneMap from './TuneMap';
 const TuneView = (() => {
     return (
         <>
-            <ViewComponent map={TuneMap} />
             <TunePlayer />
+            <ViewComponent map={TuneMap} />
         </>
     );
 });

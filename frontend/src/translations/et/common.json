@@ -44,7 +44,11 @@
         "language": "Keel",
         "country": "Riik",
         "state": "Seisund",
-        "genre": "Liik"
+        "genre": "Liik",
+        "publications": "Väljaanded",
+        "remarks": "Märkused",
+        "verifiedBy": "Kontrollija",
+        "verified": "Kontrollimise aeg"
     },
     "user": {
         "role": "Kasutaja roll"
@@ -75,10 +79,10 @@
     },
     "attribute": {
         "attribute": "Tunnus",
-        "text-form": "Teksti vorm",
-        "tune-form": "Viisi vorm",
-        "sound-range": "Heliulatus",
-        "rhythm-type": "Rütmitüüp"
+        "textForm": "Teksti vorm",
+        "tuneForm": "Viisi vorm",
+        "soundRange": "Heliulatus",
+        "rhythmType": "Rütmitüüp"
     },
     "transcription": {
         "transcription": "Noodistus",
@@ -87,12 +91,17 @@
     },
     "coding": {
         "coding": "Kodeering",
-        "key-signature": "Võtmemärk",
-        "support-sound": "Tugiheli",
+        "keySignature": "Võtmemärk",
+        "supportSound": "Tugiheli",
         "pitch": "Kõrgus",
         "measure": "Taktimõõt"
     },
     "edit": {
         "save": "Salvesta"
+    },
+    "language": {
+        "current": "EST",
+        "est": "EST",
+        "eng": "ENG"
     }
 }

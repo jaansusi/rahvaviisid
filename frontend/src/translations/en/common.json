@@ -34,5 +34,10 @@
         "nation": "Nation",
         "language": "Language",
         "country": "Country"
+    },
+    "language": {
+        "current": "ENG",
+        "est": "EST",
+        "eng": "ENG"
     }
 }

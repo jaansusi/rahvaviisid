@@ -9,13 +9,15 @@ const PersonMap = {
     ],
     edit: [
         { name: 'pid', type: 'number', header: 'person.pid', getter: x => x.pid },
+        
         { name: 'givenName', header: 'person.givenName', getter: x => x.givenName },
         { name: 'surname', header: 'person.surname', getter: x => x.surname },
         { name: 'nickname', header: 'person.nickname', getter: x => x.nickname },
         { name: 'birthYear', type: 'number', header: 'person.birthYear', getter: x => x.birthYear },
         { name: 'deathYear', type: 'number', header: 'person.deathYear', getter: x => x.deathYear },
         { name: 'sexId', type: 'number', header: 'person.sex', getter: x => x.sexId },
-        { name: 'remarks', header: 'common.remarks', getter: x => x.remarks }
+        { name: 'remarks', header: 'common.remarks', getter: x => x.remarks },
+        { name: 'created', header: 'common.created', getter: x => x.created }
     ]
 };
 
