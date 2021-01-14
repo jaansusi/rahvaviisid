@@ -14,7 +14,8 @@
     "action": {
         "actions": "Tegevused",
         "view": "Vaata",
-        "edit": "Muuda"
+        "edit": "Muuda",
+        "delete": "Kustuta"
     },
     "date": {
         "created": "Loodud",

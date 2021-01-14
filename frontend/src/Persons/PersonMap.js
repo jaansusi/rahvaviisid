@@ -1,5 +1,14 @@
 const PersonMap = {
     apiPath: 'persons',
+    list: [
+        { field: 'pid', headerName: 'person.pid', width: 170 },
+        { field: 'surname', headerName: 'person.surname', width: 170 },
+        { field: 'givenName', headerName: 'person.givenName', width: 170 },
+        { field: 'nickname', headerName: 'person.nickname', width: 170 },
+        { field: 'birthYear', headerName: 'person.birthYear', width: 70 },
+        { field: 'deathYear', headerName: 'person.deathYear', width: 70 },
+        { field: 'sex', headerName: 'person.sex', width: 70 }
+    ],
     view: [
         { header: 'person.pid', getter: x => x.pid },
         { header: 'person.givenName', getter: x => x.givenName },

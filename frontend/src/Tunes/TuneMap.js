@@ -1,5 +1,15 @@
 const TuneMap = {
     apiPath: 'tunes',
+    list: [
+        { field: 'tuneReference', headerName: 'tune.tuneReference', width: 170 },
+        { field: 'textReference', headerName: 'tune.textReference', width: 170 },
+        { field: 'soundReference', headerName: 'tune.soundReference', width: 170 },
+        { field: 'videoReference', headerName: 'tune.videoReference', width: 170 },
+        { field: 'catalogue', headerName: 'tune.catalogue', width: 170 },
+        { field: 'nationId', headerName: 'tune.nation', width: 70 },
+        { field: 'languageId', headerName: 'tune.language', width: 70 },
+        { field: 'countryId', headerName: 'tune.country', width: 70 }
+    ],
     view: [
         { header: 'common.id', getter: x => x.id },
         { header: 'tune.state', getter: x => x.tuneStateId },

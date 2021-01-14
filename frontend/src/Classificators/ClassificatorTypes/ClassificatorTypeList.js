@@ -5,7 +5,6 @@ import {
     Link
 } from 'react-router-dom';
 import config from '../../config';
-import SortableTable from '../../Components/SortableTable/SortableTable';
 import { useTranslation } from "react-i18next";
 import typeMapper from './ClassificatorTypeMap';
 
@@ -41,7 +40,7 @@ const ClassificatorTypeList = (() => {
     return (
         <>
             <Link className='action-link' to={`.`}>{t('common.back')}</Link>
-            <SortableTable tableHeaders={currentClassificator.headers} dataGetters={currentClassificator.getters} url={url} tableData={data} />
+            {/* <SortableTable tableHeaders={currentClassificator.headers} dataGetters={currentClassificator.getters} url={url} tableData={data} /> */}
         </>
     );
 });

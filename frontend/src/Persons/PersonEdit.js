@@ -1,5 +1,5 @@
 import React from 'react';
-import EditComponent from '../Components/EditComponent/EditComponent';
+import EditComponent from '../Components/EditComponent';
 import PersonMap from './PersonMap';
 
 

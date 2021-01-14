@@ -1,6 +1,5 @@
 import React from 'react';
 import { useTranslation } from "react-i18next";
-import './ViewDataFragment.css';
 import { TableContainer, Table, TableRow, TableCell } from '@material-ui/core';
 
 const ViewEntityDataComponent = ((props) => {

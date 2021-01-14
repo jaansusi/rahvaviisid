@@ -3,7 +3,7 @@ import {
     useParams
 } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import config from '../../config';
+import config from '../config';
 import { Grid, TextField, Button } from '@material-ui/core';
 
 const formReducer = (state, event) => {

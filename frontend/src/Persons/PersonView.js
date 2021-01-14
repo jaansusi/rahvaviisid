@@ -1,5 +1,5 @@
 import React from 'react';
-import ViewComponent from '../Components/ViewComponent/ViewComponent';
+import ViewComponent from '../Components/ViewComponent';
 import PersonMap from './PersonMap';
 
 const PersonView = (() => {

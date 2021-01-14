@@ -2,10 +2,9 @@ import React, { useState, useEffect } from 'react';
 import {
     useParams
 } from "react-router-dom";
-import config from '../../config';
-import ViewDataFragment from '../../Fragments/ViewDataFragment/ViewDataFragment';
+import config from '../config';
 
-const ViewComponent = ((props) => {
+const ListComponent = ((props) => {
     let { id } = useParams();
     let [data, setData] = useState({});
     let objectMap = props.map;
@@ -21,8 +20,8 @@ const ViewComponent = ((props) => {
     }, [id, objectMap.apiPath]);
 
     return (
-        <ViewDataFragment mapping={objectMap} tableData={data}/>
+        <ListDataFragment mapping={objectMap} tableData={data}/>
     );
 });
 
-export default ViewComponent;
+export default ListComponent;

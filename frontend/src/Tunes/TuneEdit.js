@@ -1,7 +1,7 @@
 import React from 'react';
 import TunePlayer from './TunePlayer';
 import TuneMap from './TuneMap';
-import EditComponent from '../Components/EditComponent/EditComponent';
+import EditComponent from '../Components/EditComponent';
 
 const TuneEdit = (() => {
     return (
