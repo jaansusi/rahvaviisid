@@ -10,7 +10,7 @@ const Actions = (({ url, id }) => {
     return (
         <>
             <Link className='action-link' to={`${url}/` + id}>{t('action.view')}</Link>
-            <Link className='action-link' to={`${url}/edit/` + id}>{t('action.edit')}</Link>
+            <Link className='action-link' to={`${url}/` + id + '/muuda'}>{t('action.edit')}</Link>
         </>
     );
 });

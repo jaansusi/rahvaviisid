@@ -11,6 +11,7 @@ import {
   Switch,
   Route
 } from 'react-router-dom';
+import Grid from '@material-ui/core/Grid';
 
 function App() {
   return (
@@ -19,10 +20,17 @@ function App() {
         <meta charSet="utf-8" />
         <title>Rahvaviisid</title>
         <meta name="description" content="Rahvaviiside infosüsteem" />
+        <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
       </Helmet>
       <Router>
-          <Header />
-          <div id="body">
+        <Header />
+        <Grid
+          container
+          direction='column'
+          alignItems='center'
+          style={{ minHeight: '100vh' }}
+        >
+          <Grid item xs={12}>
             <Switch>
               <Route exact path="/">
                 <Home />
@@ -37,7 +45,8 @@ function App() {
                 <ClassificatorWrapper />
               </Route>
             </Switch>
-          </div>
+          </Grid>
+        </Grid>
       </Router>
     </>
   );

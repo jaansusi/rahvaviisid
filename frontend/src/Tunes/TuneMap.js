@@ -19,19 +19,19 @@ const TuneMap = {
         { header: 'date.modified', getter: x => x.modified }
     ],
     edit: [
-        { name: 'tuneStateId', header: 'tune.state', getter: x => x.tuneStateId },
-        { name: 'textReference', header: 'tune.textReference', getter: x => x.textReference },
-        { name: 'tuneReference', header: 'tune.tuneReference', getter: x => x.tuneReference },
-        { name: 'soundReference', header: 'tune.soundReference', getter: x => x.soundReference },
-        { name: 'videoReference ', header: 'tune.videoReference', getter: x => x.videoReference },
-        { name: 'catalogue', header: 'tune.catalogue', getter: x => x.catalogue },
-        { name: 'nationId', header: 'tune.nation', getter: x => x.nationId },
-        { name: 'languageId', header: 'tune.language', getter: x => x.languageId },
-        { name: 'countryId', header: 'tune.country', getter: x => x.countryId },
-        { name: 'publications', header: 'tune.publications', getter: x => x.publications },
-        { name: 'remarks', header: 'tune.remarks', getter: x => x.remarks },
-        { name: 'verifiedBy', header: 'tune.verifiedBy', getter: x => x.verifiedBy },
-        { name: 'verified', header: 'tune.verified', getter: x => x.verified }
+        { name: 'tuneStateId', header: 'tune.state' },
+        { name: 'textReference', header: 'tune.textReference' },
+        { name: 'tuneReference', header: 'tune.tuneReference' },
+        { name: 'soundReference', header: 'tune.soundReference' },
+        { name: 'videoReference', header: 'tune.videoReference' },
+        { name: 'catalogue', header: 'tune.catalogue' },
+        { name: 'nationId', header: 'tune.nation' },
+        { name: 'languageId', header: 'tune.language' },
+        { name: 'countryId', header: 'tune.country' },
+        { name: 'publications', header: 'tune.publications' },
+        { name: 'remarks', header: 'tune.remarks' },
+        { name: 'verifiedBy', header: 'tune.verifiedBy' },
+        { name: 'verified', header: 'tune.verified' }
     ]
 };
 

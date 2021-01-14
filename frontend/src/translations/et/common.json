@@ -8,7 +8,8 @@
         "active": "On aktiivne",
         "description": "Kirjeldus",
         "back": "Tagasi",
-        "remarks": "Märkused"
+        "remarks": "Märkused",
+        "id": "ID"
     },
     "action": {
         "actions": "Tegevused",

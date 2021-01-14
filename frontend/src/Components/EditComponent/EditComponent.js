@@ -4,6 +4,7 @@ import {
 } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import config from '../../config';
+import { Grid, TextField, Button } from '@material-ui/core';
 
 const formReducer = (state, event) => {
     return {
@@ -13,22 +14,13 @@ const formReducer = (state, event) => {
 };
 
 const EditComponent = ((props) => {
-    let { id } = useParams();
-    let [formData, setFormData] = useReducer(formReducer, {
-        id: 1,
-        pid: '',
-        givenName: '',
-        surname: '',
-        nickname: '',
-        birthYear: 1,
-        deathYear: 1,
-        sexId: '',
-        remarks: ''
-    });
     let objectMap = props.map;
+    let { id } = useParams();
+    let emptyDataObject = {}
+    objectMap.edit.forEach((x) => {emptyDataObject[x.name] = ''});
+    let [formData, setFormData] = useReducer(formReducer, emptyDataObject);
     let [submitting, setSubmitting] = useState(false);
     const { t } = useTranslation('common');
-
     useEffect(() => {
         fetch(config.apiUrl + '/' + objectMap.apiPath + '/' + id)
             .then(res => res.json())
@@ -83,21 +75,25 @@ const EditComponent = ((props) => {
         <>
             <form onSubmit={handleSubmit}>
                 <input type='hidden' name='id' value={formData.id === null ? 1 : formData.id} />
-                <table>
-                    <tbody>
-                        {
-                            objectMap.edit.map((valueMap, i) => {
-                                return (
-                                    <tr>
-                                        <td><span>{t(valueMap.header)}</span></td>
-                                        <td><input type='text' onChange={handleChange} name={valueMap.name} value={valueMap.getter(formData)} /></td>
-                                    </tr>
-                                )
-                            })
-                        }
-                    </tbody>
-                </table>
-                <button type="submit" disabled={submitting}>{t('edit.save')}</button>
+                <Grid
+                    container
+                    direction='column'
+                >
+                    {
+                        objectMap.edit.map((valueMap, i) => {
+                            return (
+                                <Grid
+                                    item
+                                    xs={6}
+                                    key={i}
+                                >
+                                    <TextField name={valueMap.name} label={t(valueMap.header)} value={formData[valueMap.name]} onChange={handleChange} />
+                                </Grid>
+                            )
+                        })
+                    }
+                </Grid>
+                <Button type="submit" disabled={submitting}>{t('edit.save')}</Button>
             </form>
         </>
     );
