@@ -1,6 +1,5 @@
 import abcjs from "abcjs";
 import React, { useEffect, useState } from 'react';
-import './TunePlayer.css';
 import { Grid, TextField } from '@material-ui/core';
 
 const TunePlayer = ((props) => {

@@ -10,7 +10,7 @@ const Actions = (({ id }) => {
         <>
             <Button href={`${url}/` + id} color="primary">{t('action.view')}</Button>
             <Button href={`${url}/` + id + '/muuda'} color="primary">{t('action.edit')}</Button>
-            <Button href='#' color="primary">{t('action.delete')}</Button>
+            <Button href='/#' color="primary">{t('action.delete')}</Button>
         </>
     );
 });

@@ -1,9 +1,9 @@
 import React from 'react';
 import {
-    Link,
     useRouteMatch
 } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { Button } from '@material-ui/core';
 
 const Classificators = (() => {
     let { path } = useRouteMatch();
@@ -11,42 +11,42 @@ const Classificators = (() => {
     return (
         <>
             <h3>{t('tune.tune')}</h3>
-            <Link className='action-link' to={`${path}/rahvas`}>{t('tune.nation')}</Link>
-            <Link className='action-link' to={`${path}/keel`}>{t('tune.language')}</Link>
-            <Link className='action-link' to={`${path}/riik`}>{t('tune.country')}</Link>
-            <Link className='action-link' to={`${path}/viisi-seisund`}>{t('tune.state')}</Link>
-            <Link className='action-link' to={`${path}/viisi-liik`}>{t('tune.genre')}</Link>
+            <Button className='action-link' href={`${path}/rahvas`}>{t('tune.nation')}</Button>
+            <Button className='action-link' href={`${path}/keel`}>{t('tune.language')}</Button>
+            <Button className='action-link' href={`${path}/riik`}>{t('tune.country')}</Button>
+            <Button className='action-link' href={`${path}/viisi-seisund`}>{t('tune.state')}</Button>
+            <Button className='action-link' href={`${path}/viisi-liik`}>{t('tune.genre')}</Button>
             <h3>{t('person.person')}</h3>
-            <Link className='action-link' to={`${path}/viisi-tegija-roll`}>{t('person.role')}</Link>
-            <Link className='action-link' to={`${path}/kasutaja-roll`}>{t('user.role')}</Link>
-            <Link className='action-link' to={`${path}/sugu`}>{t('person.sex')}</Link>
+            <Button className='action-link' href={`${path}/viisi-tegija-roll`}>{t('person.role')}</Button>
+            <Button className='action-link' href={`${path}/kasutaja-roll`}>{t('user.role')}</Button>
+            <Button className='action-link' href={`${path}/sugu`}>{t('person.sex')}</Button>
             <h3>{t('place.place')}</h3>
-            <Link className='action-link' to={`${path}/koha-liik`}>{t('place.type')}</Link>
-            <Link className='action-link' to={`${path}/kihelkond`}>{t('place.parish')}</Link>
-            <Link className='action-link' to={`${path}/vald`}>{t('place.municipality')}</Link>
-            <Link className='action-link' to={`${path}/kyla`}>{t('place.village')}</Link>
+            <Button className='action-link' href={`${path}/koha-liik`}>{t('place.type')}</Button>
+            <Button className='action-link' href={`${path}/kihelkond`}>{t('place.parish')}</Button>
+            <Button className='action-link' href={`${path}/vald`}>{t('place.municipality')}</Button>
+            <Button className='action-link' href={`${path}/kyla`}>{t('place.village')}</Button>
             <h3>{t('performance.performance')}</h3>
-            <Link className='action-link' to={`${path}/tegeliku-esituse-liik`}>{t('performance.actual.type')}</Link>
-            <Link className='action-link' to={`${path}/traditsioonilise-esituse-liik`}>{t('performance.traditional.type')}</Link>
-            <Link className='action-link' to={`${path}/tegeliku-tegevuse-liik`}>{t('performance.actual.action')}</Link>
-            <Link className='action-link' to={`${path}/traditsioonilise-tegevuse-liik`}>{t('performance.traditional.action')}</Link>
+            <Button className='action-link' href={`${path}/tegeliku-esituse-liik`}>{t('performance.actual.type')}</Button>
+            <Button className='action-link' href={`${path}/traditsioonilise-esituse-liik`}>{t('performance.traditional.type')}</Button>
+            <Button className='action-link' href={`${path}/tegeliku-tegevuse-liik`}>{t('performance.actual.action')}</Button>
+            <Button className='action-link' href={`${path}/traditsioonilise-tegevuse-liik`}>{t('performance.traditional.action')}</Button>
             <h3>{t('song.song')}</h3>
-            <Link className='action-link' to={`${path}/laulu-liik`}>{t('song.genre')}</Link>
-            <Link className='action-link' to={`${path}/laulu-teema`}>{t('song.topic')}</Link>
-            <Link className='action-link' to={`${path}/varsivorm`}>{t('song.verse')}</Link>
+            <Button className='action-link' href={`${path}/laulu-liik`}>{t('song.genre')}</Button>
+            <Button className='action-link' href={`${path}/laulu-teema`}>{t('song.topic')}</Button>
+            <Button className='action-link' href={`${path}/varsivorm`}>{t('song.verse')}</Button>
             <h3>{t('attribute.attribute')}</h3>
-            <Link className='action-link' to={`${path}/teksti-vorm`}>{t('attribute.text-form')}</Link>
-            <Link className='action-link' to={`${path}/viisi-vorm`}>{t('attribute.tune-form')}</Link>
-            <Link className='action-link' to={`${path}/heliulatus`}>{t('attribute.sound-range')}</Link>
-            <Link className='action-link' to={`${path}/rytmityyp`}>{t('attribute.rhythm-type')}</Link>
+            <Button className='action-link' href={`${path}/teksti-vorm`}>{t('attribute.textForm')}</Button>
+            <Button className='action-link' href={`${path}/viisi-vorm`}>{t('attribute.tuneForm')}</Button>
+            <Button className='action-link' href={`${path}/heliulatus`}>{t('attribute.soundRange')}</Button>
+            <Button className='action-link' href={`${path}/rytmityyp`}>{t('attribute.rhythmType')}</Button>
             <h3>{t('transcription.transcription')}</h3>
-            <Link className='action-link' to={`${path}/noodistuse-alus`}>{t('transcription.source')}</Link>
-            <Link className='action-link' to={`${path}/noodistuse-tegija-roll`}>{t('transcription.person-role')}</Link>
+            <Button className='action-link' href={`${path}/noodistuse-alus`}>{t('transcription.source')}</Button>
+            <Button className='action-link' href={`${path}/noodistuse-tegija-roll`}>{t('transcription.personRole')}</Button>
             <h3>{t('coding.coding')}</h3>
-            <Link className='action-link' to={`${path}/votmemark`}>{t('coding.key-signature')}</Link>
-            <Link className='action-link' to={`${path}/tugiheli`}>{t('coding.support-sound')}</Link>
-            <Link className='action-link' to={`${path}/korgus`}>{t('coding.pitch')}</Link>
-            <Link className='action-link' to={`${path}/taktimoot`}>{t('coding.measure')}</Link>
+            <Button className='action-link' href={`${path}/votmemark`}>{t('coding.keySignature')}</Button>
+            <Button className='action-link' href={`${path}/tugiheli`}>{t('coding.supportSound')}</Button>
+            <Button className='action-link' href={`${path}/korgus`}>{t('coding.pitch')}</Button>
+            <Button className='action-link' href={`${path}/taktimoot`}>{t('coding.measure')}</Button>
         </>
     );
 });

@@ -5,7 +5,6 @@ import {
     Route,
     useRouteMatch
 } from 'react-router-dom';
-import './TuneWrapper.css';
 import 'abcjs/abcjs-audio.css';
 import TuneEdit from './TuneEdit';
 

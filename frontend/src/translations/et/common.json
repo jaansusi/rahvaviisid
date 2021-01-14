@@ -89,7 +89,7 @@
     "transcription": {
         "transcription": "Noodistus",
         "source": "Noodistuse alus",
-        "person-role": "Tegija roll"
+        "personRole": "Tegija roll"
     },
     "coding": {
         "coding": "Kodeering",
