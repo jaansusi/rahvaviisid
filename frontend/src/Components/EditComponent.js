@@ -2,9 +2,8 @@ import React, { useState, useEffect, useReducer } from 'react';
 import {
     useParams
 } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 import config from '../config';
-import { Grid, TextField, Button } from '@material-ui/core';
+import EditDataFragment from '../Fragments/EditDataFragment';
 
 const formReducer = (state, event) => {
     return {
@@ -19,8 +18,8 @@ const EditComponent = ((props) => {
     let emptyDataObject = {}
     objectMap.edit.forEach((x) => {emptyDataObject[x.field] = ''});
     let [formData, setFormData] = useReducer(formReducer, emptyDataObject);
+
     let [submitting, setSubmitting] = useState(false);
-    const { t } = useTranslation('common');
     useEffect(() => {
         fetch(config.apiUrl + '/' + objectMap.apiPath + '/' + id)
             .then(res => res.json())
@@ -60,42 +59,20 @@ const EditComponent = ((props) => {
         setTimeout(() => {
             setSubmitting(false);
         }, 3000);
-    }
+    };
 
+    
     const handleChange = event => {
         const { name, value, type } = event.target;
         setFormData({
             name: name,
             value: type === 'number' ? parseInt(value, 10) : value,
         });
-    }
+    };
 
     return (
-        <>
-            <form onSubmit={handleSubmit}>
-                <input type='hidden' name='id' value={formData.id === null ? 1 : formData.id} />
-                <Grid
-                    container
-                    direction='column'
-                >
-                    {
-                        objectMap.edit.map((valueMap, i) => {
-                            return (
-                                <Grid
-                                    item
-                                    xs={6}
-                                    key={i}
-                                >
-                                    <TextField name={valueMap.field} label={t(valueMap.headerName)} value={formData[valueMap.field]} onChange={handleChange} />
-                                </Grid>
-                            )
-                        })
-                    }
-                </Grid>
-                <Button type="submit" disabled={submitting}>{t('edit.save')}</Button>
-            </form>
-        </>
-    );
+        <EditDataFragment mapping={objectMap} formData={formData} handleSubmit={handleSubmit} submitting={submitting} handleChange={handleChange} />
+    )
 });
 
 export default EditComponent;
