@@ -14,10 +14,10 @@ const formReducer = (state, event) => {
 };
 
 const EditComponent = ((props) => {
-    let objectMap = props.map;
+    let objectMap = props.mapping;
     let { id } = useParams();
     let emptyDataObject = {}
-    objectMap.edit.forEach((x) => {emptyDataObject[x.name] = ''});
+    objectMap.edit.forEach((x) => {emptyDataObject[x.field] = ''});
     let [formData, setFormData] = useReducer(formReducer, emptyDataObject);
     let [submitting, setSubmitting] = useState(false);
     const { t } = useTranslation('common');
@@ -28,11 +28,10 @@ const EditComponent = ((props) => {
                 (result) => {
                     objectMap.edit.forEach((map) => {
                         setFormData({
-                            name: map.name,
-                            value: result[map.name] === null ? '' : result[map.name],
+                            name: map.field,
+                            value: result[map.field] === null ? '' : result[map.field],
                         });
                     })
-                    console.log(result);
                 }
             )
     }, [id, objectMap.apiPath, objectMap.edit]);
@@ -87,7 +86,7 @@ const EditComponent = ((props) => {
                                     xs={6}
                                     key={i}
                                 >
-                                    <TextField name={valueMap.name} label={t(valueMap.header)} value={formData[valueMap.name]} onChange={handleChange} />
+                                    <TextField name={valueMap.field} label={t(valueMap.headerName)} value={formData[valueMap.field]} onChange={handleChange} />
                                 </Grid>
                             )
                         })

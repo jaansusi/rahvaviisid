@@ -6,7 +6,7 @@ import EditComponent from '../Components/EditComponent';
 const TuneEdit = (() => {
     return (
         <>
-            <EditComponent map={TuneMap} />
+            <EditComponent mapping={TuneMap} />
             <TunePlayer editable={true} />
         </>
     );

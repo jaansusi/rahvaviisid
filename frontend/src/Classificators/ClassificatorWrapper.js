@@ -1,6 +1,8 @@
 import React from 'react';
 import Classificators from './Classificators';
 import ClassificatorTypeList from './ClassificatorTypes/ClassificatorTypeList';
+import ClassificatorTypeView from './ClassificatorTypes/ClassificatorTypeView';
+import ClassificatorTypeEdit from './ClassificatorTypes/ClassificatorTypeEdit';
 import {
   Route,
   useRouteMatch
@@ -18,12 +20,12 @@ const ClassificatorWrapper = () => {
       <Route exact path={`${path}/:classificator`}>
         <ClassificatorTypeList />
       </Route>
-      {/* <Route exact path={`${path}/:id`}>
-        <Person />
+      <Route exact path={`${path}/:classificator/:id`}>
+        <ClassificatorTypeView />
       </Route>
-      <Route exact path={`${path}/edit/:id`}>
-        <PersonEdit />
-      </Route> */}
+      <Route exact path={`${path}/:classificator/:id/muuda`}>
+        <ClassificatorTypeEdit />
+      </Route>
     </>
   );
 }

@@ -3,13 +3,8 @@
     background-color: beige;
 }
 
-#header-container>div {
-    height: 100%;
-}
-
-#logo-container a, #logo-container img {
-    display: block;
-    height: 100%;
+.logo-image {
+    height: 80px;
 }
 
 .menu > a {

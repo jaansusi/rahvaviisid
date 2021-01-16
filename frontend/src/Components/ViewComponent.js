@@ -8,7 +8,7 @@ import ViewDataFragment from '../Fragments/ViewDataFragment';
 const ViewComponent = ((props) => {
     let { id } = useParams();
     let [data, setData] = useState({});
-    let objectMap = props.map;
+    let objectMap = props.mapping;
     useEffect(() => {
         fetch(config.apiUrl + '/' + objectMap.apiPath + '/' + id)
             .then(res => res.json())

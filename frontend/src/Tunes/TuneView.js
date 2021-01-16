@@ -3,13 +3,13 @@ import TunePlayer from './TunePlayer';
 import ViewComponent from '../Components/ViewComponent';
 import TuneMap from './TuneMap';
 
-const TuneView = (() => {
+const TuneView = () => {
     return (
         <>
             <TunePlayer />
-            <ViewComponent map={TuneMap} />
+            <ViewComponent mapping={TuneMap} />
         </>
     );
-});
+};
 
 export default TuneView;

@@ -2,10 +2,10 @@ import React from 'react';
 import {
     useParams
 } from 'react-router-dom';
-import ListComponent from '../../Components/ListComponent';
+import ViewComponent from '../../Components/ViewComponent';
 import ClassificatorsMap from './ClassificatorTypeMap';
 
-const ClassificatorTypeList = (() => {
+const ClassificatorTypeView = (() => {
     let { classificator } = useParams();
 
     let currentClassificatorMap = undefined;
@@ -20,15 +20,16 @@ const ClassificatorTypeList = (() => {
         }
     }
 
-    currentClassificatorMap.list = currentClassificatorMap.list !== undefined ?
-        currentClassificatorMap.list : ClassificatorsMap.default.list;
+    currentClassificatorMap.view = currentClassificatorMap.view !== undefined ?
+        currentClassificatorMap.view : ClassificatorsMap.default.view;
 
+    console.log(currentClassificatorMap);
     return (
         <>
-            <ListComponent mapping={currentClassificatorMap} />
+            <ViewComponent mapping={currentClassificatorMap} />
         </>
     );
 });
 
 
-export default ClassificatorTypeList;
+export default ClassificatorTypeView;

@@ -4,7 +4,7 @@ import PersonMap from './PersonMap';
 
 const PersonView = (() => {
     return (
-        <ViewComponent map={PersonMap} />
+        <ViewComponent mapping={PersonMap} />
     );
 });
 

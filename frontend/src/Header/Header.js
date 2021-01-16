@@ -30,19 +30,19 @@ const Header = (() => {
     };
 
     return (
-        <Grid id="header-container" container direction='row'>
-            <Grid xs={5} id="logo-container">
-                <a href="/"><img src={logo} alt="Logo"></img></a>
+        <Grid id="header-container" container direction='row' justify='center' alignItems='center'>
+            <Grid item xs={5} id="logo-container">
+                <a className='logo-image' href='/'><img className='logo-image' src={logo} alt="Logo"></img></a>
             </Grid>
-            <Grid xs={5} direction='row' container justify='center' alignItems='center'>
-                <MenuList className='menu'>
-                    <MenuItem component={Link} to='/'>{t('common.home')}</MenuItem>
-                    <MenuItem component={Link} to='/isikud'>{t('common.persons')}</MenuItem>
-                    <MenuItem component={Link} to='/viisid'>{t('common.tunes')}</MenuItem>
-                    <MenuItem component={Link} to='/klassifikaatorid'>{t('common.classificators')}</MenuItem>
-                </MenuList>
+            <Grid item xs={5}>
+                    <MenuList className='menu'>
+                        <MenuItem component={Link} to='/'>{t('common.home')}</MenuItem>
+                        <MenuItem component={Link} to='/isikud'>{t('common.persons')}</MenuItem>
+                        <MenuItem component={Link} to='/viisid'>{t('common.tunes')}</MenuItem>
+                        <MenuItem component={Link} to='/klassifikaatorid'>{t('common.classificators')}</MenuItem>
+                    </MenuList>
             </Grid>
-            <Grid xs={2} direction='row' container justify='center' alignItems="center" id="language-container">
+            <Grid item xs={2} id="language-container">
                 <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
                     {t('language.current')}
                 </Button>

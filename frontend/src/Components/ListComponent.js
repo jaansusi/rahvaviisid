@@ -3,24 +3,23 @@ import {
     useParams
 } from "react-router-dom";
 import config from '../config';
+import ListDataFragment from '../Fragments/ListDataFragment';
 
 const ListComponent = ((props) => {
     let { id } = useParams();
-    let [data, setData] = useState({});
-    let objectMap = props.map;
+    let [data, setData] = useState([]);
+    let objectMap = props.mapping;
     useEffect(() => {
-        fetch(config.apiUrl + '/' + objectMap.apiPath + '/' + id)
+        fetch(config.apiUrl + '/' + objectMap.apiPath)
             .then(res => res.json())
             .then(
                 (result) => {
                     setData(result);
-                    console.log(result);
                 }
             );
     }, [id, objectMap.apiPath]);
-
     return (
-        <ListDataFragment mapping={objectMap} tableData={data}/>
+        <ListDataFragment mapping={objectMap.list} tableData={data}/>
     );
 });
 

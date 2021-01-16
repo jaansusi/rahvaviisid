@@ -12,8 +12,8 @@ const ViewEntityDataComponent = ((props) => {
                     props.mapping.view.map((map, i) => {
                         return (
                             <TableRow>
-                                <TableCell align="left">{t(map.header)}</TableCell>
-                                <TableCell align="left">{map.getter(props.tableData)}</TableCell>
+                                <TableCell align="left">{t(map.headerName)}</TableCell>
+                                <TableCell align="left">{props.tableData[map.field]}</TableCell>
                             </TableRow>
                         )
                     })

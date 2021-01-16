@@ -5,7 +5,7 @@ import PersonMap from './PersonMap';
 
 const PersonEdit = (() => {
     return (
-        <EditComponent map={PersonMap} />
+        <EditComponent mapping={PersonMap} />
     );
 });
 
