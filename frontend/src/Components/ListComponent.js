@@ -19,7 +19,7 @@ const ListComponent = ((props) => {
             );
     }, [id, objectMap.apiPath]);
     return (
-        <ListDataFragment mapping={objectMap.list} tableData={data}/>
+        <ListDataFragment mapping={objectMap.list} apiPath={objectMap.apiPath} tableData={data}/>
     );
 });
 
