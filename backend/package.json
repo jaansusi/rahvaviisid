@@ -27,11 +27,11 @@
     "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
     "docker:build": "docker build -t ekm-viisid-api .",
     "docker:run": "docker run -p 3000:3000 -d ekm-viisid-api",
-    "premigrate": "npm run build",
-    "migrate": "node ./dist/migrate",
+    "database": "node ./node_modules/db-migrate/bin/db-migrate db:create kivi --env createDb --config ./migrations/database.json",
+    "migrate": "node ./node_modules/db-migrate/bin/db-migrate up --env dev --config ./migrations/database.json",
     "preopenapi-spec": "npm run build",
     "openapi-spec": "node ./dist/openapi-spec",
-    "prestart": "npm run build",
+    "prestart": "npm run migrate && npm run build",
     "start": "node -r source-map-support/register .",
     "clean": "lb-clean dist *.tsbuildinfo .eslintcache"
   },
@@ -54,6 +54,8 @@
     "@loopback/rest-crud": "^0.8.16",
     "@loopback/rest-explorer": "^3.0.2",
     "@loopback/service-proxy": "^3.0.2",
+    "db-migrate": "^0.11.12",
+    "db-migrate-pg": "^1.2.2",
     "loopback-connector-postgresql": "^5.2.0",
     "tslib": "^2.0.0"
   },
