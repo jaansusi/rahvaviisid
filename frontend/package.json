@@ -21,7 +21,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "docker:build": "docker build -t jaansusi/ekm-viisid-fe .",
+    "docker:run": "docker run -p 3001:3000 -d jaansusi/ekm-viisid-fe"
   },
   "eslintConfig": {
     "extends": "react-app"
