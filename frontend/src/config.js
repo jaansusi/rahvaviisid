@@ -1,5 +1,5 @@
 let config = {
-    apiUrl: 'viisidapi.xn--x-dha.ee'
+    apiUrl: process.env.API_URL || 'http://localhost:3000'
 }
 
 export default config;

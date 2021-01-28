@@ -12,6 +12,7 @@ import {
   Route
 } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
+import Footer from './Footer/Footer';
 
 function App() {
   return (
@@ -28,25 +29,24 @@ function App() {
           container
           direction='column'
           alignItems='center'
-          style={{ minHeight: '100vh' }}
+          className='body-container'
         >
-          <Grid item xs={12}>
-            <Switch>
-              <Route exact path="/">
-                <Home />
-              </Route>
-              <Route path="/isikud">
-                <PersonWrapper />
-              </Route>
-              <Route path="/viisid">
-                <TuneWrapper />
-              </Route>
-              <Route path="/klassifikaatorid">
-                <ClassificatorWrapper />
-              </Route>
-            </Switch>
-          </Grid>
+          <Switch>
+            <Route exact path="/">
+              <Home />
+            </Route>
+            <Route path="/isikud">
+              <PersonWrapper />
+            </Route>
+            <Route path="/viisid">
+              <TuneWrapper />
+            </Route>
+            <Route path="/klassifikaatorid">
+              <ClassificatorWrapper />
+            </Route>
+          </Switch>
         </Grid>
+        <Footer />
       </Router>
     </>
   );

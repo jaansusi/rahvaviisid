@@ -19,7 +19,7 @@ const DeleteButton = (({ apiPath, id }) => {
     }
 
     return (
-        <Button href='#' onClick={deleteObject} color="primary">{t('action.delete')}</Button>
+        <Button href='#' onClick={deleteObject} variant='outlined' color='primary'>{t('action.delete')}</Button>
     )
 });
 

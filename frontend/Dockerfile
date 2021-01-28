@@ -6,6 +6,7 @@ WORKDIR /app
 
 COPY . .
 
+ENV API_URL=https://viisidapi.xn--x-dha.ee
 RUN npm install
 RUN npm run build
 

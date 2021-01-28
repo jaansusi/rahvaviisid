@@ -12,20 +12,19 @@ const formReducer = (state, event) => {
     }
 };
 
-const EditComponent = ((props) => {
-    let objectMap = props.mapping;
+const EditComponent = (({ mapping, extraComponent }) => {
     let { id } = useParams();
     let emptyDataObject = {}
-    objectMap.edit.forEach((x) => {emptyDataObject[x.field] = ''});
+    mapping.edit.forEach((x) => {emptyDataObject[x.field] = ''});
     let [formData, setFormData] = useReducer(formReducer, emptyDataObject);
 
     let [submitting, setSubmitting] = useState(false);
     useEffect(() => {
-        fetch(config.apiUrl + '/' + objectMap.apiPath + '/' + id)
+        fetch(config.apiUrl + '/' + mapping.apiPath + '/' + id)
             .then(res => res.json())
             .then(
                 (result) => {
-                    objectMap.edit.forEach((map) => {
+                    mapping.edit.forEach((map) => {
                         setFormData({
                             name: map.field,
                             value: result[map.field] === null ? '' : result[map.field],
@@ -33,7 +32,7 @@ const EditComponent = ((props) => {
                     })
                 }
             )
-    }, [id, objectMap.apiPath, objectMap.edit]);
+    }, [id, mapping.apiPath, mapping.edit]);
 
     const handleSubmit = event => {
         event.preventDefault();
@@ -44,7 +43,7 @@ const EditComponent = ((props) => {
                 dataToSubmit[key] = undefined;
             }
         }
-        fetch(config.apiUrl + '/' + objectMap.apiPath + '/' + id,
+        fetch(config.apiUrl + '/' + mapping.apiPath + '/' + id,
             {
                 method: 'PATCH',
                 headers: {
@@ -71,7 +70,7 @@ const EditComponent = ((props) => {
     };
 
     return (
-        <EditDataFragment mapping={objectMap} formData={formData} handleSubmit={handleSubmit} submitting={submitting} handleChange={handleChange} />
+        <EditDataFragment mapping={mapping} formData={formData} handleSubmit={handleSubmit} submitting={submitting} handleChange={handleChange} extraComponent={extraComponent} />
     )
 });
 

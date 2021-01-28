@@ -61,11 +61,12 @@
   },
   "devDependencies": {
     "@loopback/build": "^6.2.5",
-    "source-map-support": "^0.5.19",
+    "@loopback/eslint-config": "^10.0.1",
     "@loopback/testlab": "^3.2.7",
     "@types/node": "^10.17.37",
-    "@loopback/eslint-config": "^10.0.1",
+    "cross-env": "^7.0.3",
     "eslint": "^7.10.0",
+    "source-map-support": "^0.5.19",
     "typescript": "~4.0.3"
   }
 }
