@@ -1,26 +1,131 @@
 import abcjs from "abcjs";
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useReducer } from 'react';
 import { Grid, TextField } from '@material-ui/core';
+import { useTranslation } from "react-i18next";
 
-const TunePlayer = ((props) => {
-  let [abcValue, setAbcValue] = useState('X:1\nL:1/8\nQ:1/4=96\n g>d dd d>B dd | d>B cB GG GG |$ g>d dd d>B BG | D>D DD GG GG || %4\nw: Las- ke sis- se mär- di- san- did,|las- ke sis- se mar- di- san- did,|mar- di küü- ned kül- me- ta- vad,|mar- di küü- ned kül- me- ta- vad.|');
-  let editable = props.editable === undefined ? false : props.editable;
 
+const TunePlayer = (({ data, onChange, editable }) => {
+  const { t } = useTranslation('common');
+  const formReducer = (state, event) => {
+    return {
+      ...state,
+      [event.name]: event.value
+    }
+  };
+  let [tuneData, setTuneData] = useReducer(formReducer, {
+    customInput: '',
+    alter: '',
+    tempo: '',
+    title: '',
+    clef: '',
+    noteLength: '',
+    reference: '',
+    author: '',
+    melody: '',
+    words: ''
+  });
+  const handleTuneChange = event => {
+    const { name, value, type } = event.target;
+    setTuneData({
+      name: name,
+      value: type === 'number' ? parseInt(value, 10) : value,
+    });
+  };
+  
+  let combData2 = (() => {
+    return [
+      tuneData.customInput === '' ? '' : tuneData.customInput,
+      tuneData.alter === '' ? '' : ('K: ' + tuneData.alter),
+      tuneData.tempo === '' ? '' : ('Q: ' + tuneData.tempo),
+      tuneData.title === '' ? '' : ('T: ' + tuneData.title),
+      tuneData.clef === '' ? '' : ('V:V1 clef=' + tuneData.clef),
+      tuneData.noteLength === '' ? '' : ('L: ' + tuneData.noteLength),
+      tuneData.reference === '' ? '' : ('X: ' + tuneData.reference),
+      tuneData.author === '' ? '' : ('Z: ' + tuneData.author),
+      tuneData.melody === '' ? '' : (tuneData.melody),
+      tuneData.words === '' ? '' : ('w: ' + tuneData.words),
+    ].join('\n');
+  });
+  let [combinedData, setCombinedData] = useState(combData2);
+  editable = editable === undefined ? false : editable;
   useEffect(() => {
-    let visualObj = abcjs.renderAbc('player', abcValue)[0];
+    let temp = tuneData;
+    for (let prop in data) {
+      if (tuneData[prop] === '' && data[prop] !== null) {
+        setTuneData({
+          name: prop,
+          value: data[prop],
+        });
+        temp[prop] = data[prop];
+      }
+    }
+    // onChange({
+    //   target: {
+    //     name: 'tuneMelodies',
+    //     value: temp,
+    //     type: 'object'
+    //   }
+    // });
+    setCombinedData(combData2);
+    let visualObj = abcjs.renderAbc('player', combinedData)[0];
     let synthControl = new abcjs.synth.SynthController();
     synthControl.load("#audio", null, { displayRestart: true, displayPlay: true, displayProgress: true });
     synthControl.setTune(visualObj, false);
-
-  }, [abcValue]);
+  }, [tuneData, combinedData, data]);
 
   return (
-    <Grid
-      item
-      xs={12}>
-      <TextField multiline fullWidth rows='5' style={{display: (editable ? 'default' : 'none')}} id="abcText" value={abcValue} onChange={((e) => setAbcValue(e.currentTarget.value))} variant='outlined'></TextField>
+    <Grid item xs={12}>
+      <Grid
+        container
+        style={{ display: (editable ? 'default' : 'none') }}
+        direction='row'
+      >
+        <Grid item xs={4} className='form-edit-item'>
+          <TextField name='clef' label={t('tune.clef')} value={tuneData['clef']} onChange={handleTuneChange} variant='outlined' />
+        </Grid>
+        <Grid item xs={4} className='form-edit-item'>
+          <TextField name='alter' label={t('tune.alter')} value={tuneData['alter']} onChange={handleTuneChange} variant='outlined' />
+        </Grid>
+
+        <Grid item xs={4} className='form-edit-item'>
+          <TextField name='tempo' label={t('tune.tempo')} value={tuneData['tempo']} onChange={handleTuneChange} variant='outlined' />
+        </Grid>
+
+        <Grid item xs={4} className='form-edit-item'>
+          <TextField name='noteLength' label={t('tune.noteLength')} value={tuneData['noteLength']} onChange={handleTuneChange} variant='outlined' />
+        </Grid>
+        <Grid item xs={4} className='form-edit-item'>
+          <TextField name='title' label={t('tune.title')} value={tuneData['title']} onChange={handleTuneChange} variant='outlined' />
+        </Grid>
+
+        <Grid item xs={4} className='form-edit-item'>
+          <TextField name='author' label={t('tune.author')} value={tuneData['author']} onChange={handleTuneChange} variant='outlined' />
+        </Grid>
+
+        <Grid item xs={4} className='form-edit-item'>
+          <TextField name='reference' label={t('tune.reference')} value={tuneData['reference']} onChange={handleTuneChange} variant='outlined' />
+        </Grid>
+      </Grid>
+      <Grid
+        container
+        style={{ display: (editable ? 'default' : 'none') }}
+        direction='column'
+      >
+        <Grid item xs={12} className='form-edit-item'>
+          <TextField name='customInput' label={t('tune.customInput')} value={tuneData['customInput']} onChange={handleTuneChange} multiline fullWidth rows='2' variant='outlined' />
+        </Grid>
+        <Grid item xs={12} className='form-edit-item'>
+          <TextField name='melody' label={t('tune.melody')} value={tuneData['melody']} onChange={handleTuneChange} multiline fullWidth rows='2' variant='outlined' />
+        </Grid>
+        <Grid item xs={12} className='form-edit-item'>
+          <TextField name='words' label={t('tune.words')} value={tuneData['words']} onChange={handleTuneChange} multiline fullWidth rows='2' variant='outlined' />
+        </Grid>
+        {/* <Grid item xs={12} className='form-edit-item'>
+          <TextField label='debug' value={combinedData} multiline fullWidth rows='10' variant='outlined' />
+        </Grid> */}
+      </Grid>
       <div id="player"></div>
-      <div id="audio"></div>
+      <div style={{ display: (tuneData.melody === undefined ? 'none' : 'default') }} id="audio"></div>
     </Grid>
   );
 });

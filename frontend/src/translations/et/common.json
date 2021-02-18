@@ -50,7 +50,17 @@
         "publications": "Väljaanded",
         "remarks": "Märkused",
         "verifiedBy": "Kontrollija",
-        "verified": "Kontrollimise aeg"
+        "verified": "Kontrollimise aeg",
+        "melody": "Meloodia",
+        "words": "Sõnad",
+        "alter": "Alter",
+        "tempo": "Tempo",
+        "clef": "Noodivõti",
+        "noteLength": "Noodi pikkus",
+        "title": "Pealkiri",
+        "author": "Autor",
+        "reference": "Viide",
+        "customInput": "Lisaväljad"
     },
     "user": {
         "role": "Kasutaja roll"

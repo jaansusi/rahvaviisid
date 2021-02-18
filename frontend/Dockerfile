@@ -5,8 +5,8 @@ FROM node:15-alpine as build
 WORKDIR /app
 
 COPY . .
-
-ENV API_URL=https://viisidapi.xn--x-dha.ee
+ARG REACT_APP_API_URL
+ENV REACT_APP_API_URL https://viisidapi.xn--x-dha.ee
 RUN npm install
 RUN npm run build
 

@@ -1,6 +1,15 @@
 -- Loo kasutaja
-CREATE USER local_dev_username PASSWORD 'local_dev_password';
-
+DO
+$createUser$
+BEGIN
+IF NOT EXISTS (
+    SELECT FROM pg_catalog.pg_roles
+    WHERE  rolname = 'local_dev_username')
+THEN
+    CREATE USER local_dev_username PASSWORD 'local_dev_password';
+END IF;
+END
+$createUser$;
 -- Eraldi schema loomine arenduse jaoks
 CREATE SCHEMA folk_tune;
 COMMENT ON SCHEMA folk_tune IS 'Folk tunes database';
@@ -11,7 +20,7 @@ ALTER USER local_dev_username SET search_path = folk_tune, public;
 GRANT CONNECT ON DATABASE kivi TO local_dev_username;
 GRANT USAGE ON SCHEMA public TO local_dev_username;
 GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA folk_tune TO local_dev_username;
-GRANT postgres TO local_dev_username;
+--GRANT postgres TO local_dev_username;
 
 -- systeemi seadistus
 SET client_encoding = 'UTF8';

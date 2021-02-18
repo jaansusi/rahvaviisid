@@ -5,22 +5,22 @@ import {
 import config from '../config';
 import EditDataFragment from '../Fragments/EditDataFragment';
 
-const formReducer = (state, event) => {
-    return {
-        ...state,
-        [event.name]: event.value
-    }
-};
 
-const EditComponent = (({ mapping, extraComponent }) => {
+const EditComponent = (({ mapping, extraComponent, filter }) => {
+    const formReducer = (state, event) => {
+        return {
+            ...state,
+            [event.name]: event.value
+        }
+    };
     let { id } = useParams();
     let emptyDataObject = {}
-    mapping.edit.forEach((x) => {emptyDataObject[x.field] = ''});
+    mapping.edit.forEach((x) => { emptyDataObject[x.field] = '' });
     let [formData, setFormData] = useReducer(formReducer, emptyDataObject);
 
     let [submitting, setSubmitting] = useState(false);
     useEffect(() => {
-        fetch(config.apiUrl + '/' + mapping.apiPath + '/' + id)
+        fetch(config.apiUrl + '/' + mapping.apiPath + '/' + id + filter)
             .then(res => res.json())
             .then(
                 (result) => {
@@ -32,7 +32,7 @@ const EditComponent = (({ mapping, extraComponent }) => {
                     })
                 }
             )
-    }, [id, mapping.apiPath, mapping.edit]);
+    }, [id, mapping.apiPath, mapping.edit, filter]);
 
     const handleSubmit = event => {
         event.preventDefault();
@@ -60,7 +60,7 @@ const EditComponent = (({ mapping, extraComponent }) => {
         }, 3000);
     };
 
-    
+
     const handleChange = event => {
         const { name, value, type } = event.target;
         setFormData({
@@ -70,7 +70,9 @@ const EditComponent = (({ mapping, extraComponent }) => {
     };
 
     return (
-        <EditDataFragment mapping={mapping} formData={formData} handleSubmit={handleSubmit} submitting={submitting} handleChange={handleChange} extraComponent={extraComponent} />
+        <>
+            <EditDataFragment mapping={mapping} formData={formData} handleSubmit={handleSubmit} submitting={submitting} handleChange={handleChange} extraComponent={extraComponent} />
+        </>
     )
 });
 

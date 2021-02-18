@@ -1,4 +1,5 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, hasOne, model, property} from '@loopback/repository';
+import { TuneMelodies } from './tune-melodies.model';
 
 @model({
   settings: {idInjection: false, postgresql: {schema: 'folk_tune', table: 'tunes'}}
@@ -119,6 +120,21 @@ export class Tunes extends Entity {
   })
   modified: string;
 
+  @property({
+    type: 'number',
+    scale: 0,
+    postgresql: {columnName: 'rhythm_type_id', dataType: 'integer', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'YES'},
+  })
+  rhythmTypeId?: number;
+
+  @property({
+    type: 'number',
+    postgresql: {columnName: 'tune_melody_id', dataType: 'integer', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'YES'},
+  })
+  tuneMelodyId?: number;
+
+  @hasOne(() => TuneMelodies, { keyFrom: 'tune_melody_id'})
+  tuneMelodies?: TuneMelodies;
   // Define well-known properties here
 
   // Indexer property to allow additional data

@@ -41,7 +41,8 @@ const TuneMap = {
         { field: 'publications', headerName: 'tune.publications' },
         { field: 'remarks', headerName: 'tune.remarks' },
         { field: 'verifiedBy', headerName: 'tune.verifiedBy' },
-        { field: 'verified', headerName: 'tune.verified' }
+        { field: 'verified', headerName: 'tune.verified' },
+        { field: 'tuneMelodies', abstract: true }
     ]
 };
 
