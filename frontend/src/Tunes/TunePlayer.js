@@ -33,6 +33,12 @@ const TunePlayer = (({ data, onChange, editable }) => {
   };
   
   let combData2 = (() => {
+    let melodyLines = tuneData.melody.split('\n');
+    let wordsLines = tuneData.words.split('\n');
+    let melodyAndWords = melodyLines.map((melodyLine, i) => {
+      return melodyLine + ((wordsLines[i] === undefined || wordsLines[i] === '') ? '' : '\nw: ' + wordsLines[i]);
+    });
+    console.log(melodyAndWords);
     return [
       tuneData.customInput === '' ? '' : tuneData.customInput,
       tuneData.alter === '' ? '' : ('K: ' + tuneData.alter),
@@ -42,9 +48,8 @@ const TunePlayer = (({ data, onChange, editable }) => {
       tuneData.noteLength === '' ? '' : ('L: ' + tuneData.noteLength),
       tuneData.reference === '' ? '' : ('X: ' + tuneData.reference),
       tuneData.author === '' ? '' : ('Z: ' + tuneData.author),
-      tuneData.melody === '' ? '' : (tuneData.melody),
-      tuneData.words === '' ? '' : ('w: ' + tuneData.words),
-    ].join('\n');
+      
+    ].concat(melodyAndWords).filter((elem) => elem !== '').join('\n');
   });
   let [combinedData, setCombinedData] = useState(combData2);
   editable = editable === undefined ? false : editable;
@@ -120,9 +125,9 @@ const TunePlayer = (({ data, onChange, editable }) => {
         <Grid item xs={12} className='form-edit-item'>
           <TextField name='words' label={t('tune.words')} value={tuneData['words']} onChange={handleTuneChange} multiline fullWidth rows='2' variant='outlined' />
         </Grid>
-        {/* <Grid item xs={12} className='form-edit-item'>
+        <Grid item xs={12} className='form-edit-item'>
           <TextField label='debug' value={combinedData} multiline fullWidth rows='10' variant='outlined' />
-        </Grid> */}
+        </Grid>
       </Grid>
       <div id="player"></div>
       <div style={{ display: (tuneData.melody === undefined ? 'none' : 'default') }} id="audio"></div>
