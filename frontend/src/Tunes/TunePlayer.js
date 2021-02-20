@@ -31,52 +31,54 @@ const TunePlayer = (({ data, onChange, editable }) => {
       value: type === 'number' ? parseInt(value, 10) : value,
     });
   };
-  
-  let combData2 = (() => {
-    let melodyLines = tuneData.melody.split('\n');
-    let wordsLines = tuneData.words.split('\n');
-    let melodyAndWords = melodyLines.map((melodyLine, i) => {
-      return melodyLine + ((wordsLines[i] === undefined || wordsLines[i] === '') ? '' : '\nw: ' + wordsLines[i]);
-    });
-    console.log(melodyAndWords);
-    return [
-      tuneData.customInput === '' ? '' : tuneData.customInput,
-      tuneData.alter === '' ? '' : ('K: ' + tuneData.alter),
-      tuneData.tempo === '' ? '' : ('Q: ' + tuneData.tempo),
-      tuneData.title === '' ? '' : ('T: ' + tuneData.title),
-      tuneData.clef === '' ? '' : ('V:V1 clef=' + tuneData.clef),
-      tuneData.noteLength === '' ? '' : ('L: ' + tuneData.noteLength),
-      tuneData.reference === '' ? '' : ('X: ' + tuneData.reference),
-      tuneData.author === '' ? '' : ('Z: ' + tuneData.author),
-      
-    ].concat(melodyAndWords).filter((elem) => elem !== '').join('\n');
-  });
-  let [combinedData, setCombinedData] = useState(combData2);
+
+
+  let [combinedData, setCombinedData] = useState('');
   editable = editable === undefined ? false : editable;
+
   useEffect(() => {
-    let temp = tuneData;
-    for (let prop in data) {
-      if (tuneData[prop] === '' && data[prop] !== null) {
-        setTuneData({
-          name: prop,
-          value: data[prop],
-        });
-        temp[prop] = data[prop];
-      }
-    }
-    // onChange({
-    //   target: {
-    //     name: 'tuneMelodies',
-    //     value: temp,
-    //     type: 'object'
-    //   }
-    // });
-    setCombinedData(combData2);
+    setCombinedData(() => {
+      let melodyLines = tuneData.melody.split('\n');
+      let wordsLines = tuneData.words.split('\n');
+      let melodyAndWords = melodyLines.map((melodyLine, i) => {
+        return melodyLine + ((wordsLines[i] === undefined || wordsLines[i] === '') ? '' : '\nw: ' + wordsLines[i]);
+      });
+      return [
+        tuneData.customInput === '' ? '' : tuneData.customInput,
+        tuneData.alter === '' ? '' : ('K: ' + tuneData.alter),
+        tuneData.tempo === '' ? '' : ('Q: ' + tuneData.tempo),
+        tuneData.title === '' ? '' : ('T: ' + tuneData.title),
+        tuneData.noteLength === '' ? '' : ('L: ' + tuneData.noteLength),
+        tuneData.reference === '' ? '' : ('X: ' + tuneData.reference),
+        tuneData.author === '' ? '' : ('Z: ' + tuneData.author),
+      ].concat(melodyAndWords).filter((elem) => elem !== '').join('\n');
+    });
     let visualObj = abcjs.renderAbc('player', combinedData)[0];
     let synthControl = new abcjs.synth.SynthController();
     synthControl.load("#audio", null, { displayRestart: true, displayPlay: true, displayProgress: true });
     synthControl.setTune(visualObj, false);
-  }, [tuneData, combinedData, data]);
+  }, [tuneData, combinedData]);
+
+  useEffect(() => {
+    for (let prop in data) {
+      setTuneData({
+        name: prop,
+        value: data[prop],
+      });
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (!Object.values(data).map(el => el === '').every(el => el)) {
+      // onChange({
+      //   target: {
+      //     name: 'tuneMelodies',
+      //     value: tuneData,
+      //     type: 'object'
+      //   }
+      // });
+    }
+  }, [tuneData]);
 
   return (
     <Grid item xs={12}>
@@ -85,9 +87,9 @@ const TunePlayer = (({ data, onChange, editable }) => {
         style={{ display: (editable ? 'default' : 'none') }}
         direction='row'
       >
-        <Grid item xs={4} className='form-edit-item'>
+        {/* <Grid item xs={4} className='form-edit-item'>
           <TextField name='clef' label={t('tune.clef')} value={tuneData['clef']} onChange={handleTuneChange} variant='outlined' />
-        </Grid>
+        </Grid> */}
         <Grid item xs={4} className='form-edit-item'>
           <TextField name='alter' label={t('tune.alter')} value={tuneData['alter']} onChange={handleTuneChange} variant='outlined' />
         </Grid>

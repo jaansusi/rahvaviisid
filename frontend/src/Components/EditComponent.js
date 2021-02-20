@@ -72,6 +72,7 @@ const EditComponent = (({ mapping, extraComponent, filter }) => {
     return (
         <>
             <EditDataFragment mapping={mapping} formData={formData} handleSubmit={handleSubmit} submitting={submitting} handleChange={handleChange} extraComponent={extraComponent} />
+            {JSON.stringify(formData)}
         </>
     )
 });
