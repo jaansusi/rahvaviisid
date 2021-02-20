@@ -6,18 +6,37 @@ import TunePlayer from '../Tunes/TunePlayer';
 
 const EditDataFragment = (({ mapping, formData, handleSubmit, handleChange, submitting, extraComponent }) => {
     const { t } = useTranslation('common');
-
+    console.log(mapping);
     return (
-        <form onSubmit={handleSubmit}>
+        <>
             <input type='hidden' name='id' value={formData.id === null ? 1 : formData.id} />
             <Grid
                 container
                 direction='row'
             >
                 {
-                    mapping.edit.map((valueMap, i) => {
-                        if (valueMap.abstract)
+                    mapping.map((valueMap, i) => {
+                        if (valueMap.hidden)
                             return undefined;
+                        if (valueMap.nested !== undefined) {
+                            let handleNestedChange = event => {
+                                const { name, value } = event.target;
+                                let temp = formData[valueMap.field];
+                                temp[name] = value;
+                                handleChange({
+                                    target: {
+                                        name: valueMap.field,
+                                        value: temp,
+                                        type: 'object'
+                                    }
+                                });
+                            };
+                            return <EditDataFragment
+                                mapping={valueMap.nested}
+                                formData={formData[valueMap.field]}
+                                handleChange={handleNestedChange} />;
+                        }
+
                         return (
                             <Grid
                                 item
@@ -33,16 +52,13 @@ const EditDataFragment = (({ mapping, formData, handleSubmit, handleChange, subm
                 <Grid item xs={12}>
                     {
                         //to-do: Find a better alternative for inserting components here.
-                        extraComponent.includes('TunePlayer') ? 
-                            <TunePlayer editable={true} data={formData.tuneMelodies} onChange={handleChange} /> : 
-                            undefined
+                        // extraComponent.includes('TunePlayer') ? 
+                        //     <TunePlayer editable={true} formData={formData} handleChange={handleChange} /> : 
+                        //     undefined
                     }
                 </Grid>
-                <Grid item xs className='form-edit-item'>
-                    <Button type="submit" disabled={submitting} variant='contained' color='primary'>{t('edit.save')}</Button>
-                </Grid>
             </Grid>
-        </form>
+        </>
     );
 });
 

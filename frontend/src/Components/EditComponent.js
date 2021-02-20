@@ -1,4 +1,6 @@
+import { Button, Grid } from '@material-ui/core';
 import React, { useState, useEffect, useReducer } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
     useParams
 } from "react-router-dom";
@@ -7,6 +9,7 @@ import EditDataFragment from '../Fragments/EditDataFragment';
 
 
 const EditComponent = (({ mapping, extraComponent, filter }) => {
+    const { t } = useTranslation('common');
     const formReducer = (state, event) => {
         return {
             ...state,
@@ -14,9 +17,8 @@ const EditComponent = (({ mapping, extraComponent, filter }) => {
         }
     };
     let { id } = useParams();
-    let emptyDataObject = {}
-    mapping.edit.forEach((x) => { emptyDataObject[x.field] = '' });
-    let [formData, setFormData] = useReducer(formReducer, emptyDataObject);
+    let createEmptyDataObject = currentMapping => Object.fromEntries(new Map(currentMapping.map((elem) => [elem.field, elem.nested === undefined ? '' : createEmptyDataObject(elem.nested)])));
+    let [formData, setFormData] = useReducer(formReducer, createEmptyDataObject(mapping.edit));
 
     let [submitting, setSubmitting] = useState(false);
     useEffect(() => {
@@ -71,8 +73,14 @@ const EditComponent = (({ mapping, extraComponent, filter }) => {
 
     return (
         <>
-            <EditDataFragment mapping={mapping} formData={formData} handleSubmit={handleSubmit} submitting={submitting} handleChange={handleChange} extraComponent={extraComponent} />
-            {JSON.stringify(formData)}
+            <form onSubmit={handleSubmit}>
+                <EditDataFragment mapping={mapping.edit} formData={formData} handleSubmit={handleSubmit} submitting={submitting} handleChange={handleChange} extraComponent={extraComponent} />
+                {JSON.stringify(formData)}
+                
+                <Grid item xs className='form-edit-item'>
+                    <Button type="submit" disabled={submitting} variant='contained' color='primary'>{t('edit.save')}</Button>
+                </Grid>
+            </form>
         </>
     )
 });

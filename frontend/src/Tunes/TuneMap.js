@@ -29,6 +29,7 @@ const TuneMap = {
         { field: 'modified', headerName: 'date.modified' }
     ],
     edit: [
+        { field: 'id', hidden: true },
         { field: 'tuneStateId', headerName: 'tune.state' },
         { field: 'textReference', headerName: 'tune.textReference' },
         { field: 'tuneReference', headerName: 'tune.tuneReference' },
@@ -42,7 +43,19 @@ const TuneMap = {
         { field: 'remarks', headerName: 'tune.remarks' },
         { field: 'verifiedBy', headerName: 'tune.verifiedBy' },
         { field: 'verified', headerName: 'tune.verified' },
-        { field: 'tuneMelodies', abstract: true }
+        { field: 'tuneMelodies', nested: [
+            { field: 'id', hidden: true },
+            { field: 'tuneId', hidden: true },
+            { field: 'melody', headerName: 'tune.melody' },
+            { field: 'clef', headerName: 'tune.clef' },
+            { field: 'alter', headerName: 'tune.alter' },
+            { field: 'tempo', headerName: 'tune.tempo' },
+            { field: 'noteLength', headerName: 'tune.noteLength' },
+            { field: 'title', headerName: 'tune.title' },
+            { field: 'author', headerName: 'tune.author' },
+            { field: 'reference', headerName: 'tune.reference' },
+            { field: 'customInput', headerName: 'tune.customInput' }
+        ]}
     ]
 };
 
