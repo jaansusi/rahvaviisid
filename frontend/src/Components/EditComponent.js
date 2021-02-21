@@ -26,12 +26,23 @@ const EditComponent = (({ mapping, extraComponent, filter }) => {
             .then(res => res.json())
             .then(
                 (result) => {
-                    mapping.edit.forEach((map) => {
-                        setFormData({
-                            name: map.field,
-                            value: result[map.field] === null ? '' : result[map.field],
+                    let setData = ((data, model, nested) => {
+                        let obj = {};
+                        model.forEach(modelElem => {
+                            let fieldValue = modelElem.nested !== undefined ? 
+                            setData(data[modelElem.field], modelElem.nested, true) : 
+                            data[modelElem.field] === null ? '' : data[modelElem.field];
+                            if (!nested) {
+                                setFormData({
+                                    name: modelElem.field,
+                                    value: fieldValue
+                                });
+                            }
+                            obj[modelElem.field] = fieldValue;
                         });
-                    })
+                        return obj;
+                    });
+                    setData(result, mapping.edit, false);
                 }
             )
     }, [id, mapping.apiPath, mapping.edit, filter]);
@@ -76,7 +87,7 @@ const EditComponent = (({ mapping, extraComponent, filter }) => {
             <form onSubmit={handleSubmit}>
                 <EditDataFragment mapping={mapping.edit} formData={formData} handleSubmit={handleSubmit} submitting={submitting} handleChange={handleChange} extraComponent={extraComponent} />
                 {JSON.stringify(formData)}
-                
+
                 <Grid item xs className='form-edit-item'>
                     <Button type="submit" disabled={submitting} variant='contained' color='primary'>{t('edit.save')}</Button>
                 </Grid>

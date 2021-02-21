@@ -16,7 +16,7 @@ COMMENT ON SCHEMA folk_tune IS 'Folk tunes database';
 ALTER USER local_dev_username SET search_path = folk_tune, public;
 
 -- Privileges
---REVOKE ALL PRIVILEGES ON SCHEMA folk_tune FROM PUBLIC;
+REVOKE ALL PRIVILEGES ON SCHEMA folk_tune FROM PUBLIC;
 GRANT CONNECT ON DATABASE kivi TO local_dev_username;
 GRANT USAGE ON SCHEMA public TO local_dev_username;
 GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA folk_tune TO local_dev_username;

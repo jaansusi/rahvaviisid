@@ -1,4 +1,4 @@
-const TuneMap = {
+const TuneModel = {
     apiPath: 'tunes',
     list: [
         { field: 'tuneReference', headerName: 'tune.tuneReference', width: 170 },
@@ -59,4 +59,4 @@ const TuneMap = {
     ]
 };
 
-export default TuneMap;
+export default TuneModel;

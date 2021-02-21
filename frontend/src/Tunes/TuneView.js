@@ -1,14 +1,14 @@
 import React from 'react';
 import TunePlayer from './TunePlayer';
 import ViewComponent from '../Components/ViewComponent';
-import TuneMap from './TuneMap';
+import TuneModel from './TuneModel';
 import { Grid } from '@material-ui/core';
 
 const TuneView = () => {
     return (
         <Grid
             item>
-            <ViewComponent mapping={TuneMap} />
+            <ViewComponent mapping={TuneModel} />
             <TunePlayer />
         </Grid>
     );

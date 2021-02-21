@@ -6,10 +6,8 @@ import TunePlayer from '../Tunes/TunePlayer';
 
 const EditDataFragment = (({ mapping, formData, handleSubmit, handleChange, submitting, extraComponent }) => {
     const { t } = useTranslation('common');
-    console.log(mapping);
     return (
         <>
-            <input type='hidden' name='id' value={formData.id === null ? 1 : formData.id} />
             <Grid
                 container
                 direction='row'
@@ -31,7 +29,8 @@ const EditDataFragment = (({ mapping, formData, handleSubmit, handleChange, subm
                                     }
                                 });
                             };
-                            return <EditDataFragment
+                            console.log(formData[valueMap.field]);
+                            return <EditDataFragment key={i}
                                 mapping={valueMap.nested}
                                 formData={formData[valueMap.field]}
                                 handleChange={handleNestedChange} />;
