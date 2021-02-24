@@ -8,7 +8,7 @@ import config from '../config';
 import EditDataFragment from '../Fragments/EditDataFragment';
 
 
-const EditComponent = (({ mapping, extraComponent, filter }) => {
+const EditComponent = (({ model, extraComponent, filter }) => {
     const { t } = useTranslation('common');
     const formReducer = (state, event) => {
         return {
@@ -17,20 +17,20 @@ const EditComponent = (({ mapping, extraComponent, filter }) => {
         }
     };
     let { id } = useParams();
-    let createEmptyDataObject = currentMapping => Object.fromEntries(new Map(currentMapping.map((elem) => [elem.field, elem.nested === undefined ? '' : createEmptyDataObject(elem.nested)])));
-    let [formData, setFormData] = useReducer(formReducer, createEmptyDataObject(mapping.edit));
+    let createEmptyDataObject = currentModel => Object.fromEntries(new Map(currentModel.map((elem) => [elem.field, elem.nested === undefined ? '' : createEmptyDataObject(elem.nested.fields)])));
+    let [formData, setFormData] = useReducer(formReducer, createEmptyDataObject(model.fields));
 
     let [submitting, setSubmitting] = useState(false);
     useEffect(() => {
-        fetch(config.apiUrl + '/' + mapping.apiPath + '/' + id + filter)
+        fetch(config.apiUrl + '/' + model.apiPath + '/' + id + filter)
             .then(res => res.json())
             .then(
                 (result) => {
-                    let setData = ((data, model, nested) => {
+                    let setData = ((data, currentModel, nested) => {
                         let obj = {};
-                        model.forEach(modelElem => {
+                        currentModel.forEach(modelElem => {
                             let fieldValue = modelElem.nested !== undefined ? 
-                            setData(data[modelElem.field], modelElem.nested, true) : 
+                            setData(data[modelElem.field], modelElem.nested.fields, true) : 
                             data[modelElem.field] === null ? '' : data[modelElem.field];
                             if (!nested) {
                                 setFormData({
@@ -42,35 +42,40 @@ const EditComponent = (({ mapping, extraComponent, filter }) => {
                         });
                         return obj;
                     });
-                    setData(result, mapping.edit, false);
+                    setData(result, model.fields, false);
                 }
             )
-    }, [id, mapping.apiPath, mapping.edit, filter]);
+    }, [id, model.apiPath, model.fields, filter]);
 
     const handleSubmit = event => {
         event.preventDefault();
         setSubmitting(true);
-        let dataToSubmit = formData;
+        
+        
+    };
+    let submitData = (model, data) => {
+        let dataToSubmit = data;
+        let nestedModels = [];
         for (let key in dataToSubmit) {
             if (dataToSubmit[key] === "") {
                 dataToSubmit[key] = undefined;
             }
         }
-        fetch(config.apiUrl + '/' + mapping.apiPath + '/' + id,
-            {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            })
-            .then(res => res.json())
-            .then(data => {
-                console.log(data);
-            })
-        setTimeout(() => {
-            setSubmitting(false);
-        }, 3000);
+        fetch(config.apiUrl + '/' + model.apiPath + '/' + id + filter,
+        {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+        })
+    setTimeout(() => {
+        setSubmitting(false);
+    }, 3000);
     };
 
 
@@ -85,7 +90,7 @@ const EditComponent = (({ mapping, extraComponent, filter }) => {
     return (
         <>
             <form onSubmit={handleSubmit}>
-                <EditDataFragment mapping={mapping.edit} formData={formData} handleSubmit={handleSubmit} submitting={submitting} handleChange={handleChange} extraComponent={extraComponent} />
+                <EditDataFragment model={model} formData={formData} handleSubmit={handleSubmit} submitting={submitting} handleChange={handleChange} extraComponent={extraComponent} />
                 {JSON.stringify(formData)}
 
                 <Grid item xs className='form-edit-item'>

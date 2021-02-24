@@ -9,7 +9,7 @@ const TuneEdit = (() => {
             <Grid item xs={6}>
                 <EditComponent
                     filter='?filter={"include": ["tuneMelodies"]}'
-                    mapping={TuneModel}
+                    model={TuneModel.edit}
                     extraComponent={['TunePlayer']}
                 />
             </Grid>

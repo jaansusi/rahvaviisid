@@ -4,8 +4,9 @@ import { Grid, TextField, Button } from '@material-ui/core';
 import './EditDataFragment.css';
 import TunePlayer from '../Tunes/TunePlayer';
 
-const EditDataFragment = (({ mapping, formData, handleSubmit, handleChange, submitting, extraComponent }) => {
+const EditDataFragment = (({ model, formData, handleSubmit, handleChange, submitting, extraComponent }) => {
     const { t } = useTranslation('common');
+    console.log(model);
     return (
         <>
             <Grid
@@ -13,7 +14,7 @@ const EditDataFragment = (({ mapping, formData, handleSubmit, handleChange, subm
                 direction='row'
             >
                 {
-                    mapping.map((valueMap, i) => {
+                    model.fields.map((valueMap, i) => {
                         if (valueMap.hidden)
                             return undefined;
                         if (valueMap.nested !== undefined) {
@@ -31,7 +32,7 @@ const EditDataFragment = (({ mapping, formData, handleSubmit, handleChange, subm
                             };
                             console.log(formData[valueMap.field]);
                             return <EditDataFragment key={i}
-                                mapping={valueMap.nested}
+                                model={valueMap.nested}
                                 formData={formData[valueMap.field]}
                                 handleChange={handleNestedChange} />;
                         }
