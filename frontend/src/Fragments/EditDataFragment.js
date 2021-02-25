@@ -1,12 +1,11 @@
 import React from 'react';
 import { useTranslation } from "react-i18next";
-import { Grid, TextField, Button } from '@material-ui/core';
+import { Grid, TextField } from '@material-ui/core';
 import './EditDataFragment.css';
 import TunePlayer from '../Tunes/TunePlayer';
 
-const EditDataFragment = (({ model, formData, handleSubmit, handleChange, submitting, extraComponent }) => {
+const EditDataFragment = (({ model, formData, handleChange, extraComponent }) => {
     const { t } = useTranslation('common');
-    console.log(model);
     return (
         <>
             <Grid
@@ -14,6 +13,7 @@ const EditDataFragment = (({ model, formData, handleSubmit, handleChange, submit
                 direction='row'
             >
                 {
+                    //Create form fields based on the model
                     model.fields.map((valueMap, i) => {
                         if (valueMap.hidden)
                             return undefined;
@@ -30,7 +30,6 @@ const EditDataFragment = (({ model, formData, handleSubmit, handleChange, submit
                                     }
                                 });
                             };
-                            console.log(formData[valueMap.field]);
                             return <EditDataFragment key={i}
                                 model={valueMap.nested}
                                 formData={formData[valueMap.field]}
@@ -52,9 +51,9 @@ const EditDataFragment = (({ model, formData, handleSubmit, handleChange, submit
                 <Grid item xs={12}>
                     {
                         //to-do: Find a better alternative for inserting components here.
-                        // extraComponent.includes('TunePlayer') ? 
-                        //     <TunePlayer editable={true} formData={formData} handleChange={handleChange} /> : 
-                        //     undefined
+                        extraComponent !== undefined && extraComponent.includes('TunePlayer')
+                            ? <TunePlayer editable={true} formData={formData} handleChange={handleChange} />
+                            : undefined
                     }
                 </Grid>
             </Grid>

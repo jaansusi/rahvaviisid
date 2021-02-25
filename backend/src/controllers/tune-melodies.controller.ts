@@ -15,23 +15,21 @@ import {
   put,
   del,
   requestBody,
+  response,
 } from '@loopback/rest';
 import {TuneMelodies} from '../models';
 import {TuneMelodiesRepository} from '../repositories';
 
-export class TuneMelodiesControllerController {
+export class TuneMelodiesController {
   constructor(
     @repository(TuneMelodiesRepository)
     public tuneMelodiesRepository : TuneMelodiesRepository,
   ) {}
 
-  @post('/tune-melodies', {
-    responses: {
-      '200': {
-        description: 'TuneMelodies model instance',
-        content: {'application/json': {schema: getModelSchemaRef(TuneMelodies)}},
-      },
-    },
+  @post('/tune-melodies')
+  @response(200, {
+    description: 'TuneMelodies model instance',
+    content: {'application/json': {schema: getModelSchemaRef(TuneMelodies)}},
   })
   async create(
     @requestBody({
@@ -49,13 +47,10 @@ export class TuneMelodiesControllerController {
     return this.tuneMelodiesRepository.create(tuneMelodies);
   }
 
-  @get('/tune-melodies/count', {
-    responses: {
-      '200': {
-        description: 'TuneMelodies model count',
-        content: {'application/json': {schema: CountSchema}},
-      },
-    },
+  @get('/tune-melodies/count')
+  @response(200, {
+    description: 'TuneMelodies model count',
+    content: {'application/json': {schema: CountSchema}},
   })
   async count(
     @param.where(TuneMelodies) where?: Where<TuneMelodies>,
@@ -63,17 +58,14 @@ export class TuneMelodiesControllerController {
     return this.tuneMelodiesRepository.count(where);
   }
 
-  @get('/tune-melodies', {
-    responses: {
-      '200': {
-        description: 'Array of TuneMelodies model instances',
-        content: {
-          'application/json': {
-            schema: {
-              type: 'array',
-              items: getModelSchemaRef(TuneMelodies, {includeRelations: true}),
-            },
-          },
+  @get('/tune-melodies')
+  @response(200, {
+    description: 'Array of TuneMelodies model instances',
+    content: {
+      'application/json': {
+        schema: {
+          type: 'array',
+          items: getModelSchemaRef(TuneMelodies, {includeRelations: true}),
         },
       },
     },
@@ -84,13 +76,10 @@ export class TuneMelodiesControllerController {
     return this.tuneMelodiesRepository.find(filter);
   }
 
-  @patch('/tune-melodies', {
-    responses: {
-      '200': {
-        description: 'TuneMelodies PATCH success count',
-        content: {'application/json': {schema: CountSchema}},
-      },
-    },
+  @patch('/tune-melodies')
+  @response(200, {
+    description: 'TuneMelodies PATCH success count',
+    content: {'application/json': {schema: CountSchema}},
   })
   async updateAll(
     @requestBody({
@@ -106,15 +95,12 @@ export class TuneMelodiesControllerController {
     return this.tuneMelodiesRepository.updateAll(tuneMelodies, where);
   }
 
-  @get('/tune-melodies/{id}', {
-    responses: {
-      '200': {
-        description: 'TuneMelodies model instance',
-        content: {
-          'application/json': {
-            schema: getModelSchemaRef(TuneMelodies, {includeRelations: true}),
-          },
-        },
+  @get('/tune-melodies/{id}')
+  @response(200, {
+    description: 'TuneMelodies model instance',
+    content: {
+      'application/json': {
+        schema: getModelSchemaRef(TuneMelodies, {includeRelations: true}),
       },
     },
   })
@@ -125,12 +111,9 @@ export class TuneMelodiesControllerController {
     return this.tuneMelodiesRepository.findById(id, filter);
   }
 
-  @patch('/tune-melodies/{id}', {
-    responses: {
-      '204': {
-        description: 'TuneMelodies PATCH success',
-      },
-    },
+  @patch('/tune-melodies/{id}')
+  @response(204, {
+    description: 'TuneMelodies PATCH success',
   })
   async updateById(
     @param.path.number('id') id: number,
@@ -146,12 +129,9 @@ export class TuneMelodiesControllerController {
     await this.tuneMelodiesRepository.updateById(id, tuneMelodies);
   }
 
-  @put('/tune-melodies/{id}', {
-    responses: {
-      '204': {
-        description: 'TuneMelodies PUT success',
-      },
-    },
+  @put('/tune-melodies/{id}')
+  @response(204, {
+    description: 'TuneMelodies PUT success',
   })
   async replaceById(
     @param.path.number('id') id: number,
@@ -160,12 +140,9 @@ export class TuneMelodiesControllerController {
     await this.tuneMelodiesRepository.replaceById(id, tuneMelodies);
   }
 
-  @del('/tune-melodies/{id}', {
-    responses: {
-      '204': {
-        description: 'TuneMelodies DELETE success',
-      },
-    },
+  @del('/tune-melodies/{id}')
+  @response(204, {
+    description: 'TuneMelodies DELETE success',
   })
   async deleteById(@param.path.number('id') id: number): Promise<void> {
     await this.tuneMelodiesRepository.deleteById(id);

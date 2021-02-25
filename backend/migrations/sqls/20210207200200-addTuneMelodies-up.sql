@@ -10,6 +10,7 @@ CREATE TABLE folk_tune.tune_melodies
     author text,
     reference text,
     custom_input text,
+    words text,
     PRIMARY KEY (id)
 )
 WITH (

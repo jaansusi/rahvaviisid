@@ -137,7 +137,7 @@ export class TunesController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Tunes, {partial: true}),
+          schema: getModelSchemaRef(Tunes, {partial: false}),
         },
       },
     })

@@ -70,6 +70,12 @@ export class TuneMelodies extends Entity {
   customInput?: string;
 
   @property({
+    type: 'string',
+    postgresql: {columnName: 'words', dataType: 'text', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'YES'},
+  })
+  words?: string;
+
+  @property({
     type: 'number',
     postgresql: {columnName: 'tune_id', dataType: 'integer', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'YES'}
   })
