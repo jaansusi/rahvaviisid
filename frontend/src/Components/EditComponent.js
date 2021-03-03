@@ -108,6 +108,7 @@ const EditComponent = (({ model, extraComponent, filter }) => {
 
     const handleChange = event => {
         const { name, value, type } = event.target;
+        console.log(formData);
         setFormData({
             name: name,
             value: type === 'number' ? parseInt(value, 10) : value,
