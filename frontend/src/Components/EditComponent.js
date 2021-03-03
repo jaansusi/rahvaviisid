@@ -67,7 +67,7 @@ const EditComponent = (({ model, extraComponent, filter }) => {
         //to-do: this needs a rework
         for (let key in tempData) {
             if (tempData[key] === "") {
-                tempData[key] = null;
+                tempData[key] = undefined;
             }
         }
 

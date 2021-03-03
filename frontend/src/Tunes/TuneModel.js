@@ -59,8 +59,6 @@ const TuneModel = {
                     fields: [
                         { field: 'id', hidden: true },
                         { field: 'tunesId', hidden: true },
-                        { field: 'melody', headerName: 'tune.melody' },
-                        { field: 'words', headerName: 'tune.words' },
                         { field: 'clef', headerName: 'tune.clef' },
                         { field: 'alter', headerName: 'tune.alter' },
                         { field: 'tempo', headerName: 'tune.tempo' },
@@ -68,7 +66,9 @@ const TuneModel = {
                         { field: 'title', headerName: 'tune.title' },
                         { field: 'author', headerName: 'tune.author' },
                         { field: 'reference', headerName: 'tune.reference' },
-                        { field: 'customInput', headerName: 'tune.customInput' }
+                        { field: 'melody', type: 'textbox', headerName: 'tune.melody' },
+                        { field: 'words', type: 'textbox', headerName: 'tune.words' },
+                        { field: 'customInput', type: 'textbox', headerName: 'tune.customInput' }
                     ]
                 }
             }

@@ -5,21 +5,20 @@ import {
 import config from '../config';
 import ListDataFragment from '../Fragments/ListDataFragment';
 
-const ListComponent = ((props) => {
+const ListComponent = (({ model }) => {
     let { id } = useParams();
     let [data, setData] = useState([]);
-    let objectMap = props.mapping;
     useEffect(() => {
-        fetch(config.apiUrl + '/' + objectMap.apiPath)
+        fetch(config.apiUrl + '/' + model.list.apiPath)
             .then(res => res.json())
             .then(
                 (result) => {
                     setData(result);
                 }
             );
-    }, [id, objectMap.apiPath]);
+    }, [id, model.list.apiPath]);
     return (
-        <ListDataFragment mapping={objectMap.list} apiPath={objectMap.apiPath} tableData={data}/>
+        <ListDataFragment model={model.list} apiPath={model.apiPath} tableData={data}/>
     );
 });
 

@@ -1,11 +1,10 @@
 import React from 'react';
-import { useTranslation } from "react-i18next";
-import { Grid, TextField } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import './EditDataFragment.css';
 import TunePlayer from '../Tunes/TunePlayer';
+import FormInputComponent from '../Components/FormInputComponent';
 
 const EditDataFragment = (({ model, formData, handleChange, extraComponent }) => {
-    const { t } = useTranslation('common');
     return (
         <>
             <Grid
@@ -14,37 +13,30 @@ const EditDataFragment = (({ model, formData, handleChange, extraComponent }) =>
             >
                 {
                     //Create form fields based on the model
-                    model.fields.map((valueMap, i) => {
-                        if (valueMap.hidden)
+                    model.fields.map((modelField, i) => {
+                        if (modelField.hidden)
                             return undefined;
-                        if (valueMap.nested !== undefined) {
+                        if (modelField.nested !== undefined) {
                             let handleNestedChange = event => {
                                 const { name, value } = event.target;
-                                let temp = formData[valueMap.field];
+                                let temp = formData[modelField.field];
                                 temp[name] = value;
                                 handleChange({
                                     target: {
-                                        name: valueMap.field,
+                                        name: modelField.field,
                                         value: temp,
                                         type: 'object'
                                     }
                                 });
                             };
                             return <EditDataFragment key={i}
-                                model={valueMap.nested}
-                                formData={formData[valueMap.field]}
+                                model={modelField.nested}
+                                formData={formData[modelField.field]}
                                 handleChange={handleNestedChange} />;
                         }
 
                         return (
-                            <Grid
-                                item
-                                xs={4}
-                                key={i}
-                                className='form-edit-item'
-                            >
-                                <TextField name={valueMap.field} label={t(valueMap.headerName)} value={formData[valueMap.field]} onChange={handleChange} variant='outlined' />
-                            </Grid>
+                                <FormInputComponent model={modelField} value={formData[modelField.field]} handleChange={handleChange} key={i} />
                         )
                     })
                 }

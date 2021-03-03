@@ -4,7 +4,7 @@ import TuneModel from './TuneModel';
 
 const TunesList = () => {
   return (
-    <ListComponent mapping={TuneModel} />
+    <ListComponent model={TuneModel} />
   );
 };
 
