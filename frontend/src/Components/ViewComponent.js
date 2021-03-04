@@ -5,12 +5,11 @@ import {
 import config from '../config';
 import ViewDataFragment from '../Fragments/ViewDataFragment';
 
-const ViewComponent = ((props) => {
+const ViewComponent = (({ model }) => {
     let { id } = useParams();
     let [data, setData] = useState({});
-    let objectMap = props.mapping;
     useEffect(() => {
-        fetch(config.apiUrl + '/' + objectMap.apiPath + '/' + id)
+        fetch(config.apiUrl + '/' + model.apiPath + '/' + id)
             .then(res => res.json())
             .then(
                 (result) => {
@@ -18,10 +17,10 @@ const ViewComponent = ((props) => {
                     console.log(result);
                 }
             );
-    }, [id, objectMap.apiPath]);
+    }, [id, model.apiPath]);
 
     return (
-        <ViewDataFragment mapping={objectMap} tableData={data}/>
+        <ViewDataFragment model={model} data={data}/>
     );
 });
 

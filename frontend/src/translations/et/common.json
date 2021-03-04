@@ -10,7 +10,8 @@
         "back": "Tagasi",
         "remarks": "Märkused",
         "id": "ID",
-        "missing": "Puudub"
+        "missing": "Puudub",
+        "footer": "Eesti Kirjandusmuuseum"
     },
     "action": {
         "actions": "Tegevused",
