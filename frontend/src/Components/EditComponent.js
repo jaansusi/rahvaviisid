@@ -44,14 +44,24 @@ const EditComponent = (({ model, extraComponent, filter }) => {
                     });
                     setData(result, model, false);
                 }
-            )
+            );
+
+        model.fields.forEach((field, i) => {
+            if (field.type === 'dropdown') {
+                fetch(config.apiUrl + '/' + field.apiPath)
+                    .then(res => res.json())
+                    .then(result => {
+                        model.fields[i].values = result;
+                    });
+            }
+        });
     }, [id, model, filter]);
 
     const handleSubmit = event => {
         event.preventDefault();
         setSubmitting(true);
 
-        submitData(model, formData)
+        submitData(model, formData);
     };
 
     let submitData = (currentModel, data) => {
@@ -82,7 +92,7 @@ const EditComponent = (({ model, extraComponent, filter }) => {
         }
 
         //Last, let's add the root object as well
-        requestObjects.push({ model: currentModel, dataElem: tempData})
+        requestObjects.push({ model: currentModel, dataElem: tempData })
 
         // We can assume that all the DB entries already exist, we're just patching them so no need for synchronous requests.
         requestObjects.forEach((obj) => {
