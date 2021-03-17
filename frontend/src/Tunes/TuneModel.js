@@ -45,6 +45,10 @@ const TuneModel = {
             { field: 'soundReference', headerName: 'tune.soundReference' },
             { field: 'videoReference', headerName: 'tune.videoReference' },
             { field: 'catalogue', headerName: 'tune.catalogue' },
+            { field: 'supportSound', headerName: 'tune.supportSound' },
+            { field: 'height', headerName: 'tune.height' },
+            { field: 'bar', headerName: 'tune.bar' },
+            { field: 'clef', headerName: 'tune.clef' },
             { field: 'nationId', type: 'dropdown', apiPath: 'nations', headerName: 'tune.nation' },
             { field: 'languageId', type: 'dropdown', apiPath: 'languages', headerName: 'tune.language' },
             { field: 'countryId', type: 'dropdown', apiPath: 'countries', headerName: 'tune.country' },
@@ -61,14 +65,15 @@ const TuneModel = {
                     fields: [
                         { field: 'id', hidden: true },
                         { field: 'tunesId', hidden: true },
-                        { field: 'clef', headerName: 'tune.clef' },
                         { field: 'alter', headerName: 'tune.alter' },
                         { field: 'tempo', headerName: 'tune.tempo' },
+                        { field: 'rhythmType', headerName: 'tune.rhythmType' },
                         { field: 'noteLength', headerName: 'tune.noteLength' },
                         { field: 'melody', type: 'textbox', headerName: 'tune.melody' },
                         { field: 'words', type: 'textbox', headerName: 'tune.words' },
                         { field: 'customInput', type: 'textbox', headerName: 'tune.customInput' },
-                        { field: 'variationIndex', hidden: true }
+                        { field: 'variationIndex', hidden: true },
+
                     ]
                 }
             }

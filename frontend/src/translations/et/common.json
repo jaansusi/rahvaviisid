@@ -62,7 +62,8 @@
         "title": "Pealkiri",
         "author": "Autor",
         "reference": "Viide",
-        "customInput": "Lisaväljad"
+        "customInput": "Lisaväljad",
+        "variationTitle": "Variatsioon "
     },
     "user": {
         "role": "Kasutaja roll"

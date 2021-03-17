@@ -1,5 +1,4 @@
-import {Entity, model, property, hasOne, belongsTo} from '@loopback/repository';
-import {Tunes} from './tunes.model';
+import {Entity, model, property} from '@loopback/repository';
 
 @model({
   settings: {idInjection: false, postgresql: {schema: 'folk_tune', table: 'tune_melodies'}}
@@ -17,15 +16,9 @@ export class TuneMelodies extends Entity {
   @property({
     type: 'string',
     required: true,
-    postgresql: {columnName: 'melody', dataType: 'ARRAY', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'NO'},
+    postgresql: {columnName: 'melody', dataType: 'text', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'NO'},
   })
   melody: string;
-
-  @property({
-    type: 'string',
-    postgresql: {columnName: 'clef', dataType: 'text', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'YES'},
-  })
-  clef?: string;
 
   @property({
     type: 'string',
@@ -70,6 +63,14 @@ export class TuneMelodies extends Entity {
   customInput?: string;
 
   @property({
+    type: 'number',
+    required: true,
+    scale: 0,
+    postgresql: {columnName: 'tune_id', dataType: 'integer', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'NO'},
+  })
+  tunesId: number;
+
+  @property({
     type: 'string',
     postgresql: {columnName: 'words', dataType: 'text', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'YES'},
   })
@@ -77,15 +78,17 @@ export class TuneMelodies extends Entity {
 
   @property({
     type: 'number',
-    postgresql: {columnName: 'tune_id', dataType: 'integer', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'YES'}
+    scale: 0,
+    postgresql: {columnName: 'variation_index', dataType: 'integer', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'YES'},
   })
-  tunesId?: number;
+  variationIndex?: number;
 
   @property({
     type: 'number',
-    postgresql: {columnName: 'variation_index', dataType: 'integer', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'YES'}
+    scale: 0,
+    postgresql: {columnName: 'rhythm_type', dataType: 'integer', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'YES'},
   })
-  variationIndex?: number;
+  rhythmType?: number;
 
   // Define well-known properties here
 

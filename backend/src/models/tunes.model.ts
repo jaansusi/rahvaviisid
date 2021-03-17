@@ -127,8 +127,33 @@ export class Tunes extends Entity {
   })
   rhythmTypeId?: number;
 
+  @property({
+    type: 'string',
+    postgresql: {columnName: 'clef', dataType: 'text', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'YES'},
+  })
+  clef?: string;
+
+  @property({
+    type: 'string',
+    postgresql: {columnName: 'support_sound', dataType: 'text', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'YES'},
+  })
+  supportSound?: string;
+
+  @property({
+    type: 'string',
+    postgresql: {columnName: 'height', dataType: 'text', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'YES'},
+  })
+  height?: string;
+
+  @property({
+    type: 'string',
+    postgresql: {columnName: 'bar', dataType: 'text', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'YES'},
+  })
+  bar?: string;
+
   @hasMany(() => TuneMelodies, { keyTo: 'tune_id'})
   tuneMelodies?: TuneMelodies[];
+  
   // Define well-known properties here
 
   // Indexer property to allow additional data
