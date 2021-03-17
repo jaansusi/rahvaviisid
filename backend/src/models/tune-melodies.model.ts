@@ -81,6 +81,12 @@ export class TuneMelodies extends Entity {
   })
   tunesId?: number;
 
+  @property({
+    type: 'number',
+    postgresql: {columnName: 'variation_index', dataType: 'integer', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'YES'}
+  })
+  variationIndex?: number;
+
   // Define well-known properties here
 
   // Indexer property to allow additional data

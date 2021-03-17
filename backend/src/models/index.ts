@@ -49,5 +49,4 @@ export * from './tune-encodings.model';
 export * from './support-sounds.model';
 export * from './pitches.model';
 export * from './measures.model';
-export * from './tune-variations.model';
 export * from './tune-melodies.model';

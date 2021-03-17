@@ -50,4 +50,3 @@ export * from './users.repository';
 export * from './verse-forms.repository';
 export * from './villages.repository';
 export * from './tune-melodies.repository';
-export * from './tune-variations.repository';

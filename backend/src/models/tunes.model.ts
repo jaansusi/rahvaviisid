@@ -1,4 +1,4 @@
-import {Entity, hasOne, model, property} from '@loopback/repository';
+import {Entity, hasMany, model, property} from '@loopback/repository';
 import { TuneMelodies } from './tune-melodies.model';
 
 @model({
@@ -127,14 +127,8 @@ export class Tunes extends Entity {
   })
   rhythmTypeId?: number;
 
-  @property({
-    type: 'number',
-    postgresql: {columnName: 'tune_melody_id', dataType: 'integer', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'YES'},
-  })
-  tuneMelodyId?: number;
-
-  @hasOne(() => TuneMelodies, { keyFrom: 'tune_melody_id'})
-  tuneMelodies?: TuneMelodies;
+  @hasMany(() => TuneMelodies, { keyTo: 'tune_id'})
+  tuneMelodies?: TuneMelodies[];
   // Define well-known properties here
 
   // Indexer property to allow additional data

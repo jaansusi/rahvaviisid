@@ -30,5 +30,4 @@ export * from './key-signatures.controller';
 export * from './support-sounds.controller';
 export * from './pitches.controller';
 export * from './measures.controller';
-export * from './tune-variations.controller';
 export * from './tune-melodies.controller';

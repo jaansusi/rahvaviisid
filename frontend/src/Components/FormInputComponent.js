@@ -4,8 +4,9 @@ import { useTranslation } from 'react-i18next';
 import './FormInputComponent.css';
 
 
-const FormInputComponent = (({ model, value, handleChange, selectOptions }) => {
+const FormInputComponent = (({ model, value, handleChange, index }) => {
     const { t } = useTranslation('common');
+    
     switch (model.type) {
         case 'textbox':
             return (
@@ -15,7 +16,7 @@ const FormInputComponent = (({ model, value, handleChange, selectOptions }) => {
                     className='form-edit-item'
                 >
                     <FormControl className='form-input-element' variant='outlined'>
-                        <TextField name={model.field} label={t(model.headerName)} value={value} onChange={handleChange} multiline fullWidth rows='2' variant='outlined' />
+                        <TextField name={model.field} label={t(model.headerName)} value={value} onChange={(e) => handleChange(e, index)} multiline fullWidth rows='2' variant='outlined' />
                     </FormControl>
                 </Grid>
             );
@@ -31,7 +32,7 @@ const FormInputComponent = (({ model, value, handleChange, selectOptions }) => {
                 >
                     <FormControl className='form-input-element' variant='outlined'>
                         <InputLabel id={model.headerName}>{t(model.headerName)}</InputLabel>
-                        <Select name={model.field} labelId={model.headerName} label={t(model.headerName)} variant="outlined" value={value} onChange={handleChange}>
+                        <Select name={model.field} labelId={model.headerName} label={t(model.headerName)} variant="outlined" value={value} onChange={(e) => handleChange(e, index)}>
                             <MenuItem value=''>{t('common.missing')}</MenuItem>
                             {
                                 model.values.map((elem, i) => <MenuItem key={i} value={elem.id}>{t(elem.title)}</MenuItem>)
@@ -40,6 +41,8 @@ const FormInputComponent = (({ model, value, handleChange, selectOptions }) => {
                     </FormControl>
                 </Grid>
             );
+        case 'array':
+            return (<></>);
         default:
             return (
                 <Grid
@@ -49,7 +52,7 @@ const FormInputComponent = (({ model, value, handleChange, selectOptions }) => {
                 >
 
                     <FormControl className='form-input-element' variant='outlined'>
-                        <TextField name={model.field} label={t(model.headerName)} value={value} onChange={handleChange} variant='outlined' />
+                        <TextField name={model.field} label={t(model.headerName)} value={value} onChange={(e) => handleChange(e, index)} variant='outlined' />
                     </FormControl>
                 </Grid>
             );
