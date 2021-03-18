@@ -28,6 +28,9 @@ const EditDataFragment = (({ model, formData, handleChange, extraComponent, inde
                             // There's no need to create an input for a value the user can't interact with
                             if (modelField.hidden)
                                 return undefined;
+                            
+                            if (formData[modelField.field] === undefined)
+                                return null;
                             // If the model field is defined as nested, create another handler function
                             // to-do: introduce recursion to allow for multiple levels of depth for nested models
                             if (modelField.nested !== undefined) {
@@ -58,7 +61,9 @@ const EditDataFragment = (({ model, formData, handleChange, extraComponent, inde
                                             }
                                         });
                                     };
-                                    let data = modelField.sortBy === undefined ? formData[modelField.field] : formData[modelField.field].sort((a, b) => a[modelField.sortBy] - b[modelField.sortBy])
+                                    let data = modelField.sortBy === undefined 
+                                        ? formData[modelField.field] 
+                                        : formData[modelField.field].sort((a, b) => a[modelField.sortBy] - b[modelField.sortBy])
                                     return data.map((elem, i) =>
                                         <>
                                             <EditDataFragment key={i}
@@ -88,7 +93,7 @@ const EditDataFragment = (({ model, formData, handleChange, extraComponent, inde
                     <Grid item xs={12}>
                         {
                             // to-do: Find a better alternative for inserting components here.
-                            extraComponent !== undefined && extraComponent.includes('TunePlayer')
+                            extraComponent !== undefined && extraComponent.includes('TunePlayer') && formData.tuneMelodies !== undefined
                                 ? formData.tuneMelodies.sort((a, b) => a.variationIndex - b.variationIndex).map((elem, i) => <TunePlayer key={i} index={i} formData={formData} />)
                                 : undefined
                         }

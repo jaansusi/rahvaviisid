@@ -19,9 +19,9 @@ const TunePlayer = (({ formData, editable, index }) => {
         melodyData.alter === '' ? '' : ('K: ' + melodyData.alter),
         melodyData.tempo === '' ? '' : ('Q: ' + melodyData.tempo),
         melodyData.noteLength === '' ? '' : ('L: ' + melodyData.noteLength),
-        melodyData.title === '' ? '' : ('T: ' + melodyData.title),//to-do: FROM META
-        melodyData.reference === '' ? '' : ('X: ' + melodyData.reference),//to-do: FROM META
-        melodyData.author === '' ? '' : ('Z: ' + melodyData.author),//to-do: FROM META
+        //melodyData.title === '' ? '' : ('T: ' + melodyData.title),
+        melodyData.reference === '' ? '' : ('X: ' + formData.reference),
+        //melodyData.author === '' ? '' : ('Z: ' + melodyData.author),
       ].concat(melodyAndWords).filter((elem) => elem !== '').join('\n');
     });
     let visualObj = abcjs.renderAbc('player'+index, combinedData)[0];
