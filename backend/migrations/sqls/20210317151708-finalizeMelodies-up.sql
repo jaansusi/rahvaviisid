@@ -33,3 +33,8 @@ ALTER TABLE folk_tune.tune_melodies DROP CONSTRAINT fk_tune_melodies_rhythm_type
 
 ALTER TABLE folk_tune.tunes
     ADD COLUMN old_tune_id integer;
+
+ALTER TABLE folk_tune.tune_melodies DROP COLUMN rhythm_type;
+
+ALTER TABLE folk_tune.tune_melodies
+    ADD COLUMN rhythm_type text;
