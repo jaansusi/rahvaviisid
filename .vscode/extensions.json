@@ -1,0 +1,7 @@
+{
+    "recommendations": [
+        "esbenp.prettier-vscode",
+        "jebbs.plantuml",
+        "ms-python.python"
+    ]
+}
