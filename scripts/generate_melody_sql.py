@@ -17,9 +17,9 @@ with open(sys.argv[1]) as csv_file:
         tune_sql = "UPDATE folk_tune.tunes SET support_sound='{0}', height='{1}', bar='{2}', clef='{3}' WHERE old_tune_id='{4}';"\
             .format(row['support_sound'], row['height'], row['bar'], row['clef'], row['reference'])
         old_tune_id_sql = "SELECT id INTO tune_id_var_{0} FROM folk_tune.tunes WHERE old_tune_id='{1}' LIMIT 1;".format(row_count, row['reference'])
-        melody_sql = "IF {5} != NULL THEN INSERT INTO folk_tune.tune_melodies \
+        melody_sql = "IF NOT {5} IS NULL THEN INSERT INTO folk_tune.tune_melodies \
             (melody, alter, tempo, note_length, reference, tune_id, variation_index, rhythm_type) VALUES \
-            ('{0}','{1}','{2}','{3}','{4}',{5},{6},'{7}');\nEND IF;"\
+            ('{0}','{1}','{2}','{3}','{4}',{5},{6},'{7}'); END IF;"\
             .format(row['melody'], row['alter'], row['tempo'], row['note_length'], row['reference'], 'tune_id_var_{0}'.format(row_count), row['variation_index'], row['rhythm_type'])
         data.append("\n".join([tune_sql,old_tune_id_sql,melody_sql]))
         #break
