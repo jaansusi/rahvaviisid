@@ -8,6 +8,7 @@ import i18next from "i18next";
 import common_et from "./translations/et/common.json";
 import common_en from "./translations/en/common.json";
 import { HelmetProvider } from 'react-helmet-async';
+import './middleware/axiosInterceptors.js';
 
 i18next.init({
   interpolation: { escapeValue: false },  // React already does escaping

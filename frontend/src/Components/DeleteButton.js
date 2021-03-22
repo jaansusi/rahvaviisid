@@ -2,15 +2,13 @@ import React from 'react';
 import config from '../config';
 import { Button } from '@material-ui/core';
 import { useTranslation } from "react-i18next";
+import axios from 'axios';
 
 const DeleteButton = (({ apiPath, id }) => {
     const { t } = useTranslation('common');
     
     let deleteObject = () => {
-        fetch(config.apiUrl + '/' + apiPath + '/' + id,
-            {
-                method: 'DELETE'
-            })
+        axios.delete(config.apiUrl + '/' + apiPath + '/' + id)
             .then(
                 (result) => {
                     console.log(result);

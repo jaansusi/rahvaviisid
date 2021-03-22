@@ -4,16 +4,16 @@ import {
 } from "react-router-dom";
 import config from '../config';
 import ListDataFragment from '../Fragments/ListDataFragment';
+import axios from 'axios';
 
 const ListComponent = (({ model }) => {
     let { id } = useParams();
     let [data, setData] = useState([]);
     useEffect(() => {
-        fetch(config.apiUrl + '/' + model.list.apiPath)
-            .then(res => res.json())
+        axios.get(config.apiUrl + '/' + model.list.apiPath)
             .then(
                 (result) => {
-                    setData(result);
+                    setData(result.data);
                 }
             );
     }, [id, model.list.apiPath]);

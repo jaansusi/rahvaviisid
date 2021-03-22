@@ -27,10 +27,11 @@ const EditDataFragment = (({ model, formData, handleChange, extraComponent, inde
                         model.fields.map((modelField, i) => {
                             // There's no need to create an input for a value the user can't interact with
                             if (modelField.hidden)
-                                return undefined;
-                            
+                                return null;
+                            // In addition, if the value for some reason is undefined, don't do anything
                             if (formData[modelField.field] === undefined)
                                 return null;
+
                             // If the model field is defined as nested, create another handler function
                             // to-do: introduce recursion to allow for multiple levels of depth for nested models
                             if (modelField.nested !== undefined) {
@@ -64,21 +65,21 @@ const EditDataFragment = (({ model, formData, handleChange, extraComponent, inde
                                     let data = modelField.sortBy === undefined 
                                         ? formData[modelField.field] 
                                         : formData[modelField.field].sort((a, b) => a[modelField.sortBy] - b[modelField.sortBy])
-                                    return data.map((elem, i) =>
+                                    return data.map((elem, j) =>
                                         <>
-                                            <EditDataFragment key={i}
+                                            <EditDataFragment
                                                 model={modelField.nested}
                                                 formData={elem}
                                                 handleChange={handleArrayChange}
-                                                index={i}
-                                                title={t('tune.variationTitle') + (i + 1)}
+                                                index={j}
+                                                title={t('tune.variationTitle') + (j + 1)}
                                             />
                                         </>
                                     );
                                 }
 
                                 // Return the data fragment created for the child model
-                                return <EditDataFragment key={i}
+                                return <EditDataFragment
                                     model={modelField.nested}
                                     formData={formData[modelField.field]}
                                     handleChange={handleNestedChange} />;
@@ -86,7 +87,7 @@ const EditDataFragment = (({ model, formData, handleChange, extraComponent, inde
 
                             // If the field does not have any children, return the form element for it.
                             return (
-                                <FormInputComponent model={modelField} value={formData[modelField.field]} handleChange={handleChange} key={i} index={index} />
+                                <FormInputComponent key={modelField.field} model={modelField} value={formData[modelField.field]} handleChange={handleChange} index={index} />
                             )
                         })
                     }
@@ -94,7 +95,7 @@ const EditDataFragment = (({ model, formData, handleChange, extraComponent, inde
                         {
                             // to-do: Find a better alternative for inserting components here.
                             extraComponent !== undefined && extraComponent.includes('TunePlayer') && formData.tuneMelodies !== undefined
-                                ? formData.tuneMelodies.sort((a, b) => a.variationIndex - b.variationIndex).map((elem, i) => <TunePlayer key={i} index={i} formData={formData} />)
+                                ? formData.tuneMelodies.sort((a, b) => a.variationIndex - b.variationIndex).map((elem, j) => <TunePlayer key={j} index={j} formData={formData} />)
                                 : undefined
                         }
                     </Grid>

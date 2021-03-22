@@ -41,7 +41,7 @@ const TunePlayer = ({ formData, editable, index }) => {
 			displayProgress: true,
 		});
 		synthControl.setTune(visualObj, false);
-	}, [formData, combinedData, index]);
+	}, [formData, combinedData, index, melodyData.alter, melodyData.customInput, melodyData.melody, melodyData.noteLength, melodyData.reference, melodyData.tempo, melodyData.words]);
 
 	return (
 		<Grid item xs={12}>

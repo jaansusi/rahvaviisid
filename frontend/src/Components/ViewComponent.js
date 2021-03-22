@@ -4,16 +4,16 @@ import {
 } from "react-router-dom";
 import config from '../config';
 import ViewDataFragment from '../Fragments/ViewDataFragment';
+import axios from 'axios';
 
 const ViewComponent = (({ model }) => {
     let { id } = useParams();
     let [data, setData] = useState({});
     useEffect(() => {
-        fetch(config.apiUrl + '/' + model.apiPath + '/' + id)
-            .then(res => res.json())
+        axios.get(config.apiUrl + '/' + model.apiPath + '/' + id)
             .then(
                 (result) => {
-                    setData(result);
+                    setData(result.data);
                     console.log(result);
                 }
             );
