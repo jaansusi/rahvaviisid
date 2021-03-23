@@ -5,29 +5,25 @@ import TunePlayer from '../Tunes/TunePlayer';
 import FormInputComponent from '../Components/FormInputComponent';
 import { useTranslation } from 'react-i18next';
 
-const EditDataFragment = (({ model, formData, handleChange, extraComponent, index, title }) => {
+const EditDataFragment = ({
+    model,
+    formData,
+    handleChange,
+    extraComponent,
+    index,
+    title,
+}) => {
     const { t } = useTranslation('common');
     return (
         <>
-            <Grid
-                container
-                direction='column'
-            >
-                <h4>
-                    {
-                        title !== undefined ? title : null
-                    }
-                </h4>
-                <Grid
-                    container
-                    direction='row'
-                >
+            <Grid container direction='column'>
+                <h4>{title !== undefined ? title : null}</h4>
+                <Grid container direction='row'>
                     {
                         // Create form fields based on the model
                         model.fields.map((modelField, i) => {
                             // There's no need to create an input for a value the user can't interact with
-                            if (modelField.hidden)
-                                return null;
+                            if (modelField.hidden) return null;
                             // In addition, if the value for some reason is undefined, don't do anything
                             if (formData[modelField.field] === undefined)
                                 return null;
@@ -35,7 +31,7 @@ const EditDataFragment = (({ model, formData, handleChange, extraComponent, inde
                             // If the model field is defined as nested, create another handler function
                             // to-do: introduce recursion to allow for multiple levels of depth for nested models
                             if (modelField.nested !== undefined) {
-                                let handleNestedChange = event => {
+                                let handleNestedChange = (event) => {
                                     const { name, value } = event.target;
                                     let temp = formData[modelField.field];
                                     temp[name] = value;
@@ -43,8 +39,8 @@ const EditDataFragment = (({ model, formData, handleChange, extraComponent, inde
                                         target: {
                                             name: modelField.field,
                                             value: temp,
-                                            type: 'object'
-                                        }
+                                            type: 'object',
+                                        },
                                     });
                                 };
 
@@ -58,51 +54,74 @@ const EditDataFragment = (({ model, formData, handleChange, extraComponent, inde
                                             target: {
                                                 name: modelField.field,
                                                 value: temp,
-                                                type: 'object'
-                                            }
+                                                type: 'object',
+                                            },
                                         });
                                     };
-                                    let data = modelField.sortBy === undefined 
-                                        ? formData[modelField.field] 
-                                        : formData[modelField.field].sort((a, b) => a[modelField.sortBy] - b[modelField.sortBy])
-                                    return data.map((elem, j) =>
+                                    let data =
+                                        modelField.sortBy === undefined
+                                            ? formData[modelField.field]
+                                            : formData[modelField.field].sort((a, b) => a[modelField.sortBy] - b[modelField.sortBy]);
+                                    return (
                                         <>
-                                            <EditDataFragment
-                                                model={modelField.nested}
-                                                formData={elem}
-                                                handleChange={handleArrayChange}
-                                                index={j}
-                                                title={t('tune.variationTitle') + (j + 1)}
-                                            />
+                                            {
+                                                data.map((elem, j) => (
+                                                    <>
+                                                        <EditDataFragment
+                                                            model={modelField.nested}
+                                                            formData={elem}
+                                                            handleChange={handleArrayChange}
+                                                            index={j}
+                                                            title={t('tune.variationTitle') + (j + 1)}
+                                                            extraComponent={extraComponent}
+                                                        />
+                                                        <Grid item xs={12}>
+                                                            {
+                                                                // to-do: Find a better alternative for inserting components here.
+                                                                extraComponent !== undefined && extraComponent.includes('TunePlayer')
+                                                                    ?
+                                                                    <TunePlayer
+                                                                        key={j}
+                                                                        index={j}
+                                                                        formData={formData}
+                                                                    />
+                                                                    : undefined
+                                                            }
+                                                        </Grid>
+                                                    </>
+                                                ))
+                                            }
+
                                         </>
                                     );
                                 }
 
                                 // Return the data fragment created for the child model
-                                return <EditDataFragment
-                                    model={modelField.nested}
-                                    formData={formData[modelField.field]}
-                                    handleChange={handleNestedChange} />;
+                                return (
+                                    <EditDataFragment
+                                        model={modelField.nested}
+                                        formData={formData[modelField.field]}
+                                        handleChange={handleNestedChange}
+                                    />
+                                );
                             }
 
                             // If the field does not have any children, return the form element for it.
                             return (
-                                <FormInputComponent key={modelField.field} model={modelField} value={formData[modelField.field]} handleChange={handleChange} index={index} />
-                            )
+                                <FormInputComponent
+                                    key={modelField.field}
+                                    model={modelField}
+                                    value={formData[modelField.field]}
+                                    handleChange={handleChange}
+                                    index={index}
+                                />
+                            );
                         })
                     }
-                    <Grid item xs={12}>
-                        {
-                            // to-do: Find a better alternative for inserting components here.
-                            extraComponent !== undefined && extraComponent.includes('TunePlayer') && formData.tuneMelodies !== undefined
-                                ? formData.tuneMelodies.sort((a, b) => a.variationIndex - b.variationIndex).map((elem, j) => <TunePlayer key={j} index={j} formData={formData} />)
-                                : undefined
-                        }
-                    </Grid>
                 </Grid>
             </Grid>
         </>
     );
-});
+};
 
 export default EditDataFragment;

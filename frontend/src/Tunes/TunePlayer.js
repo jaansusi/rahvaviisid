@@ -45,7 +45,6 @@ const TunePlayer = ({ formData, editable, index }) => {
 
 	return (
 		<Grid item xs={12}>
-			{JSON.stringify(melodyData)}
 			<div id={'player' + index}></div>
 			<div
 				style={{
