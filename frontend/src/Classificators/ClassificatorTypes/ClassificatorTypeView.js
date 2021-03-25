@@ -26,7 +26,7 @@ const ClassificatorTypeView = (() => {
     console.log(currentClassificatorModel);
     return (
         <>
-            <ViewComponent modelping={currentClassificatorModel} />
+            <ViewComponent model={currentClassificatorModel} />
         </>
     );
 });

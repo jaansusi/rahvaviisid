@@ -1,5 +1,4 @@
 const PersonModel = {
-
     list: {
         apiPath: 'persons',
         fields: [
@@ -23,14 +22,15 @@ const PersonModel = {
         ]
     },
     edit: {
-        apiPath: 'persons', fields: [
+        apiPath: 'persons',
+        fields: [
             { field: 'pid', type: 'number', headerName: 'person.pid' },
             { field: 'givenName', headerName: 'person.givenName' },
             { field: 'surname', headerName: 'person.surname' },
             { field: 'nickname', headerName: 'person.nickname' },
             { field: 'birthYear', type: 'number', headerName: 'person.birthYear' },
             { field: 'deathYear', type: 'number', headerName: 'person.deathYear' },
-            { field: 'sexId', type: 'number', headerName: 'person.sex' },
+            { field: 'sexId', type: 'dropdown', apiPath: 'sexes', headerName: 'person.sex' },
             { field: 'remarks', headerName: 'common.remarks' }
         ]
     }

@@ -25,7 +25,7 @@ const ClassificatorTypeEdit = (() => {
 
     return (
         <>
-            <EditComponent modelping={currentClassificatorModel} />
+            <EditComponent model={currentClassificatorModel} />
         </>
     );
 });

@@ -25,7 +25,7 @@ const ClassificatorTypeList = (() => {
 
     return (
         <>
-            <ListComponent modelping={currentClassificatorModel} />
+            <ListComponent model={currentClassificatorModel} />
         </>
     );
 });

@@ -4,7 +4,7 @@ import PersonModel from './PersonModel';
 
 const PersonView = (() => {
     return (
-        <ViewComponent modelping={PersonModel} />
+        <ViewComponent model={PersonModel.view} />
     );
 });
 

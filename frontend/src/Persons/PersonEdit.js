@@ -5,7 +5,7 @@ import PersonModel from './PersonModel';
 
 const PersonEdit = (() => {
     return (
-        <EditComponent modelping={PersonModel} />
+        <EditComponent model={PersonModel.edit} />
     );
 });
 

@@ -62,7 +62,7 @@ const EditComponent = ({ model, extraComponent, filter }) => {
         Promise.all(modelPromises).then(() => {
             // Retrieve the data
             axios
-                .get(config.apiUrl + '/' + model.apiPath + '/' + id + filter)
+                .get(config.apiUrl + '/' + model.apiPath + '/' + id + (filter !== undefined ? '?filter=' + filter : ''))
                 .then((result) => {
                     // Create a recursive function to model this object to react
                     let setData = (data, currentModel, nested) => {
@@ -111,7 +111,7 @@ const EditComponent = ({ model, extraComponent, filter }) => {
                         return obj;
                     };
 
-                    // Start the model modelping
+                    // Start the model model
                     setData(result.data, model, false);
                 });
         });
