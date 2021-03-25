@@ -1,11 +1,11 @@
 import React from 'react';
 import EditComponent from '../Components/EditComponent';
-import PersonMap from './PersonMap';
+import PersonModel from './PersonModel';
 
 
 const PersonEdit = (() => {
     return (
-        <EditComponent mapping={PersonMap} />
+        <EditComponent modelping={PersonModel} />
     );
 });
 

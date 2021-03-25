@@ -14,11 +14,11 @@ const ViewEntityDataComponent = (({ model, data, extraComponent }) => {
                 <Table>
                     <tbody>
                         {
-                            model.fields.map((map, i) => {
+                            model.fields.map((model, i) => {
                                 return (
                                     <TableRow key={i}>
-                                        <TableCell align="left">{t(map.headerName)}</TableCell>
-                                        <TableCell align="left">{data[map.field]}</TableCell>
+                                        <TableCell align="left">{t(model.headerName)}</TableCell>
+                                        <TableCell align="left">{data[model.field]}</TableCell>
                                     </TableRow>
                                 )
                             })

@@ -4,7 +4,7 @@ import {
 } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Button, Grid } from '@material-ui/core';
-import ClassificatorsMap from './ClassificatorTypes/ClassificatorTypeMap';
+import ClassificatorsModel from './ClassificatorTypes/ClassificatorTypeModel';
 
 const Classificators = (() => {
     let { path } = useRouteMatch();
@@ -13,7 +13,7 @@ const Classificators = (() => {
         <Grid item xs>
             <Grid container direction='column'>
                 {
-                    ClassificatorsMap.groups.map((group, i) => {
+                    ClassificatorsModel.groups.map((group, i) => {
                         return (
                             <Grid item key={i}>
                                 <h3>{t(group.name)}</h3>

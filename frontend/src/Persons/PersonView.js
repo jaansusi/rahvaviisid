@@ -1,10 +1,10 @@
 import React from 'react';
 import ViewComponent from '../Components/ViewComponent';
-import PersonMap from './PersonMap';
+import PersonModel from './PersonModel';
 
 const PersonView = (() => {
     return (
-        <ViewComponent mapping={PersonMap} />
+        <ViewComponent modelping={PersonModel} />
     );
 });
 

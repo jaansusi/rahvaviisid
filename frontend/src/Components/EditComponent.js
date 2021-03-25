@@ -34,8 +34,8 @@ const EditComponent = ({ model, extraComponent, filter }) => {
                 }
             })(),
         ]);
-        let map = new Map(arr);
-        return Object.fromEntries(map);
+        let model = new Map(arr);
+        return Object.fromEntries(model);
     };
     let [formData, setFormData] = useReducer(
         formReducer,
@@ -64,7 +64,7 @@ const EditComponent = ({ model, extraComponent, filter }) => {
             axios
                 .get(config.apiUrl + '/' + model.apiPath + '/' + id + filter)
                 .then((result) => {
-                    // Create a recursive function to map this object to react
+                    // Create a recursive function to model this object to react
                     let setData = (data, currentModel, nested) => {
                         let obj = {};
                         currentModel.fields.forEach((modelElem) => {
@@ -111,7 +111,7 @@ const EditComponent = ({ model, extraComponent, filter }) => {
                         return obj;
                     };
 
-                    // Start the model mapping
+                    // Start the model modelping
                     setData(result.data, model, false);
                 });
         });

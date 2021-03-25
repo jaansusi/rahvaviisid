@@ -1,10 +1,10 @@
 import React from 'react';
 import ListComponent from '../Components/ListComponent';
-import PersonMap from './PersonMap';
+import PersonModel from './PersonModel';
 
 const PersonsList = () => {
     return (
-        <ListComponent mapping={PersonMap} />
+        <ListComponent model={PersonModel} />
     );
 };
 

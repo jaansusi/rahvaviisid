@@ -1,4 +1,4 @@
-const ClassificatorsMap =
+const ClassificatorsModel =
 {
     default: {
         list: [
@@ -220,4 +220,4 @@ const ClassificatorsMap =
     ]
 };
 
-export default ClassificatorsMap;
+export default ClassificatorsModel;

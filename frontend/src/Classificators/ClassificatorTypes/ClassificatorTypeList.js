@@ -3,29 +3,29 @@ import {
     useParams
 } from 'react-router-dom';
 import ListComponent from '../../Components/ListComponent';
-import ClassificatorsMap from './ClassificatorTypeMap';
+import ClassificatorsModel from './ClassificatorTypeModel';
 
 const ClassificatorTypeList = (() => {
     let { classificator } = useParams();
 
-    let currentClassificatorMap = undefined;
+    let currentClassificatorModel = undefined;
     loop:
-    for (let groupKey in ClassificatorsMap.groups) {
-        let classificators = ClassificatorsMap.groups[groupKey].classificators
-        for (let mapKey in classificators) {
-            if (classificators[mapKey].url === classificator) {
-                currentClassificatorMap = classificators[mapKey];
+    for (let groupKey in ClassificatorsModel.groups) {
+        let classificators = ClassificatorsModel.groups[groupKey].classificators
+        for (let modelKey in classificators) {
+            if (classificators[modelKey].url === classificator) {
+                currentClassificatorModel = classificators[modelKey];
                 break loop;
             }
         }
     }
 
-    currentClassificatorMap.list = currentClassificatorMap.list !== undefined ?
-        currentClassificatorMap.list : ClassificatorsMap.default.list;
+    currentClassificatorModel.list = currentClassificatorModel.list !== undefined ?
+        currentClassificatorModel.list : ClassificatorsModel.default.list;
 
     return (
         <>
-            <ListComponent mapping={currentClassificatorMap} />
+            <ListComponent modelping={currentClassificatorModel} />
         </>
     );
 });
