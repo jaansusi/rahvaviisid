@@ -6,7 +6,8 @@ import config from '../config';
 import EditDataFragment from '../Fragments/EditDataFragment';
 import axios from 'axios';
 
-const EditComponent = ({ model, extraComponent, filter }) => {
+const EditComponent = ({ model, extraComponent, filter, newItem }) => {
+    newItem = newItem === undefined ? false : newItem;
     const { t } = useTranslation('common');
     const formReducer = (state, event) => {
         return {
@@ -60,62 +61,67 @@ const EditComponent = ({ model, extraComponent, filter }) => {
             .filter((x) => x !== undefined);
 
         Promise.all(modelPromises).then(() => {
-            // Retrieve the data
-            axios
-                .get(config.apiUrl + '/' + model.apiPath + '/' + id + (filter !== undefined ? '?filter=' + filter : ''))
-                .then((result) => {
-                    // Create a recursive function to model this object to react
-                    let setData = (data, currentModel, nested) => {
-                        let obj = {};
-                        currentModel.fields.forEach((modelElem) => {
-                            let fieldValue = undefined;
-                            if (data[modelElem.field] !== null)
-                                fieldValue = data[modelElem.field];
-                            else {
-                                // Recur with the child model
-                                if (modelElem.nested !== undefined)
-                                    fieldValue = setData(
-                                        data[modelElem.field],
-                                        modelElem.nested,
-                                        true
-                                    );
-                                // If the field has a defined type, act on it
-                                switch (modelElem.type) {
-                                    case 'array':
-                                        fieldValue =
-                                            fieldValue === undefined
-                                                ? []
-                                                : [fieldValue];
-                                        break;
-                                    default:
-                                        fieldValue =
-                                            fieldValue === undefined
-                                                ? ''
-                                                : fieldValue;
-                                        break;
+            if (newItem) {
+
+            } else {
+                // Retrieve the data
+                axios
+                    .get(config.apiUrl + '/' + model.apiPath + '/' + id + (filter !== undefined ? '?filter=' + filter : ''))
+                    .then((result) => {
+                        // Create a recursive function to model this object to react
+                        let setData = (data, currentModel, nested) => {
+                            let obj = {};
+                            currentModel.fields.forEach((modelElem) => {
+                                let fieldValue = undefined;
+                                if (data[modelElem.field] !== null)
+                                    fieldValue = data[modelElem.field];
+                                else {
+                                    // Recur with the child model
+                                    if (modelElem.nested !== undefined)
+                                        fieldValue = setData(
+                                            data[modelElem.field],
+                                            modelElem.nested,
+                                            true
+                                        );
+                                    // If the field has a defined type, act on it
+                                    switch (modelElem.type) {
+                                        case 'array':
+                                            fieldValue =
+                                                fieldValue === undefined
+                                                    ? []
+                                                    : [fieldValue];
+                                            break;
+                                        default:
+                                            fieldValue =
+                                                fieldValue === undefined
+                                                    ? ''
+                                                    : fieldValue;
+                                            break;
+                                    }
                                 }
-                            }
 
-                            // If the function is not marked as nested, just set the value and be done with it
-                            if (!nested) {
-                                setFormData({
-                                    name: modelElem.field,
-                                    value: fieldValue,
-                                });
-                            }
-                            // Otherwise assign the nested value to the original field..
-                            obj[modelElem.field] = fieldValue;
-                        });
+                                // If the function is not marked as nested, just set the value and be done with it
+                                if (!nested) {
+                                    setFormData({
+                                        name: modelElem.field,
+                                        value: fieldValue,
+                                    });
+                                }
+                                // Otherwise assign the nested value to the original field..
+                                obj[modelElem.field] = fieldValue;
+                            });
 
-                        // ..and return it to be assigned in the parent call
-                        return obj;
-                    };
+                            // ..and return it to be assigned in the parent call
+                            return obj;
+                        };
 
-                    // Start the model model
-                    setData(result.data, model, false);
-                });
+                        // Start the model mapping
+                        setData(result.data, model, false);
+                    });
+            }
+
         });
-    }, [id, model, filter]);
+    }, [id, model, filter, newItem]);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -158,15 +164,29 @@ const EditComponent = ({ model, extraComponent, filter }) => {
         // Last, let's add the root object as well
         requestObjects.push({ model: currentModel, dataElem: tempData });
 
-        // We assume that all the DB entries already exist, we're just patching them so no need for synchronous requests
+        
         requestObjects.forEach((obj) => {
-            axios
+            if (newItem) {
+                // No DB entries exist, use post requests
+                axios
+                .post(
+                    config.apiUrl + '/' + obj.model.apiPath,
+                    {
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(obj.dataElem),
+                    }
+                ) 
+                .then((resData) => {
+                    console.log(resData);
+                });
+            } else {
+                // DB entries should already exist, use patch requests
+                // to-do: new subelements (like a tune variation) needs to be handled with a post request instead
+                axios
                 .patch(
-                    config.apiUrl +
-                        '/' +
-                        obj.model.apiPath +
-                        '/' +
-                        obj.dataElem.id,
+                    config.apiUrl + '/' + obj.model.apiPath + '/' + obj.dataElem.id,
                     {
                         headers: {
                             'Content-Type': 'application/json',
@@ -177,6 +197,8 @@ const EditComponent = ({ model, extraComponent, filter }) => {
                 .then((resData) => {
                     console.log(resData);
                 });
+            }
+            
         });
 
         setTimeout(() => {

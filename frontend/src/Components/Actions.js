@@ -12,7 +12,7 @@ const Actions = (({ id, apiPath }) => {
         <Grid container
         justify='space-around'>
             <Grid item>
-                <Button href={`${url}/` + id} variant="outlined" color="primary">{t('action.view')}</Button>
+                <Button href={`${url}/` + id + '/vaata'} variant="outlined" color="primary">{t('action.view')}</Button>
             </Grid>
             <Grid item>
                 <Button href={`${url}/` + id + '/muuda'} variant="outlined" color="primary">{t('action.edit')}</Button>
