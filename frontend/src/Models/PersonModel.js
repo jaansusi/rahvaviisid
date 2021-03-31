@@ -1,6 +1,8 @@
-const PersonModel = {
+import modelParser from './ModelParser';
+
+const PersonModel = modelParser({
+    apiPath: 'persons',
     list: {
-        apiPath: 'persons',
         fields: [
             { field: 'pid', headerName: 'person.pid', width: 80 },
             { field: 'surname', headerName: 'person.surname', width: 170 },
@@ -12,7 +14,6 @@ const PersonModel = {
         ]
     },
     view: {
-        apiPath: 'persons',
         fields: [
             { field: 'pid', headerName: 'person.pid' },
             { field: 'givenName', headerName: 'person.givenName' },
@@ -22,7 +23,6 @@ const PersonModel = {
         ]
     },
     edit: {
-        apiPath: 'persons',
         fields: [
             { field: 'pid', type: 'number', headerName: 'person.pid' },
             { field: 'givenName', headerName: 'person.givenName' },
@@ -34,6 +34,6 @@ const PersonModel = {
             { field: 'remarks', headerName: 'common.remarks' }
         ]
     }
-};
+});
 
 export default PersonModel;

@@ -10,15 +10,15 @@ const ListComponent = (({ model }) => {
     let { id } = useParams();
     let [data, setData] = useState([]);
     useEffect(() => {
-        axios.get(config.apiUrl + '/' + model.list.apiPath)
+        axios.get(config.apiUrl + '/' + model.apiPath)
             .then(
                 (result) => {
                     setData(result.data);
                 }
             );
-    }, [id, model.list.apiPath]);
+    }, [id, model.apiPath]);
     return (
-        <ListDataFragment model={model.list} apiPath={model.apiPath} tableData={data}/>
+        <ListDataFragment model={model} apiPath={model.apiPath} tableData={data}/>
     );
 });
 

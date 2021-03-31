@@ -4,7 +4,7 @@ import {
 } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Button, Grid } from '@material-ui/core';
-import ClassificatorsModel from './ClassificatorTypes/ClassificatorTypeModel';
+import ClassificatorsModel from '../Models/ClassificatorTypeModel';
 
 const Classificators = (() => {
     let { path } = useRouteMatch();
@@ -19,8 +19,8 @@ const Classificators = (() => {
                                 <h3>{t(group.name)}</h3>
                                 <Grid container direction='row'>
                                     {
-                                        group.classificators.map((classificator, j) => {
-                                            return (<Button key={j} className='classificator-link' href={`${path}/${classificator.url}`}>{t(classificator.name)}</Button>)
+                                        group.models.map((model, j) => {
+                                            return (<Button key={j} className='classificator-link' href={`${path}/${model.url}`}>{t(model.name)}</Button>)
                                         })
                                     }
                                 </Grid>

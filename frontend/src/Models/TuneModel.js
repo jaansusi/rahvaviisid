@@ -1,6 +1,8 @@
-const TuneModel = {
+import modelParser from './ModelParser';
+
+const TuneModel = modelParser({
+    apiPath: 'tunes',
     list: {
-        apiPath: 'tunes',
         fields: [
             { field: 'tuneReference', headerName: 'tune.tuneReference', width: 170 },
             { field: 'textReference', headerName: 'tune.textReference', width: 170 },
@@ -13,7 +15,6 @@ const TuneModel = {
         ]
     },
     view: {
-        apiPath: 'tunes',
         fields: [
             { field: 'id', headerName: 'common.id' },
             { field: 'tuneStateId', headerName: 'tune.state' },
@@ -34,7 +35,6 @@ const TuneModel = {
         ]
     },
     edit: {
-        apiPath: 'tunes',
         fields: [
             { field: 'id', hidden: true },
             { field: 'created', hidden: true },
@@ -79,6 +79,6 @@ const TuneModel = {
             }
         ]
     }
-};
+});
 
 export default TuneModel;

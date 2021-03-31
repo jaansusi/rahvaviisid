@@ -1,44 +1,56 @@
 const ClassificatorsModel =
 {
     default: {
-        list: [
-            { field: 'title', headerName: 'common.title', width: 170 },
-            { field: 'active', headerName: 'common.active', width: 170 }
-        ],
-        view: [
-            { field: 'title', headerName: 'common.title' },
-            { field: 'active', headerName: 'common.active' },
-            { field: 'created', headerName: 'common.created' },
-            { field: 'modified', headerName: 'common.modified' }
-        ],
-        edit: [
-            { field: 'title', headerName: 'common.title' },
-            { field: 'active', headerName: 'common.active' }
-        ]
+        list: {
+            fields: [
+                { field: 'title', headerName: 'common.title', width: 170 },
+                { field: 'active', headerName: 'common.active', width: 170 }
+            ]
+        },
+        view: {
+            fields: [
+                { field: 'title', headerName: 'common.title' },
+                { field: 'active', headerName: 'common.active' },
+                { field: 'created', headerName: 'common.created' },
+                { field: 'modified', headerName: 'common.modified' }
+            ]
+        },
+        edit: {
+            fields: [
+                { field: 'title', headerName: 'common.title' },
+                { field: 'active', headerName: 'common.active' }
+            ]
+        }
     },
     groups: [
         {
             name: 'tune.tune',
-            classificators: [
+            models: [
                 {
                     name: 'tune.nation',
                     url: 'rahvas',
                     apiPath: 'nations',
-                    list: [
-                        { field: 'title', headerName: 'common.title', width: 170 },
-                        { field: 'description', headerName: 'common.description', width: 170 },
-                        { field: 'active', headerName: 'common.active', width: 170 }
-                    ],
-                    view: [
-                        { field: 'title', headerName: 'common.title' },
-                        { field: 'description', headerName: 'common.description' },
-                        { field: 'active', headerName: 'common.active' }
-                    ],
-                    edit: [
-                        { field: 'title', headerName: 'common.title' },
-                        { field: 'description', headerName: 'common.description' },
-                        { field: 'active', headerName: 'common.active' }
-                    ]
+                    list: {
+                        fields: [
+                            { field: 'title', headerName: 'common.title', width: 170 },
+                            { field: 'description', headerName: 'common.description', width: 170 },
+                            { field: 'active', headerName: 'common.active', width: 170 }
+                        ]
+                    },
+                    view: {
+                        fields: [
+                            { field: 'title', headerName: 'common.title' },
+                            { field: 'description', headerName: 'common.description' },
+                            { field: 'active', headerName: 'common.active' }
+                        ]
+                    },
+                    edit: {
+                        fields: [
+                            { field: 'title', headerName: 'common.title' },
+                            { field: 'description', headerName: 'common.description' },
+                            { field: 'active', headerName: 'common.active' }
+                        ]
+                    }
                 },
                 {
                     name: 'tune.language',
@@ -64,7 +76,7 @@ const ClassificatorsModel =
         },
         {
             name: 'person.person',
-            classificators: [
+            models: [
                 {
                     name: 'person.role',
                     url: 'viisi-tegija-roll',
@@ -84,7 +96,7 @@ const ClassificatorsModel =
         },
         {
             name: 'place.place',
-            classificators: [
+            models: [
                 {
                     name: 'place.type',
                     url: 'koha-liik',
@@ -109,7 +121,7 @@ const ClassificatorsModel =
         },
         {
             name: 'performance.performance',
-            classificators: [
+            models: [
                 {
                     name: 'performance.actual.type',
                     url: 'tegeliku-esituse-liik',
@@ -134,7 +146,7 @@ const ClassificatorsModel =
         },
         {
             name: 'song.song',
-            classificators: [
+            models: [
                 {
                     name: 'song.genre',
                     url: 'laulu-liik',
@@ -154,7 +166,7 @@ const ClassificatorsModel =
         },
         {
             name: 'song.song',
-            classificators: [
+            models: [
                 {
                     name: 'attribute.textForm',
                     url: 'teksti-vorm',
@@ -179,7 +191,7 @@ const ClassificatorsModel =
         },
         {
             name: 'transcription.transcription',
-            classificators: [
+            models: [
                 {
                     name: 'transcription.source',
                     url: 'noodistuse-alus',
@@ -194,7 +206,7 @@ const ClassificatorsModel =
         },
         {
             name: 'coding.coding',
-            classificators: [
+            models: [
                 {
                     name: 'coding.keySignature',
                     url: 'votmemark',

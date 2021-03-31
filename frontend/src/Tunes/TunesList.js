@@ -1,10 +1,10 @@
 import React from 'react';
 import ListComponent from '../Components/ListComponent';
-import TuneModel from './TuneModel';
+import TuneModel from '../Models/TuneModel';
 
 const TunesList = () => {
   return (
-    <ListComponent model={TuneModel} />
+    <ListComponent model={TuneModel.list} />
   );
 };
 

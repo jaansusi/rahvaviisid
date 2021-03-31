@@ -5,7 +5,6 @@ import TunePlayer from '../Tunes/TunePlayer';
 
 const ViewEntityDataComponent = (({ model, data, extraComponent }) => {
     const { t } = useTranslation('common');
-    console.log(model);
     return (
         <Grid
             item

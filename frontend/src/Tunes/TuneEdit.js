@@ -1,5 +1,5 @@
 import React from 'react';
-import TuneModel from './TuneModel';
+import TuneModel from '../Models/TuneModel';
 import EditComponent from '../Components/EditComponent';
 import { Grid } from '@material-ui/core';
 
@@ -9,7 +9,7 @@ const TuneEdit = (({ newItem }) => {
         <>
             <Grid item xs={6}>
                 <EditComponent
-                    filter='{"include": ["tuneMelodies", "tuneEvents"]}'
+                    filter='{"include": ["tuneMelodies"]}'
                     model={TuneModel.edit}
                     extraComponent={['TunePlayer']}
                     newItem = {newItem}

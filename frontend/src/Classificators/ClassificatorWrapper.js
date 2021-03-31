@@ -20,7 +20,7 @@ const ClassificatorWrapper = () => {
       <Route exact path={`${path}/:classificator`}>
         <ClassificatorTypeList />
       </Route>
-      <Route exact path={`${path}/:classificator/:id`}>
+      <Route exact path={`${path}/:classificator/:id/vaata`}>
         <ClassificatorTypeView />
       </Route>
       <Route exact path={`${path}/:classificator/:id/muuda`}>

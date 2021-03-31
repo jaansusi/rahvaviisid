@@ -1,6 +1,6 @@
 import React from 'react';
 import ViewComponent from '../Components/ViewComponent';
-import TuneModel from './TuneModel';
+import TuneModel from '../Models/TuneModel';
 import { Grid } from '@material-ui/core';
 
 const TuneView = () => {
