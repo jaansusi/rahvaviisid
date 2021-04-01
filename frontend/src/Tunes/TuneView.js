@@ -7,7 +7,11 @@ const TuneView = () => {
     return (
         <Grid
             item>
-            <ViewComponent model={TuneModel.view} />
+            <ViewComponent
+                filter='{"include": ["tuneMelodies"]}'
+                model={TuneModel.view}
+                extraComponent={['TunePlayer']}
+            />
         </Grid>
     );
 };

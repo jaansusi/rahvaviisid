@@ -10,7 +10,6 @@ import TuneEdit from './TuneEdit';
 
 const TuneWrapper = () => {
     let { path, url } = useRouteMatch();
-    console.log(path);
     return (
         <>
             <Route exact path={url}>

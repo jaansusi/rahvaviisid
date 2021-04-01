@@ -1,40 +1,57 @@
 import React from 'react';
 import { useTranslation } from "react-i18next";
-import { Grid, TableContainer, Table, TableRow, TableCell } from '@material-ui/core';
+import { TableRow, TableCell } from '@material-ui/core';
 import TunePlayer from '../Tunes/TunePlayer';
 
-const ViewEntityDataComponent = (({ model, data, extraComponent }) => {
+const ViewDataFragment = (({ model, elementData, extraComponent }) => {
     const { t } = useTranslation('common');
     return (
-        <Grid
-            item
-            xs>
-            <TableContainer>
-                <Table>
-                    <tbody>
-                        {
-                            model.fields.map((model, i) => {
-                                return (
-                                    <TableRow key={i}>
-                                        <TableCell align="left">{t(model.headerName)}</TableCell>
-                                        <TableCell align="left">{data[model.field]}</TableCell>
-                                    </TableRow>
-                                )
-                            })
-                        }
-                    </tbody>
-                </Table>
-            </TableContainer>
-            <Grid item xs={12}>
-                {
-                    //to-do: Find a better alternative for inserting components here.
-                    extraComponent !== undefined && extraComponent.includes('TunePlayer')
-                        ? <TunePlayer editable={false} formData={data} />
-                        : undefined
-                }
-            </Grid>
-        </Grid>
+        <>
+            {
+                model.fields.map((modelField, i) => {
+                    if (modelField.type === 'array') {
+                        let data =
+                            modelField.sortBy === undefined
+                                ? elementData[modelField.field]
+                                : elementData[modelField.field].sort((a, b) => a[modelField.sortBy] - b[modelField.sortBy]);
+                        return (
+                            data.map((elem, j) => (
+                                <ViewDataFragment
+                                    model={modelField.nested}
+                                    elementData={elem}
+                                    key={'viewfragment' + i + j}
+                                    title={t('tune.variationTitle') + (j + 1)}
+                                    extraComponent={
+                                        modelField.extraComponent === 'TunePlayer' ?
+                                            <TunePlayer
+                                                formData={elementData}
+                                                index={j}
+                                            />
+                                            : undefined
+                                    }
+                                />
+                            ))
+                        );
+                    }
+                    return modelField.hidden !== undefined && modelField.hidden ? null :
+                        <TableRow key={'row' + i}>
+                            <TableCell align="left">{t(modelField.headerName)}</TableCell>
+                            <TableCell align="left">{elementData[modelField.field]}</TableCell>
+                        </TableRow>
+                        ;
+                })
+            }
+            {
+                extraComponent !== undefined ?
+                    <TableRow>
+                        <TableCell>
+                            {extraComponent}
+                        </TableCell>
+                    </TableRow> :
+                    null
+            }
+        </>
     );
 });
 
-export default ViewEntityDataComponent;
+export default ViewDataFragment;

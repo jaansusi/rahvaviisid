@@ -1,5 +1,5 @@
 import React from 'react';
-import config from '../config';
+import config from '../../config';
 import { Button } from '@material-ui/core';
 import { useTranslation } from "react-i18next";
 import axios from 'axios';

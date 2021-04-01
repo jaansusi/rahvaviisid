@@ -1,8 +1,8 @@
 import React from 'react';
 import { useTranslation } from "react-i18next";
 import { DataGrid } from '@material-ui/data-grid';
-import Actions from '../Components/Actions';
-import CreateButton from '../Components/CreateButton';
+import Actions from '../Components/Buttons/Actions';
+import CreateButton from '../Components/Buttons/CreateButton';
 
 const ListDataFragment = (({ model, tableData }) => {
     const { t } = useTranslation('common');

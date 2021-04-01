@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import config from '../config';
 import EditDataFragment from '../Fragments/EditDataFragment';
 import axios from 'axios';
+import { createEmptyDataObject, mapResponseToModel } from './ComponentHelpers';
 
 const EditComponent = ({ model, extraComponent, filter, newItem }) => {
     newItem = newItem === undefined ? false : newItem;
@@ -16,28 +17,7 @@ const EditComponent = ({ model, extraComponent, filter, newItem }) => {
         };
     };
     let { id } = useParams();
-
-    let createEmptyDataObject = (currentModel) => {
-        let arr = currentModel.map((elem) => [
-            elem.field,
-            //Run an IIFE since we don't need a defined function here and a one-liner would be too confusing
-            (() => {
-                let value = undefined;
-                //If a value should be nested, let's recurse into the nested model
-                if (elem.nested !== undefined)
-                    value = createEmptyDataObject(elem.nested.fields);
-                //If the model field has a type defined, assign it here.
-                switch (elem.type) {
-                    case 'array':
-                        return value === undefined ? [] : [value];
-                    default:
-                        return value === undefined ? '' : value;
-                }
-            })(),
-        ]);
-        let model = new Map(arr);
-        return Object.fromEntries(model);
-    };
+    
     let [formData, setFormData] = useReducer(
         formReducer,
         createEmptyDataObject(model.fields)
@@ -62,61 +42,14 @@ const EditComponent = ({ model, extraComponent, filter, newItem }) => {
 
         Promise.all(modelPromises).then(() => {
             if (newItem) {
-
+                
             } else {
                 // Retrieve the data
                 axios
                     .get(config.apiUrl + '/' + model.apiPath + '/' + id + (filter !== undefined ? '?filter=' + filter : ''))
                     .then((result) => {
-                        // Create a recursive function to model this object to react
-                        let setData = (data, currentModel, nested) => {
-                            let obj = {};
-                            currentModel.fields.forEach((modelElem) => {
-                                let fieldValue = undefined;
-                                if (data[modelElem.field] !== null)
-                                    fieldValue = data[modelElem.field];
-                                else {
-                                    // Recur with the child model
-                                    if (modelElem.nested !== undefined)
-                                        fieldValue = setData(
-                                            data[modelElem.field],
-                                            modelElem.nested,
-                                            true
-                                        );
-                                    // If the field has a defined type, act on it
-                                    switch (modelElem.type) {
-                                        case 'array':
-                                            fieldValue =
-                                                fieldValue === undefined
-                                                    ? []
-                                                    : [fieldValue];
-                                            break;
-                                        default:
-                                            fieldValue =
-                                                fieldValue === undefined
-                                                    ? ''
-                                                    : fieldValue;
-                                            break;
-                                    }
-                                }
-
-                                // If the function is not marked as nested, just set the value and be done with it
-                                if (!nested) {
-                                    setFormData({
-                                        name: modelElem.field,
-                                        value: fieldValue,
-                                    });
-                                }
-                                // Otherwise assign the nested value to the original field..
-                                obj[modelElem.field] = fieldValue;
-                            });
-
-                            // ..and return it to be assigned in the parent call
-                            return obj;
-                        };
-
                         // Start the model mapping
-                        setData(result.data, model, false);
+                        mapResponseToModel(result.data, model, setFormData);
                     });
             }
 
@@ -164,7 +97,6 @@ const EditComponent = ({ model, extraComponent, filter, newItem }) => {
         // Last, let's add the root object as well
         requestObjects.push({ model: currentModel, dataElem: tempData });
 
-        
         requestObjects.forEach((obj) => {
             if (newItem) {
                 // No DB entries exist, use post requests

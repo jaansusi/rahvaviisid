@@ -1,7 +1,7 @@
 import { FormControl, Grid, InputLabel, MenuItem, Select, TextField } from '@material-ui/core';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import './FormInputComponent.css';
+import './Css/FormInputComponent.css';
 
 
 const FormInputComponent = (({ model, value, handleChange, index }) => {

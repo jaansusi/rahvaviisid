@@ -1,4 +1,5 @@
 import modelParser from './ModelParser';
+import TuneMelodyModel from './TuneMelodyModel';
 
 const TuneModel = modelParser({
     apiPath: 'tunes',
@@ -17,7 +18,7 @@ const TuneModel = modelParser({
     view: {
         fields: [
             { field: 'id', headerName: 'common.id' },
-            { field: 'tuneStateId', headerName: 'tune.state' },
+            { field: 'tuneStateId', type: 'external', apiPath: 'tune-states', headerName: 'tune.state' },
             { field: 'textReference', headerName: 'tune.textReference' },
             { field: 'tuneReference', headerName: 'tune.tuneReference' },
             { field: 'soundReference', headerName: 'tune.soundReference' },
@@ -31,7 +32,14 @@ const TuneModel = modelParser({
             { field: 'verifiedBy', headerName: 'tune.verifiedBy' },
             { field: 'verified', headerName: 'tune.verified' },
             { field: 'created', headerName: 'date.created' },
-            { field: 'modified', headerName: 'date.modified' }
+            { field: 'modified', headerName: 'date.modified' },
+            {
+                field: 'tuneMelodies',
+                type: 'array',
+                sortBy: 'variationIndex',
+                extraComponent: 'TunePlayer',
+                nested: TuneMelodyModel.view
+            }
         ]
     },
     edit: {
@@ -60,22 +68,8 @@ const TuneModel = modelParser({
                 field: 'tuneMelodies',
                 type: 'array',
                 sortBy: 'variationIndex',
-                nested: {
-                    apiPath: 'tune-melodies',
-                    fields: [
-                        { field: 'id', hidden: true },
-                        { field: 'tunesId', hidden: true },
-                        { field: 'alter', headerName: 'tune.alter' },
-                        { field: 'tempo', headerName: 'tune.tempo' },
-                        { field: 'rhythmType', headerName: 'tune.rhythmType' },
-                        { field: 'noteLength', headerName: 'tune.noteLength' },
-                        { field: 'melody', type: 'textbox', headerName: 'tune.melody' },
-                        { field: 'words', type: 'textbox', headerName: 'tune.words' },
-                        { field: 'customInput', type: 'textbox', headerName: 'tune.customInput' },
-                        { field: 'variationIndex', hidden: true },
-
-                    ]
-                }
+                extraComponent: 'TunePlayer',
+                nested: TuneMelodyModel.edit
             }
         ]
     }
