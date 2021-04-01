@@ -6,8 +6,8 @@ const TuneMelodyModel = modelParser({
         fields: [
             { field: 'id', hidden: true },
             { field: 'tunesId', hidden: true },
-            { field: 'alter', hidden: true, headerName: 'tune.alter' },
-            { field: 'tempo', hidden: true, headerName: 'tune.tempo' },
+            { field: 'alter', headerName: 'tune.alter' },
+            { field: 'tempo', headerName: 'tune.tempo' },
             { field: 'rhythmType', hidden: true, headerName: 'tune.rhythmType' },
             { field: 'noteLength', hidden: true, headerName: 'tune.noteLength' },
             { field: 'melody', hidden: true, type: 'textbox', headerName: 'tune.melody' },

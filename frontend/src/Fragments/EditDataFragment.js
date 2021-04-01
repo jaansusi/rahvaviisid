@@ -62,37 +62,23 @@ const EditDataFragment = ({
                                         modelField.sortBy === undefined
                                             ? formData[modelField.field]
                                             : formData[modelField.field].sort((a, b) => a[modelField.sortBy] - b[modelField.sortBy]);
-                                    return (
-                                        <>
-                                            {
-                                                data.map((elem, j) => (
-                                                    <>
-                                                        <EditDataFragment
-                                                            model={modelField.nested}
-                                                            formData={elem}
-                                                            handleChange={handleArrayChange}
-                                                            index={j}
-                                                            title={t('tune.variationTitle') + (j + 1)}
-                                                            extraComponent={extraComponent}
-                                                        />
-                                                        <Grid item xs={12}>
-                                                            {
-                                                                // to-do: Find a better alternative for inserting components here.
-                                                                extraComponent !== undefined && extraComponent.includes('TunePlayer')
-                                                                    ?
-                                                                    <TunePlayer
-                                                                        key={j}
-                                                                        index={j}
-                                                                        formData={formData}
-                                                                    />
-                                                                    : undefined
-                                                            }
-                                                        </Grid>
-                                                    </>
-                                                ))
+                                    return data.map((elem, j) =>
+                                        <EditDataFragment
+                                            model={modelField.nested}
+                                            formData={elem}
+                                            handleChange={handleArrayChange}
+                                            key={'viewfragment' + i + j}
+                                            index={j}
+                                            title={t('tune.variationTitle') + (j + 1)}
+                                            extraComponent={
+                                                modelField.extraComponent === 'TunePlayer' ?
+                                                    <TunePlayer
+                                                        formData={formData}
+                                                        index={j}
+                                                    />
+                                                    : undefined
                                             }
-
-                                        </>
+                                        />
                                     );
                                 }
 
@@ -119,6 +105,13 @@ const EditDataFragment = ({
                         })
                     }
                 </Grid>
+                {
+                    extraComponent !== undefined ?
+                        <Grid item>
+                            {extraComponent}
+                        </Grid> :
+                        null
+                }
             </Grid>
         </>
     );
