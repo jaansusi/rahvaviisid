@@ -6,6 +6,7 @@ import config from '../config';
 import EditDataFragment from '../Fragments/EditDataFragment';
 import axios from 'axios';
 import { createEmptyDataObject, mapResponseToModel } from './ComponentHelpers';
+import Actions from './Buttons/Actions';
 
 const EditComponent = ({ model, extraComponent, filter, newItem }) => {
     newItem = newItem === undefined ? false : newItem;
@@ -42,7 +43,7 @@ const EditComponent = ({ model, extraComponent, filter, newItem }) => {
 
         Promise.all(modelPromises).then(() => {
             if (newItem) {
-                
+
             } else {
                 // Retrieve the data
                 axios
@@ -149,6 +150,7 @@ const EditComponent = ({ model, extraComponent, filter, newItem }) => {
 
     return (
         <>
+        { !newItem ? <Actions apiPath={model.apiPath} id={id} /> : null }
             <form onSubmit={handleSubmit}>
                 <EditDataFragment
                     model={model}

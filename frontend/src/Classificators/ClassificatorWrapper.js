@@ -4,26 +4,24 @@ import ClassificatorTypeList from './ClassificatorTypes/ClassificatorTypeList';
 import ClassificatorTypeView from './ClassificatorTypes/ClassificatorTypeView';
 import ClassificatorTypeEdit from './ClassificatorTypes/ClassificatorTypeEdit';
 import {
-  Route,
-  useRouteMatch
+  Route
 } from 'react-router-dom';
 
 const ClassificatorWrapper = () => {
-  let { path } = useRouteMatch();
 
   return (
     <>
-      <Route exact path={path}>
+      <Route exact path={'/:asset'}>
         <Classificators />
       </Route>
       
-      <Route exact path={`${path}/:classificator`}>
+      <Route exact path={`/:asset/:classificator`}>
         <ClassificatorTypeList />
       </Route>
-      <Route exact path={`${path}/:classificator/:id/vaata`}>
+      <Route exact path={`/:asset/:classificator/:id/vaata`}>
         <ClassificatorTypeView />
       </Route>
-      <Route exact path={`${path}/:classificator/:id/muuda`}>
+      <Route exact path={`/:asset/:classificator/:id/muuda`}>
         <ClassificatorTypeEdit />
       </Route>
     </>

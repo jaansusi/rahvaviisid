@@ -1,13 +1,13 @@
 import React from 'react';
 import {
-    useRouteMatch
+    useParams
 } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Button, Grid } from '@material-ui/core';
 import ClassificatorsModel from '../Models/ClassificatorTypeModel';
 
 const Classificators = (() => {
-    let { path } = useRouteMatch();
+    let { asset } = useParams();
     const { t } = useTranslation('common');
     return (
         <Grid item xs>
@@ -20,7 +20,7 @@ const Classificators = (() => {
                                 <Grid container direction='row'>
                                     {
                                         group.models.map((model, j) => {
-                                            return (<Button key={j} className='classificator-link' href={`${path}/${model.url}`}>{t(model.name)}</Button>)
+                                            return (<Button key={j} className='classificator-link' href={`${asset}/${model.url}`}>{t(model.name)}</Button>)
                                         })
                                     }
                                 </Grid>

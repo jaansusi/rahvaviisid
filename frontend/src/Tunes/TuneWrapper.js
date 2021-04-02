@@ -2,26 +2,24 @@ import React from 'react';
 import TunesList from './TunesList';
 import TuneView from './TuneView';
 import {
-    Route,
-    useRouteMatch
+    Route
 } from 'react-router-dom';
 import 'abcjs/abcjs-audio.css';
 import TuneEdit from './TuneEdit';
 
 const TuneWrapper = () => {
-    let { path, url } = useRouteMatch();
     return (
         <>
-            <Route exact path={url}>
+            <Route exact path={'/:asset'}>
                 <TunesList />
             </Route>
-            <Route exact path={`${path}/uus`}>
+            <Route exact path={`/:asset/uus`}>
                 <TuneEdit newItem={true} />
             </Route>
-            <Route exact path={`${path}/:id/vaata`}>
+            <Route exact path={`/:asset/:id/vaata`}>
                 <TuneView />
             </Route>
-            <Route exact path={`${path}/:id/muuda`}>
+            <Route exact path={`/:asset/:id/muuda`}>
                 <TuneEdit />
             </Route>
         </>

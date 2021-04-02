@@ -7,6 +7,7 @@ import ViewDataFragment from '../Fragments/ViewDataFragment';
 import axios from 'axios';
 import { createEmptyDataObject, mapResponseToModel } from './ComponentHelpers';
 import { Grid, Table, TableContainer } from '@material-ui/core';
+import Actions from './Buttons/Actions';
 
 const ViewComponent = (({ model, filter, extraComponent }) => {
     let { id } = useParams();
@@ -43,17 +44,20 @@ const ViewComponent = (({ model, filter, extraComponent }) => {
             });
     }, [id, model, filter]);
     return (
-        <Grid
-            item
-            xs>
-            <TableContainer>
-                <Table>
-                    <tbody>
-                        <ViewDataFragment key={'asssssssss'} model={model} elementData={formData} />
-                    </tbody>
-                </Table>
-            </TableContainer>
-        </Grid>
+        <>
+            <Actions apiPath={model.apiPath} id={id} />
+            <Grid
+                item
+                xs>
+                <TableContainer>
+                    <Table>
+                        <tbody>
+                            <ViewDataFragment key={'asssssssss'} model={model} elementData={formData} />
+                        </tbody>
+                    </Table>
+                </TableContainer>
+            </Grid>
+        </>
     );
 });
 

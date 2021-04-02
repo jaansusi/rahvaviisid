@@ -1,24 +1,22 @@
 import React from 'react';
 import PersonsList from './PersonsList';
 import {
-  Route,
-  useRouteMatch
+  Route
 } from 'react-router-dom';
 import PersonView from './PersonView';
 import PersonEdit from './PersonEdit';
 
 const PersonWrapper = () => {
-  let { path, url } = useRouteMatch();
 
   return (
     <>
-      <Route exact path={url}>
+      <Route exact path={'/:asset'}>
         <PersonsList />
       </Route>
-      <Route exact path={`${path}/:id`}>
+      <Route exact path={`/:asset/:id`}>
         <PersonView />
       </Route>
-      <Route exact path={`${path}/:id/muuda`}>
+      <Route exact path={`/:asset/:id/muuda`}>
         <PersonEdit />
       </Route>
     </>
