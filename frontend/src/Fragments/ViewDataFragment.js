@@ -14,13 +14,14 @@ const ViewDataFragment = (({ model, elementData, extraComponent }) => {
                             modelField.sortBy === undefined
                                 ? elementData[modelField.field]
                                 : elementData[modelField.field].sort((a, b) => a[modelField.sortBy] - b[modelField.sortBy]);
+                        console.log(elementData);
                         return (
                             data.map((elem, j) => (
                                 <ViewDataFragment
                                     model={modelField.nested}
                                     elementData={elem}
                                     key={'viewfragment' + i + j}
-                                    title={t('tune.variationTitle') + (j + 1)}
+                                    title={t(modelField.nested.headerName) + (j + 1)}
                                     extraComponent={
                                         modelField.extraComponent === 'TunePlayer' ?
                                             <TunePlayer

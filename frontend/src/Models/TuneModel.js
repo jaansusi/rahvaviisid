@@ -1,5 +1,6 @@
 import modelParser from './ModelParser';
 import TuneMelodyModel from './TuneMelodyModel';
+import TuneTranscriptionModel from './TuneTransciptionModel';
 
 const TuneModel = modelParser({
     apiPath: 'tunes',
@@ -34,11 +35,9 @@ const TuneModel = modelParser({
             { field: 'created', headerName: 'date.created' },
             { field: 'modified', headerName: 'date.modified' },
             {
-                field: 'tuneMelodies',
+                field: 'tuneTranscriptions',
                 type: 'array',
-                sortBy: 'variationIndex',
-                extraComponent: 'TunePlayer',
-                nested: TuneMelodyModel.view
+                nested: TuneTranscriptionModel.view
             }
         ]
     },
