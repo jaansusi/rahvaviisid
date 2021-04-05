@@ -1,7 +1,9 @@
 import {Entity, model, property} from '@loopback/repository';
 
 @model({
-  settings: {idInjection: false, postgresql: {schema: 'folk_tune', table: 'tune_melodies'}}
+  settings: {
+    idInjection: false, 
+    postgresql: {schema: 'folk_tune', table: 'tune_melodies'}}
 })
 export class TuneMelodies extends Entity {
   @property({
@@ -69,6 +71,14 @@ export class TuneMelodies extends Entity {
     postgresql: {columnName: 'tune_id', dataType: 'integer', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'NO'},
   })
   tunesId: number;
+
+  @property({
+    type: 'number',
+    required: true,
+    scale: 0,
+    postgresql: {columnName: 'tune_id', dataType: 'integer', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'NO'},
+  })
+  tuneTranscriptionsId: number;
 
   @property({
     type: 'string',

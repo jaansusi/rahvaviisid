@@ -947,11 +947,9 @@ CREATE TABLE folk_tune.tune_transcriptions
     id serial NOT NULL,
     tune_id integer NOT NULL,
     transcription_source_id smallint NOT NULL,
-    file_reference folk_tune.D_title,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
     CONSTRAINT PK_tune_transcriptions PRIMARY KEY (id),
-    CONSTRAINT UQ_tune_transcriptions_tune_id_file_reference UNIQUE (tune_id, file_reference),
     CONSTRAINT FK_tune_transcriptions_tunes FOREIGN KEY (tune_id) REFERENCES folk_tune.tunes (id) ON DELETE CASCADE,
     CONSTRAINT FK_tune_transcriptions_transcription_sources FOREIGN KEY (transcription_source_id)
         REFERENCES folk_tune.transcription_sources (id),
