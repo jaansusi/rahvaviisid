@@ -18,6 +18,9 @@ const ClassificatorWrapper = () => {
       <Route exact path={`/:asset/:classificator`}>
         <ClassificatorTypeList />
       </Route>
+      <Route exact path={`/:asset/:classificator/uus`}>
+        <ClassificatorTypeEdit newItem={true} />
+      </Route>
       <Route exact path={`/:asset/:classificator/:id/vaata`}>
         <ClassificatorTypeView />
       </Route>

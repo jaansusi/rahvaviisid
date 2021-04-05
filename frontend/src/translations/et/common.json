@@ -119,5 +119,9 @@
         "current": "EST",
         "est": "EST",
         "eng": "ENG"
+    },
+    "model": {
+        "true": "Jah",
+        "false": "Ei"
     }
 }

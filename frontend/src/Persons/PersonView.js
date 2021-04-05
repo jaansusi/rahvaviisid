@@ -2,10 +2,10 @@ import React from 'react';
 import ViewComponent from '../Components/ViewComponent';
 import PersonModel from '../Models/PersonModel';
 
-const PersonView = (() => {
+const PersonView = () => {
     return (
         <ViewComponent model={PersonModel.view} />
     );
-});
+};
 
 export default PersonView;

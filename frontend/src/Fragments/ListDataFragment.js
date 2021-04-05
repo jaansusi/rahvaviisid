@@ -11,7 +11,22 @@ const ListDataFragment = (({ model, tableData }) => {
         return x;
     });
     columns.push({ field: '', headerName: t('action.actions'), sortable: false, width: 290, renderCell: (params) => <Actions apiPath={model.apiPath} id={params.row.id} /> });
-
+    if (tableData !== undefined)
+        tableData = tableData.map((row) => {
+            for (let field in row) {
+                let modelField = model.fields.find((x) => field === x.field);
+                if (modelField === undefined)
+                    continue;
+                switch (modelField.type) {
+                    case 'boolean':
+                        row[field] = row[field] ? t('model.true') : t('model.false');
+                        break;
+                    default:
+                        break;
+                }
+            }
+            return row;
+        });
     return (
         <>
             <div style={{ width: '90vw', height: '500px' }}>

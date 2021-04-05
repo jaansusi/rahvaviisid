@@ -3,10 +3,12 @@ import EditComponent from '../Components/EditComponent';
 import PersonModel from '../Models/PersonModel';
 
 
-const PersonEdit = (() => {
+const PersonEdit = ({ newItem }) => {
     return (
-        <EditComponent model={PersonModel.edit} />
+        <EditComponent 
+        model = {PersonModel.edit}
+        newItem = {newItem} />
     );
-});
+};
 
 export default PersonEdit;

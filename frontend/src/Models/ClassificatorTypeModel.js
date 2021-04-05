@@ -4,13 +4,13 @@ const ClassificatorsModel =
         list: {
             fields: [
                 { field: 'title', headerName: 'common.title', width: 170 },
-                { field: 'active', headerName: 'common.active', width: 170 }
+                { field: 'isActive', type: 'boolean', headerName: 'common.active', width: 170 }
             ]
         },
         view: {
             fields: [
                 { field: 'title', headerName: 'common.title' },
-                { field: 'active', headerName: 'common.active' },
+                { field: 'isActive', headerName: 'common.active' },
                 { field: 'created', headerName: 'common.created' },
                 { field: 'modified', headerName: 'common.modified' }
             ]
@@ -18,7 +18,7 @@ const ClassificatorsModel =
         edit: {
             fields: [
                 { field: 'title', headerName: 'common.title' },
-                { field: 'active', headerName: 'common.active' }
+                { field: 'isActive', headerName: 'common.active' }
             ]
         }
     },
@@ -34,21 +34,21 @@ const ClassificatorsModel =
                         fields: [
                             { field: 'title', headerName: 'common.title', width: 170 },
                             { field: 'description', headerName: 'common.description', width: 170 },
-                            { field: 'active', headerName: 'common.active', width: 170 }
+                            { field: 'isActive', type: 'boolean', headerName: 'common.active', width: 170 }
                         ]
                     },
                     view: {
                         fields: [
                             { field: 'title', headerName: 'common.title' },
                             { field: 'description', headerName: 'common.description' },
-                            { field: 'active', headerName: 'common.active' }
+                            { field: 'isActive', headerName: 'common.active' }
                         ]
                     },
                     edit: {
                         fields: [
                             { field: 'title', headerName: 'common.title' },
                             { field: 'description', headerName: 'common.description' },
-                            { field: 'active', headerName: 'common.active' }
+                            { field: 'isActive', headerName: 'common.active' }
                         ]
                     }
                 },

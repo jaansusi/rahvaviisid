@@ -13,6 +13,9 @@ const PersonWrapper = () => {
       <Route exact path={'/:asset'}>
         <PersonsList />
       </Route>
+      <Route exact path={`/:asset/uus`}>
+        <PersonEdit newItem={true} />
+      </Route>
       <Route exact path={`/:asset/:id/vaata`}>
         <PersonView />
       </Route>

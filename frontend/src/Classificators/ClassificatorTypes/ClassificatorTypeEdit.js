@@ -5,11 +5,13 @@ import {
 import EditComponent from '../../Components/EditComponent';
 import getClassificatorModel from './GetClassificatorModel';
 
-const ClassificatorTypeEdit = () => {
+const ClassificatorTypeEdit = ({newItem}) => {
     let { classificator } = useParams();
     
     return (
-        <EditComponent model={getClassificatorModel(classificator, 'edit')} />
+        <EditComponent 
+            model = {getClassificatorModel(classificator, 'edit')}
+            newItem = {newItem} />
     );
 };
 
