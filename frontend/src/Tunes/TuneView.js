@@ -4,11 +4,23 @@ import TuneModel from '../Models/TuneModel';
 import { Grid } from '@material-ui/core';
 
 const TuneView = () => {
+    let filter = {
+        include: [
+            {
+                relation: "tuneTranscriptions",
+                scope: {
+                    include: [
+                        { relation: "tuneMelodies" }
+                    ]
+                }
+            }
+        ]
+    };
     return (
         <Grid
             item>
             <ViewComponent
-                filter='{"include": ["tuneMelodies"]}'
+                filter={filter}
                 model={TuneModel.view}
                 extraComponent={['TunePlayer']}
             />

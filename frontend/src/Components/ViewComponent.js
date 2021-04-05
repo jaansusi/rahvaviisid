@@ -23,7 +23,7 @@ const ViewComponent = (({ model, filter, extraComponent }) => {
     );
     useEffect(() => {
         axios
-            .get(config.apiUrl + '/' + model.apiPath + '/' + id + (filter !== undefined ? '?filter=' + filter : ''))
+            .get(config.apiUrl + '/' + model.apiPath + '/' + id + (filter !== undefined ? '?filter=' + encodeURIComponent(JSON.stringify(filter)) : ''))
             .then((result) => {
                 // Start the model mapping
                 mapResponseToModel(result.data, model, setFormData);
