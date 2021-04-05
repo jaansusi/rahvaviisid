@@ -1,4 +1,5 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, hasMany, model, property} from '@loopback/repository';
+import { TuneMelodies } from './tune-melodies.model';
 
 @model({
   settings: {
@@ -22,7 +23,7 @@ export class TuneTranscriptions extends Entity {
     scale: 0,
     postgresql: {columnName: 'tune_id', dataType: 'integer', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'NO'},
   })
-  tuneId: number;
+  tunesId: number;
 
   @property({
     type: 'number',
@@ -31,14 +32,6 @@ export class TuneTranscriptions extends Entity {
     postgresql: {columnName: 'transcription_source_id', dataType: 'smallint', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'NO'},
   })
   transcriptionSourceId: number;
-
-  @property({
-    type: 'string',
-    required: true,
-    length: 100,
-    postgresql: {columnName: 'file_reference', dataType: 'character varying', dataLength: 100, dataPrecision: null, dataScale: null, nullable: 'NO'},
-  })
-  fileReference: string;
 
   @property({
     type: 'date',
@@ -53,6 +46,9 @@ export class TuneTranscriptions extends Entity {
     postgresql: {columnName: 'modified', dataType: 'timestamp without time zone', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'NO'},
   })
   modified: string;
+
+  @hasMany(() => TuneMelodies, { keyTo: 'tune_id'})
+  tuneMelodies?: TuneMelodies[];
 
   // Define well-known properties here
 

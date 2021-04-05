@@ -1,5 +1,6 @@
 import {Entity, hasMany, model, property} from '@loopback/repository';
 import { TuneMelodies } from './tune-melodies.model';
+import { TuneTranscriptions } from './tune-transcriptions.model';
 
 @model({
   settings: {idInjection: false, postgresql: {schema: 'folk_tune', table: 'tunes'}}
@@ -153,8 +154,13 @@ export class Tunes extends Entity {
 
   @hasMany(() => TuneMelodies, { keyTo: 'tune_id'})
   tuneMelodies?: TuneMelodies[];
+
+
+  @hasMany(() => TuneTranscriptions, { keyFrom: 'tune_id'})
+  tuneTranscriptions?: TuneTranscriptions[];
   
-  // Define well-known properties here
+
+    // Define well-known properties here
 
   // Indexer property to allow additional data
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
