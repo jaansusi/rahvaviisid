@@ -1,6 +1,14 @@
-import {Entity, hasMany, model, property} from '@loopback/repository';
+import {Entity, hasMany, model, property, hasOne} from '@loopback/repository';
 import { TuneMelodies } from './tune-melodies.model';
 import { TuneTranscriptions } from './tune-transcriptions.model';
+import {Countries} from './countries.model';
+import {Nations} from './nations.model';
+import {Languages} from './languages.model';
+import {TunePerformances} from './tune-performances.model';
+import {TunePlaces} from './tune-places.model';
+import {TunesPersonsRoles} from './tunes-persons-roles.model';
+import {TuneSongs} from './tune-songs.model';
+import {TuneEncodings} from './tune-encodings.model';
 
 @model({
   settings: {idInjection: false, postgresql: {schema: 'folk_tune', table: 'tunes'}}
@@ -158,7 +166,31 @@ export class Tunes extends Entity {
 
   @hasMany(() => TuneTranscriptions, { keyFrom: 'tune_id'})
   tuneTranscriptions?: TuneTranscriptions[];
-  
+
+  @hasOne(() => Countries, { keyFrom: 'countryId', keyTo: 'id'})
+  countries: Countries;
+
+  @hasOne(() => Nations, { keyFrom: 'nationId', keyTo: 'id'})
+  nations: Nations;
+
+  @hasOne(() => Languages, { keyFrom: 'languageId', keyTo: 'id'})
+  languages: Languages;
+  //esitlus
+  @hasMany(() => TunePerformances, {keyTo: 'id'})
+  tunePerformances: TunePerformances[];
+  //kohad
+  @hasMany(() => TunePlaces, {keyTo: 'id'})
+  tunePlaces: TunePlaces[];
+  //Laul
+  @hasMany(() => TuneSongs, {keyTo: 'id'})
+  tuneSongs: TuneSongs[];
+  //muusikalised tunnused
+  @hasMany(() => TuneEncodings, {keyTo: 'id'})
+  tuneEncodings: TuneEncodings[];
+  //esitaja
+  @hasMany(() => TunesPersonsRoles, {keyTo: 'id'})
+  tunesPersonsRoles: TunesPersonsRoles[];
+
 
     // Define well-known properties here
 
