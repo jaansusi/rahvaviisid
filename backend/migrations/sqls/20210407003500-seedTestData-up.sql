@@ -17,3 +17,7 @@ VALUES
 INSERT INTO folk_tune.tune_performances (id, tune_id, actual_performance_type_id, traditional_performance_type_id, actual_action_type_id, accompaniment, remarks)
 VALUES
     (1,1,1,1,1,'test accompaniment','test esitluse märkus');
+
+INSERT INTO folk_tune.transcriptions_persons_roles (id, tune_transcription_id, person_id, transcription_person_role_type_id,action_year,remarks)  
+VALUES
+    (1,1,1,1,2020,'kodeerimise märkused');
