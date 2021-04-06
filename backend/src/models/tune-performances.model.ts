@@ -1,4 +1,8 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, hasOne} from '@loopback/repository';
+import {ActualPerformanceTypes} from './actual-performance-types.model';
+import {ActualActionTypes} from './actual-action-types.model';
+import {TraditionalPerformanceTypes} from './traditional-performance-types.model';
+import {TraditionalActionTypes} from './traditional-action-types.model';
 
 @model({
   settings: {
@@ -30,7 +34,7 @@ export class TunePerformances extends Entity {
     scale: 0,
     postgresql: {columnName: 'actual_performance_type_id', dataType: 'smallint', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'NO'},
   })
-  actualPerformanceTypeId: number;
+  actualPerformanceTypeId?: number;
 
   @property({
     type: 'number',
@@ -72,6 +76,16 @@ export class TunePerformances extends Entity {
     postgresql: {columnName: 'modified', dataType: 'timestamp without time zone', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'NO'},
   })
   modified: string;
+
+  @hasOne(() => ActualPerformanceTypes, {keyFrom: 'actualPerformanceTypeId?', keyTo: 'id'})
+  actualPerformanceTypes: ActualPerformanceTypes;
+
+  @hasOne(() => ActualActionTypes, {keyFrom: 'actualActionTypeId', keyTo: 'id'})
+  actualActionTypes: ActualActionTypes;
+
+  @hasOne(() => TraditionalPerformanceTypes, {keyFrom: 'traditionalPerformanceTypeId', keyTo: 'id'})
+  traditionalPerformanceTypes: TraditionalPerformanceTypes;
+
 
   // Define well-known properties here
 

@@ -1,4 +1,9 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, hasOne} from '@loopback/repository';
+import {Persons} from './persons.model';
+import {TunePlaceTypes} from './tune-place-types.model';
+import {Parishes} from './parishes.model';
+import {Municipalities} from './municipalities.model';
+import {Villages} from './villages.model';
 
 @model({
   settings: {idInjection: false, postgresql: {schema: 'folk_tune', table: 'tune_places'}}
@@ -85,6 +90,20 @@ export class TunePlaces extends Entity {
   })
   modified: string;
 
+  @hasOne(() => Persons, {keyFrom: 'personId', keyTo: 'id'})
+  persons: Persons;
+
+  @hasOne(() => TunePlaceTypes, {keyFrom: 'tunePlaceTypeId', keyTo: 'id'})
+  tunePlaceTypes: TunePlaceTypes;
+
+  @hasOne(() => Parishes, {keyFrom: 'parishId', keyTo: 'id'})
+  parishes: Parishes;
+
+  @hasOne(() => Municipalities, {keyFrom: 'municipalityId', keyTo: 'id'})
+  municipalities: Municipalities;
+
+  @hasOne(() => Villages, {keyFrom: 'villageId', keyTo: 'id'})
+  villages: Villages;
   // Define well-known properties here
 
   // Indexer property to allow additional data

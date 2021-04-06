@@ -164,7 +164,7 @@ export class Tunes extends Entity {
   tuneMelodies?: TuneMelodies[];
 
 
-  @hasMany(() => TuneTranscriptions, { keyFrom: 'tune_id'})
+  @hasMany(() => TuneTranscriptions, { keyTo: 'tune_id'})
   tuneTranscriptions?: TuneTranscriptions[];
 
   @hasOne(() => Countries, { keyFrom: 'countryId', keyTo: 'id'})
@@ -176,19 +176,19 @@ export class Tunes extends Entity {
   @hasOne(() => Languages, { keyFrom: 'languageId', keyTo: 'id'})
   languages: Languages;
   //esitlus
-  @hasMany(() => TunePerformances, {keyTo: 'id'})
+  @hasMany(() => TunePerformances, {keyTo: 'tune_id'})
   tunePerformances: TunePerformances[];
   //kohad
-  @hasMany(() => TunePlaces, {keyTo: 'id'})
+  @hasMany(() => TunePlaces, {keyTo: 'tune_id'})
   tunePlaces: TunePlaces[];
   //Laul
-  @hasMany(() => TuneSongs, {keyTo: 'id'})
+  @hasMany(() => TuneSongs, {keyTo: 'tune_id'})
   tuneSongs: TuneSongs[];
   //muusikalised tunnused
-  @hasMany(() => TuneEncodings, {keyTo: 'id'})
+  @hasMany(() => TuneEncodings, {keyTo: 'tune_id'})
   tuneEncodings: TuneEncodings[];
   //esitaja
-  @hasMany(() => TunesPersonsRoles, {keyTo: 'id'})
+  @hasMany(() => TunesPersonsRoles, {keyTo: 'tune_id'})
   tunesPersonsRoles: TunesPersonsRoles[];
 
 

@@ -1,4 +1,6 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, hasOne} from '@loopback/repository';
+import {Persons} from './persons.model';
+import {TunePersonRoleTypes} from './tune-person-role-types.model';
 
 @model({
   settings: {
@@ -88,6 +90,11 @@ export class TunesPersonsRoles extends Entity {
   })
   modified: string;
 
+  @hasOne(() => Persons, {keyFrom: 'personId', keyTo: 'id'})
+  persons: Persons;
+
+  @hasOne(() => TunePersonRoleTypes, {keyFrom: 'tunePersonRoleTypeId', keyTo: 'id'})
+  tunePersonRoleTypes: TunePersonRoleTypes;
   // Define well-known properties here
 
   // Indexer property to allow additional data

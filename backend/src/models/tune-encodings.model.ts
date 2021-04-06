@@ -1,4 +1,8 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, hasOne} from '@loopback/repository';
+import {KeySignatures} from './key-signatures.model';
+import {SupportSounds} from './support-sounds.model';
+import {Measures} from './measures.model';
+import {Pitches} from './pitches.model';
 
 @model({
   settings: {idInjection: false, postgresql: {schema: 'folk_tune', table: 'tune_encodings'}}
@@ -83,6 +87,19 @@ export class TuneEncodings extends Entity {
     postgresql: {columnName: 'modified', dataType: 'timestamp without time zone', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'NO'},
   })
   modified: string;
+
+  @hasOne(() => KeySignatures, {keyFrom: 'keySignatureId', keyTo: 'id'})
+  keySignatures: KeySignatures;
+
+  @hasOne(() => SupportSounds, {keyFrom: 'supportSoundId', keyTo: 'id'})
+  supportSounds: SupportSounds;
+
+  @hasOne(() => Pitches, {keyFrom: 'pitchId', keyTo: 'id'})
+  pitches: Pitches;
+  
+  @hasOne(() => Measures, {keyFrom: 'measureId', keyTo: 'id'})
+  measures: Measures;
+
 
   // Define well-known properties here
 
