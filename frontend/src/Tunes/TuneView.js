@@ -18,7 +18,7 @@ const TuneView = () => {
     };
     return (
         <Grid
-            item>
+            item xs={9}>
             <ViewComponent
                 filter={filter}
                 model={TuneModel.view}

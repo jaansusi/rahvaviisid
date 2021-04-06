@@ -64,7 +64,8 @@
         "author": "Autor",
         "reference": "Viide",
         "customInput": "Lisaväljad",
-        "variationTitle": "Variatsioon "
+        "variationTitle": "Variatsioon ",
+        "transcription": "Noodistus"
     },
     "user": {
         "role": "Kasutaja roll"
