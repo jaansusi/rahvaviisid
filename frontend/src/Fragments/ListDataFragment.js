@@ -4,7 +4,7 @@ import { DataGrid } from '@material-ui/data-grid';
 import Actions from '../Components/Buttons/Actions';
 import CreateButton from '../Components/Buttons/CreateButton';
 
-const ListDataFragment = (({ model, tableData }) => {
+const ListDataFragment = (({ model, tableData, rowCount, setOffset }) => {
     const { t } = useTranslation('common');
     let columns = model.fields.map((x) => {
         x.headerName = t(x.headerName);
@@ -31,7 +31,13 @@ const ListDataFragment = (({ model, tableData }) => {
         <>
             <div style={{ width: '90vw', height: '500px' }}>
                 <CreateButton />
-                <DataGrid rows={tableData} columns={columns} pageSize={10} />
+                <DataGrid 
+                paginationMode='server' 
+                rowCount={rowCount}
+                rows={tableData} 
+                columns={columns} 
+                pageSize={10}
+                onPageChange={(x) => setOffset(x.page * x.pageSize)} />
             </div>
         </>
     );
