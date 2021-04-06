@@ -3,6 +3,7 @@ import TuneMelodyModel from './TuneMelodyModel';
 
 const TuneTranscriptionModel = modelParser({
     view: {
+        label: 'tune.transcription',
         fields: [
             { field: 'id', hidden: true },
             { field: 'tunesId', hidden: true },

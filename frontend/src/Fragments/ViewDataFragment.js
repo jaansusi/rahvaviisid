@@ -1,12 +1,15 @@
 import React from 'react';
 import { useTranslation } from "react-i18next";
-import { TableRow, TableCell } from '@material-ui/core';
+import { TableRow, TableCell, Grid, Divider } from '@material-ui/core';
 import TunePlayer from '../Tunes/TunePlayer';
 
 const ViewDataFragment = (({ model, elementData, extraComponent }) => {
     const { t } = useTranslation('common');
     return (
         <>
+            <Grid item><h2>{t(model.label)}</h2></Grid>
+            <Divider />
+            <Grid container direction='row' spacing={2}>
             {
                 model.fields.map((modelField, i) => {
                     if (modelField.type === 'array') {
@@ -14,7 +17,7 @@ const ViewDataFragment = (({ model, elementData, extraComponent }) => {
                             modelField.sortBy === undefined
                                 ? elementData[modelField.field]
                                 : elementData[modelField.field].sort((a, b) => a[modelField.sortBy] - b[modelField.sortBy]);
-                        console.log(elementData);
+                        
                         return (
                             data.map((elem, j) => (
                                 <ViewDataFragment
@@ -35,10 +38,10 @@ const ViewDataFragment = (({ model, elementData, extraComponent }) => {
                         );
                     }
                     return modelField.hidden !== undefined && modelField.hidden ? null :
-                        <TableRow key={'row' + i}>
-                            <TableCell align="left">{t(modelField.headerName)}</TableCell>
-                            <TableCell align="left">{elementData[modelField.field]}</TableCell>
-                        </TableRow>
+                        <Grid container item xs={6} spacing={2} key={'row' + i}>
+                            <Grid item xs={6} style={{ display: "flex", justifyContent: "flex-end" }}>{t(modelField.headerName)}</Grid>
+                            <Grid item xs={6}>{elementData[modelField.field]}</Grid>
+                        </Grid>
                         ;
                 })
             }
@@ -51,6 +54,7 @@ const ViewDataFragment = (({ model, elementData, extraComponent }) => {
                     </TableRow> :
                     null
             }
+            </Grid>
         </>
     );
 });
