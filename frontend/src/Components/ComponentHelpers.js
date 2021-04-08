@@ -70,6 +70,21 @@ const mapResponseToModel = (data, model, setFormData) => {
 
     // Start the model mapping
     setData(data, model, false);
-}
+};
 
-export { createEmptyDataObject, mapResponseToModel };
+const createIncludeFilter = (model) => {
+    let recursiveFun = (currentModel) => {
+        return {
+            include: currentModel.fields.filter(x => x.nested || x.selector).map((x) => {
+                let obj = {
+                    relation: x.field
+                };
+                if (x.nested)
+                    obj.scope = recursiveFun(x.nested);
+                return obj;
+            })
+        }
+    };
+    return recursiveFun(model);
+}
+export { createEmptyDataObject, mapResponseToModel, createIncludeFilter };

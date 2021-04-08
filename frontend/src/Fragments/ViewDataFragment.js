@@ -12,6 +12,9 @@ const ViewDataFragment = (({ model, elementData, extraComponent }) => {
             <Grid container direction='row' spacing={2}>
             {
                 model.fields.map((modelField, i) => {
+                    if (modelField.selector && elementData[modelField] !== undefined && elementData[modelField.field][modelField.selector] !== undefined) {
+                        elementData[modelField.field] = elementData[modelField.field][modelField.selector];
+                    }
                     if (modelField.type === 'array') {
                         let data =
                             modelField.sortBy === undefined
@@ -37,10 +40,13 @@ const ViewDataFragment = (({ model, elementData, extraComponent }) => {
                             ))
                         );
                     }
+                    
+                    let fieldData = modelField.selector ? elementData[modelField.field][modelField.selector] : elementData[modelField.field];
+
                     return modelField.hidden !== undefined && modelField.hidden ? null :
                         <Grid container item xs={6} spacing={2} key={'row' + i}>
                             <Grid item xs={6} style={{ display: "flex", justifyContent: "flex-end" }}>{t(modelField.headerName)}</Grid>
-                            <Grid item xs={6}>{elementData[modelField.field]}</Grid>
+                            <Grid item xs={6}>{fieldData}</Grid>
                         </Grid>
                         ;
                 })

@@ -2,20 +2,10 @@ import React from 'react';
 import ViewComponent from '../Components/ViewComponent';
 import TuneModel from '../Models/TuneModel';
 import { Grid } from '@material-ui/core';
+import { createIncludeFilter } from '../Components/ComponentHelpers';
 
 const TuneView = () => {
-    let filter = {
-        include: [
-            {
-                relation: "tuneTranscriptions",
-                scope: {
-                    include: [
-                        { relation: "tuneMelodies" }
-                    ]
-                }
-            }
-        ]
-    };
+    let filter = createIncludeFilter(TuneModel.view);
     return (
         <Grid
             item xs={9}>

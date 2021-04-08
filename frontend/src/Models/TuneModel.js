@@ -1,5 +1,7 @@
 import modelParser from './ModelParser';
+import NationModel from './NationModel';
 import TuneMelodyModel from './TuneMelodyModel';
+import TunePlaceModel from './TunePlace';
 import TuneTranscriptionModel from './TuneTransciptionModel';
 
 const TuneModel = modelParser({
@@ -11,9 +13,9 @@ const TuneModel = modelParser({
             { field: 'soundReference', headerName: 'tune.soundReference', width: 170 },
             { field: 'videoReference', headerName: 'tune.videoReference', width: 170 },
             { field: 'catalogue', headerName: 'tune.catalogue', width: 170 },
-            { field: 'nationId', headerName: 'tune.nation', width: 70 },
-            { field: 'languageId', headerName: 'tune.language', width: 70 },
-            { field: 'countryId', headerName: 'tune.country', width: 70 }
+            { field: 'nations', headerName: 'tune.nation', selector: 'title', width: 170 },
+            { field: 'languages', headerName: 'tune.language', selector: 'title', width: 100 },
+            { field: 'countries', headerName: 'tune.country', selector: 'title', width: 100 }
         ]
     },
     view: {
@@ -21,11 +23,11 @@ const TuneModel = modelParser({
         fields: [
             { field: 'id', hidden: true, headerName: 'common.id' },
             { field: 'tuneReference', headerName: 'tune.tuneReference' },
-            { field: 'nationId', headerName: 'tune.nation' },
+            { field: 'nations', headerName: 'tune.nation', selector: 'title' },
             { field: 'textReference', headerName: 'tune.textReference' },
-            { field: 'languageId', headerName: 'tune.language' },
+            { field: 'languages', headerName: 'tune.language', selector: 'title' },
             { field: 'soundReference', headerName: 'tune.soundReference' },
-            { field: 'countryId', headerName: 'tune.country' },
+            { field: 'countries', headerName: 'tune.country', selector: 'title' },
             { field: 'videoReference', headerName: 'tune.videoReference' },
             { field: 'publications', headerName: 'tune.publications' },
             { field: 'catalogue', headerName: 'tune.catalogue' },
@@ -33,10 +35,35 @@ const TuneModel = modelParser({
             { field: 'verifiedBy', headerName: 'tune.verifiedBy' },
             { field: 'verified', headerName: 'tune.verified' },
             {
+                field: 'tunePlaces',
+                type: 'array',
+                nested: TunePlaceModel.view
+            },
+            {
                 field: 'tuneTranscriptions',
                 type: 'array',
                 nested: TuneTranscriptionModel.view
-            }
+            },
+            // {
+            //     field: 'tunePlaces',
+            //     type: 'array',
+            //     nested: TuneTranscriptionModel.view
+            // },
+            // {
+            //     field: 'tuneSongs',
+            //     type: 'array',
+            //     nested: TuneTranscriptionModel.view
+            // },
+            // {
+            //     field: 'tuneEncodings',
+            //     type: 'array',
+            //     nested: TuneTranscriptionModel.view
+            // },
+            // {
+            //     field: 'tunePersonsRoles',
+            //     type: 'array',
+            //     nested: TuneTranscriptionModel.view
+            // },
         ]
     },
     edit: {
