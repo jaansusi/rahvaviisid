@@ -23,7 +23,7 @@ export class TuneEncodings extends Entity {
     scale: 0,
     postgresql: {columnName: 'tune_id', dataType: 'integer', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'NO'},
   })
-  tuneId: number;
+  tunesId: number;
 
   @property({
     type: 'number',
