@@ -1,65 +1,72 @@
 import React from 'react';
 import { useTranslation } from "react-i18next";
-import { TableRow, TableCell, Grid, Divider } from '@material-ui/core';
-import TunePlayer from '../Tunes/TunePlayer';
+import { Grid, Divider } from '@material-ui/core';
+import { Pagination } from '@material-ui/lab';
+import ViewDataElement from '../Elements/ViewDataElement';
 
 const ViewDataFragment = (({ model, elementData, extraComponent }) => {
     const { t } = useTranslation('common');
+    if (!elementData)
+        return null;
     return (
         <>
             <Grid item><h2>{t(model.label)}</h2></Grid>
             <Divider />
             <Grid container direction='row' spacing={2}>
-            {
-                model.fields.map((modelField, i) => {
-                    if (modelField.selector && elementData[modelField] !== undefined && elementData[modelField.field][modelField.selector] !== undefined) {
-                        elementData[modelField.field] = elementData[modelField.field][modelField.selector];
-                    }
-                    if (modelField.type === 'array') {
-                        let data =
-                            modelField.sortBy === undefined
-                                ? elementData[modelField.field]
-                                : elementData[modelField.field].sort((a, b) => a[modelField.sortBy] - b[modelField.sortBy]);
-                        
-                        return (
-                            data.map((elem, j) => (
-                                <ViewDataFragment
-                                    model={modelField.nested}
-                                    elementData={elem}
-                                    key={'viewfragment' + i + j}
-                                    title={t(modelField.nested.headerName) + (j + 1)}
-                                    extraComponent={
-                                        modelField.extraComponent === 'TunePlayer' ?
-                                            <TunePlayer
-                                                formData={elementData}
-                                                index={j}
-                                            />
-                                            : undefined
-                                    }
-                                />
-                            ))
-                        );
-                    }
-                    
-                    let fieldData = modelField.selector ? elementData[modelField.field][modelField.selector] : elementData[modelField.field];
+                {
+                    model.fields.map((modelField, i) => {
+                        if (modelField.hidden)
+                            return null;
+                        let dataInArray = modelField.array ?
+                            elementData[modelField.field] :
+                            [elementData[modelField.field]];
 
-                    return modelField.hidden !== undefined && modelField.hidden ? null :
-                        <Grid container item xs={6} spacing={2} key={'row' + i}>
-                            <Grid item xs={6} style={{ display: "flex", justifyContent: "flex-end" }}>{t(modelField.headerName)}</Grid>
-                            <Grid item xs={6}>{fieldData}</Grid>
-                        </Grid>
-                        ;
-                })
-            }
-            {
-                extraComponent !== undefined ?
-                    <TableRow>
-                        <TableCell>
-                            {extraComponent}
-                        </TableCell>
-                    </TableRow> :
-                    null
-            }
+                        // Decide on the elements width, based on model type
+                        let fieldWidth;
+                        switch (modelField.type) {
+                            case 'model':
+                                fieldWidth = 12;
+                                break;
+                            default:
+                                fieldWidth = 6;
+                                break;
+                        }
+                        return (
+                            <Grid item xs={fieldWidth} key={i}>
+                                {
+                                    dataInArray.map((singleData, j) => {
+                                        if (!modelField.nested) {
+                                            return (
+                                                <ViewDataElement
+                                                    key={j}
+                                                    model={modelField}
+                                                    value={
+                                                        modelField.selector ?
+                                                            singleData[modelField.selector] :
+                                                            singleData
+                                                    } />
+                                            );
+                                        } else {
+                                            return (
+                                                <ViewDataFragment
+                                                    model={modelField.nested}
+                                                    elementData={singleData}
+                                                />
+                                            );
+                                        }
+                                    })
+                                }
+                                {
+                                    modelField.array ?
+                                        <Pagination 
+                                        count={dataInArray.length}
+                                        /> :
+                                        null
+                                }
+                            </Grid>
+                        )
+                    })
+                }
             </Grid>
         </>
     );

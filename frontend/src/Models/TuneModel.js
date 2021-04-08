@@ -1,5 +1,4 @@
 import modelParser from './ModelParser';
-import NationModel from './NationModel';
 import TuneMelodyModel from './TuneMelodyModel';
 import TunePlaceModel from './TunePlace';
 import TuneTranscriptionModel from './TuneTransciptionModel';
@@ -36,12 +35,14 @@ const TuneModel = modelParser({
             { field: 'verified', headerName: 'tune.verified' },
             {
                 field: 'tunePlaces',
-                type: 'array',
+                type: 'model',
+                array: true,
                 nested: TunePlaceModel.view
             },
             {
                 field: 'tuneTranscriptions',
-                type: 'array',
+                type: 'model',
+                array: true,
                 nested: TuneTranscriptionModel.view
             },
             // {
