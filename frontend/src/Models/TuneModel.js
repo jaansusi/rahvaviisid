@@ -1,6 +1,6 @@
 import modelParser from './ModelParser';
 import TuneMelodyModel from './TuneMelodyModel';
-import TunePlaceModel from './TunePlace';
+import TunePlaceModel from './TunePlaceModel';
 import TuneTranscriptionModel from './TuneTransciptionModel';
 
 const TuneModel = modelParser({
@@ -35,9 +35,8 @@ const TuneModel = modelParser({
             { field: 'verified', headerName: 'tune.verified' },
             {
                 field: 'tunePlaces',
-                type: 'model',
-                array: true,
-                nested: TunePlaceModel.view
+                type: 'table',
+                nested: TunePlaceModel.table
             },
             {
                 field: 'tuneTranscriptions',

@@ -1,17 +1,15 @@
 import modelParser from './ModelParser';
 
 const TunePlaceModel = modelParser({
-    view: {
-        label: 'tune.place',
+    table: {
+        label: 'place.place',
         fields: [
-            { field: 'id', hidden: true },
-            { field: 'tunesId', hidden: true },
-            { field: 'personId', headerName: 'person.name' },
-            { field: 'tunePlaceTypeId', headerName: 'tune.place.type' },
-            { field: 'parishId', headerName: 'location.parish' },
-            { field: 'municipalityId', headerName: 'location.municipality' },
-            { field: 'villageId', headerName: 'location.village' },
-            { field: 'otherPlace', headerName: 'tune.place.other' },
+            { field: 'persons', headerName: 'person.name', selector: ['givenName' , 'surname']},
+            { field: 'tunePlaceTypes', headerName: 'place.type', selector: 'title' },
+            { field: 'parishes', headerName: 'place.parish', selector: 'title' },
+            { field: 'municipalities', headerName: 'place.municipality', selector: 'title' },
+            { field: 'villages', headerName: 'place.village', selector: 'title' },
+            { field: 'otherPlace', headerName: 'place.other' },
             { field: 'remarks', headerName: 'tune.remarks' }
         ]
     },

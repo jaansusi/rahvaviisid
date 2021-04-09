@@ -12,6 +12,9 @@ const createEmptyDataObject = (currentModel) => {
                 case 'boolean':
                     value = true;
                     break;
+                case 'table':
+                    value = [];
+                    break;
                 default:
                     value = value === undefined ? '' : value;
             }

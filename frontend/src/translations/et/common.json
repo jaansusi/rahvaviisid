@@ -30,6 +30,7 @@
     "person": {
         "person": "Isik",
         "pid": "PID",
+        "name": "Nimi",
         "givenName": "Eesnimi",
         "surname": "Perekonnanimi",
         "nickname": "Hüüdnimi",
@@ -72,10 +73,11 @@
     },
     "place": {
         "place": "Koht",
-        "type": "Liik",
+        "type": "Koha liik",
         "parish": "Kihelkond",
         "municipality": "Vald",
-        "village": "Küla"
+        "village": "Küla",
+        "other": "Muu koht"
     },
     "performance": {
         "performance": "Esitus",
