@@ -58,12 +58,11 @@ const TuneModel = modelParser({
                 type: 'table',
                 nested: TunePersonsModel.table
             },
-            //tunePerformances annab millegipärast viga.
-            // {
-            //     field: 'tunePerformances',
-            //     type: 'table',
-            //     nested: TunePerformancesModel.table
-            // },
+            {
+                field: 'tunePerformances',
+                type: 'table',
+                nested: TunePerformancesModel.table
+            },
             {
                 field: 'tuneSongs',
                 type: 'table',
