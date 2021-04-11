@@ -1,6 +1,7 @@
 import modelParser from './ModelParser';
 import TuneMelodyModel from './TuneMelodyModel';
 import TunePlaceModel from './TunePlaceModel';
+import TuneEncodingModel from './TuneEncodingModel';
 import TuneTranscriptionModel from './TuneTransciptionModel';
 
 const TuneModel = modelParser({
@@ -39,6 +40,11 @@ const TuneModel = modelParser({
                 nested: TunePlaceModel.table
             },
             {
+                field: 'tuneEncodings',
+                type: 'table',
+                nested: TuneEncodingModel.table
+            },
+            {
                 field: 'tuneTranscriptions',
                 type: 'model',
                 array: true,
@@ -54,11 +60,7 @@ const TuneModel = modelParser({
             //     type: 'array',
             //     nested: TuneTranscriptionModel.view
             // },
-            // {
-            //     field: 'tuneEncodings',
-            //     type: 'array',
-            //     nested: TuneTranscriptionModel.view
-            // },
+
             // {
             //     field: 'tunePersonsRoles',
             //     type: 'array',

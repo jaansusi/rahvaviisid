@@ -108,8 +108,8 @@
         "source": "Noodistuse alus",
         "personRole": "Tegija roll"
     },
-    "coding": {
-        "coding": "Kodeering",
+    "encoding": {
+        "encoding": "Kodeering",
         "keySignature": "Võtmemärk",
         "supportSound": "Tugiheli",
         "pitch": "Kõrgus",
