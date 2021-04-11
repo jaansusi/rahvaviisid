@@ -3,6 +3,9 @@ import TuneMelodyModel from './TuneMelodyModel';
 import TunePlaceModel from './TunePlaceModel';
 import TuneEncodingModel from './TuneEncodingModel';
 import TuneTranscriptionModel from './TuneTransciptionModel';
+import TunePerformancesModel from './TunePerformancesModel';
+import TunePersonsModel from './TunePersonsModel';
+import TuneSongsModel from './TuneSongsModel';
 
 const TuneModel = modelParser({
     apiPath: 'tunes',
@@ -50,22 +53,24 @@ const TuneModel = modelParser({
                 array: true,
                 nested: TuneTranscriptionModel.view
             },
+            {
+                field: 'tunesPersonsRoles',
+                type: 'table',
+                nested: TunePersonsModel.table
+            },
+            //tunePerformances annab millegipärast viga.
             // {
-            //     field: 'tunePlaces',
-            //     type: 'array',
-            //     nested: TuneTranscriptionModel.view
+            //     field: 'tunePerformances',
+            //     type: 'table',
+            //     nested: TunePerformancesModel.table
             // },
-            // {
-            //     field: 'tuneSongs',
-            //     type: 'array',
-            //     nested: TuneTranscriptionModel.view
-            // },
+            {
+                field: 'tuneSongs',
+                type: 'table',
+                nested: TuneSongsModel.table
+            },
 
-            // {
-            //     field: 'tunePersonsRoles',
-            //     type: 'array',
-            //     nested: TuneTranscriptionModel.view
-            // },
+
         ]
     },
     edit: {
