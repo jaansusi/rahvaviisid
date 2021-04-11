@@ -1,12 +1,10 @@
 const createEmptyDataObject = (currentModel) => {
-    let arr = currentModel.map((elem) => [
+    let arr = currentModel.fields.map((elem) => [
         elem.field,
         // Run an IIFE since we don't need a defined function here and a one-liner would be too confusing
         (() => {
             let value = undefined;
-            // If a value should be nested, let's recurse into the nested model
-            if (elem.nested !== undefined)
-                value = createEmptyDataObject(elem.nested.fields);
+
             // If the model field has a type defined, assign it here.
             switch (elem.type) {
                 case 'boolean':
@@ -15,20 +13,32 @@ const createEmptyDataObject = (currentModel) => {
                 case 'table':
                     value = [];
                     break;
-                case 'array':
-                    value = [];
+                case 'model':
+                    // If a value should be nested, let's recurse into the nested model
+                    if (elem.nested !== undefined){
+                        value = createEmptyDataObject(elem.nested);
+                        //console.log(value)
+                    }
+                    else
+                        value = {};
+                    return [];
                     break;
                 default:
                     value = value === undefined ? '' : value;
             }
+            // If there's a selector, there should be an object
+            if (elem.selector !== undefined)
+                value = {[elem.selector]: value};
+
             // If the field should be an array, let's make it into one
             if (elem.array)
-                value = [value]
+                value = [value];
             return value;
         })(),
     ]);
     let model = new Map(arr);
-    return Object.fromEntries(model);
+    let object = Object.fromEntries(model);
+    return object;
 };
 
 const mapResponseToModel = (data, model, setFormData) => {

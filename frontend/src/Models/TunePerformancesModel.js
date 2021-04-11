@@ -5,8 +5,8 @@ const TunePerformancesModel = modelParser({
         label: 'performance.performance',
         fields: [
             { field: 'actualPerformanceTypes', headerName: 'performance.actual.type', selector: 'title'},
-            { field: 'traditionalPerformanceTypes', headerName: 'performance.traditional.type',selector: 'title'},
-            { field: 'actualActionTypes', headerName: 'performance.actual.action',selector: 'title'},
+            { field: 'traditionalPerformanceTypes', headerName: 'performance.traditional.type', selector: 'title'},
+            { field: 'actualActionTypes', headerName: 'performance.actual.action', selector: 'title'},
             { field: 'accompaniment', headerName: 'tunepeformances.accompaniment'},
             { field: 'remarks', headerName: 'common.remarks'}
         ]

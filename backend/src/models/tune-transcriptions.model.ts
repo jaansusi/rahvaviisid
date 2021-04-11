@@ -1,5 +1,6 @@
-import {Entity, hasMany, model, property} from '@loopback/repository';
+import {Entity, hasMany, model, property, hasOne} from '@loopback/repository';
 import { TuneMelodies } from './tune-melodies.model';
+import {TranscriptionSources} from './transcription-sources.model';
 
 @model({
   settings: {
@@ -50,6 +51,8 @@ export class TuneTranscriptions extends Entity {
   @hasMany(() => TuneMelodies, { keyTo: 'tune_id'})
   tuneMelodies?: TuneMelodies[];
 
+  @hasOne(() => TranscriptionSources, {keyFrom: 'transcriptionSourceId', keyTo: 'id'})
+  transcriptionSources: TranscriptionSources;
   // Define well-known properties here
 
   // Indexer property to allow additional data

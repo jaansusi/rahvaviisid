@@ -5,7 +5,6 @@ import {inject, Getter} from '@loopback/core';
 import {ActualPerformanceTypesRepository} from './actual-performance-types.repository';
 import {ActualActionTypesRepository} from './actual-action-types.repository';
 import {TraditionalPerformanceTypesRepository} from './traditional-performance-types.repository';
-import {TraditionalActionTypesRepository} from './traditional-action-types.repository';
 
 export class TunePerformancesRepository extends DefaultCrudRepository<
   TunePerformances,
@@ -19,14 +18,10 @@ export class TunePerformancesRepository extends DefaultCrudRepository<
 
   public readonly traditionalPerformanceTypes: HasOneRepositoryFactory<TraditionalPerformanceTypes, typeof TunePerformances.prototype.id>;
 
-  public readonly traditionalActionTypes: HasOneRepositoryFactory<TraditionalActionTypes, typeof TunePerformances.prototype.id>;
-
   constructor(
-    @inject('datasources.db') dataSource: DbDataSource, @repository.getter('ActualPerformanceTypesRepository') protected actualPerformanceTypesRepositoryGetter: Getter<ActualPerformanceTypesRepository>, @repository.getter('ActualActionTypesRepository') protected actualActionTypesRepositoryGetter: Getter<ActualActionTypesRepository>, @repository.getter('TraditionalPerformanceTypesRepository') protected traditionalPerformanceTypesRepositoryGetter: Getter<TraditionalPerformanceTypesRepository>, @repository.getter('TraditionalActionTypesRepository') protected traditionalActionTypesRepositoryGetter: Getter<TraditionalActionTypesRepository>,
+    @inject('datasources.db') dataSource: DbDataSource, @repository.getter('ActualPerformanceTypesRepository') protected actualPerformanceTypesRepositoryGetter: Getter<ActualPerformanceTypesRepository>, @repository.getter('ActualActionTypesRepository') protected actualActionTypesRepositoryGetter: Getter<ActualActionTypesRepository>, @repository.getter('TraditionalPerformanceTypesRepository') protected traditionalPerformanceTypesRepositoryGetter: Getter<TraditionalPerformanceTypesRepository>,
   ) {
     super(TunePerformances, dataSource);
-    this.traditionalActionTypes = this.createHasOneRepositoryFactoryFor('traditionalActionTypes', traditionalActionTypesRepositoryGetter);
-    this.registerInclusionResolver('traditionalActionTypes', this.traditionalActionTypes.inclusionResolver);
     this.traditionalPerformanceTypes = this.createHasOneRepositoryFactoryFor('traditionalPerformanceTypes', traditionalPerformanceTypesRepositoryGetter);
     this.registerInclusionResolver('traditionalPerformanceTypes', this.traditionalPerformanceTypes.inclusionResolver);
     this.actualActionTypes = this.createHasOneRepositoryFactoryFor('actualActionTypes', actualActionTypesRepositoryGetter);

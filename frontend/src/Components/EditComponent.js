@@ -21,7 +21,7 @@ const EditComponent = ({ model, extraComponent, filter, newItem }) => {
     
     let [formData, setFormData] = useReducer(
         formReducer,
-        createEmptyDataObject(model.fields)
+        createEmptyDataObject(model)
     );
 
     let [submitting, setSubmitting] = useState(false);

@@ -51,15 +51,20 @@ const ViewDataElement = (({ model, value }) => {
                 </>
             );
         case 'model':
-            return (
-                <>
-                {JSON.stringify(value)}
-                <ViewDataFragment
+            console.log(model.array);
+            if (model.array)
+                return value.map((elemValue, i) =>
+                    <ViewDataFragment
+                        model={model.nested}
+                        elementData={value}
+                        key={i}
+                    />
+                );
+            else
+                return <ViewDataFragment
                     model={model.nested}
                     elementData={value}
                 />
-                </>
-            );
         default:
             return (
                 <Grid container spacing={2}>

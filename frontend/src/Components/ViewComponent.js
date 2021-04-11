@@ -19,8 +19,9 @@ const ViewComponent = (({ model, filter, extraComponent }) => {
     };
     let [formData, setFormData] = useReducer(
         formReducer,
-        createEmptyDataObject(model.fields)
+        createEmptyDataObject(model)
     );
+    console.log(createEmptyDataObject(model));
     useEffect(() => {
         axios
             .get(config.apiUrl + '/' + model.apiPath + '/' + id + (filter !== undefined ? '?filter=' + encodeURIComponent(JSON.stringify(filter)) : ''))
