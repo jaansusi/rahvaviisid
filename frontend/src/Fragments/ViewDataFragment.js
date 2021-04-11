@@ -22,6 +22,9 @@ const ViewDataFragment = (({ model, elementData }) => {
                             case 'model':
                                 fieldWidth = 12;
                                 break;
+                            case 'table':
+                                fieldWidth = 12;
+                                break;
                             default:
                                 fieldWidth = 6;
                                 break;
