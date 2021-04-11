@@ -5,17 +5,14 @@ const TuneTranscriptionModel = modelParser({
     view: {
         label: 'tune.transcription',
         fields: [
-            { field: 'id', hidden: true },
-            { field: 'tunesId', hidden: true },
-            { field: 'transcriptionSourceId', headerName: 'tune.alter' },
-            { field: 'created', headerName: 'tune.tempo' },
-            { field: 'modified', headerName: 'tune.rhythmType' },
+            { field: 'transcriptionSources', headerName: 'transcription.source', selector: 'title' },
+            { field: 'created', headerName: 'date.created' },
+            { field: 'modified', headerName: 'date.modified' },
             {
                 field: 'tuneMelodies',
-                headerName: 'tune.variation',
-                type: 'array',
+                type: 'model',
+                array: true,
                 sortBy: 'variationIndex',
-                extraComponent: 'TunePlayer',
                 nested: TuneMelodyModel.view
             }
         ]

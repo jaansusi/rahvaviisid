@@ -22,7 +22,8 @@
     },
     "date": {
         "created": "Loodud",
-        "modified": "Muudetud"
+        "modified": "Muudetud",
+        "verified": "Kontrollitud"
     },
     "home": {
         "home": "Kodu"

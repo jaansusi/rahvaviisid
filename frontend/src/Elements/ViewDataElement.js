@@ -16,21 +16,21 @@ const ViewDataElement = (({ model, value }) => {
                         <TableHead>
                             <TableRow>
                                 {
-                                    model.nested.fields.map((field) => {
-                                        return (<TableCell>{t(field.headerName)}</TableCell>);
+                                    model.nested.fields.map((field, i) => {
+                                        return (<TableCell key={i}>{t(field.headerName)}</TableCell>);
                                     })
                                 }
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             {
-                                value.map((row) => {
+                                value.map((row, i) => {
                                     return (
-                                        <TableRow>
+                                        <TableRow key={i}>
                                             {
-                                                model.nested.fields.map((field) => {
+                                                model.nested.fields.map((field, j) => {
                                                     return (
-                                                        <TableCell>
+                                                        <TableCell key={j}>
                                                             {
                                                                 field.selector ?
                                                                     Array.isArray(field.selector) ?
@@ -52,10 +52,13 @@ const ViewDataElement = (({ model, value }) => {
             );
         case 'model':
             return (
+                <>
+                {JSON.stringify(value)}
                 <ViewDataFragment
                     model={model.nested}
-                    elementData={value[model.field]}
+                    elementData={value}
                 />
+                </>
             );
         default:
             return (

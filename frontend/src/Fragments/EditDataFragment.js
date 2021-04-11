@@ -2,7 +2,7 @@ import React from 'react';
 import { Grid } from '@material-ui/core';
 import './EditDataFragment.css';
 import TunePlayer from '../Tunes/TunePlayer';
-import FormInputComponent from '../Components/FormInputComponent';
+import EditFormElement from '../Elements/EditFormElement';
 import { useTranslation } from 'react-i18next';
 
 const EditDataFragment = ({
@@ -94,7 +94,7 @@ const EditDataFragment = ({
 
                             // If the field does not have any children, return the form element for it.
                             return (
-                                <FormInputComponent
+                                <EditFormElement
                                     key={modelField.field}
                                     model={modelField}
                                     value={formData[modelField.field]}

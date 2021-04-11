@@ -75,8 +75,6 @@ const TuneModel = modelParser({
     edit: {
         fields: [
             { field: 'id', hidden: true },
-            { field: 'created', hidden: true },
-            { field: 'modified', hidden: true },
             { field: 'tuneStateId', type: 'dropdown', apiPath: 'tune-states', headerName: 'tune.state' },
             { field: 'textReference', headerName: 'tune.textReference' },
             { field: 'tuneReference', headerName: 'tune.tuneReference' },
@@ -93,7 +91,9 @@ const TuneModel = modelParser({
             { field: 'publications', headerName: 'tune.publications' },
             { field: 'remarks', headerName: 'tune.remarks' },
             { field: 'verifiedBy', type: 'number', headerName: 'tune.verifiedBy' },
-            { field: 'verified', hidden: true },
+            { field: 'verified', type: 'view', headerName: 'date.verified' },
+            { field: 'created', type: 'view', headerName: 'date.created' },
+            { field: 'modified', type: 'view', headerName: 'date.modified' },
             {
                 field: 'tuneMelodies',
                 type: 'array',

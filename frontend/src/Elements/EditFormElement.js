@@ -1,12 +1,12 @@
 import { FormControl, Grid, InputLabel, MenuItem, Select, TextField } from '@material-ui/core';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import './Css/FormInputComponent.css';
+import './Css/EditFormElement.css';
 
 
-const FormInputComponent = (({ model, value, handleChange, index }) => {
+const EditFormElement = (({ model, value, handleChange, index }) => {
     const { t } = useTranslation('common');
-    
+
     switch (model.type) {
         case 'textbox':
             return (
@@ -41,8 +41,18 @@ const FormInputComponent = (({ model, value, handleChange, index }) => {
                     </FormControl>
                 </Grid>
             );
-        case 'array':
-            return (<></>);
+        case 'view':
+            return (
+                <Grid
+                    item
+                    xs={4}
+                    className='form-edit-item'
+                >
+                    <FormControl className='form-input-element' variant='outlined'>
+                        <TextField disabled name={model.field} label={t(model.headerName)} value={value} onChange={(e) => handleChange(e, index)} variant='outlined' />
+                    </FormControl>
+                </Grid>
+            );
         default:
             return (
                 <Grid
@@ -60,4 +70,4 @@ const FormInputComponent = (({ model, value, handleChange, index }) => {
 
 });
 
-export default FormInputComponent;
+export default EditFormElement;

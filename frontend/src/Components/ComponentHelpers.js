@@ -15,6 +15,9 @@ const createEmptyDataObject = (currentModel) => {
                 case 'table':
                     value = [];
                     break;
+                case 'array':
+                    value = [];
+                    break;
                 default:
                     value = value === undefined ? '' : value;
             }
