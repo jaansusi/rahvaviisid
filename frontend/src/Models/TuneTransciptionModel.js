@@ -8,13 +8,13 @@ const TuneTranscriptionModel = modelParser({
             { field: 'transcriptionSources', headerName: 'transcription.source', selector: 'title' },
             { field: 'created', headerName: 'date.created' },
             { field: 'modified', headerName: 'date.modified' },
-            // {
-            //     field: 'tuneMelodies',
-            //     type: 'model',
-            //     array: true,
-            //     sortBy: 'variationIndex',
-            //     nested: TuneMelodyModel.view
-            // }
+            {
+                field: 'tuneMelodies',
+                type: 'model',
+                array: true,
+                sortBy: 'variationIndex',
+                nested: TuneMelodyModel.view
+            }
         ]
     },
     // edit: {

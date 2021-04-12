@@ -9,7 +9,7 @@ import { mapResponseToModel } from './ComponentHelpers';
 import { Grid } from '@material-ui/core';
 import Actions from './Buttons/Actions';
 
-const ViewComponent = (({ model, filter, extraComponent }) => {
+const ViewComponent = (({ model, filter }) => {
     let { id } = useParams();
     const formReducer = (state, event) => {
         return {

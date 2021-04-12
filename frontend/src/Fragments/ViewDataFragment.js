@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from "react-i18next";
 import { Grid, Divider } from '@material-ui/core';
 import ViewDataElement from '../Elements/ViewDataElement';
+import TunePlayer from '../Tunes/TunePlayer';
 
 const ViewDataFragment = (({ model, elementData }) => {
     const { t } = useTranslation('common');
@@ -25,6 +26,9 @@ const ViewDataFragment = (({ model, elementData }) => {
                             case 'table':
                                 fieldWidth = 12;
                                 break;
+                            case 'player':
+                                fieldWidth = 12;
+                                break;
                             default:
                                 fieldWidth = 6;
                                 break;
@@ -32,10 +36,16 @@ const ViewDataFragment = (({ model, elementData }) => {
                         return (
                             <Grid item xs={fieldWidth} key={i}>
                                 {
-                                    <ViewDataElement
-                                        model={modelField}
-                                        value={elementData[modelField.field]
-                                        } />
+                                    modelField.type !== 'player' ?
+                                        <ViewDataElement
+                                            model={modelField}
+                                            value={elementData[modelField.field]
+                                            } />
+                                        : <TunePlayer
+                                            formData={elementData}
+                                            editable={false}
+                                            index={i}
+                                        />
                                 }
                             </Grid>
                         )

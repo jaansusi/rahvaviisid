@@ -12,7 +12,6 @@ const TuneView = () => {
             <ViewComponent
                 filter={filter}
                 model={TuneModel.view}
-                extraComponent={['TunePlayer']}
             />
         </Grid>
     );

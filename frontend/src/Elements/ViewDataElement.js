@@ -3,10 +3,9 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import ViewDataFragment from '../Fragments/ViewDataFragment';
 
-
 const ViewDataElement = (({ model, value }) => {
     const { t } = useTranslation('common');
-    if (value === undefined) 
+    if (value === undefined)
         return null;
     switch (model.type) {
         case 'table':
@@ -56,7 +55,7 @@ const ViewDataElement = (({ model, value }) => {
                 return value.map((elemValue, i) =>
                     <ViewDataFragment
                         model={model.nested}
-                        elementData={value}
+                        elementData={elemValue}
                         key={i}
                     />
                 );
