@@ -5,7 +5,7 @@ import {
 import config from '../config';
 import ViewDataFragment from '../Fragments/ViewDataFragment';
 import axios from 'axios';
-import { createEmptyDataObject, mapResponseToModel } from './ComponentHelpers';
+import { mapResponseToModel } from './ComponentHelpers';
 import { Grid } from '@material-ui/core';
 import Actions from './Buttons/Actions';
 
@@ -19,7 +19,7 @@ const ViewComponent = (({ model, filter, extraComponent }) => {
     };
     let [formData, setFormData] = useReducer(
         formReducer,
-        {} //createEmptyDataObject(model)
+        {}
     );
     useEffect(() => {
         axios

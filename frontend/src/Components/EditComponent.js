@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import config from '../config';
 import EditDataFragment from '../Fragments/EditDataFragment';
 import axios from 'axios';
-import { createEmptyDataObject, mapResponseToModel } from './ComponentHelpers';
+import { mapResponseToModel } from './ComponentHelpers';
 import Actions from './Buttons/Actions';
 
 const EditComponent = ({ model, extraComponent, filter, newItem }) => {
@@ -21,7 +21,7 @@ const EditComponent = ({ model, extraComponent, filter, newItem }) => {
     
     let [formData, setFormData] = useReducer(
         formReducer,
-        {}//createEmptyDataObject(model)
+        {}
     );
 
     let [submitting, setSubmitting] = useState(false);
