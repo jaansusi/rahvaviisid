@@ -108,4 +108,4 @@ const createIncludeFilter = (model) => {
     };
     return recursiveFun(model);
 }
-export { createEmptyDataObject, mapResponseToModel, createIncludeFilter };
+export { mapResponseToModel, createIncludeFilter };

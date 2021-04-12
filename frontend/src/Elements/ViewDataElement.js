@@ -6,7 +6,8 @@ import ViewDataFragment from '../Fragments/ViewDataFragment';
 
 const ViewDataElement = (({ model, value }) => {
     const { t } = useTranslation('common');
-
+    if (value === undefined) 
+        return null;
     switch (model.type) {
         case 'table':
             return (
@@ -51,7 +52,6 @@ const ViewDataElement = (({ model, value }) => {
                 </>
             );
         case 'model':
-            console.log(model.array);
             if (model.array)
                 return value.map((elemValue, i) =>
                     <ViewDataFragment
@@ -72,7 +72,11 @@ const ViewDataElement = (({ model, value }) => {
                         style={{ display: "flex", justifyContent: "flex-end" }}>
                         {t(model.headerName)}
                     </Grid>
-                    <Grid item xs={6}>{model.selector ? value[model.selector] : value}</Grid>
+                    { value !== undefined ?
+                        <Grid item xs={6}>{model.selector ? value[model.selector] : value}</Grid>
+                        : null
+                    }
+
                 </Grid>
             );
     }

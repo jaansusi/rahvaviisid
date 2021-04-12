@@ -5,7 +5,7 @@ const TuneTranscriptionModel = modelParser({
     view: {
         label: 'tune.transcription',
         fields: [
-            // { field: 'transcriptionSources', headerName: 'transcription.source', selector: 'title' },
+            { field: 'transcriptionSources', headerName: 'transcription.source', selector: 'title' },
             { field: 'created', headerName: 'date.created' },
             { field: 'modified', headerName: 'date.modified' },
             // {
