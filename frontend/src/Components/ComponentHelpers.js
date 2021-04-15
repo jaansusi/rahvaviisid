@@ -65,4 +65,9 @@ const createIncludeFilter = (model) => {
     };
     return recursiveFun(model);
 }
-export { mapResponseToModel, createIncludeFilter };
+
+const parseFormResponse = (response) => {
+    console.log(response);
+    return null;
+}
+export { mapResponseToModel, createIncludeFilter, parseFormResponse };

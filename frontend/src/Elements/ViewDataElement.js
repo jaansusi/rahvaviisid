@@ -1,4 +1,4 @@
-import { Grid, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
+import { Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import ViewDataFragment from '../Fragments/ViewDataFragment';
@@ -12,42 +12,44 @@ const ViewDataElement = (({ model, value }) => {
             return (
                 <>
                     <h2>{t(model.nested.label)}</h2>
-                    <Table>
-                        <TableHead>
-                            <TableRow>
+                    <TableContainer component={Paper}>
+                        <Table>
+                            <TableHead>
+                                <TableRow>
+                                    {
+                                        model.nested.fields.map((field, i) => {
+                                            return (<TableCell align={i === 0 ? 'left' : 'right'} key={i}>{t(field.headerName)}</TableCell>);
+                                        })
+                                    }
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
                                 {
-                                    model.nested.fields.map((field, i) => {
-                                        return (<TableCell key={i}>{t(field.headerName)}</TableCell>);
+                                    value.map((row, i) => {
+                                        return (
+                                            <TableRow key={i}>
+                                                {
+                                                    model.nested.fields.map((field, j) => {
+                                                        return (
+                                                            <TableCell align={j === 0 ? 'left' : 'right'} key={j}>
+                                                                {
+                                                                    field.selector ?
+                                                                        Array.isArray(field.selector) ?
+                                                                            field.selector.map(x => row[field.field][x]).join(' ') :
+                                                                            row[field.field][field.selector] :
+                                                                        row[field.field]
+                                                                }
+                                                            </TableCell>
+                                                        );
+                                                    })
+                                                }
+                                            </TableRow>
+                                        )
                                     })
                                 }
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {
-                                value.map((row, i) => {
-                                    return (
-                                        <TableRow key={i}>
-                                            {
-                                                model.nested.fields.map((field, j) => {
-                                                    return (
-                                                        <TableCell key={j}>
-                                                            {
-                                                                field.selector ?
-                                                                    Array.isArray(field.selector) ?
-                                                                        field.selector.map(x => row[field.field][x]).join(' ') :
-                                                                        row[field.field][field.selector] :
-                                                                    row[field.field]
-                                                            }
-                                                        </TableCell>
-                                                    );
-                                                })
-                                            }
-                                        </TableRow>
-                                    )
-                                })
-                            }
-                        </TableBody>
-                    </Table>
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
                 </>
             );
         case 'model':
@@ -66,13 +68,12 @@ const ViewDataElement = (({ model, value }) => {
                 />
         default:
             return (
-                <Grid container spacing={2}>
-                    <Grid item xs={6}
-                        style={{ display: "flex", justifyContent: "flex-end" }}>
+                <Grid container>
+                    <Grid item xs={3}>
                         {t(model.headerName)}
                     </Grid>
                     { value !== undefined ?
-                        <Grid item xs={6}>{model.selector ? value[model.selector] : value}</Grid>
+                        <Grid item xs={3}>{model.selector ? value[model.selector] : value}</Grid>
                         : null
                     }
 

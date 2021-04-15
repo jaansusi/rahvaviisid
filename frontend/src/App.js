@@ -11,6 +11,8 @@ import {
 import Grid from '@material-ui/core/Grid';
 import Footer from './Footer/Footer';
 import MainRouter from './MainRouter';
+import 'react-notifications/lib/notifications.css';
+import { NotificationContainer } from 'react-notifications';
 
 function App() {
   return (
@@ -39,6 +41,7 @@ function App() {
           </Switch>
         </Grid>
         <Footer />
+        <NotificationContainer />
       </Router>
     </>
   );

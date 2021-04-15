@@ -36,6 +36,7 @@ const ViewDataFragment = (({ model, elementData }) => {
                         return (
                             <Grid item xs={fieldWidth} key={i}>
                                 {
+                                    // to-do: Figure out a more abstract way to add an extra component
                                     modelField.type !== 'player' ?
                                         <ViewDataElement
                                             model={modelField}

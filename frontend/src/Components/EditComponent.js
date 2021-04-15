@@ -5,10 +5,10 @@ import { useParams } from 'react-router-dom';
 import config from '../config';
 import EditDataFragment from '../Fragments/EditDataFragment';
 import axios from 'axios';
-import { mapResponseToModel } from './ComponentHelpers';
+import { createIncludeFilter, mapResponseToModel } from './ComponentHelpers';
 import Actions from './Buttons/Actions';
 
-const EditComponent = ({ model, extraComponent, filter, newItem }) => {
+const EditComponent = ({ model, newItem }) => {
     newItem = newItem === undefined ? false : newItem;
     const { t } = useTranslation('common');
     const formReducer = (state, event) => {
@@ -47,7 +47,7 @@ const EditComponent = ({ model, extraComponent, filter, newItem }) => {
             } else {
                 // Retrieve the data
                 axios
-                    .get(config.apiUrl + '/' + model.apiPath + '/' + id + (filter !== undefined ? '?filter=' + filter : ''))
+                    .get(config.apiUrl + '/' + model.apiPath + '/' + id + '?filter=' + encodeURIComponent(JSON.stringify(createIncludeFilter(model))))
                     .then((result) => {
                         // Start the model mapping
                         mapResponseToModel(result.data, model, setFormData);
@@ -55,7 +55,7 @@ const EditComponent = ({ model, extraComponent, filter, newItem }) => {
             }
 
         });
-    }, [id, model, filter, newItem]);
+    }, [id, model, newItem]);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -156,7 +156,6 @@ const EditComponent = ({ model, extraComponent, filter, newItem }) => {
                     model={model}
                     formData={formData}
                     handleChange={handleChange}
-                    extraComponent={extraComponent}
                 />
 
                 <Grid item xs className="form-edit-item">

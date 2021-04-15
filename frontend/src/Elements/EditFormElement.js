@@ -2,11 +2,12 @@ import { FormControl, Grid, InputLabel, MenuItem, Select, TextField } from '@mat
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import './Css/EditFormElement.css';
+import ViewDataElement from './ViewDataElement';
 
 
 const EditFormElement = (({ model, value, handleChange, index }) => {
     const { t } = useTranslation('common');
-
+    console.log(model.type);
     switch (model.type) {
         case 'textbox':
             return (
@@ -53,6 +54,12 @@ const EditFormElement = (({ model, value, handleChange, index }) => {
                     </FormControl>
                 </Grid>
             );
+        case 'table':
+            return (
+                <>
+                <ViewDataElement model={model} value={value} />
+                </>
+            );
         default:
             return (
                 <Grid
@@ -60,7 +67,6 @@ const EditFormElement = (({ model, value, handleChange, index }) => {
                     xs={4}
                     className='form-edit-item'
                 >
-
                     <FormControl className='form-input-element' variant='outlined'>
                         <TextField name={model.field} label={t(model.headerName)} value={value} onChange={(e) => handleChange(e, index)} variant='outlined' />
                     </FormControl>

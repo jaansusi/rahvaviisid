@@ -17,21 +17,21 @@ const TuneTranscriptionModel = modelParser({
             }
         ]
     },
-    // edit: {
-    //     fields: [
-    //         { field: 'id', hidden: true },
-    //         { field: 'tunesId', hidden: true },
-    //         { field: 'alter', headerName: 'tune.alter' },
-    //         { field: 'tempo', headerName: 'tune.tempo' },
-    //         { field: 'rhythmType', headerName: 'tune.rhythmType' },
-    //         { field: 'noteLength', headerName: 'tune.noteLength' },
-    //         { field: 'melody', type: 'textbox', headerName: 'tune.melody' },
-    //         { field: 'words', type: 'textbox', headerName: 'tune.words' },
-    //         { field: 'customInput', type: 'textbox', headerName: 'tune.customInput' },
-    //         { field: 'variationIndex', hidden: true },
-
-    //     ]
-    // }
+    edit: {
+        label: 'tune.transcription',
+        fields: [
+            { field: 'transcriptionSources', type: 'dropdown', apiPath: 'transcription-sources', headerName: 'transcription.source' },
+            { field: 'created', headerName: 'date.created' },
+            { field: 'modified', headerName: 'date.modified' },
+            // {
+            //     field: 'tuneMelodies',
+            //     type: 'model',
+            //     array: true,
+            //     sortBy: 'variationIndex',
+            //     nested: TuneMelodyModel.view
+            // }
+        ]
+    },
 });
 
 export default TuneTranscriptionModel;

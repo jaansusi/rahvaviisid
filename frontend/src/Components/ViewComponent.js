@@ -5,11 +5,11 @@ import {
 import config from '../config';
 import ViewDataFragment from '../Fragments/ViewDataFragment';
 import axios from 'axios';
-import { mapResponseToModel } from './ComponentHelpers';
+import { createIncludeFilter, mapResponseToModel } from './ComponentHelpers';
 import { Grid } from '@material-ui/core';
 import Actions from './Buttons/Actions';
 
-const ViewComponent = (({ model, filter }) => {
+const ViewComponent = (({ model }) => {
     let { id } = useParams();
     const formReducer = (state, event) => {
         return {
@@ -23,7 +23,7 @@ const ViewComponent = (({ model, filter }) => {
     );
     useEffect(() => {
         axios
-            .get(config.apiUrl + '/' + model.apiPath + '/' + id + (filter !== undefined ? '?filter=' + encodeURIComponent(JSON.stringify(filter)) : ''))
+            .get(config.apiUrl + '/' + model.apiPath + '/' + id + '?filter=' + encodeURIComponent(JSON.stringify(createIncludeFilter(model))))
             .then((result) => {
                 // Start the model mapping
                 mapResponseToModel(result.data, model, setFormData);
@@ -42,7 +42,7 @@ const ViewComponent = (({ model, filter }) => {
                     .filter((x) => x !== undefined);
 
             });
-    }, [id, model, filter]);
+    }, [id, model]);
     return (
         <>
             <Actions apiPath={model.apiPath} id={id} />

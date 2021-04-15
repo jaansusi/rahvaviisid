@@ -95,12 +95,10 @@ const TuneModel = modelParser({
             { field: 'created', type: 'view', headerName: 'date.created' },
             { field: 'modified', type: 'view', headerName: 'date.modified' },
             {
-                field: 'tuneMelodies',
-                type: 'array',
-                sortBy: 'variationIndex',
-                extraComponent: 'TunePlayer',
-                nested: TuneMelodyModel.edit
-            }
+                field: 'tunePlaces',
+                type: 'table',
+                nested: TunePlaceModel.table
+            },
         ]
     }
 });
