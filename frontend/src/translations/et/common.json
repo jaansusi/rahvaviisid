@@ -18,7 +18,8 @@
         "view": "Vaata",
         "edit": "Muuda",
         "delete": "Kustuta",
-        "create": "Loo uus"
+        "create": "Loo uus",
+        "close": "Sulge"
     },
     "date": {
         "created": "Loodud",
@@ -119,7 +120,12 @@
         "keySignature": "Võtmemärk",
         "supportSound": "Tugiheli",
         "pitch": "Kõrgus",
-        "measure": "Taktimõõt"
+        "measure": "Taktimõõt",
+        "tuneEncodingNum": "Kod. num",
+        "keySignatures": "Helistik",
+        "supportSounds": "Tugiheli",
+        "pitches": "Helikõrgus",
+        "measures": "Tempo"
     },
     "edit": {
         "save": "Salvesta"

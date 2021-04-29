@@ -1,19 +1,15 @@
 import React from 'react';
 import { Grid } from '@material-ui/core';
 import './EditDataFragment.css';
-import TunePlayer from '../Tunes/TunePlayer';
-import EditFormElement from '../Elements/EditFormElement';
-import { useTranslation } from 'react-i18next';
+import EditDataElement from '../Elements/EditDataElement';
 
 const EditDataFragment = ({
     model,
-    formData,
+    elementData,
     handleChange,
-    extraComponent,
     index,
     title,
 }) => {
-    const { t } = useTranslation('common');
     return (
         <Grid container direction='column'>
             <h4>{title !== undefined ? title : null}</h4>
@@ -24,7 +20,7 @@ const EditDataFragment = ({
                         // There's no need to create an input for a value the user can't interact with
                         if (modelField.hidden) return null;
                         // In addition, if the value for some reason is undefined, don't do anything
-                        if (formData[modelField.field] === undefined)
+                        if (elementData[modelField.field] === undefined)
                             return null;
 
                         // If the model field is defined as nested, create another handler function
@@ -32,7 +28,7 @@ const EditDataFragment = ({
                         if (modelField.nested !== undefined) {
                             let handleNestedChange = (event) => {
                                 const { name, value } = event.target;
-                                let temp = formData[modelField.field];
+                                let temp = elementData[modelField.field];
                                 temp[name] = value;
                                 handleChange({
                                     target: {
@@ -43,42 +39,12 @@ const EditDataFragment = ({
                                 });
                             };
 
-                            // Array is a special case, it doesn't modify the inputs but multiplies them
-                            if (modelField.type === 'array') {
-                                let handleArrayChange = (event, i) => {
-                                    const { name, value } = event.target;
-                                    let temp = formData[modelField.field];
-                                    temp[i][name] = value;
-                                    handleChange({
-                                        target: {
-                                            name: modelField.field,
-                                            value: temp,
-                                            type: 'object',
-                                        },
-                                    });
-                                };
-                                let data =
-                                    modelField.sortBy === undefined
-                                        ? formData[modelField.field]
-                                        : formData[modelField.field].sort((a, b) => a[modelField.sortBy] - b[modelField.sortBy]);
-                                return data.map((elem, j) =>
-                                    <EditDataFragment
-                                        model={modelField.nested}
-                                        formData={elem}
-                                        handleChange={handleArrayChange}
-                                        key={'viewfragment' + i + j}
-                                        index={j}
-                                        title={t('tune.variationTitle') + (j + 1)}
-                                    />
-                                );
-                            }
-
-                            // Return the data fragment created for the child model
+                            // Return the data element created for the child model
                             return (
-                                <EditDataFragment
+                                <EditDataElement
                                     key={i}
-                                    model={modelField.nested}
-                                    formData={formData[modelField.field]}
+                                    model={modelField}
+                                    elemValue={elementData[modelField.field]}
                                     handleChange={handleNestedChange}
                                 />
                             );
@@ -86,10 +52,10 @@ const EditDataFragment = ({
 
                         // If the field does not have any children, return the form element for it.
                         return (
-                            <EditFormElement
-                                key={modelField.field}
+                            <EditDataElement
+                                key={i}
                                 model={modelField}
-                                value={formData[modelField.field]}
+                                elemValue={elementData[modelField.field]}
                                 handleChange={handleChange}
                                 index={index}
                             />

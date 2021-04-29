@@ -21,27 +21,27 @@ export class TunesRepository extends DefaultCrudRepository<
 
   public readonly tuneMelodies: HasManyRepositoryFactory<TuneMelodies, typeof Tunes.prototype.id>;
   public readonly tuneTranscriptions: HasManyRepositoryFactory<TuneTranscriptions, typeof Tunes.prototype.id>;
-
   public readonly countries: HasOneRepositoryFactory<Countries, typeof Tunes.prototype.id>;
-
   public readonly nations: HasOneRepositoryFactory<Nations, typeof Tunes.prototype.id>;
-
   public readonly languages: HasOneRepositoryFactory<Languages, typeof Tunes.prototype.id>;
-
   public readonly tunePerformances: HasManyRepositoryFactory<TunePerformances, typeof Tunes.prototype.id>;
-
   public readonly tunePlaces: HasManyRepositoryFactory<TunePlaces, typeof Tunes.prototype.id>;
-
   public readonly tunesPersonsRoles: HasManyRepositoryFactory<TunesPersonsRoles, typeof Tunes.prototype.id>;
-
   public readonly tuneSongs: HasManyRepositoryFactory<TuneSongs, typeof Tunes.prototype.id>;
-
   public readonly tuneEncodings: HasManyRepositoryFactory<TuneEncodings, typeof Tunes.prototype.id>;
 
   constructor(
     @inject('datasources.db') dataSource: DbDataSource, 
     @repository.getter('TuneMelodiesRepository') protected tuneMelodiesRepositoryGetter: Getter<TuneMelodiesRepository>,
-    @repository.getter('TuneTranscriptionsRepository') protected tuneTranscriptionsRepositoryGetter: Getter<TuneTranscriptionsRepository>, @repository.getter('CountriesRepository') protected countriesRepositoryGetter: Getter<CountriesRepository>, @repository.getter('NationsRepository') protected nationsRepositoryGetter: Getter<NationsRepository>, @repository.getter('LanguagesRepository') protected languagesRepositoryGetter: Getter<LanguagesRepository>, @repository.getter('TunePerformancesRepository') protected tunePerformancesRepositoryGetter: Getter<TunePerformancesRepository>, @repository.getter('TunePlacesRepository') protected tunePlacesRepositoryGetter: Getter<TunePlacesRepository>, @repository.getter('TunesPersonsRolesRepository') protected tunesPersonsRolesRepositoryGetter: Getter<TunesPersonsRolesRepository>, @repository.getter('TuneSongsRepository') protected tuneSongsRepositoryGetter: Getter<TuneSongsRepository>, @repository.getter('TuneEncodingsRepository') protected tuneEncodingsRepositoryGetter: Getter<TuneEncodingsRepository>,
+    @repository.getter('TuneTranscriptionsRepository') protected tuneTranscriptionsRepositoryGetter: Getter<TuneTranscriptionsRepository>, 
+    @repository.getter('CountriesRepository') protected countriesRepositoryGetter: Getter<CountriesRepository>, 
+    @repository.getter('NationsRepository') protected nationsRepositoryGetter: Getter<NationsRepository>, 
+    @repository.getter('LanguagesRepository') protected languagesRepositoryGetter: Getter<LanguagesRepository>, 
+    @repository.getter('TunePerformancesRepository') protected tunePerformancesRepositoryGetter: Getter<TunePerformancesRepository>, 
+    @repository.getter('TunePlacesRepository') protected tunePlacesRepositoryGetter: Getter<TunePlacesRepository>, 
+    @repository.getter('TunesPersonsRolesRepository') protected tunesPersonsRolesRepositoryGetter: Getter<TunesPersonsRolesRepository>, 
+    @repository.getter('TuneSongsRepository') protected tuneSongsRepositoryGetter: Getter<TuneSongsRepository>, 
+    @repository.getter('TuneEncodingsRepository') protected tuneEncodingsRepositoryGetter: Getter<TuneEncodingsRepository>,
   ) {
     super(Tunes, dataSource);
     this.tuneEncodings = this.createHasManyRepositoryFactoryFor('tuneEncodings', tuneEncodingsRepositoryGetter,);

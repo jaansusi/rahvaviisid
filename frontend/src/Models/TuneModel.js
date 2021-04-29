@@ -1,5 +1,4 @@
 import modelParser from './ModelParser';
-import TuneMelodyModel from './TuneMelodyModel';
 import TunePlaceModel from './TunePlaceModel';
 import TuneEncodingModel from './TuneEncodingModel';
 import TuneTranscriptionModel from './TuneTransciptionModel';
@@ -91,13 +90,44 @@ const TuneModel = modelParser({
             { field: 'publications', headerName: 'tune.publications' },
             { field: 'remarks', headerName: 'tune.remarks' },
             { field: 'verifiedBy', type: 'number', headerName: 'tune.verifiedBy' },
-            { field: 'verified', type: 'view', headerName: 'date.verified' },
+            { field: 'verified', headerName: 'date.verified' },
             { field: 'created', type: 'view', headerName: 'date.created' },
             { field: 'modified', type: 'view', headerName: 'date.modified' },
             {
                 field: 'tunePlaces',
                 type: 'table',
-                nested: TunePlaceModel.table
+                nested: TunePlaceModel.table,
+                edit: TunePlaceModel.edit
+            },
+            {
+                field: 'tuneEncodings',
+                type: 'table',
+                nested: TuneEncodingModel.table,
+                edit: TuneEncodingModel.edit
+            },
+            {
+                field: 'tuneTranscriptions',
+                type: 'model',
+                array: true,
+                nested: TuneTranscriptionModel.view
+            },
+            {
+                field: 'tunesPersonsRoles',
+                type: 'table',
+                nested: TunePersonsModel.table,
+                edit: TunePersonsModel.edit
+            },
+            {
+                field: 'tunePerformances',
+                type: 'table',
+                nested: TunePerformancesModel.table,
+                edit: TunePerformancesModel.edit
+            },
+            {
+                field: 'tuneSongs',
+                type: 'table',
+                nested: TuneSongsModel.table,
+                edit: TuneSongsModel.edit
             },
         ]
     }

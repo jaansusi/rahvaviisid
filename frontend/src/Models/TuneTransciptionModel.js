@@ -20,9 +20,10 @@ const TuneTranscriptionModel = modelParser({
     edit: {
         label: 'tune.transcription',
         fields: [
+            { field: 'id', hidden: true },
             { field: 'transcriptionSources', type: 'dropdown', apiPath: 'transcription-sources', headerName: 'transcription.source' },
-            { field: 'created', headerName: 'date.created' },
-            { field: 'modified', headerName: 'date.modified' },
+            { field: 'created', type: 'view', headerName: 'date.created' },
+            { field: 'modified', type: 'view', headerName: 'date.modified' },
             // {
             //     field: 'tuneMelodies',
             //     type: 'model',

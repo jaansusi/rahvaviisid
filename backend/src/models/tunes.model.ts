@@ -175,21 +175,26 @@ export class Tunes extends Entity {
 
   @hasOne(() => Languages, { keyFrom: 'languageId', keyTo: 'id'})
   languages: Languages;
+
   //esitlus
   @hasMany(() => TunePerformances, {keyTo: 'tune_id'})
-  tunePerformances: TunePerformances[];
+  tunePerformances?: TunePerformances[];
+
   //kohad
   @hasMany(() => TunePlaces, {keyTo: 'tune_id'})
-  tunePlaces: TunePlaces[];
+  tunePlaces?: TunePlaces[];
+
   //Laul
   @hasMany(() => TuneSongs, {keyTo: 'tune_id'})
-  tuneSongs: TuneSongs[];
+  tuneSongs?: TuneSongs[];
+
   //muusikalised tunnused
   @hasMany(() => TuneEncodings, {keyTo: 'tune_id'})
-  tuneEncodings: TuneEncodings[];
+  tuneEncodings?: TuneEncodings[];
+
   //esitaja
   @hasMany(() => TunesPersonsRoles, {keyTo: 'tune_id'})
-  tunesPersonsRoles: TunesPersonsRoles[];
+  tunesPersonsRoles?: TunesPersonsRoles[];
 
 
     // Define well-known properties here

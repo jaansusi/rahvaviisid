@@ -8,8 +8,8 @@ const PersonModel = modelParser({
             { field: 'surname', headerName: 'person.surname', width: 170 },
             { field: 'givenName', headerName: 'person.givenName', width: 140 },
             { field: 'nickname', headerName: 'person.nickname', width: 140 },
-            { field: 'birthYear', headerName: 'person.birthYear', width: 150 },
-            { field: 'deathYear', headerName: 'person.deathYear', width: 150 },
+            { field: 'birthYear', type: 'number', headerName: 'person.birthYear', width: 150 },
+            { field: 'deathYear', type: 'number', headerName: 'person.deathYear', width: 150 },
             { field: 'sex', headerName: 'person.sex', width: 120 }
         ]
     },

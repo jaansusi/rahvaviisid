@@ -2,13 +2,13 @@ import abcjs from 'abcjs';
 import React, { useEffect, useState } from 'react';
 import { Grid } from '@material-ui/core';
 
-const TunePlayer = ({ formData, editable, index }) => {
+const TunePlayer = ({ elementData, editable, index }) => {
 	let [combinedData, setCombinedData] = useState('');
 	editable = editable === undefined ? false : editable;
 	useEffect(() => {
 		setCombinedData(() => {
-			let melodyLines = formData.melody.split('\n');
-			let wordsLines = formData.words.split('\n');
+			let melodyLines = elementData.melody.split('\n');
+			let wordsLines = elementData.words.split('\n');
 			let melodyAndWords = melodyLines.map((melodyLine, i) => {
 				return (
 					melodyLine +
@@ -18,15 +18,15 @@ const TunePlayer = ({ formData, editable, index }) => {
 				);
 			});
 			return [
-				formData.customInput === '' ? '' : formData.customInput,
-				formData.alter === '' ? '' : 'K: ' + formData.alter,
-				formData.tempo === '' ? '' : 'Q: ' + formData.tempo,
-				formData.noteLength === ''
+				elementData.customInput === '' ? '' : elementData.customInput,
+				elementData.alter === '' ? '' : 'K: ' + elementData.alter,
+				elementData.tempo === '' ? '' : 'Q: ' + elementData.tempo,
+				elementData.noteLength === ''
 					? ''
-					: 'L: ' + formData.noteLength,
-				//formData.title === '' ? '' : ('T: ' + formData.title),
-				formData.reference === '' ? '' : 'X: ' + formData.reference,
-				//formData.author === '' ? '' : ('Z: ' + formData.author),
+					: 'L: ' + elementData.noteLength,
+				//elementData.title === '' ? '' : ('T: ' + elementData.title),
+				elementData.reference === '' ? '' : 'X: ' + elementData.reference,
+				//elementData.author === '' ? '' : ('Z: ' + elementData.author),
 			]
 				.concat(melodyAndWords)
 				.filter((elem) => elem !== '')
@@ -40,7 +40,7 @@ const TunePlayer = ({ formData, editable, index }) => {
 			displayProgress: true,
 		});
 		synthControl.setTune(visualObj, false);
-	}, [formData, combinedData, index, formData.alter, formData.customInput, formData.melody, formData.noteLength, formData.reference, formData.tempo, formData.words]);
+	}, [elementData, combinedData, index, elementData.alter, elementData.customInput, elementData.melody, elementData.noteLength, elementData.reference, elementData.tempo, elementData.words]);
 
 	return (
 		<Grid item xs={12}>
@@ -48,7 +48,7 @@ const TunePlayer = ({ formData, editable, index }) => {
 			<div
 				style={{
 					display:
-						formData.melody === undefined ? 'none' : 'default',
+						elementData.melody === undefined ? 'none' : 'default',
 				}}
 				id={'audio' + index}
 			></div>

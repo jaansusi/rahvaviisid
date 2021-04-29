@@ -1,8 +1,10 @@
 import {
   Count,
   CountSchema,
+  DefaultCrudRepository,
   Filter,
   FilterExcludingWhere,
+  Repository,
   repository,
   Where,
 } from '@loopback/repository';
@@ -16,13 +18,36 @@ import {
   del,
   requestBody,
 } from '@loopback/rest';
-import {Tunes} from '../models';
-import {TunesRepository} from '../repositories';
+import {SexesRelations, Tunes} from '../models';
+import {
+  TuneEncodingsRepository,
+  TuneMelodiesRepository,
+  TunePerformancesRepository,
+  TunePlacesRepository,
+  TuneSongsRepository,
+  TunesPersonsRolesRepository,
+  TunesRepository,
+  TuneTranscriptionsRepository,
+} from '../repositories';
 
 export class TunesController {
   constructor(
     @repository(TunesRepository)
-    public tunesRepository : TunesRepository,
+    public tunesRepository: TunesRepository,
+    @repository(TuneMelodiesRepository)
+    public tuneMelodiesRepository: TuneMelodiesRepository,
+    @repository(TuneEncodingsRepository)
+    public tuneEncodingsRepository: TuneEncodingsRepository,
+    @repository(TuneSongsRepository)
+    public tuneSongsRepository: TuneSongsRepository,
+    @repository(TunePerformancesRepository)
+    public tunePerformancesRepository: TunePerformancesRepository,
+    @repository(TunePlacesRepository)
+    public tunePlacesRepository: TunePlacesRepository,
+    @repository(TuneTranscriptionsRepository)
+    public tuneTranscriptionsRepository: TuneTranscriptionsRepository,
+    @repository(TunesPersonsRolesRepository)
+    public tunesPersonsRolesRepository: TunesPersonsRolesRepository,
   ) {}
 
   @post('/tunes', {
@@ -57,9 +82,7 @@ export class TunesController {
       },
     },
   })
-  async count(
-    @param.where(Tunes) where?: Where<Tunes>,
-  ): Promise<Count> {
+  async count(@param.where(Tunes) where?: Where<Tunes>): Promise<Count> {
     return this.tunesRepository.count(where);
   }
 
@@ -78,9 +101,7 @@ export class TunesController {
       },
     },
   })
-  async find(
-    @param.filter(Tunes) filter?: Filter<Tunes>,
-  ): Promise<Tunes[]> {
+  async find(@param.filter(Tunes) filter?: Filter<Tunes>): Promise<Tunes[]> {
     return this.tunesRepository.find(filter);
   }
 
@@ -120,7 +141,8 @@ export class TunesController {
   })
   async findById(
     @param.path.number('id') id: number,
-    @param.filter(Tunes, {exclude: 'where'}) filter?: FilterExcludingWhere<Tunes>
+    @param.filter(Tunes, {exclude: 'where'})
+    filter?: FilterExcludingWhere<Tunes>,
   ): Promise<Tunes> {
     return this.tunesRepository.findById(id, filter);
   }
@@ -137,12 +159,55 @@ export class TunesController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Tunes, {partial: false}),
+          schema: getModelSchemaRef(Tunes, {
+            includeRelations: true,
+            partial: 'deep',
+          }),
         },
       },
     })
     tunes: Tunes,
   ): Promise<void> {
+    let updateNestedAsset = (
+      assets: any[] | undefined,
+      repository: DefaultCrudRepository<any, number, object>,
+    ) => {
+      assets?.forEach((x: any) => {
+        repository.updateById(x.id, x);
+      });
+    };
+    if (tunes.tuneEncodings !== undefined) {
+      updateNestedAsset(tunes.tuneEncodings, this.tuneEncodingsRepository);
+      delete tunes.tuneEncodings;
+    }
+    if (tunes.tunePerformances !== undefined) {
+      // tunes.tunePerformances.forEach((performance) => {
+      //   if (performance.actualPerformanceTypes !== undefined) {
+      //     updateNestedAsset(performance.actualPerformanceTypes, this.actualPerformanceTypesRepository);
+      //   }
+      // });
+      delete tunes.tunePerformances;
+    }
+    if (tunes.tunePlaces !== undefined) {
+      //updateNestedAsset(tunes.tunePlaces, this.tunePlacesRepository);
+      delete tunes.tunePlaces;
+    }
+    if (tunes.tuneSongs !== undefined) {
+      updateNestedAsset(tunes.tuneSongs, this.tuneSongsRepository);
+      delete tunes.tuneSongs;
+    }
+    if (tunes.tunesPersonsRoles !== undefined) {
+      //updateNestedAsset(tunes.tunesPersonsRoles, this.tunesPersonsRolesRepository);
+      delete tunes.tunesPersonsRoles;
+    }
+    if (tunes.tuneTranscriptions !== undefined) {
+      // if (tunes.tuneMelodies !== undefined) {
+      //   updateNestedAsset(tunes.tuneMelodies, this.tuneMelodiesRepository);
+      //   delete tunes.tuneMelodies;
+      // }
+      //updateNestedAsset(tunes.tuneTranscriptions, this.tuneTranscriptionsRepository);
+      delete tunes.tuneTranscriptions;
+    }
     await this.tunesRepository.updateById(id, tunes);
   }
 

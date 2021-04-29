@@ -1,6 +1,8 @@
 import modelParser from './ModelParser';
+import PersonModel from './PersonModel';
 
 const TunePlaceModel = modelParser({
+    apiPath: 'tune-places',
     table: {
         label: 'place.place',
         fields: [
@@ -13,21 +15,18 @@ const TunePlaceModel = modelParser({
             { field: 'remarks', headerName: 'tune.remarks' }
         ]
     },
-    // edit: {
-    //     fields: [
-    //         { field: 'id', hidden: true },
-    //         { field: 'tunesId', hidden: true },
-    //         { field: 'alter', headerName: 'tune.alter' },
-    //         { field: 'tempo', headerName: 'tune.tempo' },
-    //         { field: 'rhythmType', headerName: 'tune.rhythmType' },
-    //         { field: 'noteLength', headerName: 'tune.noteLength' },
-    //         { field: 'melody', type: 'textbox', headerName: 'tune.melody' },
-    //         { field: 'words', type: 'textbox', headerName: 'tune.words' },
-    //         { field: 'customInput', type: 'textbox', headerName: 'tune.customInput' },
-    //         { field: 'variationIndex', hidden: true },
+    edit: {
+        fields: [
+            { field: 'personId', type: 'dropdown', apiPath: PersonModel.apiPath, headerName: 'person.person'},
+            { field: 'tunePlaceTypes', headerName: 'place.type', selector: 'title' },
+            { field: 'parishes', headerName: 'place.parish', selector: 'title' },
+            { field: 'municipalities', headerName: 'place.municipality', selector: 'title' },
+            { field: 'villages', headerName: 'place.village', selector: 'title' },
+            { field: 'otherPlace', headerName: 'place.other' },
+            { field: 'remarks', headerName: 'tune.remarks' }
 
-    //     ]
-    // }
+        ]
+    }
 });
 
 export default TunePlaceModel;

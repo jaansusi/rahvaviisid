@@ -94,11 +94,11 @@ export class TuneMelodies extends Entity {
   variationIndex?: number;
 
   @property({
-    type: 'number',
+    type: 'string',
     scale: 0,
-    postgresql: {columnName: 'rhythm_type', dataType: 'integer', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'YES'},
+    postgresql: {columnName: 'rhythm_type', dataType: 'text', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'YES'},
   })
-  rhythmType?: number;
+  rhythmType?: string;
 
   // Define well-known properties here
 

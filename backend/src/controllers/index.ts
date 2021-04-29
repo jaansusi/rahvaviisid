@@ -54,3 +54,4 @@ export * from './tune-encodings-pitches.controller';
 export * from './tunes-persons-roles-persons.controller';
 export * from './tunes-persons-roles-tune-person-role-types.controller';
 export * from './tune-transcriptions-transcription-sources.controller';
+export * from './tune-places.controller';

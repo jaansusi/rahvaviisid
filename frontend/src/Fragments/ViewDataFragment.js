@@ -43,7 +43,7 @@ const ViewDataFragment = (({ model, elementData }) => {
                                             value={elementData[modelField.field]
                                             } />
                                         : <TunePlayer
-                                            formData={elementData}
+                                            elementData={elementData}
                                             editable={false}
                                             index={i}
                                         />
