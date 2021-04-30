@@ -13,4 +13,4 @@ CREATE TABLE folk_tune.externalreferences
 ;
 INSERT INTO folk_tune.externalreferences (tune_id,type_id,description, value)
 VALUES
-    (1,1,"Käsikiri","ERA-15039-52820-34479");
+    (1,1,'Käsikiri','ERA-15039-52820-34479');
