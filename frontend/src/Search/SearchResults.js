@@ -12,7 +12,7 @@ const SearchResults = ({ assets }) => {
     x.headerName = t(x.headerName);
     return x;
   });
-  columns.push({ field: '', headerName: t('action.actions'), sortable: false, width: 290, renderCell: (params) => <Actions apiPath={'/tunes'} id={params.row.id} /> });
+  columns.push({ field: '', headerName: t('action.actions'), sortable: false, width: 290, renderCell: (params) => <Actions apiPath={'tunes'} id={params.row.id} /> });
 
   return (
     <div style={{ width: '90vw', height: '500px' }}>

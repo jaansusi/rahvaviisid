@@ -51,3 +51,4 @@ export * from './pitches.model';
 export * from './measures.model';
 export * from './tune-melodies.model';export * from './tunes.model';
 export * from './tune-melodies.model';
+export * from './external-references.model';

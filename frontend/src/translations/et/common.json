@@ -19,7 +19,8 @@
         "edit": "Muuda",
         "delete": "Kustuta",
         "create": "Loo uus",
-        "close": "Sulge"
+        "close": "Sulge",
+        "kivike": "Ava Kivikeses"
     },
     "date": {
         "created": "Loodud",
@@ -95,6 +96,11 @@
             "type": "Traditsioonilise esituse liik",
             "action": "Traditsioonilise tegevuse liik"
         }
+    },
+    "reference": {
+        "label": "Välisviited",
+        "description": "Kirjeldus",
+        "url": "Link"
     },
     "song": {
         "song": "Laul",

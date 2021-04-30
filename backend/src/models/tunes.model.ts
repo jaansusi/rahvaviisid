@@ -9,6 +9,7 @@ import {TunePlaces} from './tune-places.model';
 import {TunesPersonsRoles} from './tunes-persons-roles.model';
 import {TuneSongs} from './tune-songs.model';
 import {TuneEncodings} from './tune-encodings.model';
+import { ExternalReferences } from './external-references.model';
 
 @model({
   settings: {idInjection: false, postgresql: {schema: 'folk_tune', table: 'tunes'}}
@@ -196,6 +197,9 @@ export class Tunes extends Entity {
   @hasMany(() => TunesPersonsRoles, {keyTo: 'tune_id'})
   tunesPersonsRoles?: TunesPersonsRoles[];
 
+  //pid  
+  @hasMany(() => ExternalReferences, {keyTo: 'tune_id'})
+  externalReferences?: ExternalReferences[];
 
     // Define well-known properties here
 

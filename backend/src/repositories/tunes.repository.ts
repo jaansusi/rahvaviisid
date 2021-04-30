@@ -12,6 +12,8 @@ import {TunePlacesRepository} from './tune-places.repository';
 import {TunesPersonsRolesRepository} from './tunes-persons-roles.repository';
 import {TuneSongsRepository} from './tune-songs.repository';
 import {TuneEncodingsRepository} from './tune-encodings.repository';
+import { ExternalReferences } from '../models/external-references.model';
+import { ExternalReferencesRepository } from './external-references.repository';
 
 export class TunesRepository extends DefaultCrudRepository<
   Tunes,
@@ -29,6 +31,7 @@ export class TunesRepository extends DefaultCrudRepository<
   public readonly tunesPersonsRoles: HasManyRepositoryFactory<TunesPersonsRoles, typeof Tunes.prototype.id>;
   public readonly tuneSongs: HasManyRepositoryFactory<TuneSongs, typeof Tunes.prototype.id>;
   public readonly tuneEncodings: HasManyRepositoryFactory<TuneEncodings, typeof Tunes.prototype.id>;
+  public readonly externalReferences: HasManyRepositoryFactory<ExternalReferences, typeof Tunes.prototype.id>;
 
   constructor(
     @inject('datasources.db') dataSource: DbDataSource, 
@@ -42,7 +45,8 @@ export class TunesRepository extends DefaultCrudRepository<
     @repository.getter('TunesPersonsRolesRepository') protected tunesPersonsRolesRepositoryGetter: Getter<TunesPersonsRolesRepository>, 
     @repository.getter('TuneSongsRepository') protected tuneSongsRepositoryGetter: Getter<TuneSongsRepository>, 
     @repository.getter('TuneEncodingsRepository') protected tuneEncodingsRepositoryGetter: Getter<TuneEncodingsRepository>,
-  ) {
+    @repository.getter('ExternalReferencesRepository') protected externalReferencesRepositoryGetter: Getter<ExternalReferencesRepository>,
+    ) {
     super(Tunes, dataSource);
     this.tuneEncodings = this.createHasManyRepositoryFactoryFor('tuneEncodings', tuneEncodingsRepositoryGetter,);
     this.registerInclusionResolver('tuneEncodings', this.tuneEncodings.inclusionResolver);
@@ -64,5 +68,7 @@ export class TunesRepository extends DefaultCrudRepository<
     this.registerInclusionResolver('tuneMelodies', this.tuneMelodies.inclusionResolver);
     this.tuneTranscriptions = this.createHasManyRepositoryFactoryFor('tuneTranscriptions', tuneTranscriptionsRepositoryGetter);
     this.registerInclusionResolver('tuneTranscriptions', this.tuneTranscriptions.inclusionResolver);
+    this.externalReferences = this.createHasManyRepositoryFactoryFor('externalReferences', externalReferencesRepositoryGetter);
+    this.registerInclusionResolver('externalReferences', this.externalReferences.inclusionResolver);
   }
 }

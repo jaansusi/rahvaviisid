@@ -5,6 +5,7 @@ import TuneTranscriptionModel from './TuneTransciptionModel';
 import TunePerformancesModel from './TunePerformancesModel';
 import TunePersonsModel from './TunePersonsModel';
 import TuneSongsModel from './TuneSongsModel';
+import ExternalReferenceModel from './ExternalReferenceModel';
 
 const TuneModel = modelParser({
     apiPath: 'tunes',
@@ -40,6 +41,11 @@ const TuneModel = modelParser({
                 field: 'tunePlaces',
                 type: 'table',
                 nested: TunePlaceModel.table
+            },
+            {
+                field: 'externalReferences',
+                type: 'table',
+                nested: ExternalReferenceModel.table
             },
             {
                 field: 'tuneEncodings',

@@ -1,6 +1,7 @@
 import { Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 import ViewDataFragment from '../Fragments/ViewDataFragment';
 
 const ViewDataElement = (({ model, value }) => {
@@ -33,11 +34,20 @@ const ViewDataElement = (({ model, value }) => {
                                                         return (
                                                             <TableCell align={j === 0 ? 'left' : 'right'} key={j}>
                                                                 {
-                                                                    field.selector ?
-                                                                        Array.isArray(field.selector) ?
-                                                                            field.selector.map(x => row[field.field][x]).join(' ') :
-                                                                            row[field.field][field.selector] :
-                                                                        row[field.field]
+                                                                    field.type === 'url' ?
+                                                                        <a
+                                                                            target="_blank"
+                                                                            rel="noreferrer"
+                                                                            href={field.format.replace('%_%', row[field.field])}
+                                                                            >
+                                                                            {t('action.kivike')}
+                                                                        </a>
+                                                                        :
+                                                                        field.selector ?
+                                                                            Array.isArray(field.selector) ?
+                                                                                field.selector.map(x => row[field.field][x]).join(' ') :
+                                                                                row[field.field][field.selector] :
+                                                                            row[field.field]
                                                                 }
                                                             </TableCell>
                                                         );

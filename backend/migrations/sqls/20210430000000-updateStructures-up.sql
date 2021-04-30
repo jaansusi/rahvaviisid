@@ -1,4 +1,4 @@
-CREATE TABLE folk_tune.externalreferences
+CREATE TABLE folk_tune.external_references
 (
     id smallserial NOT NULL,
     tune_id integer NOT NULL,
@@ -11,6 +11,6 @@ CREATE TABLE folk_tune.externalreferences
     CONSTRAINT FK_externalreferences_tunes FOREIGN KEY (tune_id) REFERENCES folk_tune.tunes (id)
 )
 ;
-INSERT INTO folk_tune.externalreferences (tune_id,type_id,description, value)
+INSERT INTO folk_tune.external_references (tune_id,type_id,description, value)
 VALUES
     (1,1,'Käsikiri','ERA-15039-52820-34479');
