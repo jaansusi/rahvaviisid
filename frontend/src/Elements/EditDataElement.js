@@ -59,7 +59,14 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
             let addEntryToTable = () => {
                 setExpanded(elemValue.length);
                 elemValue.push(createEmptyDataObject(model.edit.fields));
-            }
+            };
+            let deleteEntryFromTable = (i) => {
+                if (expanded === i)
+                    setExpanded(-1);
+                else
+                    setExpanded(i)
+                elemValue.splice(i, 1);
+            };
             let handleRowChange = (event, index) => {
                 const { name, value } = event.target;
                 let temp = elemValue;
@@ -142,7 +149,7 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                                                 }
                                                 <TableCell>
                                                     <Button onClick={() => { setExpanded(i) }}>{t('action.edit')}</Button>
-                                                    <Button>{t('action.delete')}</Button>
+                                                    <Button onClick={() => { deleteEntryFromTable(i) }}>{t('action.delete')}</Button>
                                                 </TableCell>
                                             </TableRow>
                                         )
