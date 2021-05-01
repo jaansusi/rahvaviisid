@@ -1,7 +1,6 @@
 import { Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
 import ViewDataFragment from '../Fragments/ViewDataFragment';
 
 const ViewDataElement = (({ model, value }) => {
@@ -38,7 +37,7 @@ const ViewDataElement = (({ model, value }) => {
                                                                         <a
                                                                             target="_blank"
                                                                             rel="noreferrer"
-                                                                            href={field.format.replace('%_%', row[field.field])}
+                                                                            href={field.format.replace('%url%', row[field.field])}
                                                                             >
                                                                             {t('action.kivike')}
                                                                         </a>

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import SearchBar from './SearchBar';
 import SearchResults from './SearchResults';
 import config from '../config';
+import { Grid } from '@material-ui/core';
 
 const SearchComponent = (props) => {
     const [input, setInput] = useState('');
@@ -35,13 +36,13 @@ const SearchComponent = (props) => {
     }, []);
 
     return (
-        <>
+        <Grid item xs={12}>
             <SearchBar
                 input={input}
                 setKeyword={updateInput}
             />
-            <SearchResults assets={searchResults} />
-        </>
+            <SearchResults showAll={input.length > 2} assets={searchResults} />
+        </Grid>
     );
 }
 

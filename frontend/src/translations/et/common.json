@@ -31,7 +31,8 @@
         "home": "Kodu"
     },
     "search": {
-        "reference": "Otsi viite järgi"
+        "reference": "Otsi viite järgi",
+        "tooMany": "Sisestage vähemalt 3 tähte, et kuvada kõiki vasteid."
     },
     "person": {
         "person": "Isik",
