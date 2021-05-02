@@ -16,7 +16,7 @@ const MassModification = ({ assetIds }) => {
   let modifiableFields = TuneModel.edit.fields
     .filter((x) => x.nested === undefined && !x.hidden).map((x) => { x.id = x.field; x.headerName = t(x.headerName); return x; });
 
-  let columns = [{ field: 'headerName', headerName: t('search.fieldHeader'), width: 300 }]
+  let columns = [{ field: 'headerName', headerName: t('massMod.fieldHeader'), width: 300 }]
   const handleSubmit = (event) => {
     event.preventDefault();
     setSubmitting(true);
@@ -52,6 +52,7 @@ const MassModification = ({ assetIds }) => {
         <Button
           onClick={() => setIsDone(!isDone)}
           variant='contained'
+          disabled={selectedFields.length === 0}
         >
           {isDone ? t('massMod.backToFields') : t('massMod.toValues')}
         </Button>
@@ -95,7 +96,10 @@ const MassModification = ({ assetIds }) => {
               columns={columns}
               autoHeight
               hideFooter
-              onSelectionModelChange={(selectedRows) => setSelectedFields(selectedRows.selectionModel)}
+              onSelectionModelChange={(selectedRows) => {
+                console.log(selectedRows)
+                setSelectedFields(selectedRows.selectionModel)
+              }}
             />
           </>
       }

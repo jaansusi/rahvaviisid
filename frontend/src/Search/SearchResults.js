@@ -19,13 +19,13 @@ const SearchResults = ({ showAll, assets }) => {
 
   return (
     <div style={{ width: '90vw' }}>
-      <Grid item>{!showAll ? t('search.tooMany') : ''}</Grid>
       <Grid item>
         <Button
           disabled={selection.length === 0}
           onClick={() => { setModifying(!modifying); }}
+          variant='contained'
         >
-          {t('search.massMod')}
+          {!modifying ? t('massMod.start') : t('massMod.backToAssets')}
         </Button>
       </Grid>
       {

@@ -30,10 +30,6 @@
     "home": {
         "home": "Kodu"
     },
-    "search": {
-        "reference": "Otsi viite järgi",
-        "tooMany": "Sisestage vähemalt 3 tähte, et kuvada kõiki vasteid."
-    },
     "person": {
         "person": "Isik",
         "pid": "PID",
@@ -73,7 +69,10 @@
         "reference": "Viide",
         "customInput": "Lisaväljad",
         "variationTitle": "Variatsioon ",
-        "transcription": "Noodistus"
+        "transcription": "Noodistus",
+        "supportSound": "Tugiheli",
+        "height": "Kõrgus",
+        "bar": "Võti"
     },
     "user": {
         "role": "Kasutaja roll"
@@ -156,5 +155,15 @@
         "actionEndYear": "Tegevuse lõppaasta",
         "remarks": "Märkused",
         "nameOrigin": "Nime originaalkuju"
+    },
+    "search": {
+        "reference": "Otsi viite järgi"
+    },
+    "massMod": {
+        "start": "Alusta massimuutmist",
+        "backToAssets": "Tagasi viiside valikusse",
+        "toValues": "Edasi väärtuste juurde",
+        "backToFields": "Tagasi tulpade juurde",
+        "fieldHeader": "Väli"
     }
 }
