@@ -6,9 +6,9 @@ import config from '../config';
 import { Grid } from '@material-ui/core';
 
 const SearchComponent = (props) => {
-    const [input, setInput] = useState('');
-    const [searchResultsDefault, setSearchResultsDefault] = useState([]);
-    const [searchResults, setSearchResults] = useState([]);
+    let [input, setInput] = useState('');
+    let [searchResultsDefault, setSearchResultsDefault] = useState([]);
+    let [searchResults, setSearchResults] = useState([]);
 
     const fetchData = async () => {
         axios
@@ -41,7 +41,10 @@ const SearchComponent = (props) => {
                 input={input}
                 setKeyword={updateInput}
             />
-            <SearchResults showAll={input.length > 2} assets={searchResults} />
+            <SearchResults
+                showAll={input.length > 2}
+                assets={searchResults}
+            />
         </Grid>
     );
 }

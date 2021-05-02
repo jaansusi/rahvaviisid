@@ -30,7 +30,6 @@ function App() {
           direction='column'
           alignItems='center'
           className='body-container'
-          xs={12}
         >
           <Switch>
             <Route exact path="/">
