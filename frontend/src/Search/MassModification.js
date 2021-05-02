@@ -1,7 +1,9 @@
 import { Button, FormControl, Grid, TextField } from '@material-ui/core';
 import { DataGrid } from '@material-ui/data-grid';
+import axios from 'axios';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import config from '../config';
 import TuneModel from '../Models/TuneModel';
 
 
@@ -19,7 +21,21 @@ const MassModification = ({ assetIds }) => {
     event.preventDefault();
     setSubmitting(true);
 
-    console.log(submitObject);
+    assetIds.forEach(id => {
+      axios
+        .patch(
+          config.apiUrl + '/tunes/' + id,
+          submitObject,
+          {
+            headers: {
+              'Content-Type': 'application/json',
+            }
+          }
+        )
+        .then((resData) => {
+          console.log(resData);
+        });
+    });
 
     setSubmitting(false);
   };
@@ -37,7 +53,7 @@ const MassModification = ({ assetIds }) => {
           onClick={() => setIsDone(!isDone)}
           variant='contained'
         >
-          {isDone ? 'BACK' : 'NEXT'}
+          {isDone ? t('massMod.backToFields') : t('massMod.toValues')}
         </Button>
       </Grid>
       {
