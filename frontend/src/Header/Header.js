@@ -4,8 +4,9 @@ import { useTranslation } from "react-i18next";
 import './Header.css';
 import logo from '../assets/logo.png';
 import { Grid, Button, MenuList, Menu, MenuItem } from '@material-ui/core';
+import AuthService from '../Authentication/AuthService';
 
-const Header = (() => {
+const Header = ({authentication, setAuthentication}) => {
     const { t, i18n } = useTranslation('common');
 
     const [anchorEl, setAnchorEl] = useState(null);
@@ -40,6 +41,11 @@ const Header = (() => {
                         <MenuItem component={Link} to='/isikud'>{t('common.persons')}</MenuItem>
                         <MenuItem component={Link} to='/viisid'>{t('common.tunes')}</MenuItem>
                         <MenuItem component={Link} to='/klassifikaatorid'>{t('common.classificators')}</MenuItem>
+                        {
+                            authentication === null ?
+                            <MenuItem component={Link} to='/login'>{t('header.login')}</MenuItem> :
+                            <MenuItem component={Link} to='/' onClick={() => AuthService.logout(setAuthentication)}>{t('header.logout')}</MenuItem>
+                        }
                     </MenuList>
             </Grid>
             <Grid item xs={2} id="language-container">
@@ -53,7 +59,7 @@ const Header = (() => {
             </Grid>
         </Grid>
     );
-});
+};
 
 
 

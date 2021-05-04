@@ -165,5 +165,17 @@
         "toValues": "Edasi väärtuste juurde",
         "backToFields": "Tagasi tulpade juurde",
         "fieldHeader": "Väli"
+    },
+    "login": {
+        "email": "E-maili aadress",
+        "password": "Parool",
+        "rememberMe": "Mäleta mind",
+        "signIn": "Logi sisse",
+        "forgotPassword": "Unustasin parooli",
+        "invalidCredentials": "Vigane e-mail / parool"
+    },
+    "header": {
+        "login": "Logi sisse",
+        "logout": "Logi välja"
     }
 }

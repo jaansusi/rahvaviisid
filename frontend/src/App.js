@@ -13,8 +13,11 @@ import Footer from './Footer/Footer';
 import MainRouter from './MainRouter';
 import 'react-notifications/lib/notifications.css';
 import { NotificationContainer } from 'react-notifications';
+import Login from './Authentication/Login';
+import UseLocalStorageState from './Authentication/UseLocalStorageState';
 
 function App() {
+  const [authentication, setAuthentication] = UseLocalStorageState('user');
   return (
     <>
       <Helmet>
@@ -24,7 +27,7 @@ function App() {
         <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
       </Helmet>
       <Router>
-        <Header />
+        <Header authentication={authentication} setAuthentication={setAuthentication} />
         <Grid
           container
           direction='column'
@@ -34,6 +37,9 @@ function App() {
           <Switch>
             <Route exact path="/">
               <Home />
+            </Route>
+            <Route exact path="/login">
+              <Login setAuthentication={setAuthentication} />
             </Route>
             <Route path="/:asset">
               <MainRouter />

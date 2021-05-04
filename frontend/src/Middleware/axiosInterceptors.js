@@ -1,4 +1,5 @@
 import axios from 'axios';
+import AuthService from '../Authentication/AuthService';
 
 axios.interceptors.response.use((response) => {
     let replaceNulls = ((tempObj) => {
@@ -20,4 +21,12 @@ axios.interceptors.response.use((response) => {
 }, (errorResponse) => {
     console.log(errorResponse);
     return errorResponse;
+});
+
+axios.interceptors.request.use((config) => {
+    let userData = AuthService.getUserData();
+    if (userData !== null) {
+        config.headers.Authorization = "Bearer " + userData.token;
+    }
+    return config;
 })
