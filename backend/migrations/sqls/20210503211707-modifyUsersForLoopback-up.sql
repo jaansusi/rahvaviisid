@@ -40,8 +40,8 @@ CREATE TABLE public.refreshtoken
         NOT VALID
 );
 
-INSERT INTO public.user(id, email, role, name)
-    VALUES (uuid_generate_v4(), 'admin@ekm.ee', ARRAY['admin'], 'Admin Istrator');
+INSERT INTO public.user(id, email, roles, firstname, lastname)
+    VALUES (uuid_generate_v4(), 'admin@ekm.ee', ARRAY['admin'], 'Admin', 'Istrator');
 
 INSERT INTO public.usercredentials(id, password, userid)
     (SELECT uuid_generate_v4(), '$2a$10$NkXNEbcUVbW6jopSkoVvIeTgbX8acFD/BRMBUAFS3FP4lxNNaXnxS', id as userid FROM public.user WHERE email = 'admin@ekm.ee');
