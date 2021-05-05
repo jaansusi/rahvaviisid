@@ -1,10 +1,10 @@
-import { User } from '@loopback/authentication-jwt';
+import { User as OrigUser } from '@loopback/authentication-jwt';
 import {Entity, hasOne, model, property} from '@loopback/repository';
 
 @model({
   settings: {idInjection: false, postgresql: {schema: 'public', table: 'user'}}
 })
-export class EkmUser extends User {
+export class User extends OrigUser {
   @property({
     type: 'string',
     postgresql: {columnName: 'roles', dataType: 'ARRAY', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'YES'},
@@ -33,13 +33,13 @@ export class EkmUser extends User {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [prop: string]: any;
 
-  constructor(data?: Partial<EkmUser>) {
+  constructor(data?: Partial<User>) {
     super(data);
   }
 }
 
-export interface EkmUserRelations {
+export interface UserRelations {
   // describe navigational properties here
 }
 
-export type EkmUsersWithRelations = EkmUser & EkmUserRelations;
+export type UsersWithRelations = User & UserRelations;

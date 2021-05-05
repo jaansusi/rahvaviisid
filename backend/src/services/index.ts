@@ -4,4 +4,4 @@
 // License text available at https://opensource.org/licenses/MIT
 
 export * from './basic.authorizer';
-export * from './ekm-user.service';
+export * from './user-management.service';

@@ -13,16 +13,21 @@ import {
 import {UserServiceBindings} from '../keys';
 import {UserCredentials, UserRelations} from '@loopback/authentication-jwt';
 import {UserCredentialsRepository} from '@loopback/authentication-jwt';
-import { EkmUser } from '../models';
+import { User } from '../models';
 
-export class EkmUserRepository extends DefaultCrudRepository<
-  EkmUser,
-  typeof EkmUser.prototype.id,
+export type Credentials = {
+  email: string;
+  password: string;
+};
+
+export class UserRepository extends DefaultCrudRepository<
+  User,
+  typeof User.prototype.id,
   UserRelations
 > {
   public readonly userCredentials: HasOneRepositoryFactory<
     UserCredentials,
-    typeof EkmUser.prototype.id
+    typeof User.prototype.id
   >;
   
   constructor(
@@ -31,7 +36,7 @@ export class EkmUserRepository extends DefaultCrudRepository<
     @repository.getter('UserCredentialsRepository')
     protected userCredentialsRepositoryGetter: Getter<UserCredentialsRepository>,
   ) {
-    super(EkmUser, dataSource);
+    super(User, dataSource);
     this.userCredentials = this.createHasOneRepositoryFactoryFor(
       'userCredentials',
       userCredentialsRepositoryGetter,
@@ -43,10 +48,9 @@ export class EkmUserRepository extends DefaultCrudRepository<
   }
 
   async findCredentials(
-    userId: typeof EkmUser.prototype.id,
+    userId: typeof User.prototype.id,
   ): Promise<UserCredentials | undefined> {
     try {
-      console.log(this.userCredentials(userId).get());
       return this.userCredentials(userId).get();
     } catch (err) {
       if (err.code === 'ENTITY_NOT_FOUND') {

@@ -159,10 +159,10 @@ export class TunesController {
     },
   })
   @authenticate('jwt')
-  // @authorize({
-  //   allowedRoles: ['admin', 'editor'],
-  //   voters: [basicAuthorization],
-  // })
+  @authorize({
+    allowedRoles: ['admin', 'editor'],
+    voters: [basicAuthorization],
+  })
   async updateById(
     @param.path.number('id') id: number,
     @requestBody({

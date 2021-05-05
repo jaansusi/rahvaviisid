@@ -46,7 +46,6 @@ export * from './tune-states.repository';
 export * from './tune-transcriptions.repository';
 export * from './tunes-persons-roles.repository';
 export * from './user-role-types.repository';
-export * from './users.repository';
 export * from './verse-forms.repository';
 export * from './villages.repository';
 export * from './tune-melodies.repository';

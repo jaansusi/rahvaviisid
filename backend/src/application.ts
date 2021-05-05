@@ -18,6 +18,9 @@ import {
 } from '@loopback/authentication-jwt';
 import {DbDataSource} from './datasources';
 import { AuthorizationBindings, AuthorizationComponent, AuthorizationDecision, AuthorizationOptions } from '@loopback/authorization';
+import { UserManagementService } from './services/user-management.service';
+import { JWTService } from './services/jwt.service';
+import { TokenServiceBindings } from './keys';
 
 export { ApplicationConfig };
 
@@ -26,6 +29,7 @@ export class EkmViisidApiApplication extends BootMixin(
 ) {
   constructor(options: ApplicationConfig = {}) {
     super(options);
+
 
     // Set up the custom sequence
     this.sequence(MySequence);
@@ -58,5 +62,14 @@ export class EkmViisidApiApplication extends BootMixin(
     this.component(AuthorizationComponent);
 
     this.dataSource(DbDataSource, UserServiceBindings.DATASOURCE_NAME);
+
+    this.setUpBindings();
+  }
+
+  setUpBindings(): void {
+    
+    this.bind(TokenServiceBindings.TOKEN_SERVICE).toClass(JWTService);
+    this.bind(UserServiceBindings.USER_SERVICE).toClass(UserManagementService);
+
   }
 }

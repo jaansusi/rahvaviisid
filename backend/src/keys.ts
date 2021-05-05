@@ -5,7 +5,7 @@
 
 import {TokenService, UserService} from '@loopback/authentication';
 import {BindingKey} from '@loopback/core';
-import {EkmUser} from './models';
+import {User} from './models';
 import {Credentials} from '@loopback/authentication-jwt';
 import {RefreshTokenService} from '@loopback/authentication-jwt';
 
@@ -27,7 +27,7 @@ export namespace TokenServiceBindings {
 }
 
 export namespace UserServiceBindings {
-  export const USER_SERVICE = BindingKey.create<UserService<EkmUser, Credentials>>(
+  export const USER_SERVICE = BindingKey.create<UserService<User, Credentials>>(
     'services.user.service',
   );
   export const DATASOURCE_NAME = 'jwtdb';
