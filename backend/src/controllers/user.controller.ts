@@ -8,8 +8,6 @@ import {
   Credentials,
   MyUserService,
   TokenServiceBindings,
-  User,
-  UserRepository,
   UserServiceBindings,
 } from '@loopback/authentication-jwt';
 import {inject} from '@loopback/core';
@@ -24,9 +22,12 @@ import {
 import {SecurityBindings, securityId, UserProfile} from '@loopback/security';
 import {genSalt, hash} from 'bcryptjs';
 import _ from 'lodash';
+import { EkmUser } from '../models';
+import { EkmUserRepository } from '../repositories';
+import { EkmUserService } from '../services';
 
 @model()
-export class NewUserRequest extends User {
+export class NewUserRequest extends EkmUser {
   @property({
     type: 'string',
     required: true,
@@ -62,10 +63,10 @@ export class UserController {
     @inject(TokenServiceBindings.TOKEN_SERVICE)
     public jwtService: TokenService,
     @inject(UserServiceBindings.USER_SERVICE)
-    public userService: MyUserService,
+    public userService: EkmUserService,
     @inject(SecurityBindings.USER, {optional: true})
     public user: UserProfile,
-    @repository(UserRepository) protected userRepository: UserRepository,
+    @repository(EkmUserRepository) protected userRepository: EkmUserRepository,
   ) {}
 
   @post('/users/login', {
@@ -94,6 +95,7 @@ export class UserController {
     const user = await this.userService.verifyCredentials(credentials);
     // convert a User object into a UserProfile object (reduced set of properties)
     const userProfile = this.userService.convertToUserProfile(user);
+    console.log(await this.userRepository.findById(user.id));
     // create a JSON Web Token based on the user profile
     const token = await this.jwtService.generateToken(userProfile);
     return {
@@ -120,6 +122,8 @@ export class UserController {
     @inject(SecurityBindings.USER)
     currentUserProfile: UserProfile,
   ): Promise<string> {
+    let a = await this.userService.findUserById(currentUserProfile[securityId]);
+    console.log(a);
     return currentUserProfile[securityId];
   }
 
@@ -130,7 +134,7 @@ export class UserController {
         content: {
           'application/json': {
             schema: {
-              'x-ts-type': User,
+              'x-ts-type': EkmUser,
             },
           },
         },
@@ -148,7 +152,7 @@ export class UserController {
       },
     })
     newUserRequest: NewUserRequest,
-  ): Promise<User> {
+  ): Promise<EkmUser> {
     const password = await hash(newUserRequest.password, await genSalt());
     const savedUser = await this.userRepository.create(
       _.omit(newUserRequest, 'password'),

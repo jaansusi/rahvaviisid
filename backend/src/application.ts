@@ -17,6 +17,7 @@ import {
   UserServiceBindings,
 } from '@loopback/authentication-jwt';
 import {DbDataSource} from './datasources';
+import { AuthorizationBindings, AuthorizationComponent, AuthorizationDecision, AuthorizationOptions } from '@loopback/authorization';
 
 export { ApplicationConfig };
 
@@ -53,6 +54,8 @@ export class EkmViisidApiApplication extends BootMixin(
     this.component(AuthenticationComponent);
 
     this.component(JWTAuthenticationComponent);
+
+    this.component(AuthorizationComponent);
 
     this.dataSource(DbDataSource, UserServiceBindings.DATASOURCE_NAME);
   }

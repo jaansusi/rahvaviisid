@@ -1,3 +1,5 @@
+import { authenticate } from '@loopback/authentication';
+import { authorize } from '@loopback/authorization';
 import {
   Count,
   CountSchema,
@@ -29,6 +31,7 @@ import {
   TunesRepository,
   TuneTranscriptionsRepository,
 } from '../repositories';
+import { basicAuthorization } from '../services';
 
 export class TunesController {
   constructor(
@@ -147,6 +150,7 @@ export class TunesController {
     return this.tunesRepository.findById(id, filter);
   }
 
+
   @patch('/tunes/{id}', {
     responses: {
       '204': {
@@ -154,6 +158,11 @@ export class TunesController {
       },
     },
   })
+  @authenticate('jwt')
+  // @authorize({
+  //   allowedRoles: ['admin', 'editor'],
+  //   voters: [basicAuthorization],
+  // })
   async updateById(
     @param.path.number('id') id: number,
     @requestBody({
