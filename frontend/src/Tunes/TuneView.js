@@ -121,12 +121,15 @@ const TuneView = () => {
 
             <Grid item container spacing={2}>
                 <Grid item>
-                    <Typography variant='h5'>{t('tune.transcription')}</Typography>
+                    <Typography variant='h5'>{t('tune.transcriptions')}</Typography>
                 </Grid>
                 {
-                    assetData.tuneTranscriptions?.map((transcription) => {
+                    assetData.tuneTranscriptions?.map((transcription, i) => {
                         return (
                             <Grid item container direction='column' spacing={2}>
+                                <Grid item>
+                                    <Typography variant='h5'>{t('tune.transcription')} {i + 1}</Typography>
+                                </Grid>
                                 <Grid item container direction='row'>
                                     <Grid item xs={2} container direction='column'>
                                         <Grid item>{t('transcription.source')}</Grid>
@@ -146,13 +149,46 @@ const TuneView = () => {
                                 <Divider />
                                 <Grid item container direction='column' spacing={2}>
                                     {
-                                        transcription.tuneMelodies?.map((melody) => {
+                                        transcription.tuneMelodies?.map((melody, j) => {
                                             return (
-                                                <Grid item container direction='row'>
-                                                    <Grid item xs={4} container direction='column'>
-                                                        <Grid item>{t('melody.abc')}</Grid>
-                                                        <Grid item>{melody.melody}</Grid>
+                                                <Grid item container direction='column' spacing={2}>
+                                                    <Grid item>
+                                                        <Typography variant='h6'>{t('tune.melody')} {j + 1}</Typography>
                                                     </Grid>
+                                                    <Grid item container direction='row'>
+                                                        <Grid item xs={2} container direction='column'>
+                                                            <Grid item>{t('common.title')}</Grid>
+                                                            <Grid item>{melody.title}</Grid>
+                                                        </Grid>
+                                                        <Grid item xs={2} container direction='column'>
+                                                            <Grid item>{t('tune.author')}</Grid>
+                                                            <Grid item>{melody.author}</Grid>
+                                                        </Grid>
+                                                        <Grid item xs={2} container direction='column'>
+                                                            <Grid item>{t('tune.noteLength')}</Grid>
+                                                            <Grid item>{melody.noteLength}</Grid>
+                                                        </Grid>
+                                                        <Grid item xs={2} container direction='column'>
+                                                            <Grid item>{t('tune.alter')}</Grid>
+                                                            <Grid item>{melody.alter}</Grid>
+                                                        </Grid>
+                                                        <Grid item xs={2} container direction='column'>
+                                                            <Grid item>{t('tune.rhythmType')}</Grid>
+                                                            <Grid item>{melody.rhythmType}</Grid>
+                                                        </Grid>
+                                                    </Grid>
+                                                    <Grid item container direction='column'>
+                                                        <Grid item container direction='row'>
+                                                            <Grid item xs={4} container direction='column'>
+                                                                <Grid item>{t('melody.abc')}</Grid>
+                                                                <Grid item>{melody.melody}</Grid>
+                                                            </Grid>
+                                                        </Grid>
+                                                        <Grid item>
+                                                            <PlayerViewComponent elementData={melody} index={i.toString() + j.toString()} />
+                                                        </Grid>
+                                                    </Grid>
+                                                    <Divider />
                                                 </Grid>
                                             );
                                         })
@@ -177,10 +213,12 @@ const TuneView = () => {
                     );
                 })
             }
-            {/* < Divider />
+            < Divider />
+
+            { JSON.stringify(assetData)}
             < ViewComponent
                 model={TuneModel.view}
-            /> */}
+            />
         </Grid>
     );
 };

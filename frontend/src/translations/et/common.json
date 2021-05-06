@@ -71,11 +71,13 @@
         "customInput": "Lisaväljad",
         "variationTitle": "Variatsioon ",
         "transcription": "Noodistus",
+        "transcriptions": "Noodistused",
         "supportSound": "Tugiheli",
         "height": "Kõrgus",
         "bar": "Võti",
         "verification": "Kontrollimine",
-        "archive": "Arhiivi tunnused"
+        "archive": "Arhiivi tunnused",
+        "rhythmType": "Rütmitüüp"
     },
     "user": {
         "role": "Kasutaja roll"
