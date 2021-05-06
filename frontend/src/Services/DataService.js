@@ -79,8 +79,11 @@ export const DataService = {
 
     CreateIncludeFilter(model) {
         let recursiveFun = (currentModel) => {
+            let nestedFields = currentModel.fields.filter(x => x.nested || x.selector);
+            if (nestedFields.length === 0)
+                return {}
             return {
-                include: currentModel.fields.filter(x => x.nested || x.selector).map((x) => {
+                include: nestedFields.map((x) => {
                     let obj = {
                         relation: x.field
                     };

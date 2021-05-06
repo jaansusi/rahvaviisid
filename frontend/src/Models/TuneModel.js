@@ -37,6 +37,8 @@ export const TuneModel = ModelService.GenerateDefaults({
             { field: 'remarks', headerName: 'tune.remarks' },
             { field: 'verifiedBy', headerName: 'tune.verifiedBy' },
             { field: 'verified', headerName: 'tune.verified' },
+            { field: 'created', headerName: 'date.created' },
+            { field: 'modified', headerName: 'date.modified' },
             {
                 field: 'tunePlaces',
                 type: 'table',

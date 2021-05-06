@@ -7,7 +7,6 @@ export const ModelService = {
                 model[view].apiPath = model.apiPath;
             }
         });
-
         return model;
     }
 };

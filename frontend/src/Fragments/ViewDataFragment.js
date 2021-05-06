@@ -36,17 +36,11 @@ const ViewDataFragment = (({ model, elementData }) => {
                         return (
                             <Grid item xs={fieldWidth} key={i}>
                                 {
-                                    // to-do: Figure out a more abstract way to add an extra component
-                                    modelField.type !== 'player' ?
-                                        <ViewDataElement
-                                            model={modelField}
-                                            value={elementData[modelField.field]
-                                            } />
-                                        : <TunePlayer
-                                            elementData={elementData}
-                                            editable={false}
-                                            index={i}
-                                        />
+                                    <ViewDataElement
+                                        model={modelField}
+                                        value={elementData[modelField.field]
+                                        } />
+
                                 }
                             </Grid>
                         )

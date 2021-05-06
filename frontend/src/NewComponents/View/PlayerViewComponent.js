@@ -1,12 +1,11 @@
 import abcjs from 'abcjs';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Grid } from '@material-ui/core';
+import { TuneService } from '../../Services';
 
-const PlayerViewComponent = ({ elementData, editable, index }) => {
-	let [combinedData, setCombinedData] = useState('');
-	editable = editable === undefined ? false : editable;
+export const PlayerViewComponent = ({ elementData, index }) => {
 	useEffect(() => {
-		
+		let combinedData = TuneService.CombineData(elementData);
 		let visualObj = abcjs.renderAbc('player' + index, combinedData)[0];
 		let synthControl = new abcjs.synth.SynthController();
 		synthControl.load('#audio' + index, null, {
@@ -15,7 +14,7 @@ const PlayerViewComponent = ({ elementData, editable, index }) => {
 			displayProgress: true,
 		});
 		synthControl.setTune(visualObj, false);
-	}, [elementData, combinedData, index, elementData.alter, elementData.customInput, elementData.melody, elementData.noteLength, elementData.reference, elementData.tempo, elementData.words]);
+	}, [elementData, index]);
 
 	return (
 		<Grid item xs={12}>
@@ -30,5 +29,3 @@ const PlayerViewComponent = ({ elementData, editable, index }) => {
 		</Grid>
 	);
 };
-
-export default PlayerViewComponent;

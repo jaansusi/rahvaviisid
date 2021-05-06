@@ -33,11 +33,9 @@ export const AuthService = {
     },
 
     CanAccess(allowedRoles) {
-        console.log(allowedRoles);
         let userData = this.GetUserData();
         if (!userData)
             return false;
-        console.log(jwt_decode(userData.token));
         let token = jwt_decode(userData.token);
         if (token === undefined || !token.roles)
             return false;

@@ -1,5 +1,5 @@
-export class TuneService {
-    SetCombinedData(elementData) {
+export const TuneService =  {
+    CombineData(elementData) {
         let melodyLines = elementData.melody.split('\n');
         let wordsLines = elementData.words.split('\n');
         let melodyAndWords = melodyLines.map((melodyLine, i) => {
@@ -24,5 +24,5 @@ export class TuneService {
             .concat(melodyAndWords)
             .filter((elem) => elem !== '')
             .join('\n');
-    };
+    }
 }

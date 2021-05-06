@@ -7,7 +7,7 @@ import { Grid } from '@material-ui/core';
 import Actions from './Buttons/Actions';
 import { DataService } from '../Services';
 
-const ViewComponent = (({ model }) => {
+const ViewComponent = ({ model }) => {
     let { id } = useParams();
     const formReducer = (state, event) => {
         return {
@@ -20,6 +20,7 @@ const ViewComponent = (({ model }) => {
         {}
     );
     useEffect(() => {
+        console.log(model);
         DataService.RequestAsset(model, id, setFormData);
     }, [id, model]);
     return (
@@ -32,6 +33,6 @@ const ViewComponent = (({ model }) => {
             </Grid>
         </>
     );
-});
+};
 
 export default ViewComponent;

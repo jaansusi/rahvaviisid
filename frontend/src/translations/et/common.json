@@ -44,6 +44,7 @@
     },
     "tune": {
         "tune": "Viis",
+        "references": "Viited",
         "tuneReference": "Viisiviide",
         "textReference": "Tekstiviide",
         "soundReference": "Heliviide",
@@ -72,7 +73,9 @@
         "transcription": "Noodistus",
         "supportSound": "Tugiheli",
         "height": "Kõrgus",
-        "bar": "Võti"
+        "bar": "Võti",
+        "verification": "Kontrollimine",
+        "archive": "Arhiivi tunnused"
     },
     "user": {
         "role": "Kasutaja roll"
@@ -178,5 +181,8 @@
         "login": "Logi sisse",
         "logout": "Logi välja",
         "search": "Otsing"
+    },
+    "melody": {
+        "abc": "ABC kuju"
     }
 }

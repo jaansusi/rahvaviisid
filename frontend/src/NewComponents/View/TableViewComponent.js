@@ -1,56 +1,56 @@
 import React from 'react';
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@material-ui/core";
+import { useTranslation } from 'react-i18next';
 
-const TableViewComponent = ({value, model}) => {
+export const TableViewComponent = ({ value, model }) => {
+    const { t } = useTranslation('common');
     return (
         <TableContainer component={Paper}>
-                        <Table>
-                            <TableHead>
-                                <TableRow>
+            <Table>
+                <TableHead>
+                    <TableRow>
+                        {
+                            model.nested.fields.map((field, i) => {
+                                return (<TableCell align={i === 0 ? 'left' : 'right'} key={i}>{t(field.headerName)}</TableCell>);
+                            })
+                        }
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {
+                        value?.map((row, i) => {
+                            return (
+                                <TableRow key={i}>
                                     {
-                                        model.nested.fields.map((field, i) => {
-                                            return (<TableCell align={i === 0 ? 'left' : 'right'} key={i}>{t(field.headerName)}</TableCell>);
+                                        model.nested.fields.map((field, j) => {
+                                            return (
+                                                <TableCell align={j === 0 ? 'left' : 'right'} key={j}>
+                                                    {
+                                                        field.type === 'url' ?
+                                                            <a
+                                                                target="_blank"
+                                                                rel="noreferrer"
+                                                                href={field.format.replace('%url%', row[field.field])}
+                                                            >
+                                                                {t('action.kivike')}
+                                                            </a>
+                                                            :
+                                                            field.selector ?
+                                                                Array.isArray(field.selector) ?
+                                                                    field.selector.map(x => row[field.field][x]).join(' ') :
+                                                                    row[field.field][field.selector] :
+                                                                row[field.field]
+                                                    }
+                                                </TableCell>
+                                            );
                                         })
                                     }
                                 </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {
-                                    value.map((row, i) => {
-                                        return (
-                                            <TableRow key={i}>
-                                                {
-                                                    model.nested.fields.map((field, j) => {
-                                                        return (
-                                                            <TableCell align={j === 0 ? 'left' : 'right'} key={j}>
-                                                                {
-                                                                    field.type === 'url' ?
-                                                                        <a
-                                                                            target="_blank"
-                                                                            rel="noreferrer"
-                                                                            href={field.format.replace('%url%', row[field.field])}
-                                                                            >
-                                                                            {t('action.kivike')}
-                                                                        </a>
-                                                                        :
-                                                                        field.selector ?
-                                                                            Array.isArray(field.selector) ?
-                                                                                field.selector.map(x => row[field.field][x]).join(' ') :
-                                                                                row[field.field][field.selector] :
-                                                                            row[field.field]
-                                                                }
-                                                            </TableCell>
-                                                        );
-                                                    })
-                                                }
-                                            </TableRow>
-                                        )
-                                    })
-                                }
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
+                            )
+                        })
+                    }
+                </TableBody>
+            </Table>
+        </TableContainer>
     );
 }
-
-export default TableViewComponent;

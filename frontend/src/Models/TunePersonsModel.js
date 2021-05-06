@@ -10,7 +10,7 @@ export const TunePersonsModel = ModelService.GenerateDefaults({
             { field: 'tunePersonRoleTypes', headerName: 'tunepersons.tunePersonRoleTypes', selector: 'title'},
             { field: 'actionStartYear', headerName: 'tunepersons.actionStartYear'},
             { field: 'actionEndYear', headerName: 'tunepersons.actionEndYear'},
-            { field: 'remarks', headerName: 'common.measures'}
+            { field: 'remarks', headerName: 'common.remarks'}
         ]
     },
     edit: {
@@ -23,7 +23,7 @@ export const TunePersonsModel = ModelService.GenerateDefaults({
             { field: 'tunePersonRoleTypes', headerName: 'tunepersons.tunePersonRoleTypes', selector: 'title'},
             { field: 'actionStartYear', headerName: 'tunepersons.actionStartYear'},
             { field: 'actionEndYear', headerName: 'tunepersons.actionEndYear'},
-            { field: 'remarks', headerName: 'common.measures'}
+            { field: 'remarks', headerName: 'common.remarks'}
         ]
     }
 });
