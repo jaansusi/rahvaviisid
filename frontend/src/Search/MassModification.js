@@ -4,7 +4,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import config from '../config';
-import TuneModel from '../Models/TuneModel';
+import { TuneModel } from '../Models';
 
 
 const MassModification = ({ assetIds }) => {

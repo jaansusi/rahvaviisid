@@ -1,6 +1,6 @@
-import modelParser from './ModelParser';
+import { ModelService } from '../Services';
 
-const NationModel = modelParser({
+export const NationModel = ModelService.GenerateDefaults({
     list: {
         fields: [
             { field: 'title', headerName: 'tune.nation' }
@@ -40,5 +40,3 @@ const NationModel = modelParser({
     //     ]
     // }
 });
-
-export default NationModel;

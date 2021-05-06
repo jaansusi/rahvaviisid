@@ -1,6 +1,6 @@
-import modelParser from './ModelParser';
+import { ModelService } from '../Services';
 
-const TuneSongsModel = modelParser({
+export const TuneSongsModel = ModelService.GenerateDefaults({
     table: {
         label: 'song.song',
         fields: [
@@ -24,5 +24,3 @@ const TuneSongsModel = modelParser({
         ]
     }
 });
-
-export default TuneSongsModel;

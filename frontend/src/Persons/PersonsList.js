@@ -1,6 +1,6 @@
 import React from 'react';
 import ListComponent from '../Components/ListComponent';
-import PersonModel from '../Models/PersonModel';
+import { PersonModel } from '../Models';
 
 const PersonsList = () => {
     return (

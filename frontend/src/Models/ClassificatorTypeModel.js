@@ -1,4 +1,4 @@
-const ClassificatorsModel =
+export const ClassificatorsModel =
 {
     default: {
         list: {
@@ -231,5 +231,3 @@ const ClassificatorsModel =
         }
     ]
 };
-
-export default ClassificatorsModel;

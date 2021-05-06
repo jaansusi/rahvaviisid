@@ -1,4 +1,5 @@
-export * from './persons.model';export * from './user-role-types.model';
+export * from './persons.model';
+export * from './user-role-types.model';
 export * from './sexes.model';
 export * from './persons.model';
 export * from './tune-states.model';

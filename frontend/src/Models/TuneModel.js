@@ -1,13 +1,13 @@
-import modelParser from './ModelParser';
-import TunePlaceModel from './TunePlaceModel';
-import TuneEncodingModel from './TuneEncodingModel';
-import TuneTranscriptionModel from './TuneTransciptionModel';
-import TunePerformancesModel from './TunePerformancesModel';
-import TunePersonsModel from './TunePersonsModel';
-import TuneSongsModel from './TuneSongsModel';
-import ExternalReferenceModel from './ExternalReferenceModel';
+import { ModelService } from '../Services';
+import { ExternalReferenceModel } from './ExternalReferenceModel';
+import { TuneEncodingModel } from './TuneEncodingModel';
+import { TunePerformancesModel } from './TunePerformancesModel';
+import { TunePersonsModel } from './TunePersonsModel';
+import { TunePlaceModel } from './TunePlaceModel';
+import { TuneSongsModel } from './TuneSongsModel';
+import { TuneTranscriptionModel } from './TuneTransciptionModel';
 
-const TuneModel = modelParser({
+export const TuneModel = ModelService.GenerateDefaults({
     apiPath: 'tunes',
     list: {
         fields: [
@@ -26,12 +26,12 @@ const TuneModel = modelParser({
         fields: [
             { field: 'id', hidden: true, headerName: 'common.id' },
             { field: 'tuneReference', headerName: 'tune.tuneReference' },
-            { field: 'nations', headerName: 'tune.nation', selector: 'title' },
             { field: 'textReference', headerName: 'tune.textReference' },
-            { field: 'languages', headerName: 'tune.language', selector: 'title' },
             { field: 'soundReference', headerName: 'tune.soundReference' },
-            { field: 'countries', headerName: 'tune.country', selector: 'title' },
             { field: 'videoReference', headerName: 'tune.videoReference' },
+            { field: 'nations', headerName: 'tune.nation', selector: 'title' },
+            { field: 'languages', headerName: 'tune.language', selector: 'title' },
+            { field: 'countries', headerName: 'tune.country', selector: 'title' },
             { field: 'publications', headerName: 'tune.publications' },
             { field: 'catalogue', headerName: 'tune.catalogue' },
             { field: 'remarks', headerName: 'tune.remarks' },
@@ -138,5 +138,3 @@ const TuneModel = modelParser({
         ]
     }
 });
-
-export default TuneModel;

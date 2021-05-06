@@ -1,7 +1,7 @@
-import modelParser from './ModelParser';
-import PersonModel from './PersonModel';
+import { PersonModel } from '.';
+import { ModelService } from '../Services';
 
-const TunePersonsModel = modelParser({
+export const TunePersonsModel = ModelService.GenerateDefaults({
     table: {
         label: 'tunepersons.title',
         fields: [
@@ -27,5 +27,3 @@ const TunePersonsModel = modelParser({
         ]
     }
 });
-
-export default TunePersonsModel;

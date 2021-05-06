@@ -1,7 +1,7 @@
-import modelParser from './ModelParser';
-import PersonModel from './PersonModel';
+import { ModelService } from '../Services';
+import { PersonModel } from '.';
 
-const TunePlaceModel = modelParser({
+export const TunePlaceModel = ModelService.GenerateDefaults({
     apiPath: 'tune-places',
     table: {
         label: 'place.place',
@@ -28,5 +28,3 @@ const TunePlaceModel = modelParser({
         ]
     }
 });
-
-export default TunePlaceModel;

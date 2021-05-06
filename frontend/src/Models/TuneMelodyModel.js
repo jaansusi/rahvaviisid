@@ -1,6 +1,6 @@
-import modelParser from './ModelParser';
+import { ModelService } from '../Services';
 
-const TuneMelodyModel = modelParser({
+export const TuneMelodyModel = ModelService.GenerateDefaults({
     apiPath: 'tune-melodies',
     view: {
         fields: [
@@ -31,5 +31,3 @@ const TuneMelodyModel = modelParser({
         ]
     }
 });
-
-export default TuneMelodyModel;

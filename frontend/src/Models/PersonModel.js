@@ -1,6 +1,6 @@
-import modelParser from './ModelParser';
+import { ModelService } from '../Services';
 
-const PersonModel = modelParser({
+export const PersonModel = ModelService.GenerateDefaults({
     apiPath: 'persons',
     list: {
         fields: [
@@ -35,5 +35,3 @@ const PersonModel = modelParser({
         ]
     }
 });
-
-export default PersonModel;

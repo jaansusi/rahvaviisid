@@ -1,6 +1,6 @@
 import React from 'react';
 import ViewComponent from '../Components/ViewComponent';
-import PersonModel from '../Models/PersonModel';
+import { PersonModel } from '../Models';
 
 const PersonView = () => {
     return (

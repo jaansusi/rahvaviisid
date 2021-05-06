@@ -1,6 +1,6 @@
-import modelParser from './ModelParser';
+import { ModelService } from '../Services';
 
-const TunePerformancesModel = modelParser({
+export const TunePerformancesModel = ModelService.GenerateDefaults({
     table: {
         label: 'performance.performance',
         fields: [
@@ -23,5 +23,3 @@ const TunePerformancesModel = modelParser({
         ]
     }
 });
-
-export default TunePerformancesModel;

@@ -1,5 +1,5 @@
-import ClassificatorsModel from "../../Models/ClassificatorTypeModel";
-import modelParser from '../../Models/ModelParser';
+import { ClassificatorsModel } from "../../Models";
+import { ModelService } from "../../Services";
 
 const getClassificatorModel = ((classificator, viewType) => {
     let currentClassificatorModel = undefined;
@@ -16,7 +16,7 @@ const getClassificatorModel = ((classificator, viewType) => {
     currentClassificatorModel[viewType] = currentClassificatorModel[viewType] !== undefined ?
     currentClassificatorModel[viewType] : ClassificatorsModel.default[viewType];
 
-    return modelParser(currentClassificatorModel)[viewType];
+    return ModelService.GenerateDefaults(currentClassificatorModel)[viewType];
 });
 
 export default getClassificatorModel;

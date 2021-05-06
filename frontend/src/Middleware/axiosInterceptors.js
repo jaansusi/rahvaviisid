@@ -1,5 +1,5 @@
 import axios from 'axios';
-import AuthService from '../Authentication/AuthService';
+import { AuthService } from '../Services';
 
 axios.interceptors.response.use((response) => {
     let replaceNulls = ((tempObj) => {
@@ -24,7 +24,7 @@ axios.interceptors.response.use((response) => {
 });
 
 axios.interceptors.request.use((config) => {
-    let userData = AuthService.getUserData();
+    let userData = AuthService.GetUserData();
     if (userData !== null) {
         config.headers.Authorization = "Bearer " + userData.token;
     }

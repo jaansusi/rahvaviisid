@@ -5,8 +5,8 @@ import { useParams } from 'react-router-dom';
 import config from '../config';
 import EditDataFragment from '../Fragments/EditDataFragment';
 import axios from 'axios';
-import { createIncludeFilter, mapResponseToModel } from './ComponentHelpers';
 import Actions from './Buttons/Actions';
+import { DataService } from '../Services';
 
 const EditComponent = ({ model, newItem }) => {
     newItem = newItem === undefined ? false : newItem;
@@ -47,10 +47,10 @@ const EditComponent = ({ model, newItem }) => {
             } else {
                 // Retrieve the data
                 axios
-                    .get(config.apiUrl + '/' + model.apiPath + '/' + id + '?filter=' + encodeURIComponent(JSON.stringify(createIncludeFilter(model))))
+                    .get(config.apiUrl + '/' + model.apiPath + '/' + id + '?filter=' + encodeURIComponent(JSON.stringify(DataService.CreateIncludeFilter(model))))
                     .then((result) => {
                         // Start the model mapping
-                        mapResponseToModel(result.data, model, setElementData);
+                        DataService.MapResponseToModel(result.data, model, setElementData);
                     });
             }
 

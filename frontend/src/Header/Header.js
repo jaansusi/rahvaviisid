@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import './Header.css';
 import logo from '../assets/logo.png';
 import { Grid, Button, MenuList, Menu, MenuItem } from '@material-ui/core';
-import AuthService from '../Authentication/AuthService';
+import { AuthService } from '../Services';
 
 const Header = ({authentication, setAuthentication}) => {
     const { t, i18n } = useTranslation('common');

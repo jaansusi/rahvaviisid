@@ -1,6 +1,6 @@
-import modelParser from './ModelParser';
+import { ModelService } from '../Services';
 
-const ExternalReferenceModel = modelParser({
+export const ExternalReferenceModel = ModelService.GenerateDefaults({
     table: {
         label: 'reference.label',
         fields: [
@@ -14,5 +14,3 @@ const ExternalReferenceModel = modelParser({
         ]
     }
 });
-
-export default ExternalReferenceModel;

@@ -2,8 +2,8 @@ import axios from "axios";
 import config from "../config";
 import jwt_decode from 'jwt-decode';
 
-class AuthService {
-    login(email, password, setAuthentication) {
+export const AuthService = {
+    Login(email, password, setAuthentication) {
         return axios
             .post(config.apiUrl + "/users/login", {
                 email,
@@ -21,20 +21,20 @@ class AuthService {
                 console.log(error);
                 return false;
             });
-    }
+    },
 
-    logout(setAuthentication) {
+    Logout(setAuthentication) {
         setAuthentication(null);
-    }
+    },
 
-    getUserData() {
+    GetUserData() {
         let data = localStorage.getItem('user');
         return JSON.parse(data);
-    }
+    },
 
-    canAccess(allowedRoles) {
+    CanAccess(allowedRoles) {
         console.log(allowedRoles);
-        let userData = this.getUserData();
+        let userData = this.GetUserData();
         if (!userData)
             return false;
         console.log(jwt_decode(userData.token));
@@ -42,7 +42,5 @@ class AuthService {
         if (token === undefined || !token.roles)
             return false;
         return allowedRoles.some(role => token.roles.includes(role));
-    }
+    },
 }
-
-export default new AuthService();

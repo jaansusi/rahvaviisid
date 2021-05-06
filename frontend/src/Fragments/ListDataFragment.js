@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { DataGrid } from '@material-ui/data-grid';
 import Actions from '../Components/Buttons/Actions';
 import CreateButton from '../Components/Buttons/CreateButton';
-import AuthService from '../Authentication/AuthService';
+import { AuthService } from '../Services';
 
 const ListDataFragment = (({ model, data, rowCount, setOffset }) => {
     const { t } = useTranslation('common');
@@ -11,7 +11,7 @@ const ListDataFragment = (({ model, data, rowCount, setOffset }) => {
         x.headerName = t(x.headerName);
         return x;
     });
-    let canAccess = AuthService.canAccess(['editor', 'admin']);
+    let canAccess = AuthService.CanAccess(['editor', 'admin']);
     columns.push({ field: '', headerName: t('action.actions'), sortable: false, width: 290, 
         renderCell: (params) => <Actions auth={canAccess} apiPath={model.apiPath} id={params.row.id} /> 
     });

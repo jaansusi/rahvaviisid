@@ -1,7 +1,7 @@
-import modelParser from './ModelParser';
-import TuneMelodyModel from './TuneMelodyModel';
+import { ModelService } from '../Services';
+import { TuneMelodyModel } from '.';
 
-const TuneTranscriptionModel = modelParser({
+export const TuneTranscriptionModel = ModelService.GenerateDefaults({
     view: {
         label: 'tune.transcription',
         fields: [
@@ -34,5 +34,3 @@ const TuneTranscriptionModel = modelParser({
         ]
     },
 });
-
-export default TuneTranscriptionModel;

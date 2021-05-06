@@ -12,7 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useTranslation } from 'react-i18next';
-import AuthService from './AuthService';
+import { AuthService } from '../Services';
 import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
@@ -46,7 +46,7 @@ let Login = ({ setAuthentication }) => {
 
   let tryLogin = (e) => {
     e.preventDefault();
-    AuthService.login(email, password, setAuthentication)
+    AuthService.Login(email, password, setAuthentication)
       .then((res) => {
         setCredentialsValid(res);
         if (res)

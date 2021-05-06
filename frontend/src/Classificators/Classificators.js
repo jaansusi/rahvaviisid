@@ -4,7 +4,7 @@ import {
 } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Button, Grid } from '@material-ui/core';
-import ClassificatorsModel from '../Models/ClassificatorTypeModel';
+import { ClassificatorsModel } from '../Models';
 
 const Classificators = () => {
     let { asset } = useParams();

@@ -1,6 +1,6 @@
-import modelParser from './ModelParser';
+import { ModelService } from '../Services';
 
-const TuneEncodingModel = modelParser({
+export const TuneEncodingModel = ModelService.GenerateDefaults({
     table: {
         label: 'encoding.encoding',
         fields: [
@@ -19,5 +19,3 @@ const TuneEncodingModel = modelParser({
         ]
     }
 });
-
-export default TuneEncodingModel;
