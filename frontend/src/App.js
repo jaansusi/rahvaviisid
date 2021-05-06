@@ -15,6 +15,7 @@ import 'react-notifications/lib/notifications.css';
 import { NotificationContainer } from 'react-notifications';
 import Login from './Authentication/Login';
 import UseLocalStorageState from './Authentication/UseLocalStorageState';
+import SearchComponent from './Search/SearchComponent';
 
 function App() {
   const [authentication, setAuthentication] = UseLocalStorageState('user');
@@ -37,6 +38,9 @@ function App() {
           <Switch>
             <Route exact path="/">
               <Home />
+            </Route>
+            <Route exact path="/otsing">
+              <SearchComponent />
             </Route>
             <Route exact path="/login">
               <Login setAuthentication={setAuthentication} />

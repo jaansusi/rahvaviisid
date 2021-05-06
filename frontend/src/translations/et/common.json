@@ -176,6 +176,7 @@
     },
     "header": {
         "login": "Logi sisse",
-        "logout": "Logi välja"
+        "logout": "Logi välja",
+        "search": "Otsing"
     }
 }

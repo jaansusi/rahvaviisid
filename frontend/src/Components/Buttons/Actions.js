@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useLocation } from 'react-router-dom';
 import DeleteButton from './DeleteButton';
 
-const Actions = (({ id, apiPath }) => {
+const Actions = (({ id, apiPath, auth, pathOverride }) => {
     const { t } = useTranslation('common');
     let { pathname } = useLocation();
     let beforeInt = true;
@@ -15,18 +15,24 @@ const Actions = (({ id, apiPath }) => {
             return undefined;
         return elem;
     }).filter(x => x !== undefined).join('/');
+    if (pathOverride)
+        path = pathOverride;
     return (
         <Grid container
-        justify='space-around'>
+            justify='space-around'>
             <Grid item>
                 <Button href={`${path}/` + id + '/vaata'} variant="outlined" color="primary">{t('action.view')}</Button>
             </Grid>
-            <Grid item>
-                <Button href={`${path}/` + id + '/muuda'} variant="outlined" color="primary">{t('action.edit')}</Button>
-            </Grid>
-            <Grid item>
-                <DeleteButton apiPath={apiPath} id={id} />
-            </Grid>
+            { auth &&
+                <>
+                    <Grid item>
+                        <Button href={`${path}/` + id + '/muuda'} variant="outlined" color="primary">{t('action.edit')}</Button>
+                    </Grid>
+                    <Grid item>
+                        <DeleteButton apiPath={apiPath} id={id} />
+                    </Grid>
+                </>
+            }
         </Grid>
     );
 });

@@ -38,6 +38,7 @@ const Header = ({authentication, setAuthentication}) => {
             <Grid item xs={5}>
                     <MenuList className='menu'>
                         <MenuItem component={Link} to='/'>{t('common.home')}</MenuItem>
+                        <MenuItem component={Link} to='/otsing'>{t('header.search')}</MenuItem>
                         <MenuItem component={Link} to='/isikud'>{t('common.persons')}</MenuItem>
                         <MenuItem component={Link} to='/viisid'>{t('common.tunes')}</MenuItem>
                         <MenuItem component={Link} to='/klassifikaatorid'>{t('common.classificators')}</MenuItem>
