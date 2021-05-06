@@ -215,10 +215,10 @@ const TuneView = () => {
             }
             < Divider />
 
-            { JSON.stringify(assetData)}
+            {/* { JSON.stringify(assetData)}
             < ViewComponent
                 model={TuneModel.view}
-            />
+            /> */}
         </Grid>
     );
 };

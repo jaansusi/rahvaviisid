@@ -77,7 +77,8 @@
         "bar": "Võti",
         "verification": "Kontrollimine",
         "archive": "Arhiivi tunnused",
-        "rhythmType": "Rütmitüüp"
+        "rhythmType": "Rütmitüüp",
+        "location": "Asukoht"
     },
     "user": {
         "role": "Kasutaja roll"
