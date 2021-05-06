@@ -5,9 +5,8 @@ import {Entity, hasOne, model, property} from '@loopback/repository';
   settings: {idInjection: false, postgresql: {schema: 'public', table: 'user'}}
 })
 export class User extends OrigUser {
-  @property({
-    type: 'string',
-    postgresql: {columnName: 'roles', dataType: 'ARRAY', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'YES'},
+  @property.array(String, {
+    postgresql: {columnName: 'roles', dataType: 'varchar[]', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'YES'},
   })
   roles?: string[];
 
