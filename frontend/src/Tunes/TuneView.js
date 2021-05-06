@@ -3,7 +3,6 @@ import { Divider, Grid, Typography } from '@material-ui/core';
 import { useParams } from 'react-router';
 import { DataService } from '../Services';
 import { TuneModel } from '../Models';
-import ViewComponent from '../Components/ViewComponent';
 import { useTranslation } from 'react-i18next';
 import { PlayerViewComponent, TableViewComponent } from '../NewComponents';
 
