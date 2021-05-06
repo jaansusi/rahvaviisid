@@ -6,7 +6,7 @@ WORKDIR /app
 
 COPY . .
 ARG REACT_APP_API_URL
-ENV REACT_APP_API_URL https://viisidapi.xn--x-dha.ee
+ENV REACT_APP_API_URL https://viisidapi.xmt.ee
 RUN npm install
 RUN npm run build
 
