@@ -20,7 +20,7 @@ import {
   del,
   requestBody,
 } from '@loopback/rest';
-import {SexesRelations, Tunes} from '../models';
+import {Tunes} from '../models';
 import {
   TuneEncodingsRepository,
   TuneMelodiesRepository,
@@ -34,7 +34,7 @@ import {
 import { basicAuthorization } from '../services';
 
 export class TunesController {
-  constructor(
+  constructor( 
     @repository(TunesRepository)
     public tunesRepository: TunesRepository,
     @repository(TuneMelodiesRepository)
