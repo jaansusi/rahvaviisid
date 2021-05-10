@@ -2,7 +2,7 @@ import { User as OrigUser } from '@loopback/authentication-jwt';
 import {Entity, hasOne, model, property} from '@loopback/repository';
 
 @model({
-  settings: {idInjection: false, postgresql: {schema: 'folk_tune', table: 'user'}}
+  settings: {idInjection: false, postgresql: {schema: 'public', table: 'user'}}
 })
 export class User extends OrigUser {
   @property.array(String, {
