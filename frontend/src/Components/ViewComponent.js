@@ -26,9 +26,7 @@ const ViewComponent = ({ model }) => {
     return (
         <>
             <Actions apiPath={model.apiPath} id={id} currentView='view' />
-            <Grid
-                item
-                xs>
+            <Grid item>
                 <ViewDataFragment model={model} elementData={formData} />        
             </Grid>
         </>

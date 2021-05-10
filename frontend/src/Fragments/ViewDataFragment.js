@@ -11,7 +11,7 @@ const ViewDataFragment = (({ model, elementData }) => {
         <>
             <Grid item><h2>{t(model.label)}</h2></Grid>
             <Divider />
-            <Grid container direction='row' spacing={2}>
+            <Grid item xs={9} container direction='row' spacing={2}>
                 {
                     model.fields.map((modelField, i) => {
                         if (modelField.hidden)

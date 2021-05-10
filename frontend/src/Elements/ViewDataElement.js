@@ -38,7 +38,7 @@ const ViewDataElement = (({ model, value }) => {
                                                                             target="_blank"
                                                                             rel="noreferrer"
                                                                             href={field.format.replace('%url%', row[field.field])}
-                                                                            >
+                                                                        >
                                                                             {t('action.kivike')}
                                                                         </a>
                                                                         :
@@ -77,15 +77,9 @@ const ViewDataElement = (({ model, value }) => {
                 />
         default:
             return (
-                <Grid container>
-                    <Grid item xs={3}>
-                        {t(model.headerName)}
-                    </Grid>
-                    { value !== undefined ?
-                        <Grid item xs={3}>{model.selector ? value[model.selector] : value}</Grid>
-                        : null
-                    }
-
+                <Grid item xs={2} container direction='column'>
+                    <Grid item>{t(model.headerName)}</Grid>
+                    <Grid item>{value}</Grid>
                 </Grid>
             );
     }

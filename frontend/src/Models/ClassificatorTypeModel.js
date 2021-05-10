@@ -11,8 +11,8 @@ export const ClassificatorsModel =
             fields: [
                 { field: 'title', headerName: 'common.title' },
                 { field: 'isActive', headerName: 'common.active' },
-                { field: 'created', headerName: 'common.created' },
-                { field: 'modified', headerName: 'common.modified' }
+                { field: 'created', headerName: 'date.created' },
+                { field: 'modified', headerName: 'date.modified' }
             ]
         },
         edit: {
