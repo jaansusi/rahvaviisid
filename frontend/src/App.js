@@ -30,6 +30,7 @@ function App() {
       <Router>
         <Header authentication={authentication} setAuthentication={setAuthentication} />
         <Grid
+          id='content-container'
           container
           direction='column'
           alignItems='center'

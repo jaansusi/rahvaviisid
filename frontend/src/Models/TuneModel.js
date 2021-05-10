@@ -11,6 +11,7 @@ export const TuneModel = ModelService.GenerateDefaults({
     apiPath: 'tunes',
     list: {
         fields: [
+            { field: 'pid', headerName: 'common.pid', width: 200 },
             { field: 'tuneReference', headerName: 'tune.tuneReference', width: 170 },
             { field: 'textReference', headerName: 'tune.textReference', width: 170 },
             { field: 'soundReference', headerName: 'tune.soundReference', width: 170 },
@@ -25,6 +26,7 @@ export const TuneModel = ModelService.GenerateDefaults({
         label: 'tune.tune',
         fields: [
             { field: 'id', hidden: true, headerName: 'common.id' },
+            { field: 'pid', headerName: 'common.pid' },
             { field: 'tuneReference', headerName: 'tune.tuneReference' },
             { field: 'textReference', headerName: 'tune.textReference' },
             { field: 'soundReference', headerName: 'tune.soundReference' },
@@ -82,6 +84,7 @@ export const TuneModel = ModelService.GenerateDefaults({
     edit: {
         fields: [
             { field: 'id', hidden: true },
+            { field: 'pid', headerName: 'common.pid'},
             { field: 'tuneStateId', type: 'dropdown', apiPath: 'tune-states', headerName: 'tune.state' },
             { field: 'textReference', headerName: 'tune.textReference' },
             { field: 'tuneReference', headerName: 'tune.tuneReference' },

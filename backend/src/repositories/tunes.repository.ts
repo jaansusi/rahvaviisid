@@ -1,7 +1,7 @@
 import {DefaultCrudRepository, repository, HasOneRepositoryFactory, HasManyRepositoryFactory} from '@loopback/repository';
 import {Tunes, TunesRelations, TuneMelodies, TuneTranscriptions, Countries, Nations, Languages, TunePerformances, TunePlaces, TunesPersonsRoles, TuneSongs, TuneEncodings} from '../models';
 import {DbDataSource} from '../datasources';
-import {inject, Getter} from '@loopback/core';
+import {inject, Getter, Constructor} from '@loopback/core';
 import {TuneMelodiesRepository} from './tune-melodies.repository';
 import {TuneTranscriptionsRepository} from './tune-transcriptions.repository';
 import {CountriesRepository} from './countries.repository';
@@ -14,12 +14,24 @@ import {TuneSongsRepository} from './tune-songs.repository';
 import {TuneEncodingsRepository} from './tune-encodings.repository';
 import { ExternalReferences } from '../models/external-references.model';
 import { ExternalReferencesRepository } from './external-references.repository';
+import { IAuditMixinOptions } from '../types';
+import { AuditRepositoryMixin } from '../mixins';
+import { AuthenticationBindings } from '@loopback/authentication';
+import { AuditLogRepository } from './audit.repository';
 
-export class TunesRepository extends DefaultCrudRepository<
+const groupAuditOpts: IAuditMixinOptions = {
+  actionKey: 'Tunes_Logs',
+};
+
+export class TunesRepository extends AuditRepositoryMixin<
   Tunes,
   typeof Tunes.prototype.id,
-  TunesRelations
-> {
+  TunesRelations,
+  number,
+  Constructor<
+    DefaultCrudRepository<Tunes, typeof Tunes.prototype.id, TunesRelations>
+  >
+>(DefaultCrudRepository, groupAuditOpts) {
 
   public readonly tuneMelodies: HasManyRepositoryFactory<TuneMelodies, typeof Tunes.prototype.id>;
   public readonly tuneTranscriptions: HasManyRepositoryFactory<TuneTranscriptions, typeof Tunes.prototype.id>;
@@ -46,6 +58,8 @@ export class TunesRepository extends DefaultCrudRepository<
     @repository.getter('TuneSongsRepository') protected tuneSongsRepositoryGetter: Getter<TuneSongsRepository>, 
     @repository.getter('TuneEncodingsRepository') protected tuneEncodingsRepositoryGetter: Getter<TuneEncodingsRepository>,
     @repository.getter('ExternalReferencesRepository') protected externalReferencesRepositoryGetter: Getter<ExternalReferencesRepository>,
+    @repository.getter('AuditLogRepository')
+    public getAuditLogRepository: Getter<AuditLogRepository>,
     ) {
     super(Tunes, dataSource);
     this.tuneEncodings = this.createHasManyRepositoryFactoryFor('tuneEncodings', tuneEncodingsRepositoryGetter,);

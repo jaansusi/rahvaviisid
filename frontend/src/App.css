@@ -4,5 +4,9 @@
 
 .body-container {
   min-height: calc(100vh - 180px);
-  margin: 10px 0;
+  padding: 10px 0;
+}
+
+#content-container {
+  background-color: #F4FaFF;
 }

@@ -11,7 +11,8 @@
         "remarks": "Märkused",
         "id": "ID",
         "missing": "Puudub",
-        "footer": "Eesti Kirjandusmuuseum"
+        "footer": "Eesti Kirjandusmuuseum",
+        "pid": "PID"
     },
     "action": {
         "actions": "Tegevused",

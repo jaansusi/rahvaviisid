@@ -55,3 +55,4 @@ export * from './external-references.model';
 export * from './user.model';
 export * from './user-with-password.model';
 export * from './tunes.model';
+export * from './audit-log.model';

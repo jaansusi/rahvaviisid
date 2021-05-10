@@ -45,7 +45,7 @@ const Header = ({authentication, setAuthentication}) => {
                         {
                             authentication === null ?
                             <MenuItem component={Link} to='/login'>{t('header.login')}</MenuItem> :
-                            <MenuItem component={Link} to='/' onClick={() => AuthService.logout(setAuthentication)}>{t('header.logout')}</MenuItem>
+                            <MenuItem component={Link} to='/' onClick={() => AuthService.Logout(setAuthentication)}>{t('header.logout')}</MenuItem>
                         }
                     </MenuList>
             </Grid>

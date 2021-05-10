@@ -32,7 +32,7 @@ const SearchResults = ({ showAll, assets }) => {
       </Grid>
       {
         modifying ?
-          <MassModification assetIds={selection.map((x) => assets[x].id)} /> :
+          <MassModification assets={selection.map(x => assets[x-1])} /> :
           <DataGrid
             checkboxSelection
             rows={assets}
