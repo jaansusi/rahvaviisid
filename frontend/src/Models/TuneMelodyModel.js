@@ -16,6 +16,7 @@ export const TuneMelodyModel = ModelService.GenerateDefaults({
         ]
     },
     edit: {
+        label: 'tune.melody',
         fields: [
             { field: 'id', hidden: true },
             { field: 'tunesId', hidden: true },
@@ -27,6 +28,7 @@ export const TuneMelodyModel = ModelService.GenerateDefaults({
             { field: 'words', type: 'textbox', headerName: 'tune.words' },
             { field: 'customInput', type: 'textbox', headerName: 'tune.customInput' },
             { field: 'variationIndex', hidden: true },
+            { type: 'player', headerName: 'tune.player' }
 
         ]
     }

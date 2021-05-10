@@ -1,8 +1,9 @@
-import { Button, FormControl, Grid, InputLabel, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@material-ui/core';
+import { Button, FormControl, Grid, InputLabel, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from '@material-ui/core';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { createEmptyDataObject } from '../Components/ComponentHelpers';
 import EditDataFragment from '../Fragments/EditDataFragment';
+import { PlayerViewComponent } from '../NewComponents';
 import './Css/EditFormElement.css';
 
 
@@ -19,7 +20,8 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                     className='form-edit-item'
                 >
                     <FormControl className='form-input-element' variant='outlined'>
-                        <TextField name={model.field} label={t(model.headerName)} value={elemValue} onChange={(e) => handleChange(e, index)} multiline fullWidth rows='2' variant='outlined' />
+                        <TextField name={model.field} label={t(model.headerName)} value={elemValue} onChange={(e) => handleChange(e, index)}
+                            style={{ backgroundColor: 'white' }} multiline fullWidth rows='2' variant='outlined' />
                     </FormControl>
                 </Grid>
             );
@@ -34,7 +36,8 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                 >
                     <FormControl className='form-input-element' variant='outlined'>
                         <InputLabel id={model.headerName}>{t(model.headerName)}</InputLabel>
-                        <Select name={model.field} labelId={model.headerName} label={t(model.headerName)} variant="outlined" value={elemValue} onChange={(e) => handleChange(e, index)}>
+                        <Select name={model.field} labelId={model.headerName} label={t(model.headerName)} variant="outlined"
+                            style={{ backgroundColor: 'white' }} value={elemValue} onChange={(e) => handleChange(e, index)}>
                             <MenuItem value=''>{t('common.missing')}</MenuItem>
                             {
                                 model.values.map((elem, i) => elem === undefined ? null : <MenuItem key={i} value={elem.id}>{model.title ? elem[model.title] : elem.title}</MenuItem>)
@@ -51,7 +54,8 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                     className='form-edit-item'
                 >
                     <FormControl className='form-input-element' variant='outlined'>
-                        <TextField disabled name={model.field} label={t(model.headerName)} value={elemValue} onChange={(e) => handleChange(e, index)} variant='outlined' />
+                        <TextField disabled name={model.field} label={t(model.headerName)} value={elemValue} onChange={(e) => handleChange(e, index)}
+                            style={{ backgroundColor: 'white' }} variant='outlined' />
                     </FormControl>
                 </Grid>
             );
@@ -90,7 +94,7 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                     item
                     xs={12}
                 >
-                    <h2>{t(model.nested.label)}</h2>
+                    <h3>{t(model.nested.label)}</h3>
                     <Button onClick={addEntryToTable} variant='outlined' color='primary'>{t('action.create')}</Button>
                     <TableContainer component={Paper}>
                         <Table>
@@ -161,7 +165,8 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
             if (model.array) {
                 let handleArrayChange = (event, i) => {
                     const { name, value } = event.target;
-                    let temp = value[model.field];
+                    console.log(event);
+                    let temp = elemValue;
                     temp[i][name] = value;
                     handleChange({
                         target: {
@@ -177,18 +182,29 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                         : elemValue.sort((a, b) => a[model.sortBy] - b[model.sortBy]);
                 return data.map((elemValue, i) =>
                     <EditDataFragment
+                        title={t(model.nested.label) + ' ' + (i+1)}
                         model={model.nested}
                         elementData={elemValue}
-                        handleChange={handleArrayChange}
+                        handleChange={(e) => handleArrayChange(e, i)}
                         key={i}
                     />
                 );
             }
             else
-                return <EditDataFragment
-                    model={model.nested}
-                    elementData={elemValue}
-                />
+                return (
+                    <>
+                        {model.label ? t(model.label) : null}
+                        <EditDataFragment
+                            model={model.nested}
+                            elementData={elemValue}
+                        />
+                    </>
+                );
+        case 'player':
+            console.log('AA');
+            return (
+                <PlayerViewComponent elementData={elemValue} index={index} />
+            );
         default:
             return (
                 <Grid
@@ -197,7 +213,13 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                     className='form-edit-item'
                 >
                     <FormControl className='form-input-element' variant='outlined'>
-                        <TextField name={model.field} label={t(model.headerName)} value={model.selector ? elemValue[model.selector] : elemValue} onChange={(e) => handleChange(e, index)} variant='outlined' />
+                        <TextField
+                            name={model.field}
+                            label={t(model.headerName)}
+                            value={model.selector ? elemValue[model.selector] : elemValue}
+                            onChange={(e) => handleChange(e, index)}
+                            style={{ backgroundColor: 'white' }}
+                            variant='outlined' />
                     </FormControl>
                 </Grid>
             );

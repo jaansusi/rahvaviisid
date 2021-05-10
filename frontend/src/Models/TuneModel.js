@@ -120,7 +120,7 @@ export const TuneModel = ModelService.GenerateDefaults({
                 field: 'tuneTranscriptions',
                 type: 'model',
                 array: true,
-                nested: TuneTranscriptionModel.view
+                nested: TuneTranscriptionModel.edit
             },
             {
                 field: 'tunesPersonsRoles',

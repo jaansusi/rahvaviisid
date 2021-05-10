@@ -21,16 +21,16 @@ export const TuneTranscriptionModel = ModelService.GenerateDefaults({
         label: 'tune.transcription',
         fields: [
             { field: 'id', hidden: true },
-            { field: 'transcriptionSources', type: 'dropdown', apiPath: 'transcription-sources', headerName: 'transcription.source' },
+            { field: 'transcriptionSourceId', type: 'dropdown', apiPath: 'transcription-sources', headerName: 'transcription.source' },
             { field: 'created', type: 'view', headerName: 'date.created' },
             { field: 'modified', type: 'view', headerName: 'date.modified' },
-            // {
-            //     field: 'tuneMelodies',
-            //     type: 'model',
-            //     array: true,
-            //     sortBy: 'variationIndex',
-            //     nested: TuneMelodyModel.view
-            // }
+            {
+                field: 'tuneMelodies',
+                type: 'model',
+                array: true,
+                sortBy: 'variationIndex',
+                nested: TuneMelodyModel.edit
+            }
         ]
     },
 });
