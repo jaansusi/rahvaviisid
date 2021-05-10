@@ -9,6 +9,7 @@ import './Css/EditFormElement.css';
 const EditDataElement = (({ model, elemValue, handleChange, index }) => {
     const { t } = useTranslation('common');
     let [expanded, setExpanded] = useState(-1);
+
     switch (model.type) {
         case 'textbox':
             return (
@@ -25,7 +26,6 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
         case 'dropdown':
             if (model.values === undefined)
                 model.values = [];
-
             return (
                 <Grid
                     item
@@ -37,7 +37,7 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                         <Select name={model.field} labelId={model.headerName} label={t(model.headerName)} variant="outlined" value={elemValue} onChange={(e) => handleChange(e, index)}>
                             <MenuItem value=''>{t('common.missing')}</MenuItem>
                             {
-                                model.values.map((elem, i) => elem === undefined ? null : <MenuItem key={i} value={elem.id}>{t(elem.title)}</MenuItem>)
+                                model.values.map((elem, i) => elem === undefined ? null : <MenuItem key={i} value={elem.id}>{model.title ? elem[model.title] : elem.title}</MenuItem>)
                             }
                         </Select>
                     </FormControl>
@@ -59,6 +59,7 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
             let addEntryToTable = () => {
                 setExpanded(elemValue.length);
                 elemValue.push(createEmptyDataObject(model.edit.fields));
+                console.log(elemValue);
             };
             let deleteEntryFromTable = (i) => {
                 if (expanded === i)
@@ -70,7 +71,6 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
             let handleRowChange = (event, index) => {
                 const { name, value } = event.target;
                 let temp = elemValue;
-
                 let selector = model.edit.fields.filter(x => x.field === name)[0].selector;
                 if (selector !== undefined) {
                     temp[index][name][selector] = value;
@@ -107,21 +107,19 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                             <TableBody>
                                 {
                                     elemValue.map((row, i) => {
-                                        if (expanded === i) {
-                                            return (
-                                                <TableRow key={i}>
-                                                    <TableCell colSpan={model.nested.fields.length + 1}>
-                                                        <EditDataFragment
-                                                            model={model.edit}
-                                                            elementData={row}
-                                                            handleChange={(e) => handleRowChange(e, i)}
-                                                        />
-                                                        <Button onClick={() => { setExpanded(-1) }} variant='outlined' color='primary'>{t('action.close')}</Button>
-                                                    </TableCell>
-                                                </TableRow>
-                                            );
-                                        }
-                                        return (
+                                        return (expanded === i) ?
+                                            <TableRow key={i}>
+                                                <TableCell colSpan={model.nested.fields.length + 1}>
+                                                    {JSON.stringify(model)}
+                                                    <EditDataFragment
+                                                        model={model.edit}
+                                                        elementData={row}
+                                                        handleChange={(e) => handleRowChange(e, i)}
+                                                    />
+                                                    <Button onClick={() => { setExpanded(-1) }} variant='outlined' color='primary'>{t('action.close')}</Button>
+                                                </TableCell>
+                                            </TableRow>
+                                            :
                                             <TableRow key={i}>
                                                 {
                                                     model.nested.fields.map((field, j) => {
@@ -152,7 +150,6 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                                                     <Button onClick={() => { deleteEntryFromTable(i) }}>{t('action.delete')}</Button>
                                                 </TableCell>
                                             </TableRow>
-                                        )
                                     })
                                 }
                             </TableBody>

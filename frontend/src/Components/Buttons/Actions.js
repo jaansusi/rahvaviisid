@@ -3,8 +3,9 @@ import { Button, Grid } from '@material-ui/core';
 import { useTranslation } from "react-i18next";
 import { useLocation } from 'react-router-dom';
 import DeleteButton from './DeleteButton';
+import { AuthService } from '../../Services';
 
-const Actions = (({ id, apiPath, auth, pathOverride }) => {
+const Actions = (({ id, apiPath, auth, pathOverride, spacing, currentView }) => {
     const { t } = useTranslation('common');
     let { pathname } = useLocation();
     let beforeInt = true;
@@ -17,20 +18,17 @@ const Actions = (({ id, apiPath, auth, pathOverride }) => {
     }).filter(x => x !== undefined).join('/');
     if (pathOverride)
         path = pathOverride;
+    if (auth === undefined)
+        auth = AuthService.CanAccess(['editor', 'admin']);
     return (
         <Grid container
-            justify='space-around'>
-            <Grid item>
-                <Button href={`${path}/` + id + '/vaata'} variant="outlined" color="primary">{t('action.view')}</Button>
-            </Grid>
+            justify='flex-end'
+            spacing={spacing ? spacing : 0}>
+            { currentView !== 'view' && <Grid item><Button href={`${path}/` + id + '/vaata'} variant="outlined" color="primary">{t('action.view')}</Button></Grid> }
             { auth &&
                 <>
-                    <Grid item>
-                        <Button href={`${path}/` + id + '/muuda'} variant="outlined" color="primary">{t('action.edit')}</Button>
-                    </Grid>
-                    <Grid item>
-                        <DeleteButton apiPath={apiPath} id={id} />
-                    </Grid>
+                    { currentView !== 'edit' && <Grid item><Button href={`${path}/` + id + '/muuda'} variant="outlined" color="primary">{t('action.edit')}</Button></Grid> }
+                    <Grid item><DeleteButton apiPath={apiPath} id={id} /></Grid>
                 </>
             }
         </Grid>

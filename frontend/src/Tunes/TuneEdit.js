@@ -5,15 +5,13 @@ import { Grid } from '@material-ui/core';
 
 const TuneEdit = ({ newItem }) => {
     return (
-        <>
-            <Grid item xs={9}>
-                <EditComponent
-                    filter = '{"include": ["tuneMelodies"]}'
-                    model = {TuneModel.edit}
-                    newItem = {newItem}
-                />
-            </Grid>
-        </>
+        <Grid item xs={9}>
+            <EditComponent
+                filter='{"include": ["tuneMelodies"]}'
+                model={TuneModel.edit}
+                newItem={newItem}
+            />
+        </Grid>
     );
 };
 

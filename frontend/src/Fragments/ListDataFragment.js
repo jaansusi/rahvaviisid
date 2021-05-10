@@ -12,7 +12,7 @@ const ListDataFragment = (({ model, data, rowCount, setOffset }) => {
         return x;
     });
     let canAccess = AuthService.CanAccess(['editor', 'admin']);
-    columns.push({ field: '', headerName: t('action.actions'), sortable: false, width: 290, 
+    columns.push({ field: '', headerName: t('action.actions'), sortable: false, width: 300, 
         renderCell: (params) => <Actions auth={canAccess} apiPath={model.apiPath} id={params.row.id} /> 
     });
 

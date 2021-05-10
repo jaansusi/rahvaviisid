@@ -18,7 +18,7 @@ export const TunePlaceModel = ModelService.GenerateDefaults({
     edit: {
         fields: [
             { field: 'personId', type: 'dropdown', apiPath: PersonModel.apiPath, headerName: 'person.person'},
-            { field: 'tunePlaceTypes', headerName: 'place.type', selector: 'title' },
+            { field: 'tunePlaceTypeId', type: 'dropdown', apiPath: 'tune-place-types', headerName: 'place.type' },
             { field: 'parishes', headerName: 'place.parish', selector: 'title' },
             { field: 'municipalities', headerName: 'place.municipality', selector: 'title' },
             { field: 'villages', headerName: 'place.village', selector: 'title' },

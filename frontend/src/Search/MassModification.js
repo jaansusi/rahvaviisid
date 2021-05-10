@@ -23,16 +23,17 @@ const MassModification = ({ assets }) => {
 
   let fieldColumns = [{ field: 'headerName', headerName: t('massMod.fieldHeader'), width: 300 }];
 
+  let pidHeaderName = t('common.pid');
   useEffect(() => {
     setSelectedFieldsColumns(
-      [{ field: 'pid', headerName: t('common.pid'), width: 200 }]
+      [{ field: 'pid', headerName: pidHeaderName, width: 200 }]
         .concat(selectedFields.map(x => {
           return {
             field: x,
             headerName: pureFields.filter(field => field.field === x)[0].headerName
           };
         })));
-  }, [selectedFields]);
+  }, [selectedFields, pidHeaderName]);
 
   const handleSubmit = (event) => {
     event.preventDefault();

@@ -26,24 +26,46 @@ const EditComponent = ({ model, newItem }) => {
 
     let [submitting, setSubmitting] = useState(false);
     useEffect(() => {
-        // If there are any other requests to make based on the root model, then this is the place
-        let modelPromises = model.fields
+        let retrievedValues = [];
+        let getDropdowns = (currentModel) => {
+            return currentModel.fields
             .map((field, i) => {
-                if (field.type === 'dropdown') {
+                if (field.type === 'dropdown' && !retrievedValues.includes(field.apiPath)) {
+                    retrievedValues.push(field.apiPath);
                     return axios
                         .get(config.apiUrl + '/' + field.apiPath)
                         .then((result) => {
                             // Set the "values" field of the model as the result, this way, the choice input is passed on with the model
-                            model.fields[i].values = result.data;
+                            return {name: field.field, data: result.data};
                         });
+                } else if (field.nested) {
+                    return getDropdowns(field.nested);
+                } else if (field.edit) {
+                    return getDropdowns(field.edit);
                 }
                 return undefined;
-            })
-            .filter((x) => x !== undefined);
-
-        Promise.all(modelPromises).then(() => {
+            });
+        }
+        let modelPromises = getDropdowns(model).flat(100);
+        Promise.all(modelPromises).then((x) => {
+            x = x.filter((x) => x !== undefined);
+            let recurseModelValues = (currentModel) => {
+                currentModel.fields = currentModel.fields
+                .map((field, i) => {
+                    if (field.nested) {
+                        field.nested = recurseModelValues(field.nested);
+                    } else if (field.type === 'table') {
+                        field.edit = recurseModelValues(field.nested);
+                    } else if (field.type === 'dropdown') {
+                        field.values = x.filter((y) => y.name === field.field)[0].data;
+                    }
+                    return field;
+                });
+                return currentModel;
+            }
+            let updatedModel = recurseModelValues(model);
             if (newItem) {
-
+                DataService.MapResponseToModel({}, updatedModel, setElementData);
             } else {
                 // Retrieve the data
                 axios
@@ -145,7 +167,7 @@ const EditComponent = ({ model, newItem }) => {
 
     return (
         <>
-            { !newItem ? <Actions apiPath={model.apiPath} id={id} /> : null}
+            { !newItem ? <Actions apiPath={model.apiPath} id={id} spacing={2} currentView='edit' /> : null}
             <form onSubmit={handleSubmit}>
                 <EditDataFragment
                     model={model}

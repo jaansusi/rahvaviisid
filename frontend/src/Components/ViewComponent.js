@@ -25,7 +25,7 @@ const ViewComponent = ({ model }) => {
     }, [id, model]);
     return (
         <>
-            <Actions apiPath={model.apiPath} id={id} />
+            <Actions apiPath={model.apiPath} id={id} currentView='view' />
             <Grid
                 item
                 xs>

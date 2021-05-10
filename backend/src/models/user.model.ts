@@ -2,7 +2,7 @@ import { User as OrigUser } from '@loopback/authentication-jwt';
 import {Entity, hasOne, model, property} from '@loopback/repository';
 
 @model({
-  settings: {idInjection: false, postgresql: {schema: 'public', table: 'user'}}
+  settings: {idInjection: false, postgresql: {schema: 'folk_tune', table: 'user'}}
 })
 export class User extends OrigUser {
   @property.array(String, {
@@ -41,4 +41,4 @@ export interface UserRelations {
   // describe navigational properties here
 }
 
-export type UsersWithRelations = User & UserRelations;
+export type UserWithRelations = User & UserRelations;
