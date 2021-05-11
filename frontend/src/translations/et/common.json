@@ -195,6 +195,7 @@
         "actedAt": "Aeg",
         "actor": "Tegija",
         "before": "Enne",
-        "after": "Pärast"
+        "after": "Pärast",
+        "chooseOne": "Vajuta real, et avada kirje"
     }
 }

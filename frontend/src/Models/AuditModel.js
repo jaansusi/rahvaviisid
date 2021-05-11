@@ -10,12 +10,5 @@ export const AuditModel = ModelService.GenerateDefaults({
             { field: 'before', headerName: 'audit.before', width: 600 },
             { field: 'after', headerName: 'audit.after', width: 600 }
         ]
-    },
-    view: {
-        fields: [
-            { field: 'action', headerName: 'audit.action' },
-            { field: 'actedAt', headerName: 'audit.actedAt' },
-            { field: 'actor', headerName: 'audit.actor' },
-        ]
     }
 });
