@@ -6,7 +6,6 @@ import { TuneModel } from '../Models';
 import { useTranslation } from 'react-i18next';
 import { PlayerViewComponent, TableViewComponent } from '../NewComponents';
 import Actions from '../Components/Buttons/Actions';
-import { Link } from 'react-router-dom';
 
 const TuneView = () => {
     const { t } = useTranslation('common');
@@ -26,8 +25,9 @@ const TuneView = () => {
     return (
         <Grid container item xs={9}>
             <Grid container>
-                
-                <Actions apiPath={TuneModel.apiPath} id={id} spacing={2} currentView='view' additionalButtons={<Grid item><Button href={'audit'} variant="outlined" color="primary">{t('common.audit')}</Button></Grid>} />
+                <Actions apiPath={TuneModel.apiPath} id={id} spacing={2} currentView='view'
+                    additionalButtons={<Grid item><Button href={'audit'} variant="outlined" color="primary">{t('common.audit')}</Button></Grid>}
+                />
             </Grid>
             <Grid
                 item
