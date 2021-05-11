@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom';
 import 'abcjs/abcjs-audio.css';
 import TuneEdit from './TuneEdit';
+import TuneAudit from './TuneAudit';
 
 const TuneWrapper = () => {
     return (
@@ -21,6 +22,9 @@ const TuneWrapper = () => {
             </Route>
             <Route exact path={`/:asset/:id/muuda`}>
                 <TuneEdit />
+            </Route>
+            <Route exact path={`/:asset/:id/audit`}>
+                <TuneAudit />
             </Route>
         </>
     );

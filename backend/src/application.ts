@@ -70,6 +70,6 @@ export class EkmViisidApiApplication extends BootMixin(
     
     this.bind(TokenServiceBindings.TOKEN_SERVICE).toClass(JWTService);
     this.bind(UserServiceBindings.USER_SERVICE).toClass(UserManagementService);
-
+    this.bind(TokenServiceBindings.TOKEN_EXPIRES_IN).to("345600");
   }
 }

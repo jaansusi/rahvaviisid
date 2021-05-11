@@ -12,7 +12,8 @@
         "id": "ID",
         "missing": "Puudub",
         "footer": "Eesti Kirjandusmuuseum",
-        "pid": "PID"
+        "pid": "PID",
+        "audit": "Logi"
     },
     "action": {
         "actions": "Tegevused",
@@ -188,5 +189,12 @@
     },
     "melody": {
         "abc": "ABC kuju"
+    },
+    "audit": {
+        "action": "Tegevus",
+        "actedAt": "Aeg",
+        "actor": "Tegija",
+        "before": "Enne",
+        "after": "Pärast"
     }
 }

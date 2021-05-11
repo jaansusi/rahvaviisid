@@ -6,7 +6,7 @@ import logo from '../assets/logo.png';
 import { Grid, Button, MenuList, Menu, MenuItem } from '@material-ui/core';
 import { AuthService } from '../Services';
 
-const Header = ({authentication, setAuthentication}) => {
+const Header = ({ authentication, setAuthentication }) => {
     const { t, i18n } = useTranslation('common');
 
     const [anchorEl, setAnchorEl] = useState(null);
@@ -36,18 +36,20 @@ const Header = ({authentication, setAuthentication}) => {
                 <a className='logo-image' href='/'><img className='logo-image' src={logo} alt="Logo"></img></a>
             </Grid>
             <Grid item xs={5}>
-                    <MenuList className='menu'>
-                        <MenuItem component={Link} to='/'>{t('common.home')}</MenuItem>
-                        <MenuItem component={Link} to='/otsing'>{t('header.search')}</MenuItem>
-                        <MenuItem component={Link} to='/isikud'>{t('common.persons')}</MenuItem>
-                        <MenuItem component={Link} to='/viisid'>{t('common.tunes')}</MenuItem>
-                        <MenuItem component={Link} to='/klassifikaatorid'>{t('common.classificators')}</MenuItem>
-                        {
-                            authentication === null ?
+                <MenuList className='menu'>
+                    <MenuItem component={Link} to='/'>{t('common.home')}</MenuItem>
+                    <MenuItem component={Link} to='/otsing'>{t('header.search')}</MenuItem>
+                    <MenuItem component={Link} to='/isikud'>{t('common.persons')}</MenuItem>
+                    <MenuItem component={Link} to='/viisid'>{t('common.tunes')}</MenuItem>
+                    <MenuItem component={Link} to='/klassifikaatorid'>{t('common.classificators')}</MenuItem>
+                    {
+                        authentication === null ?
                             <MenuItem component={Link} to='/login'>{t('header.login')}</MenuItem> :
-                            <MenuItem component={Link} to='/' onClick={() => AuthService.Logout(setAuthentication)}>{t('header.logout')}</MenuItem>
-                        }
-                    </MenuList>
+                            <>
+                                <MenuItem component={Link} to='/' onClick={() => AuthService.Logout(setAuthentication)}>{t('header.logout')}</MenuItem>
+                            </>
+                    }
+                </MenuList>
             </Grid>
             <Grid item xs={2} id="language-container">
                 <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>

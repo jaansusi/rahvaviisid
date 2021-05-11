@@ -89,10 +89,10 @@ let Login = ({ setAuthentication }) => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <FormControlLabel
+          {/* <FormControlLabel
             control={<Checkbox disabled value="remember" color="primary" />}
             label={t('login.rememberMe')}
-          />
+          /> */}
           {
             !credentialsValid &&
             <Typography color='error'>

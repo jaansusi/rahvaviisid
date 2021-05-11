@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom';
 import DeleteButton from './DeleteButton';
 import { AuthService } from '../../Services';
 
-const Actions = (({ id, apiPath, auth, pathOverride, spacing, currentView }) => {
+const Actions = (({ id, apiPath, auth, pathOverride, spacing, currentView, additionalButtons }) => {
     const { t } = useTranslation('common');
     let { pathname } = useLocation();
     let beforeInt = true;
@@ -24,10 +24,11 @@ const Actions = (({ id, apiPath, auth, pathOverride, spacing, currentView }) => 
         <Grid container
             justify='flex-end'
             spacing={spacing ? spacing : 0}>
-            { currentView !== 'view' && <Grid item><Button href={`${path}/` + id + '/vaata'} variant="outlined" color="primary">{t('action.view')}</Button></Grid> }
+            { additionalButtons }
+            { currentView !== 'view' && <Grid item><Button href={`${path}/` + id + '/vaata'} variant="outlined" color="primary">{t('action.view')}</Button></Grid>}
             { auth &&
                 <>
-                    { currentView !== 'edit' && <Grid item><Button href={`${path}/` + id + '/muuda'} variant="outlined" color="primary">{t('action.edit')}</Button></Grid> }
+                    { currentView !== 'edit' && <Grid item><Button href={`${path}/` + id + '/muuda'} variant="outlined" color="primary">{t('action.edit')}</Button></Grid>}
                     <Grid item><DeleteButton apiPath={apiPath} id={id} /></Grid>
                 </>
             }

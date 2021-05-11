@@ -33,3 +33,4 @@ export * from './classificators/pitches.controller';
 export * from './classificators/measures.controller';
 export * from './classificators/tune-places.controller';
 export * from './users-controller.controller';
+export * from './audit.controller';
