@@ -21,10 +21,11 @@ const EditComponent = ({ model, newItem }) => {
 
     let [elementData, setElementData] = useReducer(
         formReducer,
-        {}
+        DataService.CreateEmptyDataObject(model.fields)
     );
 
     let [submitting, setSubmitting] = useState(false);
+    let [updatedModel, setUpdatedModel ] = useState(model);
     useEffect(() => {
         let retrievedValues = [];
         let getDropdowns = (currentModel) => {
@@ -63,9 +64,9 @@ const EditComponent = ({ model, newItem }) => {
                 });
                 return currentModel;
             }
-            let updatedModel = recurseModelValues(model);
+            setUpdatedModel(recurseModelValues(model));
             if (newItem) {
-                DataService.MapResponseToModel({}, updatedModel, setElementData);
+                setElementData(DataService.CreateEmptyDataObject(model.fields));
             } else {
                 // Retrieve the data
                 axios
@@ -170,7 +171,7 @@ const EditComponent = ({ model, newItem }) => {
             { !newItem ? <Actions apiPath={model.apiPath} id={id} spacing={2} currentView='edit' /> : null}
             <form onSubmit={handleSubmit}>
                 <EditDataFragment
-                    model={model}
+                    model={updatedModel}
                     elementData={elementData}
                     handleChange={handleChange}
                 />

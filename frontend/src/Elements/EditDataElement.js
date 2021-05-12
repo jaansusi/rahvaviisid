@@ -1,7 +1,7 @@
 import { Button, FormControl, Grid, InputLabel, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@material-ui/core';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { createEmptyDataObject } from '../Components/ComponentHelpers';
+import { DataService } from '../Services';
 import EditDataFragment from '../Fragments/EditDataFragment';
 import { PlayerViewComponent } from '../NewComponents';
 import './Css/EditFormElement.css';
@@ -62,7 +62,7 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
         case 'table':
             let addEntryToTable = () => {
                 setExpanded(elemValue.length);
-                elemValue.push(createEmptyDataObject(model.edit.fields));
+                elemValue.push(DataService.CreateEmptyDataObject(model.edit.fields));
                 console.log(elemValue);
             };
             let deleteEntryFromTable = (i) => {

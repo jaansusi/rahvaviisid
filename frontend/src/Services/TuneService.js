@@ -1,5 +1,7 @@
 export const TuneService =  {
     CombineData(elementData) {
+        if (!elementData)
+            return '';
         let melodyLines = elementData.melody.split('\n');
         let wordsLines = elementData.words.split('\n');
         let melodyAndWords = melodyLines.map((melodyLine, i) => {
