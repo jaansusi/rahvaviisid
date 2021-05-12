@@ -20,7 +20,11 @@ const Classificators = () => {
                                 <Grid container direction='row'>
                                     {
                                         group.models.map((model, j) => {
-                                            return (<Button key={j} className='classificator-link' href={`${asset}/${model.url}`}>{t(model.name)}</Button>)
+                                            return (
+                                            <Grid>
+                                                <Button key={j} className='classificator-link' href={`${asset}/${model.url}`} variant='outlined'>{t(model.name)}</Button>
+                                            </Grid>
+                                            );
                                         })
                                     }
                                 </Grid>

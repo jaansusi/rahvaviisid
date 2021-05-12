@@ -6,6 +6,7 @@ import './App.css';
 import {
     useParams
 } from 'react-router-dom';
+import UserWrapper from './Users/UserWrapper';
 
 function MainRouter() {
     let { asset } = useParams();
@@ -16,6 +17,8 @@ function MainRouter() {
             return <TuneWrapper />;
         case 'klassifikaatorid':
             return <ClassificatorWrapper />;
+        case 'kasutajad':
+            return <UserWrapper />;
         default:
             return null;
     }

@@ -12,7 +12,7 @@ export const AuthService = {
             .then(
                 (response) => {
                     if (response.data.token) {
-                        console.log(response.data);
+                        // console.log(response.data);
                         setAuthentication(response.data);
                     }
                     return response.data;
@@ -32,8 +32,8 @@ export const AuthService = {
         return JSON.parse(data);
     },
 
-    CanAccess(allowedRoles) {
-        let userData = this.GetUserData();
+    CanAccess(allowedRoles, authToken) {
+        let userData = authToken !== undefined ? authToken : this.GetUserData();
         if (!userData)
             return false;
         let token = jwt_decode(userData.token);

@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer } from 'react';
 import { Button, Divider, Grid, Typography } from '@material-ui/core';
 import { useParams } from 'react-router';
-import { DataService } from '../Services';
+import { AuthService, DataService } from '../Services';
 import { TuneModel } from '../Models';
 import { useTranslation } from 'react-i18next';
 import { PlayerViewComponent, TableViewComponent } from '../NewComponents';
@@ -26,7 +26,7 @@ const TuneView = () => {
         <Grid container item xs={9}>
             <Grid container>
                 <Actions apiPath={TuneModel.apiPath} id={id} spacing={2} currentView='view'
-                    additionalButtons={<Grid item><Button href={'audit'} variant="outlined" color="primary">{t('common.audit')}</Button></Grid>}
+                    additionalButtons={AuthService.CanAccess(['editor', 'admin']) ? <Grid item><Button href={'audit'} variant="outlined" color="primary">{t('common.audit')}</Button></Grid> : undefined}
                 />
             </Grid>
             <Grid

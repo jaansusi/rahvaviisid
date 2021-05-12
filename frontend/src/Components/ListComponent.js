@@ -3,7 +3,7 @@ import config from '../config';
 import ListDataFragment from '../Fragments/ListDataFragment';
 import axios from 'axios';
 
-const ListComponent = (({ model, filter }) => {
+const ListComponent = (({ model, filter, currentView, additionalButtons, actionsWidth }) => {
     let [data, setData] = useState([]);
     let [offset, setOffset] = useState(0);
     let [rowCount, setRowCount] = useState(0);
@@ -38,7 +38,10 @@ const ListComponent = (({ model, filter }) => {
             apiPath={model.apiPath}
             data={data}
             rowCount={rowCount}
-            setOffset={setOffset} />
+            setOffset={setOffset}
+            currentView={currentView}
+            additionalButtons={additionalButtons}
+            actionsWidth={actionsWidth} />
     );
 });
 

@@ -13,7 +13,8 @@
         "missing": "Puudub",
         "footer": "Eesti Kirjandusmuuseum",
         "pid": "PID",
-        "audit": "Logi"
+        "audit": "Logi",
+        "deactivate": "Deaktiveeri"
     },
     "action": {
         "actions": "Tegevused",
@@ -83,7 +84,10 @@
         "location": "Asukoht"
     },
     "user": {
-        "role": "Kasutaja roll"
+        "role": "Kasutaja roll",
+        "email": "E-mail",
+        "firstName": "Eesnimi",
+        "lastName": "Perenimi"
     },
     "place": {
         "place": "Koht",
@@ -185,7 +189,8 @@
     "header": {
         "login": "Logi sisse",
         "logout": "Logi välja",
-        "search": "Otsing"
+        "search": "Otsing",
+        "users": "Kasutajad"
     },
     "melody": {
         "abc": "ABC kuju"
@@ -197,5 +202,12 @@
         "before": "Enne",
         "after": "Pärast",
         "chooseOne": "Vajuta real, et avada kirje"
+    },
+    "coding": {
+        "coding": "Kodeering",
+        "keySignature": "Võtmemärk",
+        "supportSound": "Tugiheli",
+        "pitch": "Kõrgus",
+        "measure": "Taktimõõt"
     }
 }

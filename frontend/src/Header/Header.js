@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from "react-i18next";
 import './Header.css';
@@ -9,13 +9,13 @@ import { AuthService } from '../Services';
 const Header = ({ authentication, setAuthentication }) => {
     const { t, i18n } = useTranslation('common');
 
-    const [anchorEl, setAnchorEl] = useState(null);
+    let [anchorEl, setAnchorEl] = useState(null);
 
-    const handleClick = (event) => {
+    let handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
 
-    const handleClose = (event) => {
+    let handleClose = (event) => {
         setAnchorEl(null);
         switch (event.target.textContent) {
             case t('language.est'):
@@ -30,6 +30,11 @@ const Header = ({ authentication, setAuthentication }) => {
         }
     };
 
+    let [isAdmin, setIsAdmin] = useState(false);
+
+    useEffect(() => {
+        setIsAdmin(AuthService.CanAccess(['admin'], authentication));
+    }, [authentication]);
     return (
         <Grid id="header-container" container direction='row' justify='center' alignItems='center'>
             <Grid item xs={5} id="logo-container">
@@ -43,11 +48,14 @@ const Header = ({ authentication, setAuthentication }) => {
                     <MenuItem component={Link} to='/viisid'>{t('common.tunes')}</MenuItem>
                     <MenuItem component={Link} to='/klassifikaatorid'>{t('common.classificators')}</MenuItem>
                     {
+                        isAdmin ?
+                            <MenuItem component={Link} to='/kasutajad'>{t('header.users')}</MenuItem>
+                            : null
+                    }
+                    {
                         authentication === null ?
                             <MenuItem component={Link} to='/login'>{t('header.login')}</MenuItem> :
-                            <>
-                                <MenuItem component={Link} to='/' onClick={() => AuthService.Logout(setAuthentication)}>{t('header.logout')}</MenuItem>
-                            </>
+                            <MenuItem component={Link} to='/' onClick={() => AuthService.Logout(setAuthentication)}>{t('header.logout')}</MenuItem>
                     }
                 </MenuList>
             </Grid>

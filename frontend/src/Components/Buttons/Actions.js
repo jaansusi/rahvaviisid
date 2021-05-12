@@ -29,7 +29,7 @@ const Actions = (({ id, apiPath, auth, pathOverride, spacing, currentView, addit
             { auth &&
                 <>
                     { currentView !== 'edit' && <Grid item><Button href={`${path}/` + id + '/muuda'} variant="outlined" color="primary">{t('action.edit')}</Button></Grid>}
-                    <Grid item><DeleteButton apiPath={apiPath} id={id} /></Grid>
+                    { currentView !== 'delete' && <Grid item><DeleteButton apiPath={apiPath} id={id} /></Grid>}
                 </>
             }
         </Grid>

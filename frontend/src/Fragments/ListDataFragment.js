@@ -5,15 +5,15 @@ import Actions from '../Components/Buttons/Actions';
 import CreateButton from '../Components/Buttons/CreateButton';
 import { AuthService } from '../Services';
 
-const ListDataFragment = (({ model, data, rowCount, setOffset }) => {
+const ListDataFragment = (({ model, data, rowCount, setOffset, currentView, additionalButtons, actionsWidth }) => {
     const { t } = useTranslation('common');
     let columns = model.fields.map((x) => {
         x.headerName = t(x.headerName);
         return x;
     });
     let canAccess = AuthService.CanAccess(['editor', 'admin']);
-    columns.push({ field: '', headerName: t('action.actions'), sortable: false, width: 300, 
-        renderCell: (params) => <Actions auth={canAccess} apiPath={model.apiPath} id={params.row.id} /> 
+    columns.push({ field: '', headerName: t('action.actions'), sortable: false, width: actionsWidth ? actionsWidth : 300, 
+        renderCell: (params) => <Actions auth={canAccess} apiPath={model.apiPath} id={params.row.id} currentView={currentView} additionalButtons={additionalButtons} /> 
     });
 
     let tableData = [];

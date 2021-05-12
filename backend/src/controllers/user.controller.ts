@@ -1,30 +1,43 @@
-// Copyright IBM Corp. 2020. All Rights Reserved.
-// Node module: @loopback/example-todo-jwt
-// This file is licensed under the MIT License.
-// License text available at https://opensource.org/licenses/MIT
-
-import {authenticate, TokenService} from '@loopback/authentication';
+import {authenticate} from '@loopback/authentication';
 import {
   Credentials,
   TokenServiceBindings,
   UserServiceBindings,
 } from '@loopback/authentication-jwt';
-import {inject} from '@loopback/core';
-import {model, property, repository} from '@loopback/repository';
+import {inject} from '@loopback/context';
 import {
+  Count,
+  CountSchema,
+  Filter,
+  FilterExcludingWhere,
+  model,
+  property,
+  repository,
+  Where,
+} from '@loopback/repository';
+import {
+  post,
+  param,
   get,
   getModelSchemaRef,
-  post,
+  patch,
+  del,
   requestBody,
+  response,
   SchemaObject,
 } from '@loopback/rest';
+import {User} from '../models';
+import {UserRepository} from '../repositories';
+import {
+  UserManagementService,
+  JWTService,
+  basicAuthorization,
+} from '../services';
+
 import {SecurityBindings, securityId, UserProfile} from '@loopback/security';
 import {genSalt, hash} from 'bcryptjs';
 import _ from 'lodash';
-import { User } from '../models';
-import { UserRepository } from '../repositories';
-import { UserManagementService } from '../services';
-import { JWTService } from '../services/jwt.service';
+import {authorize} from '@loopback/authorization';
 
 @model()
 export class NewUserRequest extends User {
@@ -58,6 +71,11 @@ export const CredentialsRequestBody = {
   },
 };
 
+@authenticate('jwt')
+@authorize({
+  allowedRoles: ['admin'],
+  voters: [basicAuthorization],
+})
 export class UserController {
   constructor(
     @inject(TokenServiceBindings.TOKEN_SERVICE)
@@ -69,6 +87,8 @@ export class UserController {
     @repository(UserRepository) protected userRepository: UserRepository,
   ) {}
 
+  @authenticate.skip()
+  @authorize.skip()
   @post('/users/login', {
     responses: {
       '200': {
@@ -136,5 +156,72 @@ export class UserController {
     await this.userRepository.userCredentials(savedUser.id).create({password});
 
     return savedUser;
+  }
+
+  @get('/users/count')
+  @response(200, {
+    description: 'User model count',
+    content: {'application/json': {schema: CountSchema}},
+  })
+  async count(@param.where(User) where?: Where<User>): Promise<Count> {
+    return this.userRepository.count(where);
+  }
+
+  @get('/users')
+  @response(200, {
+    description: 'Array of User model instances',
+    content: {
+      'application/json': {
+        schema: {
+          type: 'array',
+          items: getModelSchemaRef(User, {includeRelations: true}),
+        },
+      },
+    },
+  })
+  async find(@param.filter(User) filter?: Filter<User>): Promise<User[]> {
+    return this.userRepository.find(filter);
+  }
+
+  @get('/users/{id}')
+  @response(200, {
+    description: 'User model instance',
+    content: {
+      'application/json': {
+        schema: getModelSchemaRef(User, {includeRelations: true}),
+      },
+    },
+  })
+  async findById(
+    @param.path.string('id') id: string,
+    @param.filter(User, {exclude: 'where'}) filter?: FilterExcludingWhere<User>,
+  ): Promise<User> {
+    return this.userRepository.findById(id, filter);
+  }
+
+  @patch('/users/{id}')
+  @response(204, {
+    description: 'User PATCH success',
+  })
+  async updateById(
+    @param.path.string('id') id: string,
+    @requestBody({
+      content: {
+        'application/json': {
+          schema: getModelSchemaRef(User, {partial: true}),
+        },
+      },
+    })
+    user: User,
+  ): Promise<void> {
+    await this.userRepository.updateById(id, user);
+  }
+
+  @del('/users/{id}')
+  @response(204, {
+    description: 'User DELETE success',
+  })
+  async deleteById(@param.path.string('id') id: string): Promise<void> {
+    await this.userRepository.deleteById(id);
   }
 }

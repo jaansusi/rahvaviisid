@@ -11,3 +11,4 @@ export * from './TunePlaceModel';
 export * from './TuneSongsModel';
 export * from './TuneTransciptionModel';
 export * from './AuditModel';
+export * from './UserModel';
