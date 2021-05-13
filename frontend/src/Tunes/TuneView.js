@@ -170,7 +170,6 @@ const TuneView = () => {
 
                 {
                     TuneModel.view.fields.filter(x => x.type === 'table').map((fieldElem, i) => {
-                        // console.log(fieldElem);
                         return (
                             <Grid key={i} item>
                                 <Divider />

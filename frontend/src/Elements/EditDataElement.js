@@ -225,7 +225,6 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                     </>
                 );
         case 'player':
-            console.log('AA');
             return (
                 <PlayerViewComponent elementData={elemValue} index={index} />
             );
