@@ -1,7 +1,7 @@
 import { Button, Grid } from '@material-ui/core';
 import React, { useState, useEffect, useReducer } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import config from '../config';
 import EditDataFragment from '../Fragments/EditDataFragment';
 import axios from 'axios';
@@ -11,6 +11,7 @@ import { DataService } from '../Services';
 const EditComponent = ({ model, newItem }) => {
     newItem = newItem === undefined ? false : newItem;
     const { t } = useTranslation('common');
+    const history = useHistory();
     const formReducer = (state, event) => {
         return {
             ...state,
@@ -133,6 +134,7 @@ const EditComponent = ({ model, newItem }) => {
                     }
                 )
                 .then((resData) => {
+                    history.push('.');
                     console.log(resData);
                 });
         } else {

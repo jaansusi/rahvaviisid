@@ -4,24 +4,41 @@ import TuneWrapper from './Tunes/TuneWrapper';
 import ClassificatorWrapper from './Classificators/ClassificatorWrapper';
 import './App.css';
 import {
+    Redirect,
+    Switch,
+    useLocation,
     useParams
 } from 'react-router-dom';
 import UserWrapper from './Users/UserWrapper';
 
 function MainRouter() {
     let { asset } = useParams();
+    let { pathname } = useLocation();
+    let wrapper = null;
     switch (asset) {
         case 'isikud':
-            return <PersonWrapper />;
+            wrapper = <PersonWrapper />;
+            break;
         case 'viisid':
-            return <TuneWrapper />;
+            wrapper = <TuneWrapper />;
+            break;
         case 'klassifikaatorid':
-            return <ClassificatorWrapper />;
+            wrapper = <ClassificatorWrapper />;
+            break;
         case 'kasutajad':
-            return <UserWrapper />;
+            wrapper = <UserWrapper />;
+            break;
         default:
-            return null;
+            break;
     }
+    return (
+        <>
+            <Switch>
+                <Redirect from="/:url*(/+)" to={pathname.slice(0, -1)} />
+            </Switch>
+            { wrapper}
+        </>
+    );
 }
 
 export default MainRouter;
