@@ -25,7 +25,6 @@ axios.interceptors.request.use((config) => {
     if (userData !== null) {
         config.headers.Authorization = "Bearer " + userData.token;
     }
-    console.log(config.data);
     for (let field in config.data) {
         if (Array.isArray(config.data[field])) {
             if (config.data[field].length === 0)

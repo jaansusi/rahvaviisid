@@ -23,6 +23,9 @@ export const TableViewComponent = ({ value, model }) => {
                                 <TableRow key={i}>
                                     {
                                         model.nested.fields.map((field, j) => {
+                                            if (row[field.field] === undefined) {
+                                                return <TableCell></TableCell>;
+                                            }
                                             return (
                                                 <TableCell align={j === 0 ? 'left' : 'right'} key={j}>
                                                     {
