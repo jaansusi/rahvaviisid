@@ -3,41 +3,211 @@
         "home": "Home",
         "persons": "Persons",
         "tunes": "Tunes",
-        "classificators": "Classificators"
+        "classificators": "Classificators",
+        "title": "Title",
+        "active": "Active",
+        "description": "Description",
+        "back": "Back",
+        "remarks": "Remarks",
+        "id": "ID",
+        "missing": "Missing",
+        "footer": "Estonian Literary Museum",
+        "pid": "PID",
+        "audit": "Audit",
+        "deactivate": "Deactivate"
     },
     "action": {
         "actions": "Actions",
         "view": "View",
-        "edit": "Edit"
+        "edit": "Edit",
+        "delete": "Delete",
+        "create": "Create new",
+        "close": "Close",
+        "kivike": "Open with Kivike"
     },
     "date": {
-        "created": "Created"
+        "created": "Created",
+        "modified": "Modified",
+        "verified": "Verified"
     },
     "home": {
         "home": "Home"
     },
     "person": {
+        "person": "Person",
         "pid": "PID",
+        "name": "Name",
         "givenName": "Given name",
         "surname": "Surname",
         "nickname": "Nickname",
-        "birthYear": "Birth year",
-        "deathYear": "Death year",
-        "sex": "Sex"
+        "birthYear": "Year of birth",
+        "deathYear": "Year of death",
+        "sex": "Sex",
+        "role": "Role"
     },
     "tune": {
+        "tune": "Tune",
+        "references": "References",
         "tuneReference": "Tune reference",
         "textReference": "Text reference",
         "soundReference": "Sound reference",
         "videoReference": "Video reference",
         "catalogue": "Catalogue",
-        "nation": "Nation",
+        "nation": "Nationality",
         "language": "Language",
-        "country": "Country"
+        "country": "Country",
+        "state": "State",
+        "genre": "Genre",
+        "publications": "Publications",
+        "remarks": "Remarks",
+        "verifiedBy": "Verified by",
+        "verified": "Verified",
+        "melody": "Melody",
+        "words": "Words",
+        "alter": "Alter",
+        "tempo": "Tempo",
+        "clef": "Clef",
+        "noteLength": "Note length",
+        "title": "Title",
+        "author": "Author",
+        "reference": "Reference",
+        "customInput": "Additional fields",
+        "variationTitle": "Variation ",
+        "transcription": "Notation",
+        "transcriptions": "Notations",
+        "supportSound": "Support sound",
+        "height": "Height",
+        "bar": "Bar",
+        "verification": "Verification",
+        "archive": "Archive ID",
+        "rhythmType": "Rhytm type",
+        "location": "Location"
+    },
+    "user": {
+        "role": "Role",
+        "email": "E-mail address",
+        "firstName": "Given Name",
+        "lastName": "Surname"
+    },
+    "place": {
+        "place": "Place",
+        "type": "Type of place",
+        "parish": "Parish",
+        "municipality": "Municipality",
+        "village": "Village",
+        "other": "Other"
+    },
+    "performance": {
+        "performance": "Performance",
+        "accompaniment": "Accompaniment",
+        "actual": {
+            "type": "Type of actual performance",
+            "action": "Type of actual activity"
+        },
+        "traditional": {
+            "type": "Type of actual performance",
+            "action": "Type of actual activity"
+        }
+    },
+    "reference": {
+        "label": "External references",
+        "description": "Description",
+        "url": "URL"
+    },
+    "song": {
+        "song": "Song",
+        "genre": "Genre",
+        "topic": "Topic",
+        "verse": "Verse",
+        "songType": "Song type",
+        "songTitle": "Song title",
+        "firstVerse": "First verse",
+        "refrain": "Refrain"
+    },
+    "attribute": {
+        "attribute": "Attribute",
+        "textForm": "Text form",
+        "tuneForm": "Tune form",
+        "soundRange": "Sound range",
+        "rhythmType": "Rythm type"
+    },
+    "transcription": {
+        "transcription": "Transcription",
+        "source": "Source",
+        "personRole": "Role"
+    },
+    "encoding": {
+        "encoding": "Musical features",
+        "keySignature": "Key signature",
+        "supportSound": "Support sound",
+        "pitch": "Pitch",
+        "measure": "Key signature",
+        "tuneEncodingNum": "Code num",
+        "keySignatures": "Key",
+        "supportSounds": "Support sound",
+        "pitches": "Pitch",
+        "measures": "Tempo"
+    },
+    "edit": {
+        "save": "Save"
     },
     "language": {
-        "current": "ENG",
+        "current": "EST",
         "est": "EST",
         "eng": "ENG"
+    },
+    "model": {
+        "true": "Yes",
+        "false": "No"
+    },
+    "tunepersons": {
+        "tunePersonRoleTypes": "Role",
+        "title": "Person involved in notation",
+        "actionStartYear": "Year started",
+        "actionEndYear": "Year finished",
+        "remarks": "Remarks",
+        "nameOrigin": "Original title"
+    },
+    "search": {
+        "reference": "Search by ID"
+    },
+    "massMod": {
+        "start": "Start mass modifikation ",
+        "backToAssets": "Back to tune selection",
+        "toValues": "Go to values",
+        "backToFields": "Back to colums",
+        "fieldHeader": "Field"
+    },
+    "login": {
+        "email": "E-maili address",
+        "password": "Password",
+        "rememberMe": "Remember me",
+        "signIn": "Log in",
+        "forgotPassword": "Forgot password",
+        "invalidCredentials": "Invalid e-mail / password"
+    },
+    "header": {
+        "login": "Log in",
+        "logout": "Log out",
+        "search": "Search",
+        "users": "Users"
+    },
+    "melody": {
+        "abc": "ABC form"
+    },
+    "audit": {
+        "action": "Action",
+        "actedAt": "Time",
+        "actor": "Actor",
+        "before": "Before",
+        "after": "After",
+        "chooseOne": "Click to open"
+    },
+    "coding": {
+        "coding": "Coding",
+        "keySignature": "Key signature",
+        "supportSound": "Support sound",
+        "pitch": "Pitch",
+        "measure": "Time signature"
     }
 }

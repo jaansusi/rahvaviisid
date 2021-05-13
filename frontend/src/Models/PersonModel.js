@@ -24,7 +24,8 @@ export const PersonModel = ModelService.GenerateDefaults({
     },
     edit: {
         fields: [
-            { field: 'pid', type: 'number', headerName: 'person.pid' },
+            { field: 'id', hidden: true },
+            { field: 'pid', headerName: 'person.pid' },
             { field: 'givenName', headerName: 'person.givenName' },
             { field: 'surname', headerName: 'person.surname' },
             { field: 'nickname', headerName: 'person.nickname' },

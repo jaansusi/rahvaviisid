@@ -30,13 +30,6 @@ const ListDataFragment = (({ model, data, rowCount, setOffset, currentView, addi
                     //console.log(row);
                     row[field] = row[field][modelField.selector];
                 }
-                switch (modelField.type) {
-                    case 'boolean':
-                        row[field] = row[field] ? t('model.true') : t('model.false');
-                        break;
-                    default:
-                        break;
-                }
             }
             return row;
         });

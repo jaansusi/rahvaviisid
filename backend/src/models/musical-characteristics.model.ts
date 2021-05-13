@@ -1,4 +1,6 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, hasMany} from '@loopback/repository';
+import {RhythmTypes} from './rhythm-types.model';
+import {MusicalCharacteristicsRhythmTypes} from './musical-characteristics-rhythm-types.model';
 
 @model({
   settings: {
@@ -9,7 +11,7 @@ import {Entity, model, property} from '@loopback/repository';
 export class MusicalCharacteristics extends Entity {
   @property({
     type: 'number',
-    required: true,
+    required: false,
     scale: 0,
     id: 1,
     postgresql: {columnName: 'id', dataType: 'integer', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'NO'},
@@ -22,7 +24,7 @@ export class MusicalCharacteristics extends Entity {
     scale: 0,
     postgresql: {columnName: 'tune_id', dataType: 'integer', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'NO'},
   })
-  tuneId: number;
+  tunesId: number;
 
   @property({
     type: 'number',
@@ -61,18 +63,20 @@ export class MusicalCharacteristics extends Entity {
 
   @property({
     type: 'date',
-    required: true,
+    required: false,
     postgresql: {columnName: 'created', dataType: 'timestamp without time zone', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'NO'},
   })
   created: string;
 
   @property({
     type: 'date',
-    required: true,
+    required: false,
     postgresql: {columnName: 'modified', dataType: 'timestamp without time zone', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'NO'},
   })
   modified: string;
 
+  @hasMany(() => RhythmTypes, {through: {model: () => MusicalCharacteristicsRhythmTypes}})
+  rhythmTypes: RhythmTypes[];
   // Define well-known properties here
 
   // Indexer property to allow additional data

@@ -92,7 +92,6 @@ const EditComponent = ({ model, newItem }) => {
     // Function for submitting form data to API
     let submitData = (currentModel, data) => {
         let recurse = (recursedModel, recursedData) => {
-            console.log(recursedData);
             let requestObject = {};
             for (let modelKey in recursedModel.fields) {
                 let modelElem = recursedModel.fields[modelKey];
@@ -120,9 +119,7 @@ const EditComponent = ({ model, newItem }) => {
             }
             return requestObject;
         }
-        console.log(currentModel);
         let objToSend = recurse(currentModel, Object.assign({}, data));
-        console.log(objToSend);
         if (newItem) {
             // No DB entry exists, use post request
             axios
@@ -151,7 +148,7 @@ const EditComponent = ({ model, newItem }) => {
                     }
                 )
                 .then((resData) => {
-                    console.log(resData);
+                    // console.log(resData);
                 });
         }
 
@@ -175,7 +172,6 @@ const EditComponent = ({ model, newItem }) => {
                     elementData={elementData}
                     handleChange={handleChange}
                 />
-
                 <Grid item xs className="form-edit-item">
                     <Button
                         type="submit"

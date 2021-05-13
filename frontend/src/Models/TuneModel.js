@@ -1,5 +1,6 @@
 import { ModelService } from '../Services';
 import { ExternalReferenceModel } from './ExternalReferenceModel';
+import { MusicalCharacteristicsModel } from './MusicalCharacteristicsModel';
 import { TuneEncodingModel } from './TuneEncodingModel';
 import { TunePerformancesModel } from './TunePerformancesModel';
 import { TunePersonsModel } from './TunePersonsModel';
@@ -11,7 +12,7 @@ export const TuneModel = ModelService.GenerateDefaults({
     apiPath: 'tunes',
     list: {
         fields: [
-            { field: 'pid', headerName: 'common.pid', width: 200 },
+            { field: 'id', headerName: 'common.pid', width: 80 },
             { field: 'tuneReference', headerName: 'tune.tuneReference', width: 170 },
             { field: 'textReference', headerName: 'tune.textReference', width: 170 },
             { field: 'soundReference', headerName: 'tune.soundReference', width: 170 },
@@ -25,8 +26,7 @@ export const TuneModel = ModelService.GenerateDefaults({
     view: {
         label: 'tune.tune',
         fields: [
-            { field: 'id', hidden: true, headerName: 'common.id' },
-            { field: 'pid', headerName: 'common.pid' },
+            { field: 'id', headerName: 'common.id' },
             { field: 'tuneReference', headerName: 'tune.tuneReference' },
             { field: 'textReference', headerName: 'tune.textReference' },
             { field: 'soundReference', headerName: 'tune.soundReference' },
@@ -42,19 +42,24 @@ export const TuneModel = ModelService.GenerateDefaults({
             { field: 'created', headerName: 'date.created' },
             { field: 'modified', headerName: 'date.modified' },
             {
+                field: 'tunesPersonsRoles',
+                type: 'table',
+                nested: TunePersonsModel.table
+            },
+            {
                 field: 'tunePlaces',
                 type: 'table',
                 nested: TunePlaceModel.table
             },
             {
+                field: 'tunePerformances',
+                type: 'table',
+                nested: TunePerformancesModel.table
+            },
+            {
                 field: 'externalReferences',
                 type: 'table',
                 nested: ExternalReferenceModel.table
-            },
-            {
-                field: 'tuneEncodings',
-                type: 'table',
-                nested: TuneEncodingModel.table
             },
             {
                 field: 'tuneTranscriptions',
@@ -63,22 +68,21 @@ export const TuneModel = ModelService.GenerateDefaults({
                 nested: TuneTranscriptionModel.view
             },
             {
-                field: 'tunesPersonsRoles',
-                type: 'table',
-                nested: TunePersonsModel.table
-            },
-            {
-                field: 'tunePerformances',
-                type: 'table',
-                nested: TunePerformancesModel.table
-            },
-            {
                 field: 'tuneSongs',
                 type: 'table',
                 nested: TuneSongsModel.table
             },
-
-
+            {
+                field: 'tuneEncodings',
+                type: 'table',
+                nested: TuneEncodingModel.table
+            },
+            {
+                field: 'musicalCharacteristics',
+                type: 'table',
+                nested: MusicalCharacteristicsModel.table,
+                edit: MusicalCharacteristicsModel.edit
+            },
         ]
     },
     edit: {
@@ -105,6 +109,12 @@ export const TuneModel = ModelService.GenerateDefaults({
             { field: 'created', type: 'view', headerName: 'date.created' },
             { field: 'modified', type: 'view', headerName: 'date.modified' },
             {
+                field: 'tunesPersonsRoles',
+                type: 'table',
+                nested: TunePersonsModel.table,
+                edit: TunePersonsModel.edit
+            },
+            {
                 field: 'tunePlaces',
                 type: 'table',
                 nested: TunePlaceModel.table,
@@ -123,12 +133,6 @@ export const TuneModel = ModelService.GenerateDefaults({
                 nested: TuneTranscriptionModel.edit
             },
             {
-                field: 'tunesPersonsRoles',
-                type: 'table',
-                nested: TunePersonsModel.table,
-                edit: TunePersonsModel.edit
-            },
-            {
                 field: 'tunePerformances',
                 type: 'table',
                 nested: TunePerformancesModel.table,
@@ -139,6 +143,12 @@ export const TuneModel = ModelService.GenerateDefaults({
                 type: 'table',
                 nested: TuneSongsModel.table,
                 edit: TuneSongsModel.edit
+            }, 
+            {
+                field: 'musicalCharacteristics',
+                type: 'table',
+                nested: MusicalCharacteristicsModel.table,
+                edit: MusicalCharacteristicsModel.edit
             },
         ]
     }

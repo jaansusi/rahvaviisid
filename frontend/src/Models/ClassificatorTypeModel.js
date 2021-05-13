@@ -10,15 +10,18 @@ export const ClassificatorsModel =
         view: {
             fields: [
                 { field: 'title', headerName: 'common.title' },
-                { field: 'isActive', headerName: 'common.active' },
+                { field: 'description', headerName: 'common.description' },
+                { field: 'isActive', type: 'boolean', headerName: 'common.active' },
                 { field: 'created', headerName: 'date.created' },
                 { field: 'modified', headerName: 'date.modified' }
             ]
         },
         edit: {
             fields: [
+                { field: 'id', hidden: true },
                 { field: 'title', headerName: 'common.title' },
-                { field: 'isActive', headerName: 'common.active' }
+                { field: 'description', type: 'textbox', headerName: 'common.description' },
+                { field: 'isActive', type: 'boolean', headerName: 'common.active' }
             ]
         }
     },
@@ -46,9 +49,10 @@ export const ClassificatorsModel =
                     },
                     edit: {
                         fields: [
+                            { field: 'id', hidden: true },
                             { field: 'title', headerName: 'common.title' },
-                            { field: 'description', headerName: 'common.description' },
-                            { field: 'isActive', headerName: 'common.active' }
+                            { field: 'description', type: 'textbox', headerName: 'common.description' },
+                            { field: 'isActive', type: 'boolean', headerName: 'common.active' }
                         ]
                     }
                 },

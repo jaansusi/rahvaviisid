@@ -1,4 +1,4 @@
-import { Button, FormControl, Grid, InputLabel, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@material-ui/core';
+import { Button, Checkbox, FormControl, FormControlLabel, Grid, InputLabel, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@material-ui/core';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { DataService } from '../Services';
@@ -12,6 +12,30 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
     let [expanded, setExpanded] = useState(-1);
 
     switch (model.type) {
+        case 'boolean':
+            return (
+                <FormControlLabel
+                    control={
+                        <Checkbox
+                            checked={elemValue}
+                            onChange={(e) => {
+                                let a = {
+                                    target: {
+                                        name: model.field,
+                                        value: e.target.checked,
+                                        type: 'boolean'
+                                    }
+                                }
+                                handleChange(a, index);
+                            }}
+                            name={model.field}
+                            value={elemValue}
+                            color="primary"
+                        />
+                    }
+                    label={t(model.headerName)}
+                />
+            );
         case 'textbox':
             return (
                 <Grid
@@ -182,7 +206,7 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                         : elemValue.sort((a, b) => a[model.sortBy] - b[model.sortBy]);
                 return data.map((elemValue, i) =>
                     <EditDataFragment
-                        title={t(model.nested.label) + ' ' + (i+1)}
+                        title={t(model.nested.label) + ' ' + (i + 1)}
                         model={model.nested}
                         elementData={elemValue}
                         handleChange={(e) => handleArrayChange(e, i)}

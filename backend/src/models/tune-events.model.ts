@@ -6,7 +6,7 @@ import {Entity, model, property} from '@loopback/repository';
 export class TuneEvents extends Entity {
   @property({
     type: 'number',
-    required: true,
+    required: false,
     scale: 0,
     id: 1,
     postgresql: {columnName: 'id', dataType: 'integer', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'NO'},
@@ -62,7 +62,7 @@ export class TuneEvents extends Entity {
 
   @property({
     type: 'date',
-    required: true,
+    required: false,
     postgresql: {columnName: 'created', dataType: 'timestamp without time zone', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'NO'},
   })
   created: string;

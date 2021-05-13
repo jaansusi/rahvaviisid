@@ -1,5 +1,5 @@
 import {DefaultCrudRepository, repository, HasOneRepositoryFactory, HasManyRepositoryFactory} from '@loopback/repository';
-import {Tunes, TunesRelations, TuneMelodies, TuneTranscriptions, Countries, Nations, Languages, TunePerformances, TunePlaces, TunesPersonsRoles, TuneSongs, TuneEncodings} from '../models';
+import {Tunes, TunesRelations, TuneMelodies, TuneTranscriptions, Countries, Nations, Languages, TunePerformances, TunePlaces, TunesPersonsRoles, TuneSongs, TuneEncodings, MusicalCharacteristics} from '../models';
 import {DbDataSource} from '../datasources';
 import {inject, Getter, Constructor} from '@loopback/core';
 import {TuneMelodiesRepository} from './tune-melodies.repository';
@@ -18,6 +18,7 @@ import { IAuditMixinOptions } from '../types';
 import { AuditRepositoryMixin } from '../mixins';
 import { AuthenticationBindings } from '@loopback/authentication';
 import { AuditLogRepository } from './audit.repository';
+import {MusicalCharacteristicsRepository} from './musical-characteristics.repository';
 
 const groupAuditOpts: IAuditMixinOptions = {
   actionKey: 'Tunes_Logs',
@@ -45,6 +46,8 @@ export class TunesRepository extends AuditRepositoryMixin<
   public readonly tuneEncodings: HasManyRepositoryFactory<TuneEncodings, typeof Tunes.prototype.id>;
   public readonly externalReferences: HasManyRepositoryFactory<ExternalReferences, typeof Tunes.prototype.id>;
 
+  public readonly musicalCharacteristics: HasManyRepositoryFactory<MusicalCharacteristics, typeof Tunes.prototype.id>;
+
   constructor(
     @inject('datasources.db') dataSource: DbDataSource, 
     @repository.getter('TuneMelodiesRepository') protected tuneMelodiesRepositoryGetter: Getter<TuneMelodiesRepository>,
@@ -59,9 +62,11 @@ export class TunesRepository extends AuditRepositoryMixin<
     @repository.getter('TuneEncodingsRepository') protected tuneEncodingsRepositoryGetter: Getter<TuneEncodingsRepository>,
     @repository.getter('ExternalReferencesRepository') protected externalReferencesRepositoryGetter: Getter<ExternalReferencesRepository>,
     @repository.getter('AuditLogRepository')
-    public getAuditLogRepository: Getter<AuditLogRepository>,
+    public getAuditLogRepository: Getter<AuditLogRepository>, @repository.getter('MusicalCharacteristicsRepository') protected musicalCharacteristicsRepositoryGetter: Getter<MusicalCharacteristicsRepository>,
     ) {
     super(Tunes, dataSource);
+    this.musicalCharacteristics = this.createHasManyRepositoryFactoryFor('musicalCharacteristics', musicalCharacteristicsRepositoryGetter,);
+    this.registerInclusionResolver('musicalCharacteristics', this.musicalCharacteristics.inclusionResolver);
     this.tuneEncodings = this.createHasManyRepositoryFactoryFor('tuneEncodings', tuneEncodingsRepositoryGetter,);
     this.registerInclusionResolver('tuneEncodings', this.tuneEncodings.inclusionResolver);
     this.tuneSongs = this.createHasManyRepositoryFactoryFor('tuneSongs', tuneSongsRepositoryGetter,);

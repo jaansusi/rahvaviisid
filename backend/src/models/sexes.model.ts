@@ -1,4 +1,5 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, hasOne} from '@loopback/repository';
+import {Persons} from './persons.model';
 
 @model({
   settings: {idInjection: false, postgresql: {schema: 'folk_tune', table: 'sexes'}}
@@ -6,7 +7,7 @@ import {Entity, model, property} from '@loopback/repository';
 export class Sexes extends Entity {
   @property({
     type: 'number',
-    required: true,
+    required: false,
     scale: 0,
     id: 1,
     postgresql: {columnName: 'id', dataType: 'smallint', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'NO'},
@@ -36,18 +37,20 @@ export class Sexes extends Entity {
 
   @property({
     type: 'date',
-    required: true,
+    required: false,
     postgresql: {columnName: 'created', dataType: 'timestamp without time zone', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'NO'},
   })
   created: string;
 
   @property({
     type: 'date',
-    required: true,
+    required: false,
     postgresql: {columnName: 'modified', dataType: 'timestamp without time zone', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'NO'},
   })
   modified: string;
 
+  @hasOne(() => Persons, {keyTo: 'sexId'})
+  persons: Persons;
   // Define well-known properties here
 
   // Indexer property to allow additional data

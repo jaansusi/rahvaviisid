@@ -102,7 +102,7 @@ export const DataService = {
             (() => {
                 let value = undefined;
                 // If a value should be nested, let's recurse into the nested model
-                console.log(elem);
+                // console.log(elem);
                 if (elem.selector !== undefined)
                     value = {};
                 if (elem.nested !== undefined)

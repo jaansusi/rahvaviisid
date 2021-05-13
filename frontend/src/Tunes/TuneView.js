@@ -2,7 +2,7 @@ import React, { useEffect, useReducer } from 'react';
 import { Button, Divider, Grid, Typography } from '@material-ui/core';
 import { useParams } from 'react-router';
 import { AuthService, DataService } from '../Services';
-import { TuneModel } from '../Models';
+import { TuneMelodyModel, TuneModel } from '../Models';
 import { useTranslation } from 'react-i18next';
 import { PlayerViewComponent, TableViewComponent } from '../NewComponents';
 import Actions from '../Components/Buttons/Actions';
@@ -23,7 +23,7 @@ const TuneView = () => {
     }, [id]);
 
     return (
-        <Grid container item xs={9}>
+        <Grid container item lg={9} md={11}>
             <Grid container>
                 <Actions apiPath={TuneModel.apiPath} id={id} spacing={2} currentView='view'
                     additionalButtons={AuthService.CanAccess(['editor', 'admin']) ? <Grid item><Button href={'audit'} variant="outlined" color="primary">{t('common.audit')}</Button></Grid> : undefined}
@@ -121,7 +121,7 @@ const TuneView = () => {
                     {
                         assetData.tuneTranscriptions?.map((transcription, i) => {
                             return (
-                                <Grid item container direction='column' spacing={2}>
+                                <Grid key={i} item container direction='column' spacing={2}>
                                     <Grid item>
                                         <Typography variant='h5'>{t('tune.transcription')} {i + 1}</Typography>
                                     </Grid>
@@ -137,16 +137,18 @@ const TuneView = () => {
                                         {
                                             transcription.tuneMelodies?.map((melody, j) => {
                                                 return (
-                                                    <Grid item container direction='column' spacing={2}>
+                                                    <Grid key={j} item container direction='column' spacing={2}>
                                                         <Grid item>
                                                             <Typography variant='h6'>{t('tune.melody')} {j + 1}</Typography>
                                                         </Grid>
                                                         <Grid item container direction='row'>
-                                                            <AssetPropertyElement title={t('common.title')} value={melody.title} />
-                                                            <AssetPropertyElement title={t('tune.author')} value={melody.author} />
-                                                            <AssetPropertyElement title={t('tune.noteLength')} value={melody.noteLength} />
-                                                            <AssetPropertyElement title={t('tune.alter')} value={melody.alter} />
-                                                            <AssetPropertyElement title={t('tune.rhythmType')} value={melody.rhythmType} />
+                                                            {
+                                                                TuneMelodyModel.view.fields.filter(x => !x.hidden && x.type !== 'player').map((field, k) => {
+                                                                    return (
+                                                                        <AssetPropertyElement key={k} title={t(field.headerName)} value={melody[field.field]} />
+                                                                    );
+                                                                })
+                                                            }
                                                         </Grid>
                                                         <Grid item container direction='column'>
                                                             <Grid item>
@@ -168,7 +170,7 @@ const TuneView = () => {
 
                 {
                     TuneModel.view.fields.filter(x => x.type === 'table').map((fieldElem, i) => {
-                        console.log(fieldElem);
+                        // console.log(fieldElem);
                         return (
                             <Grid key={i} item>
                                 <Divider />
@@ -178,12 +180,6 @@ const TuneView = () => {
                         );
                     })
                 }
-                < Divider />
-
-                {/* { JSON.stringify(assetData)}
-            < ViewComponent
-                model={TuneModel.view}
-            /> */}
             </Grid>
         </Grid>
     );
@@ -192,9 +188,9 @@ const TuneView = () => {
 const AssetPropertyElement = ({ title, value, size }) => {
     if (!size) size = 2;
     return (
-        <Grid item xs={size} container direction='column'>
+        <Grid item xs={size} container wrap='nowrap' direction='column'>
             <Grid item>{title}</Grid>
-            <Grid item>{value}</Grid>
+            <Grid item><Typography noWrap>{value}</Typography></Grid>
         </Grid>
     );
 };

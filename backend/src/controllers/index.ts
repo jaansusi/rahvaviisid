@@ -34,3 +34,8 @@ export * from './classificators/measures.controller';
 export * from './classificators/tune-places.controller';
 export * from './audit.controller';
 export * from './user.controller';
+export * from './musical-characteristics.controller';
+export * from './tunes-musical-characteristics.controller';
+export * from './sexes-persons.controller';
+export * from './sexes-persons.controller';
+export * from './musical-characteristics-rhythm-types.controller';

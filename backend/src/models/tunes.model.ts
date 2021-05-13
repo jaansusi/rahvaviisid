@@ -11,6 +11,7 @@ import {TuneSongs} from './tune-songs.model';
 import {TuneEncodings} from './tune-encodings.model';
 import { ExternalReferences } from './external-references.model';
 import { Users } from './users.model';
+import {MusicalCharacteristics} from './musical-characteristics.model';
 
 @model({
   settings: {idInjection: false, postgresql: {schema: 'folk_tune', table: 'tunes'}}
@@ -18,7 +19,7 @@ import { Users } from './users.model';
 export class Tunes extends Entity {
   @property({
     type: 'number',
-    required: true,
+    required: false,
     scale: 0,
     id: 1,
     postgresql: {columnName: 'id', dataType: 'integer', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'NO'},
@@ -127,14 +128,14 @@ export class Tunes extends Entity {
 
   @property({
     type: 'date',
-    required: true,
+    required: false,
     postgresql: {columnName: 'created', dataType: 'timestamp without time zone', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'NO'},
   })
   created: string;
 
   @property({
     type: 'date',
-    required: true,
+    required: false,
     postgresql: {columnName: 'modified', dataType: 'timestamp without time zone', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'NO'},
   })
   modified: string;
@@ -202,6 +203,10 @@ export class Tunes extends Entity {
   tuneSongs?: TuneSongs[];
 
   //muusikalised tunnused
+  @hasMany(() => MusicalCharacteristics)
+  musicalCharacteristics: MusicalCharacteristics[];
+
+  //kodeeringud
   @hasMany(() => TuneEncodings, {keyTo: 'tune_id'})
   tuneEncodings?: TuneEncodings[];
 

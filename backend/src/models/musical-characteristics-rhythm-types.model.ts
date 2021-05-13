@@ -9,7 +9,7 @@ import {Entity, model, property} from '@loopback/repository';
 export class MusicalCharacteristicsRhythmTypes extends Entity {
   @property({
     type: 'number',
-    required: true,
+    required: false,
     scale: 0,
     id: 1,
     postgresql: {columnName: 'id', dataType: 'integer', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'NO'},
@@ -22,7 +22,7 @@ export class MusicalCharacteristicsRhythmTypes extends Entity {
     scale: 0,
     postgresql: {columnName: 'musical_characteristic_id', dataType: 'integer', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'NO'},
   })
-  musicalCharacteristicId: number;
+  musicalCharacteristicsId: number;
 
   @property({
     type: 'number',
@@ -30,18 +30,18 @@ export class MusicalCharacteristicsRhythmTypes extends Entity {
     scale: 0,
     postgresql: {columnName: 'rhythm_type_id', dataType: 'smallint', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'NO'},
   })
-  rhythmTypeId: number;
+  rhythmTypesId: number;
 
   @property({
     type: 'date',
-    required: true,
+    required: false,
     postgresql: {columnName: 'created', dataType: 'timestamp without time zone', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'NO'},
   })
   created: string;
 
   @property({
     type: 'date',
-    required: true,
+    required: false,
     postgresql: {columnName: 'modified', dataType: 'timestamp without time zone', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'NO'},
   })
   modified: string;

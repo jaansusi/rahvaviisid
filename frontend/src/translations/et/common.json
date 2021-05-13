@@ -90,7 +90,7 @@
         "lastName": "Perenimi"
     },
     "place": {
-        "place": "Koht",
+        "place": "Kohad",
         "type": "Koha liik",
         "parish": "Kihelkond",
         "municipality": "Vald",
@@ -137,7 +137,7 @@
         "personRole": "Tegija roll"
     },
     "encoding": {
-        "encoding": "Muusikalised tunnused",
+        "encoding": "Kodeeringud",
         "keySignature": "Võtmemärk",
         "supportSound": "Tugiheli",
         "pitch": "Kõrgus",
@@ -162,7 +162,7 @@
     },
     "tunepersons": {
         "tunePersonRoleTypes": "Roll",
-        "title": "Noodistusega seotud isik",
+        "title": "Viisi tegijad",
         "actionStartYear": "Tegevuse algusaasta",
         "actionEndYear": "Tegevuse lõppaasta",
         "remarks": "Märkused",
@@ -209,5 +209,12 @@
         "supportSound": "Tugiheli",
         "pitch": "Kõrgus",
         "measure": "Taktimõõt"
+    },
+    "musical": {
+        "tune": "Viisi number",
+        "score": "Läbilaulude arv (noot)",
+        "audio": "Läbilaulude arv (heli)",
+        "isVariable": "On varieeruv",
+        "soundRange": "Heliulatus"
     }
 }

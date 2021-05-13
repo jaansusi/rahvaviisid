@@ -22,6 +22,7 @@ import {
 } from '@loopback/rest';
 import {Tunes} from '../models';
 import {
+  ActualPerformanceTypesRepository,
   TuneEncodingsRepository,
   TuneMelodiesRepository,
   TunePerformancesRepository,
@@ -51,6 +52,8 @@ export class TunesController {
     public tuneTranscriptionsRepository: TuneTranscriptionsRepository,
     @repository(TunesPersonsRolesRepository)
     public tunesPersonsRolesRepository: TunesPersonsRolesRepository,
+    @repository(ActualPerformanceTypesRepository)
+    public actualPerformanceTypesRepository: ActualPerformanceTypesRepository,
   ) {}
 
   @post('/tunes', {
@@ -190,11 +193,11 @@ export class TunesController {
       delete tunes.tuneEncodings;
     }
     if (tunes.tunePerformances !== undefined) {
-      // tunes.tunePerformances.forEach((performance) => {
-      //   if (performance.actualPerformanceTypes !== undefined) {
-      //     updateNestedAsset(performance.actualPerformanceTypes, this.actualPerformanceTypesRepository);
-      //   }
-      // });
+      tunes.tunePerformances.forEach((performance) => {
+        if (performance.actualPerformanceTypes !== undefined) {
+          updateNestedAsset([performance.actualPerformanceTypes], this.actualPerformanceTypesRepository);
+        }
+      });
       delete tunes.tunePerformances;
     }
     if (tunes.tunePlaces !== undefined) {
