@@ -126,9 +126,9 @@ export const TuneModel = ModelService.GenerateDefaults({
             },
             {
                 field: 'tuneTranscriptions',
-                type: 'model',
-                array: true,
-                nested: TuneTranscriptionModel.edit
+                type: 'table',
+                nested: TuneTranscriptionModel.table,
+                edit: TuneTranscriptionModel.edit
             },
             {
                 field: 'tunePerformances',

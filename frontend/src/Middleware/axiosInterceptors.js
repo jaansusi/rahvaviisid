@@ -18,15 +18,20 @@ axios.interceptors.response.use((response) => {
     });
     response.data = replaceNulls(response.data); 
     return response;
-}, (errorResponse) => {
-    console.log(errorResponse);
-    return errorResponse;
 });
 
 axios.interceptors.request.use((config) => {
     let userData = AuthService.GetUserData();
     if (userData !== null) {
         config.headers.Authorization = "Bearer " + userData.token;
+    }
+    console.log(config.data);
+    for (let field in config.data) {
+        if (Array.isArray(config.data[field])) {
+            if (config.data[field].length === 0)
+                delete config.data[field];
+            continue;
+        }
     }
     return config;
 })

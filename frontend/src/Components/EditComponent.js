@@ -118,6 +118,7 @@ const EditComponent = ({ model, newItem }) => {
                     }
                 }
             }
+            console.log(requestObject);
             return requestObject;
         }
         let objToSend = recurse(currentModel, Object.assign({}, data));
@@ -134,8 +135,11 @@ const EditComponent = ({ model, newItem }) => {
                     }
                 )
                 .then((resData) => {
-                    history.push('.');
                     console.log(resData);
+                    history.push('.');
+                })
+                .catch((error) => {
+                    console.log(error.response.data.error);
                 });
         } else {
             // DB entry already exists, use patch request

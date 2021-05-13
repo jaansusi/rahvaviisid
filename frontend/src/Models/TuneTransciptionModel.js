@@ -2,6 +2,14 @@ import { ModelService } from '../Services';
 import { TuneMelodyModel } from '.';
 
 export const TuneTranscriptionModel = ModelService.GenerateDefaults({
+    table: {
+        label: 'tune.transcription',
+        fields: [
+            { field: 'transcriptionSources', headerName: 'transcription.source', selector: 'title' },
+            { field: 'created', headerName: 'date.created' },
+            { field: 'modified', headerName: 'date.modified' }
+        ]
+    },
     view: {
         label: 'tune.transcription',
         fields: [

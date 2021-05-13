@@ -138,7 +138,7 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                                         return (expanded === i) ?
                                             <TableRow key={i}>
                                                 <TableCell colSpan={model.nested.fields.length + 1}>
-                                                    {JSON.stringify(model)}
+                                                    {/* {JSON.stringify(model)} */}
                                                     <EditDataFragment
                                                         model={model.edit}
                                                         elementData={row}

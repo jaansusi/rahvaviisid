@@ -6,11 +6,12 @@ import ClassificatorTypeEdit from './ClassificatorTypes/ClassificatorTypeEdit';
 import {
   Route
 } from 'react-router-dom';
+import { Grid } from '@material-ui/core';
 
 const ClassificatorWrapper = () => {
 
   return (
-    <>
+    <Grid item lg={9} md={11}>
       <Route exact path={'/:asset'}>
         <Classificators />
       </Route>
@@ -27,7 +28,7 @@ const ClassificatorWrapper = () => {
       <Route exact path={`/:asset/:classificator/:id/muuda`}>
         <ClassificatorTypeEdit />
       </Route>
-    </>
+    </Grid>
   );
 }
 
