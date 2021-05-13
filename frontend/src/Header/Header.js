@@ -37,10 +37,10 @@ const Header = ({ authentication, setAuthentication }) => {
     }, [authentication]);
     return (
         <Grid id="header-container" container direction='row' justify='center' alignItems='center'>
-            <Grid item xs={5} id="logo-container">
+            <Grid item xs={3} id="logo-container">
                 <a className='logo-image' href='/'><img className='logo-image' src={logo} alt="Logo"></img></a>
             </Grid>
-            <Grid item xs={5}>
+            <Grid item xs={7}>
                 <MenuList className='menu'>
                     <MenuItem component={Link} to='/'>{t('common.home')}</MenuItem>
                     <MenuItem component={Link} to='/otsing'>{t('header.search')}</MenuItem>
