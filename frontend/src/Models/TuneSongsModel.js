@@ -7,8 +7,10 @@ export const TuneSongsModel = ModelService.GenerateDefaults({
             { field: 'songType', headerName: 'song.songType'},
             { field: 'songTitle', headerName: 'song.songTitle'},
             { field: 'firstVerse', headerName: 'song.firstVerse'},
-            { field: 'refrain', headerName: 'song.refrain'},
-            { field: 'remarks', headerName: 'common.remarks'}
+            { field: null, headerName: 'song.songGenre'},
+            { field: null, headerName: 'song.tuneGenre'},
+            { field: null, headerName: 'song.songTopic'},
+            { field: null, headerName: 'song.verseForm'}
         ]
     },
     edit: {
@@ -18,8 +20,8 @@ export const TuneSongsModel = ModelService.GenerateDefaults({
             { field: 'songType', headerName: 'song.songType'},
             { field: 'songTitle', headerName: 'song.songTitle'},
             { field: 'firstVerse', headerName: 'song.firstVerse'},
-            { field: 'refrain', headerName: 'song.refrain'},
-            { field: 'remarks', headerName: 'common.remarks'}
+            { field: 'refrain', type: 'textbox', headerName: 'song.refrain'},
+            { field: 'remarks', type: 'textbox', headerName: 'common.remarks'}
 
         ]
     }

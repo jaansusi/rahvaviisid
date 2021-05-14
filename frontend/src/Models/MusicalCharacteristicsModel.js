@@ -3,21 +3,20 @@ import { ModelService } from '../Services';
 export const MusicalCharacteristicsModel = ModelService.GenerateDefaults({
     apiPath: 'musical-characteristics',
     table: {
+        label: 'musical.label',
         fields: [
-            { field: 'tuneId', headerName: 'musical.tune', width: 170 },
-            { 
-                field: 'soundRangeId', 
-                headerName: 'musical.soundRange', 
-                width: 140 },
+            { field: 'soundRangeId', headerName: 'musical.soundRange', width: 140 },
+            { field: null, headerName: 'musical.tuneForm', width: 140 },
+            { field: null, headerName: 'musical.textForm', width: 140 },
+            { field: null, headerName: 'musical.rhythmType', width: 140 },
+            { field: null, headerName: 'musical.soundRange', width: 140 },
             { field: 'melostropheNumScore', headerName: 'musical.score', width: 140 },
             { field: 'melostropheNumAudio', headerName: 'musical.audio', width: 150 },
-            { field: 'isVariable', headerName: 'musical.isVariable', width: 150 },
-            { field: 'remarks', headerName: 'common.remarks', width: 120 }
+            { field: 'isVariable', type: 'boolean', headerName: 'musical.isVariable', width: 150 }
         ]
     },
     view: {
         fields: [
-            { field: 'tuneId', headerName: 'musical.tune', width: 170 },
             { field: 'soundRangeId', headerName: 'musical.soundRange', width: 140 },
             { field: 'melostropheNumScore', headerName: 'musical.score', width: 140 },
             { field: 'melostropheNumAudio', headerName: 'musical.audio', width: 150 },
@@ -28,12 +27,11 @@ export const MusicalCharacteristicsModel = ModelService.GenerateDefaults({
     edit: {
         fields: [
             { field: 'id', hidden: true },
-            { field: 'tuneId', headerName: 'musical.tune', width: 170 },
             { field: 'soundRangeId', headerName: 'musical.soundRange', width: 140 },
             { field: 'melostropheNumScore', headerName: 'musical.score', width: 140 },
             { field: 'melostropheNumAudio', headerName: 'musical.audio', width: 150 },
-            { field: 'isVariable', headerName: 'musical.isVariable', width: 150 },
-            { field: 'remarks', headerName: 'common.remarks', width: 120 }
+            { field: 'isVariable', type: 'boolean', headerName: 'musical.isVariable', width: 150 },
+            { field: 'remarks', type: 'textbox', headerName: 'common.remarks', width: 120 }
         ]
     }
 });

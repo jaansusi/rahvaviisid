@@ -6,8 +6,7 @@ export const TuneTranscriptionModel = ModelService.GenerateDefaults({
         label: 'tune.transcription',
         fields: [
             { field: 'transcriptionSources', headerName: 'transcription.source', selector: 'title' },
-            { field: 'created', headerName: 'date.created' },
-            { field: 'modified', headerName: 'date.modified' }
+            { field: null, headerName: 'transcription.fileReference' }
         ]
     },
     view: {

@@ -7,8 +7,8 @@ export const TunePerformancesModel = ModelService.GenerateDefaults({
             { field: 'actualPerformanceTypes', headerName: 'performance.actual.type', selector: 'title'},
             { field: 'traditionalPerformanceTypes', headerName: 'performance.traditional.type', selector: 'title'},
             { field: 'actualActionTypes', headerName: 'performance.actual.action', selector: 'title'},
-            { field: 'accompaniment', headerName: 'performance.accompaniment'},
-            { field: 'remarks', headerName: 'common.remarks'}
+            { field: null, headerName: 'performance.traditional.action'},
+            { field: 'accompaniment', headerName: 'performance.accompaniment'}
         ]
     },
     edit: {

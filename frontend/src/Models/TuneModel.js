@@ -103,7 +103,7 @@ export const TuneModel = ModelService.GenerateDefaults({
             { field: 'countryId', type: 'dropdown', apiPath: 'countries', headerName: 'tune.country' },
             { field: 'publications', headerName: 'tune.publications' },
             { field: 'remarks', headerName: 'tune.remarks' },
-            { field: 'verifiedBy', type: 'dropdown', apiPath: 'users', headerName: 'tune.verifiedBy', title: 'username' },
+            { field: 'verifiedBy', type: 'dropdown', apiPath: 'users', headerName: 'tune.verifiedBy', selector: 'email' },
             { field: 'verified', headerName: 'date.verified' },
             { field: 'created', type: 'view', headerName: 'date.created' },
             { field: 'modified', type: 'view', headerName: 'date.modified' },

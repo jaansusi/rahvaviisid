@@ -79,7 +79,7 @@ export const DataService = {
 
     CreateIncludeFilter(model) {
         let recursiveFun = (currentModel) => {
-            let nestedFields = currentModel.fields.filter(x => x.nested || x.selector);
+            let nestedFields = currentModel.fields.filter(x => x.nested || (x.selector && x.type !== 'dropdown'));
             if (nestedFields.length === 0)
                 return {}
             return {

@@ -24,7 +24,7 @@ export const TunePlaceModel = ModelService.GenerateDefaults({
             { field: 'municipalityId', type: 'dropdown', apiPath: 'municipalities', headerName: 'place.municipality' },
             { field: 'villageId', type: 'dropdown', apiPath: 'villages', headerName: 'place.village', selector: 'title' },
             { field: 'otherPlace', headerName: 'place.other' },
-            { field: 'remarks', headerName: 'tune.remarks' }
+            { field: 'remarks', type: 'textbox', headerName: 'tune.remarks' }
 
         ]
     }

@@ -5,17 +5,24 @@ export const TuneEncodingModel = ModelService.GenerateDefaults({
         label: 'encoding.encoding',
         fields: [
             { field: 'tuneEncodingNum', headerName: 'encoding.tuneEncodingNum'},
-            { field: 'keySignatures', headerName: 'encoding.keySignatures', selector: 'title'},
-            { field: 'supportSounds', headerName: 'encoding.supportSounds', selector: 'title'},
-            { field: 'pitches', headerName: 'encoding.pitches', selector: 'title'},
-            { field: 'measures', headerName: 'encoding.measures', selector: 'title'},
+            { field: 'keySignatures', headerName: 'encoding.keySignature', selector: 'title'},
+            { field: 'supportSounds', headerName: 'encoding.supportSound', selector: 'title'},
+            { field: 'pitches', headerName: 'encoding.pitch', selector: 'title'},
+            { field: 'measures', headerName: 'encoding.measure', selector: 'title'},
+            { field: 'tempo', headerName: 'tune.tempo' },
             { field: 'remarks', headerName: 'tune.remarks' }
         ]
     },
     edit: {
         fields: [
-            { field: 'id', hidden: true },
+            { field: 'id', hidden: true },            
+            { field: 'tuneEncodingNum', headerName: 'encoding.tuneEncodingNum'},
+            { field: 'keySignatureId', type: 'dropdown', apiPath: 'key-signatures', headerName: 'encoding.keySignature', selector: 'title'},
+            { field: 'supportSoundId', type: 'dropdown', apiPath: 'support-sounds', headerName: 'encoding.supportSound', selector: 'title'},
+            { field: 'pitchId', type: 'dropdown', apiPath: 'pitches', headerName: 'encoding.pitch', selector: 'title'},
+            { field: 'measureId', type: 'dropdown', apiPath: 'measures', headerName: 'encoding.measure', selector: 'title'},
             { field: 'tempo', headerName: 'tune.tempo' },
+            { field: 'remarks', headerName: 'tune.remarks' }
         ]
     }
 });

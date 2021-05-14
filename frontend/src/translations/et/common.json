@@ -101,12 +101,12 @@
         "performance": "Esitus",
         "accompaniment": "Saade",
         "actual": {
-            "type": "Tegeliku esituse liik",
-            "action": "Tegeliku tegevuse liik"
+            "type": "Tegelik esitus",
+            "action": "Tegelik tegevus"
         },
         "traditional": {
-            "type": "Traditsioonilise esituse liik",
-            "action": "Traditsioonilise tegevuse liik"
+            "type": "Traditsiooniline esitus",
+            "action": "Traditsiooniline tegevus"
         }
     },
     "reference": {
@@ -119,10 +119,14 @@
         "genre": "Liik",
         "topic": "Teema",
         "verse": "Värsivorm",
-        "songType": "Laululiik",
-        "songTitle": "Laulupealkiri",
-        "firstVerse": "Algus värss",
-        "refrain": "Refrään"
+        "songType": "Laulutüüp",
+        "songTitle": "Pealkiri",
+        "firstVerse": "Algusvärss",
+        "refrain": "Refrään",
+        "songGenre": "Laululiik",
+        "tuneGenre": "Viisiliik",
+        "songTopic": "Laulu teema",
+        "verseForm": "Värsivorm"
     },
     "attribute": {
         "attribute": "Tunnus",
@@ -134,7 +138,8 @@
     "transcription": {
         "transcription": "Noodistus",
         "source": "Noodistuse alus",
-        "personRole": "Tegija roll"
+        "personRole": "Tegija roll",
+        "fileReference": "Failiviide"
     },
     "encoding": {
         "encoding": "Kodeeringud",
@@ -142,11 +147,7 @@
         "supportSound": "Tugiheli",
         "pitch": "Kõrgus",
         "measure": "Taktimõõt",
-        "tuneEncodingNum": "Kod. num",
-        "keySignatures": "Helistik",
-        "supportSounds": "Tugiheli",
-        "pitches": "Helikõrgus",
-        "measures": "Tempo"
+        "tuneEncodingNum": "Kod. num"
     },
     "edit": {
         "save": "Salvesta"
@@ -211,10 +212,14 @@
         "measure": "Taktimõõt"
     },
     "musical": {
+        "label": "Muusikalised tunnused",
         "tune": "Viisi number",
         "score": "Läbilaulude arv (noot)",
         "audio": "Läbilaulude arv (heli)",
         "isVariable": "On varieeruv",
-        "soundRange": "Heliulatus"
+        "soundRange": "Heliulatus",
+        "tuneForm": "Viisi vorm",
+        "textForm": "Teksti vorm",
+        "rhythmType": "Rütmitüüp"
     }
 }
