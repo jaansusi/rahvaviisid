@@ -2,7 +2,6 @@ import {DefaultCrudRepository, repository, HasOneRepositoryFactory, HasManyRepos
 import {Tunes, TunesRelations, TuneMelodies, TuneTranscriptions, Countries, Nations, Languages, TunePerformances, TunePlaces, TunesPersonsRoles, TuneSongs, TuneEncodings, MusicalCharacteristics} from '../models';
 import {DbDataSource} from '../datasources';
 import {inject, Getter, Constructor} from '@loopback/core';
-import {TuneMelodiesRepository} from './tune-melodies.repository';
 import {TuneTranscriptionsRepository} from './tune-transcriptions.repository';
 import {CountriesRepository} from './countries.repository';
 import {NationsRepository} from './nations.repository';
@@ -16,7 +15,6 @@ import { ExternalReferences } from '../models/external-references.model';
 import { ExternalReferencesRepository } from './external-references.repository';
 import { IAuditMixinOptions } from '../types';
 import { AuditRepositoryMixin } from '../mixins';
-import { AuthenticationBindings } from '@loopback/authentication';
 import { AuditLogRepository } from './audit.repository';
 import {MusicalCharacteristicsRepository} from './musical-characteristics.repository';
 
@@ -34,7 +32,6 @@ export class TunesRepository extends AuditRepositoryMixin<
   >
 >(DefaultCrudRepository, groupAuditOpts) {
 
-  public readonly tuneMelodies: HasManyRepositoryFactory<TuneMelodies, typeof Tunes.prototype.id>;
   public readonly tuneTranscriptions: HasManyRepositoryFactory<TuneTranscriptions, typeof Tunes.prototype.id>;
   public readonly countries: HasOneRepositoryFactory<Countries, typeof Tunes.prototype.id>;
   public readonly nations: HasOneRepositoryFactory<Nations, typeof Tunes.prototype.id>;
@@ -50,7 +47,6 @@ export class TunesRepository extends AuditRepositoryMixin<
 
   constructor(
     @inject('datasources.db') dataSource: DbDataSource, 
-    @repository.getter('TuneMelodiesRepository') protected tuneMelodiesRepositoryGetter: Getter<TuneMelodiesRepository>,
     @repository.getter('TuneTranscriptionsRepository') protected tuneTranscriptionsRepositoryGetter: Getter<TuneTranscriptionsRepository>, 
     @repository.getter('CountriesRepository') protected countriesRepositoryGetter: Getter<CountriesRepository>, 
     @repository.getter('NationsRepository') protected nationsRepositoryGetter: Getter<NationsRepository>, 
@@ -83,8 +79,6 @@ export class TunesRepository extends AuditRepositoryMixin<
     this.registerInclusionResolver('nations', this.nations.inclusionResolver);
     this.countries = this.createHasOneRepositoryFactoryFor('countries', countriesRepositoryGetter);
     this.registerInclusionResolver('countries', this.countries.inclusionResolver);
-    this.tuneMelodies = this.createHasManyRepositoryFactoryFor('tuneMelodies', tuneMelodiesRepositoryGetter);
-    this.registerInclusionResolver('tuneMelodies', this.tuneMelodies.inclusionResolver);
     this.tuneTranscriptions = this.createHasManyRepositoryFactoryFor('tuneTranscriptions', tuneTranscriptionsRepositoryGetter);
     this.registerInclusionResolver('tuneTranscriptions', this.tuneTranscriptions.inclusionResolver);
     this.externalReferences = this.createHasManyRepositoryFactoryFor('externalReferences', externalReferencesRepositoryGetter);

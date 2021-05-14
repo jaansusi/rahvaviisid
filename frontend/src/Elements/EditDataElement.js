@@ -1,7 +1,7 @@
-import { Button, Checkbox, FormControl, FormControlLabel, Grid, InputLabel, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@material-ui/core';
+import { Button, Checkbox, Collapse, FormControl, FormControlLabel, Grid, InputLabel, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@material-ui/core';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { DataService } from '../Services';
+import { DataService, TuneService } from '../Services';
 import EditDataFragment from '../Fragments/EditDataFragment';
 import { PlayerViewComponent } from '../NewComponents';
 import './Css/EditFormElement.css';
@@ -240,7 +240,17 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                 );
         case 'player':
             return (
-                <PlayerViewComponent elementData={elemValue} index={index} />
+                <>
+                    <Grid container direction='column'>
+                        <Grid item>
+                            <Button onClick={() => setExpanded(expanded * -1)}>Komplekteeritud ABC</Button>
+                        </Grid>
+                        <Grid item>
+                            <Collapse in={expanded === 1} style={{whiteSpace: 'pre-line'}}>{TuneService.CombineData(elemValue)}</Collapse>
+                        </Grid>
+                    </Grid>
+                    <PlayerViewComponent elementData={elemValue} index={index} />
+                </>
             );
         default:
             return (

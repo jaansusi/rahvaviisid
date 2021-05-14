@@ -171,10 +171,6 @@ export class Tunes extends Entity {
   })
   bar?: string;
 
-  @hasMany(() => TuneMelodies, { keyTo: 'tune_id'})
-  tuneMelodies?: TuneMelodies[];
-
-
   @hasMany(() => TuneTranscriptions, { keyTo: 'tune_id'})
   tuneTranscriptions?: TuneTranscriptions[];
 
