@@ -159,6 +159,9 @@ const TuneView = () => {
                                                         </Grid>
                                                         <Grid item container direction='column'>
                                                             <Grid item>
+                                                                <Button>TEST</Button>
+                                                            </Grid>
+                                                            <Grid item>
                                                                 <PlayerViewComponent elementData={melody} index={i.toString() + j.toString()} />
                                                             </Grid>
                                                         </Grid>
