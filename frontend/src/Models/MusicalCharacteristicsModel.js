@@ -27,6 +27,7 @@ export const MusicalCharacteristicsModel = ModelService.GenerateDefaults({
     },
     edit: {
         fields: [
+            { field: 'id', hidden: true },
             { field: 'tuneId', headerName: 'musical.tune', width: 170 },
             { field: 'soundRangeId', headerName: 'musical.soundRange', width: 140 },
             { field: 'melostropheNumScore', headerName: 'musical.score', width: 140 },

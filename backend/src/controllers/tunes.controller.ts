@@ -23,6 +23,7 @@ import {
 import {Tunes} from '../models';
 import {
   ActualPerformanceTypesRepository,
+  MusicalCharacteristicsRepository,
   TuneEncodingsRepository,
   TuneMelodiesRepository,
   TunePerformancesRepository,
@@ -54,6 +55,8 @@ export class TunesController {
     public tunesPersonsRolesRepository: TunesPersonsRolesRepository,
     @repository(ActualPerformanceTypesRepository)
     public actualPerformanceTypesRepository: ActualPerformanceTypesRepository,
+    @repository(MusicalCharacteristicsRepository)
+    public musicalCharacteristicsRepository: MusicalCharacteristicsRepository,
   ) {}
 
   @post('/tunes', {
@@ -201,7 +204,7 @@ export class TunesController {
       delete tunes.tunePerformances;
     }
     if (tunes.tunePlaces !== undefined) {
-      //updateNestedAsset(tunes.tunePlaces, this.tunePlacesRepository);
+      updateNestedAsset(tunes.tunePlaces, this.tunePlacesRepository);
       delete tunes.tunePlaces;
     }
     if (tunes.tuneSongs !== undefined) {
@@ -209,17 +212,23 @@ export class TunesController {
       delete tunes.tuneSongs;
     }
     if (tunes.tunesPersonsRoles !== undefined) {
-      //updateNestedAsset(tunes.tunesPersonsRoles, this.tunesPersonsRolesRepository);
+      updateNestedAsset(tunes.tunesPersonsRoles, this.tunesPersonsRolesRepository);
       delete tunes.tunesPersonsRoles;
     }
     if (tunes.tuneTranscriptions !== undefined) {
-      // if (tunes.tuneMelodies !== undefined) {
-      //   updateNestedAsset(tunes.tuneMelodies, this.tuneMelodiesRepository);
-      //   delete tunes.tuneMelodies;
-      // }
-      //updateNestedAsset(tunes.tuneTranscriptions, this.tuneTranscriptionsRepository);
+      tunes.tuneTranscriptions.forEach((tuneTranscription, i) => {
+        updateNestedAsset(tuneTranscription.tuneMelodies, this.tuneMelodiesRepository);
+        if (tunes.tuneTranscriptions)
+          delete tunes.tuneTranscriptions[i].tuneMelodies;
+      })
+      updateNestedAsset(tunes.tuneTranscriptions, this.tuneTranscriptionsRepository);
       delete tunes.tuneTranscriptions;
     }
+    if (tunes.musicalCharacteristics !== undefined) {
+      updateNestedAsset(tunes.musicalCharacteristics, this.musicalCharacteristicsRepository);
+      delete tunes.musicalCharacteristics;
+    }
+    
     await this.tunesRepository.updateById(id, tunes);
   }
 

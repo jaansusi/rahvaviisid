@@ -204,7 +204,7 @@ export class Tunes extends Entity {
 
   //muusikalised tunnused
   @hasMany(() => MusicalCharacteristics)
-  musicalCharacteristics: MusicalCharacteristics[];
+  musicalCharacteristics?: MusicalCharacteristics[];
 
   //kodeeringud
   @hasMany(() => TuneEncodings, {keyTo: 'tune_id'})

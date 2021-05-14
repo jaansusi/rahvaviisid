@@ -40,32 +40,25 @@ const EditComponent = ({ model, newItem }) => {
                             // Set the "values" field of the model as the result, this way, the choice input is passed on with the model
                             return {name: field.field, data: result.data};
                         });
-                } else if (field.nested) {
-                    return getDropdowns(field.nested);
-                } else if (field.edit) {
-                    return getDropdowns(field.edit);
+                        
                 }
-                return undefined;
+                let selection = [];
+                if (field.edit) {
+                    selection.push(getDropdowns(field.edit));
+                }
+                if (field.nested) {
+                    selection.push(getDropdowns(field.nested));
+                }
+                return selection !== [] ? selection : undefined;
             });
         }
         let modelPromises = getDropdowns(model).flat(100);
+        console.log(retrievedValues);
         Promise.all(modelPromises).then((x) => {
             x = x.filter((x) => x !== undefined);
-            let recurseModelValues = (currentModel) => {
-                currentModel.fields = currentModel.fields
-                .map((field, i) => {
-                    if (field.nested) {
-                        field.nested = recurseModelValues(field.nested);
-                    } else if (field.type === 'table') {
-                        field.edit = recurseModelValues(field.nested);
-                    } else if (field.type === 'dropdown') {
-                        field.values = x.filter((y) => y.name === field.field)[0].data;
-                    }
-                    return field;
-                });
-                return currentModel;
-            }
-            setUpdatedModel(recurseModelValues(model));
+            console.log(x);
+            
+            setUpdatedModel(recurseModelValues(model, x));
             if (newItem) {
                 setElementData(DataService.CreateEmptyDataObject(model.fields));
             } else {
@@ -192,5 +185,25 @@ const EditComponent = ({ model, newItem }) => {
         </>
     );
 };
+
+const recurseModelValues = (currentModel, options) => {
+    currentModel.fields = currentModel.fields
+    .map((field, i) => {
+        console.log(field.type);
+        if (field.nested) {
+            field.nested = recurseModelValues(field.nested, options);
+        }
+        if (field.edit) {
+            field.edit = recurseModelValues(field.edit, options);
+        }
+        if (field.type === 'dropdown') {
+            console.log(options);
+            console.log(field.field);
+            field.values = options.filter((y) => y.name === field.field)[0].data;
+        }
+        return field;
+    });
+    return currentModel;
+}
 
 export default EditComponent;

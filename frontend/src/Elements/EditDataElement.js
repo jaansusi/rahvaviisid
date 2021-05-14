@@ -64,7 +64,22 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                             style={{ backgroundColor: 'white' }} value={elemValue} onChange={(e) => handleChange(e, index)}>
                             <MenuItem value=''>{t('common.missing')}</MenuItem>
                             {
-                                model.values.map((elem, i) => elem === undefined ? null : <MenuItem key={i} value={elem.id}>{model.title ? elem[model.title] : elem.title}</MenuItem>)
+                                model.values.map(
+                                    (elem, i) =>
+                                        elem === undefined ?
+                                            null :
+                                            <MenuItem
+                                                key={i}
+                                                value={elem.id}>
+                                                    {
+                                                        model.selector ?
+                                                        Array.isArray(model.selector) ?
+                                                            model.selector.map(x => elem[x]).join(' ') :
+                                                            elem[model.selector] :
+                                                        elem.title
+                                                    }
+                                            </MenuItem>
+                                )
                             }
                         </Select>
                     </FormControl>
@@ -138,7 +153,6 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                                         return (expanded === i) ?
                                             <TableRow key={i}>
                                                 <TableCell colSpan={model.nested.fields.length + 1}>
-                                                    {/* {JSON.stringify(model)} */}
                                                     <EditDataFragment
                                                         model={model.edit}
                                                         elementData={row}

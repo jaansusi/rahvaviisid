@@ -17,8 +17,7 @@ export const TunePersonsModel = ModelService.GenerateDefaults({
         fields: [
             { field: 'id', hidden: true },
             { field: 'tunesId', hidden: true },
-            { field: 'givenName', headerName: 'person.givenName'},
-            { field: 'surname', headerName: 'person.surname'},
+            { field: 'personId', type: 'dropdown', apiPath: 'persons', headerName: 'person.person' },
             { field: 'nameOrigin', headerName: 'tunepersons.nameOrigin'},
             { field: 'tunePersonRoleTypes', headerName: 'tunepersons.tunePersonRoleTypes', selector: 'title'},
             { field: 'actionStartYear', headerName: 'tunepersons.actionStartYear'},
