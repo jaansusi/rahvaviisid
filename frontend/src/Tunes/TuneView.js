@@ -129,10 +129,13 @@ const TuneView = () => {
                                     </Grid>
                                     <Grid item container direction='row'>
                                         <AssetPropertyElement title={t('transcription.source')} value={transcription.transcriptionSources?.title} />
-                                        <Grid item xs={4} container direction='row'>
-                                            <AssetPropertyElement size={6} title={t('date.created')} value={transcription.created} />
-                                            <AssetPropertyElement size={6} title={t('date.modified')} value={transcription.modified} />
-                                        </Grid>
+                                        {
+                                            AuthService.CanAccess(['editor', 'admin']) &&
+                                            <Grid item xs={4} container direction='row'>
+                                                <AssetPropertyElement size={6} title={t('date.created')} value={transcription.created} />
+                                                <AssetPropertyElement size={6} title={t('date.modified')} value={transcription.modified} />
+                                            </Grid>
+                                        }
                                     </Grid>
                                     <Divider />
                                     <Grid item container direction='column' spacing={2}>

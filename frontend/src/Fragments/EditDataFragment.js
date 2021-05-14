@@ -2,6 +2,7 @@ import React from 'react';
 import { Grid } from '@material-ui/core';
 import './EditDataFragment.css';
 import EditDataElement from '../Elements/EditDataElement';
+import { TuneService } from '../Services';
 
 const EditDataFragment = ({
     model,
@@ -19,9 +20,23 @@ const EditDataFragment = ({
                     model.fields.map((modelField, i) => {
                         // There's no need to create an input for a value the user can't interact with
                         if (modelField.hidden) return null;
+
+                        if (modelField.type === 'player') {
+                            return (
+                                <EditDataElement
+                                    key={i}
+                                    model={modelField}
+                                    elemValue={elementData}
+                                    handleChange={handleChange}
+                                    index={index}
+                                />
+                            );
+                        }
+
                         // In addition, if the value for some reason is undefined, don't do anything
-                        if (elementData[modelField.field] === undefined)
+                        if (elementData[modelField.field] === undefined) {
                             return null;
+                        }
 
                         // If the model field is defined as nested, create another handler function
                         // to-do: introduce recursion to allow for multiple levels of depth for nested models

@@ -71,13 +71,13 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                                             <MenuItem
                                                 key={i}
                                                 value={elem.id}>
-                                                    {
-                                                        model.selector ?
+                                                {
+                                                    model.selector ?
                                                         Array.isArray(model.selector) ?
                                                             model.selector.map(x => elem[x]).join(' ') :
                                                             elem[model.selector] :
                                                         elem.title
-                                                    }
+                                                }
                                             </MenuItem>
                                 )
                             }

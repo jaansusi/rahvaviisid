@@ -9,12 +9,6 @@ export const TuneMelodyModel = ModelService.GenerateDefaults({
             { field: 'height', headerName: 'tune.height' },
             { field: 'bar', headerName: 'tune.bar' },
             { field: 'clef', headerName: 'tune.clef' },
-            { field: 'rhythmType', hidden: true, headerName: 'tune.rhythmType' },
-            { field: 'noteLength', hidden: true, headerName: 'tune.noteLength' },
-            { field: 'melody', hidden: true, type: 'textbox', headerName: 'tune.melody' },
-            { field: 'words', hidden: true, type: 'textbox', headerName: 'tune.words' },
-            { field: 'customInput', hidden: true, type: 'textbox', headerName: 'tune.customInput' },
-            { field: 'variationIndex', hidden: true },
             { type: 'player', headerName: 'tune.player' }
         ]
     },
@@ -22,7 +16,7 @@ export const TuneMelodyModel = ModelService.GenerateDefaults({
         label: 'tune.melody',
         fields: [
             { field: 'id', hidden: true },
-            { field: 'tunesId', hidden: true },
+            { field: 'variationIndex', hidden: true },
             { field: 'alter', headerName: 'tune.alter' },
             { field: 'tempo', headerName: 'tune.tempo' },
             { field: 'height', headerName: 'tune.height' },
@@ -33,8 +27,7 @@ export const TuneMelodyModel = ModelService.GenerateDefaults({
             { field: 'melody', type: 'textbox', headerName: 'tune.melody' },
             { field: 'words', type: 'textbox', headerName: 'tune.words' },
             { field: 'customInput', type: 'textbox', headerName: 'tune.customInput' },
-            { field: 'variationIndex', hidden: true },
-            { type: 'player', headerName: 'tune.player' }
+            { field: 'combinedData', type: 'player', headerName: 'tune.player' }
 
         ]
     }

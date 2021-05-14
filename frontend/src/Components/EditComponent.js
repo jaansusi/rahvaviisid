@@ -53,11 +53,8 @@ const EditComponent = ({ model, newItem }) => {
             });
         }
         let modelPromises = getDropdowns(model).flat(100);
-        console.log(retrievedValues);
         Promise.all(modelPromises).then((x) => {
             x = x.filter((x) => x !== undefined);
-            console.log(x);
-            
             setUpdatedModel(recurseModelValues(model, x));
             if (newItem) {
                 setElementData(DataService.CreateEmptyDataObject(model.fields));
@@ -189,7 +186,6 @@ const EditComponent = ({ model, newItem }) => {
 const recurseModelValues = (currentModel, options) => {
     currentModel.fields = currentModel.fields
     .map((field, i) => {
-        console.log(field.type);
         if (field.nested) {
             field.nested = recurseModelValues(field.nested, options);
         }
@@ -197,8 +193,6 @@ const recurseModelValues = (currentModel, options) => {
             field.edit = recurseModelValues(field.edit, options);
         }
         if (field.type === 'dropdown') {
-            console.log(options);
-            console.log(field.field);
             field.values = options.filter((y) => y.name === field.field)[0].data;
         }
         return field;

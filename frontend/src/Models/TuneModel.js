@@ -108,6 +108,12 @@ export const TuneModel = ModelService.GenerateDefaults({
             { field: 'created', type: 'view', headerName: 'date.created' },
             { field: 'modified', type: 'view', headerName: 'date.modified' },
             {
+                field: 'tuneTranscriptions',
+                type: 'model',
+                array: true,
+                nested: TuneTranscriptionModel.edit
+            },
+            {
                 field: 'tunesPersonsRoles',
                 type: 'table',
                 nested: TunePersonsModel.table,
@@ -124,12 +130,6 @@ export const TuneModel = ModelService.GenerateDefaults({
                 type: 'table',
                 nested: TuneEncodingModel.table,
                 edit: TuneEncodingModel.edit
-            },
-            {
-                field: 'tuneTranscriptions',
-                type: 'table',
-                nested: TuneTranscriptionModel.table,
-                edit: TuneTranscriptionModel.edit
             },
             {
                 field: 'tunePerformances',
