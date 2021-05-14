@@ -22,5 +22,5 @@ export const TuneService =  {
             .concat(melodyAndWords)
             .filter((elem) => elem !== '')
             .join('\n');
-    }
+    },
 }

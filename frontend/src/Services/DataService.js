@@ -1,5 +1,6 @@
 import axios from "axios";
 import config from "../config";
+import { TuneMelodyModel } from "../Models";
 
 export const DataService = {
     RequestAsset(model, id, setFormData) {
@@ -21,7 +22,6 @@ export const DataService = {
                         return undefined;
                     })
                     .filter((x) => x !== undefined);
-
             });
     },
 
@@ -129,5 +129,13 @@ export const DataService = {
         ]);
         let model = new Map(arr);
         return Object.fromEntries(model);
+    },
+
+    GetMelody(id) {
+        return axios
+            .get(config.apiUrl + '/' + TuneMelodyModel.apiPath + '/' + id)
+            .then((response) => {
+                console.log(response);
+            });
     }
 }

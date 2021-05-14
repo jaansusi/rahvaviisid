@@ -2,7 +2,6 @@ import React from 'react';
 import { Grid } from '@material-ui/core';
 import './EditDataFragment.css';
 import EditDataElement from '../Elements/EditDataElement';
-import { TuneService } from '../Services';
 
 const EditDataFragment = ({
     model,

@@ -64,6 +64,8 @@
     "db-migrate-pg": "^1.2.2",
     "deep-object-diff": "^1.1.0",
     "loopback-connector-postgresql": "^5.2.0",
+    "python-shell": "^3.0.0",
+    "tmp": "^0.2.1",
     "tslib": "^2.0.0"
   },
   "devDependencies": {
@@ -72,6 +74,7 @@
     "@loopback/eslint-config": "^10.2.0",
     "@loopback/testlab": "^3.4.0",
     "@types/node": "^10.17.59",
+    "@types/tmp": "^0.2.0",
     "cross-env": "^7.0.3",
     "eslint": "^7.25.0",
     "source-map-support": "^0.5.19",

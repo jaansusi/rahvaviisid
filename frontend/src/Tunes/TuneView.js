@@ -22,6 +22,7 @@ const TuneView = () => {
         DataService.RequestAsset(TuneModel.view, id, setAssetData);
     }, [id]);
 
+
     return (
         <Grid container item lg={9} md={11}>
             <Grid container>
@@ -149,6 +150,7 @@ const TuneView = () => {
                                                         <Grid item container direction='row'>
                                                             {
                                                                 TuneMelodyModel.view.fields.filter(x => !x.hidden && x.type !== 'player').map((field, k) => {
+                                                                    console.log(melody);
                                                                     return (
                                                                         <AssetPropertyElement key={k} title={t(field.headerName)} value={melody[field.field]} />
                                                                     );

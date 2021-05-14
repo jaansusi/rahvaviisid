@@ -39,3 +39,4 @@ export * from './tunes-musical-characteristics.controller';
 export * from './sexes-persons.controller';
 export * from './sexes-persons.controller';
 export * from './musical-characteristics-rhythm-types.controller';
+export * from './convert.controller';

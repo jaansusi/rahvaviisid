@@ -4,6 +4,7 @@ export const TuneMelodyModel = ModelService.GenerateDefaults({
     apiPath: 'tune-melodies',
     view: {
         fields: [
+            { field: 'id', hidden: true },
             { field: 'alter', headerName: 'tune.alter' },
             { field: 'tempo', headerName: 'tune.tempo' },
             { field: 'height', headerName: 'tune.height' },
