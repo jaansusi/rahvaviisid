@@ -249,7 +249,7 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                             <Collapse in={expanded === 1} style={{whiteSpace: 'pre-line'}}>{TuneService.CombineData(elemValue)}</Collapse>
                         </Grid>
                     </Grid>
-                    <PlayerViewComponent elementData={elemValue} index={index} />
+                    <PlayerViewComponent elementData={elemValue} index={index} edit={true} />
                 </>
             );
         default:

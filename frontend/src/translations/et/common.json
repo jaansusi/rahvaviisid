@@ -81,7 +81,8 @@
         "verification": "Kontrollimine",
         "archive": "Arhiivi tunnused",
         "rhythmType": "Rütmitüüp",
-        "location": "Asukoht"
+        "location": "Asukoht",
+        "duplicate": "Duplikeeri"
     },
     "user": {
         "role": "Kasutaja roll",
@@ -194,7 +195,9 @@
         "users": "Kasutajad"
     },
     "melody": {
-        "abc": "ABC kuju"
+        "abc": "ABC kuju",
+        "export": "Eksport",
+        "import": "Import"
     },
     "audit": {
         "action": "Tegevus",

@@ -27,7 +27,19 @@ const TuneView = () => {
         <Grid container item lg={9} md={11}>
             <Grid container>
                 <Actions apiPath={TuneModel.apiPath} id={id} spacing={2} currentView='view'
-                    additionalButtons={AuthService.CanAccess(['editor', 'admin']) ? <Grid item><Button href={'audit'} variant="outlined" color="primary">{t('common.audit')}</Button></Grid> : undefined}
+                    additionalButtons=
+                    {
+                        AuthService.CanAccess(['editor', 'admin']) ?
+                            <>
+                                <Grid item>
+                                    <Button href={'audit'} variant="outlined" color="primary">{t('common.audit')}</Button>
+                                </Grid>
+                                <Grid item>
+                                    <Button onClick={() => alert('Varsti tuleb')} variant="outlined" color="primary">{t('tune.duplicate')}</Button>
+                                </Grid>
+                            </> :
+                            undefined
+                    }
                 />
             </Grid>
             <Grid
@@ -150,20 +162,14 @@ const TuneView = () => {
                                                         <Grid item container direction='row'>
                                                             {
                                                                 TuneMelodyModel.view.fields.filter(x => !x.hidden && x.type !== 'player').map((field, k) => {
-                                                                    console.log(melody);
                                                                     return (
                                                                         <AssetPropertyElement key={k} title={t(field.headerName)} value={melody[field.field]} />
                                                                     );
                                                                 })
                                                             }
                                                         </Grid>
-                                                        <Grid item container direction='column'>
-                                                            <Grid item>
-                                                                <Button>TEST</Button>
-                                                            </Grid>
-                                                            <Grid item>
-                                                                <PlayerViewComponent elementData={melody} index={i.toString() + j.toString()} />
-                                                            </Grid>
+                                                        <Grid item>
+                                                            <PlayerViewComponent elementData={melody} index={i.toString() + j.toString()} />
                                                         </Grid>
                                                         <Divider />
                                                     </Grid>

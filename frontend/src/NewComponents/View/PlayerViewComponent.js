@@ -3,29 +3,9 @@ import React, { useEffect, useState } from 'react';
 import { Button, Grid } from '@material-ui/core';
 import { TuneService } from '../../Services';
 import { useTranslation } from 'react-i18next';
-import { DataService } from '../../Services';
-import { TuneMelodyModel } from '../../Models';
 
-export const PlayerViewComponent = ({ elementData, index }) => {
+export const PlayerViewComponent = ({ elementData, index, edit }) => {
 	const { t } = useTranslation('common');
-	const [downloadLink, setDownloadLink] = useState('')
-
-	let downloadFile = () => {
-		DataService.RequestAsset(elementData.id, TuneMelodyModel, );
-		const data = new Blob(['test'], { type: 'text/plain' })
-
-		// this part avoids memory leaks
-		if (downloadLink !== '') window.URL.revokeObjectURL(downloadLink)
-
-		// update the download link state
-		setDownloadLink(window.URL.createObjectURL(data))
-		// const element = document.createElement("a");
-		// const file = new Blob(['test'], { type: 'application/xml' });
-		// element.href = URL.createObjectURL(file);
-		// element.download = "tune.xml";
-		// document.body.appendChild(element); // Required for this to work in FireFox
-		// element.click();
-	}
 
 	useEffect(() => {
 		let combinedData = TuneService.CombineData(elementData);
@@ -41,8 +21,19 @@ export const PlayerViewComponent = ({ elementData, index }) => {
 
 	return (
 		<Grid item xs={12}>
-			<div id={'player' + index}></div>
-			<Button onClick={() => downloadFile(elementData.id)} variant='outlined'>{t('melody.export')}</Button>
+			<Grid container direction='row' alignItems='center'>
+				<Grid item>
+					<div id={'player' + index}></div>
+				</Grid>
+				<Grid item>
+					{
+						!edit ?
+						<Button onClick={() => alert('Varsti tuleb')} variant='outlined'>{t('melody.export')}</Button> :
+						<Button onClick={() => alert('Varsti tuleb')} variant='outlined'>{t('melody.import')}</Button>
+					}
+					
+				</Grid>
+			</Grid>
 			<div
 				style={{
 					display:
