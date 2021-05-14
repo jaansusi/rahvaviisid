@@ -28,7 +28,7 @@ export const PlayerViewComponent = ({ elementData, index, edit }) => {
 				<Grid item>
 					{
 						!edit ?
-						<Button onClick={() => alert('Varsti tuleb')} variant='outlined'>{t('melody.export')}</Button> :
+						null :
 						<Button onClick={() => alert('Varsti tuleb')} variant='outlined'>{t('melody.import')}</Button>
 					}
 					

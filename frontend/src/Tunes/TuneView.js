@@ -167,6 +167,7 @@ const TuneView = () => {
                                                                     );
                                                                 })
                                                             }
+                                                            <Grid item><Button onClick={() => alert('Varsti tuleb')} variant='outlined'>{t('melody.export')}</Button></Grid>
                                                         </Grid>
                                                         <Grid item>
                                                             <PlayerViewComponent elementData={melody} index={i.toString() + j.toString()} />
