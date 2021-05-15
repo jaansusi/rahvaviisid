@@ -1,6 +1,6 @@
 import React from 'react';
-import Header from './Header/Header';
-import Home from './Home/Home';
+import Header from './Components/Header/Header';
+import Home from './Components/Home/Home';
 import { Helmet } from "react-helmet-async";
 import './App.css';
 import {
@@ -9,13 +9,13 @@ import {
   Route
 } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
-import Footer from './Footer/Footer';
+import Footer from './Components/Footer/Footer';
 import MainRouter from './MainRouter';
 import 'react-notifications/lib/notifications.css';
 import { NotificationContainer } from 'react-notifications';
-import Login from './Authentication/Login';
-import UseLocalStorageState from './Authentication/UseLocalStorageState';
-import SearchComponent from './Search/SearchComponent';
+import Login from './Components/Authentication/Login';
+import UseLocalStorageState from './Components/Authentication/UseLocalStorageState';
+import SearchComponent from './Components/Search/SearchComponent';
 
 function App() {
   const [authentication, setAuthentication] = UseLocalStorageState('user');

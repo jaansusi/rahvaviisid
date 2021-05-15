@@ -3,7 +3,7 @@ import React, { useState, useEffect, useReducer } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import config from '../config';
-import EditDataFragment from '../Fragments/EditDataFragment';
+import EditDataFragment from './Fragments/EditDataFragment';
 import axios from 'axios';
 import Actions from './Buttons/Actions';
 import { DataService } from '../Services';

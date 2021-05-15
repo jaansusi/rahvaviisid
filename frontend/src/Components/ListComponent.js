@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import config from '../config';
-import ListDataFragment from '../Fragments/ListDataFragment';
+import ListDataFragment from './Fragments/ListDataFragment';
 import axios from 'axios';
 
 const ListComponent = (({ model, filter, currentView, additionalButtons, actionsWidth }) => {

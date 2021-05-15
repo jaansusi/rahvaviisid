@@ -2,7 +2,7 @@ import React, { useEffect, useReducer } from 'react';
 import {
     useParams
 } from "react-router-dom";
-import ViewDataFragment from '../Fragments/ViewDataFragment';
+import ViewDataFragment from './Fragments/ViewDataFragment';
 import { Grid } from '@material-ui/core';
 import Actions from './Buttons/Actions';
 import { DataService } from '../Services';

@@ -1,7 +1,8 @@
 import React from 'react';
-import PersonWrapper from './Persons/PersonWrapper';
-import TuneWrapper from './Tunes/TuneWrapper';
-import ClassificatorWrapper from './Classificators/ClassificatorWrapper';
+import PersonWrapper from './Components/Persons/PersonWrapper';
+import TuneWrapper from './Components/Tunes/TuneWrapper';
+import UserWrapper from './Components/Users/UserWrapper';
+import ClassificatorWrapper from './Components/Classificators/ClassificatorWrapper';
 import './App.css';
 import {
     Redirect,
@@ -9,7 +10,6 @@ import {
     useLocation,
     useParams
 } from 'react-router-dom';
-import UserWrapper from './Users/UserWrapper';
 
 function MainRouter() {
     let { asset } = useParams();

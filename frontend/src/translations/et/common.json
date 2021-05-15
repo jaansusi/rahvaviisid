@@ -171,7 +171,8 @@
         "nameOrigin": "Nime originaalkuju"
     },
     "search": {
-        "reference": "Otsi viite järgi"
+        "reference": "Otsi viite järgi",
+        "general": "Otsi"
     },
     "massMod": {
         "start": "Alusta massimuutmist",
