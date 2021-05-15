@@ -1,7 +1,5 @@
-DROP TABLE folk_tune.tune_variations;
-
 ALTER TABLE folk_tune.tune_melodies
-    ADD COLUMN variation_index integer;
+    ADD COLUMN variation_index integer NOT NULL;
 
 ALTER TABLE folk_tune.tune_melodies DROP COLUMN clef;
 

@@ -1,6 +1,6 @@
 CREATE TABLE folk_tune.tune_melodies
 (
-    id integer,
+    id bigserial,
     melody text NOT NULL,
     clef text,
     alter text,
@@ -11,6 +11,7 @@ CREATE TABLE folk_tune.tune_melodies
     reference text,
     custom_input text,
     words text,
+    tune_transcription_id integer NOT NULL,
     PRIMARY KEY (id)
 )
 WITH (
@@ -18,32 +19,9 @@ WITH (
 )
 TABLESPACE pg_default;
 
-ALTER TABLE folk_tune.tune_melodies
-    ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY;
+CREATE INDEX IX_tune_melody_transcription_id ON folk_tune.tune_melodies (tune_transcription_id);
 
 ALTER TABLE folk_tune.tune_melodies
-    OWNER to local_dev_username;
-
-CREATE TABLE folk_tune.tune_variations
-(
-    id integer,
-    tune_id integer NOT NULL,
-    start_position integer NOT NULL,
-    melody text[],
-    rhythm text[],
-    PRIMARY KEY (id),
-    CONSTRAINT fk_tune_variations_tunes FOREIGN KEY (tune_id)
-        REFERENCES folk_tune.tunes (id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
-        NOT VALID
-)
-WITH (
-    OIDS = FALSE
-)
-TABLESPACE pg_default;
-
-ALTER TABLE folk_tune.tune_variations
     OWNER to local_dev_username;
 
 ALTER TABLE folk_tune.tunes
@@ -74,11 +52,10 @@ ALTER TABLE folk_tune.rhythm_types
 ALTER TABLE folk_tune.rhythm_types
     ADD COLUMN public_identifier text;
 
+
 ALTER TABLE folk_tune.tune_melodies
-    ADD COLUMN tune_id integer NOT NULL;
-ALTER TABLE folk_tune.tune_melodies
-    ADD CONSTRAINT fk_tune_melodies_tunes FOREIGN KEY (tune_id)
-    REFERENCES folk_tune.tunes (id) MATCH SIMPLE
+    ADD CONSTRAINT fk_tune_melodies_tune_transcriptions FOREIGN KEY (tune_transcription_id)
+    REFERENCES folk_tune.tune_transcriptions (id) MATCH SIMPLE
     ON UPDATE NO ACTION
     ON DELETE NO ACTION
     NOT VALID;
