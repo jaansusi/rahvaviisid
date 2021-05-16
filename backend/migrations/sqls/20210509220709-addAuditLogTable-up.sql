@@ -1,14 +1,14 @@
 CREATE TABLE folk_tune.audit_log
 (
     id bigserial NOT NULL,
-    action text,
-    acted_at date,
-    acted_on text,
-    action_key text,
-    entity_id integer,
-    actor integer,
-    before jsonb,
-    after jsonb,
+    action text NOT NULL,
+    acted_at date NOT NULL,
+    acted_on text NOT NULL,
+    action_key text NOT NULL,
+    entity_id integer NOT NULL,
+    actor integer NOT NULL,
+    before jsonb NOT NULL,
+    after jsonb NOT NULL,
     PRIMARY KEY (id)
 );
 
