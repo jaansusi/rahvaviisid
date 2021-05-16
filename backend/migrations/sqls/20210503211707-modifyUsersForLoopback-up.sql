@@ -1,6 +1,6 @@
 CREATE TABLE public."user"
 (
-    id uuid NOT NULL,
+    id SERIAL NOT NULL,
     realm text,
     username text,
     email text NOT NULL,
@@ -18,7 +18,7 @@ CREATE TABLE public."usercredentials"
 (
     id uuid NOT NULL,
     password text NOT NULL,
-    "userid" uuid,
+    "userid" integer UNIQUE,
     PRIMARY KEY (id),
     CONSTRAINT fk_user_credentials_user FOREIGN KEY ("userid")
         REFERENCES public."user" (id) MATCH SIMPLE
