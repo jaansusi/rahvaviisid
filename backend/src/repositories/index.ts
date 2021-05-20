@@ -51,4 +51,6 @@ export * from './villages.repository';
 export * from './tune-melodies.repository';
 export * from './external-references.repository';
 export * from './user.repository';
-export * from './audit.repository';export * from './users.repository';
+export * from './audit.repository';
+export * from './users.repository';
+export * from './user-credentials.repository';

@@ -1,10 +1,12 @@
-import { User as OrigUser } from '@loopback/authentication-jwt';
 import {Entity, hasOne, model, property} from '@loopback/repository';
+import { User as OrigUser, UserCredentials } from '@loopback/authentication-jwt';
 
 @model({
-  settings: {idInjection: false, postgresql: {schema: 'public', table: 'user'}}
+  settings: {idInjection: false, postgresql: {schema: 'folk_tune', table: 'user'}}
 })
 export class User extends OrigUser {
+
+  [prop: string]: any;
   @property.array(String, {
     postgresql: {columnName: 'roles', dataType: 'varchar[]', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'YES'},
   })
@@ -25,12 +27,6 @@ export class User extends OrigUser {
     postgresql: {columnName: 'lastname', dataType: 'character varying', dataLength: 40, dataPrecision: null, dataScale: null, nullable: 'YES'},
   })
   lastName?: string;
-
-  // Define well-known properties here
-
-  // Indexer property to allow additional data
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [prop: string]: any;
 
   constructor(data?: Partial<User>) {
     super(data);
