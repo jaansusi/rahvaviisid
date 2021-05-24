@@ -1,32 +1,17 @@
 {
-  "createDb": {
-    "driver": "pg",
-    "host": "localhost",
-    "port": "5432",
-    "user": "postgres",
-    "password": "a"
-  },
-  "dev": {
-    "driver": "pg",
-    "host": "localhost",
-    "port": "5432",
-    "user": "postgres",
-    "password": "a",
-    "database": "kivi"
-  },
-  "a": {
-    "driver": "pg",
-    "host": "192.168.69.27",
-    "port": "5432",
-    "user": "local_dev_username",
-    "password": "local_dev_password"
-  },
-  "b": {
-    "driver": "pg",
-    "host": "192.168.69.27",
-    "port": "5432",
-    "user": "local_dev_username",
-    "password": "local_dev_password",
-    "database": "kivi"
-  }
+    "createDB": {
+        "driver": "pg",
+        "host": "localhost",
+        "port": "5432",
+        "user": "postgres",
+        "password": "a"
+    },
+    "migrate": {
+        "driver": "pg",
+        "host": "localhost",
+        "port": "5432",
+        "user": "postgres",
+        "password": "a",
+        "database": "kivi"
+    }
 }

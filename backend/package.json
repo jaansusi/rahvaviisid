@@ -1,12 +1,12 @@
 {
   "name": "ekm-viisid-api",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Eesti Kirjandusmuuseumi rahvaviiside API",
   "keywords": [
     "loopback-application",
     "loopback"
   ],
-  "main": "dist/index.js",
+  "main": "npx db-migrate up --env migrate --config ./migrations/database.json && dist/index.js",
   "types": "dist/index.d.ts",
   "engines": {
     "node": ">=10.16"
@@ -28,9 +28,9 @@
     "docker:build": "docker build -t jaansusi/ekm-viisid-api .",
     "docker:run": "docker run -p 3000:3000 -d jaansusi/ekm-viisid-api",
     "docker:release": "npm run docker:build && docker push jaansusi/ekm-viisid-api",
-    "database:create": "npx db-migrate db:create kivi --env createDb --config ./migrations/database.json",
-    "database:drop": "npx db-migrate db:drop kivi --env createDb --config ./migrations/database.json",
-    "database:migrate": "npx db-migrate up --env dev --config ./migrations/database.json",
+    "database:create": "npx db-migrate db:create kivi --env createDB --config ./migrations/database.json",
+    "database:drop": "npx db-migrate db:drop kivi --env createDB --config ./migrations/database.json",
+    "database:migrate": "npx db-migrate up --env migrate --config ./migrations/database.json",
     "preopenapi-spec": "npm run build",
     "openapi-spec": "node ./dist/openapi-spec",
     "prestart": "npm run database:migrate && npm run build",
