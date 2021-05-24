@@ -6,7 +6,7 @@
     "loopback-application",
     "loopback"
   ],
-  "main": "npx db-migrate up --env migrate --config ./migrations/database.json && dist/index.js",
+  "main": "bash createConfig.sh && npx db-migrate up --env migrate --config ./migrations/database.json && dist/index.js",
   "types": "dist/index.d.ts",
   "engines": {
     "node": ">=10.16"
