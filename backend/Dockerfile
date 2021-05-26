@@ -25,4 +25,4 @@ RUN npm run build
 ENV HOST=0.0.0.0 PORT=3000
 
 EXPOSE ${PORT}
-CMD [ "bash" "createConfig.sh", ";", "npm", "run" "database:migrate", ";", "node", "." ]
+CMD [ "sh" "createConfig.sh", ";", "npm", "run" "database:migrate", ";", "node", "." ]
