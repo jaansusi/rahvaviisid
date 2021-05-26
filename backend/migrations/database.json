@@ -1,17 +1,17 @@
 {
     "createDB": {
         "driver": "pg",
-        "host": "localhost",
-        "port": "5432",
-        "user": "postgres",
-        "password": "a"
+        "host": {"ENV": "DB_HOST"},
+        "port": {"ENV": "DB_PORT"},
+        "user": {"ENV": "DB_USERNAME"},
+        "password": {"ENV": "DB_PASSWORD"}
     },
     "migrate": {
         "driver": "pg",
-        "host": "localhost",
-        "port": "5432",
-        "user": "postgres",
-        "password": "a",
-        "database": "kivi"
+        "host": {"ENV": "DB_HOST"},
+        "port": {"ENV": "DB_PORT"},
+        "user": {"ENV": "DB_USERNAME"},
+        "password": {"ENV": "DB_PASSWORD"},
+        "database": {"ENV": "DB_DATABASE"}
     }
 }
