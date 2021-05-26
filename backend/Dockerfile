@@ -19,10 +19,10 @@ RUN npm install
 # Bundle app source code
 COPY --chown=node . .
 
-RUN npm run build
+RUN npm run build 
 
 # Bind to all network interfaces so that it can be mapped to the host OS
 ENV HOST=0.0.0.0 PORT=3000
 
 EXPOSE ${PORT}
-CMD [ "npm", "run" "database:migrate", ";", "node", "." ]
+CMD [ "bash" "createConfig.sh", ";", "npm", "run" "database:migrate", ";", "node", "." ]
