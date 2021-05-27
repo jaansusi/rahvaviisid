@@ -45,7 +45,7 @@ export class NewUserRequest extends User {
     type: 'string',
     required: true,
     jsonSchema: {
-      pattern: '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})',
+      pattern: '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{14,})',
     },
   })
   password: string;
