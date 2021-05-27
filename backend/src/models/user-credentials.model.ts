@@ -9,7 +9,7 @@ import {Entity, model, property} from '@loopback/repository';
 export class UserCredentials extends Entity {
   @property({
     type: 'string',
-    required: true,
+    required: false,
     id: 1,
     postgresql: {columnName: 'id', dataType: 'uuid', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'NO'},
   })
@@ -24,9 +24,9 @@ export class UserCredentials extends Entity {
 
   @property({
     type: 'string',
-    postgresql: {columnName: 'userid', dataType: 'uuid', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'YES'},
+    postgresql: {columnName: 'userid', dataType: 'uuid', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'NO'},
   })
-  userid?: string;
+  userId: string;
 
   // Define well-known properties here
 

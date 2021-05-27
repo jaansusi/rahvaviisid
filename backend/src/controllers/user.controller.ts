@@ -44,6 +44,9 @@ export class NewUserRequest extends User {
   @property({
     type: 'string',
     required: true,
+    jsonSchema: {
+      pattern: '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})',
+    },
   })
   password: string;
 }
@@ -152,9 +155,9 @@ export class UserController {
     const savedUser = await this.userRepository.create(
       _.omit(newUserRequest, 'password'),
     );
-
+    console.log(savedUser)
     await this.userRepository.userCredentials(savedUser.id).create({password});
-
+    console.log('b')
     return savedUser;
   }
 
