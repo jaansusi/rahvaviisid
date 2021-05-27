@@ -1,6 +1,6 @@
 {
     "common": {
-        "home": "Kodu",
+        "home": "Avaleht",
         "persons": "Isikud",
         "tunes": "Viisid",
         "classificators": "Klassifikaatorid",
@@ -29,9 +29,6 @@
         "created": "Loodud",
         "modified": "Muudetud",
         "verified": "Kontrollitud"
-    },
-    "home": {
-        "home": "Kodu"
     },
     "person": {
         "person": "Isik",
@@ -171,8 +168,8 @@
         "nameOrigin": "Nime originaalkuju"
     },
     "search": {
-        "reference": "Otsi viite järgi",
-        "general": "Otsi"
+        "referenceOnly": "Otsi ainult viite järgi",
+        "general": "Otsingu märksõna"
     },
     "massMod": {
         "start": "Alusta massimuutmist",

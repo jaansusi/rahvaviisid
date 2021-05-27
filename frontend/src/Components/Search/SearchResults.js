@@ -21,15 +21,17 @@ const SearchResults = ({ showAll, assets }) => {
 
   return (
     <Grid container direction='column'>
-      <Grid item>
-        <Button
-          disabled={selection.length === 0}
-          onClick={() => { setModifying(!modifying); }}
-          variant='contained'
-        >
-          {!modifying ? t('massMod.start') : t('massMod.backToAssets')}
-        </Button>
-      </Grid>
+      {editAccess &&
+        <Grid item>
+          <Button
+            disabled={selection.length === 0}
+            onClick={() => { setModifying(!modifying); }}
+            variant='contained'
+          >
+            {!modifying ? t('massMod.start') : t('massMod.backToAssets')}
+          </Button>
+        </Grid>
+      }
       <Grid item>
         {
           modifying ?

@@ -33,9 +33,12 @@ const ListDataFragment = (({ model, data, rowCount, setOffset, currentView, addi
             }
             return row;
         });
+    
+    let tableWidth = columns.map(x => x.width).reduce((x, y) => x + y, 0) + 2;
     return (
         <>
-            <div style={{ width: '90vw', height: '500px' }}>
+        {JSON.stringify()}
+            <div style={{ width: tableWidth, height: '500px' }}>
                 <CreateButton />
                 <DataGrid
                     paginationMode='server'

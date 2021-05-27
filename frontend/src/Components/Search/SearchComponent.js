@@ -19,13 +19,21 @@ const SearchComponent = (props) => {
             });
     }
 
-    const updateInput = async (input) => {
+    const updateInput = async (input, isReferenceSearch) => {
         const filtered = searchResultsDefault.filter(result => {
             let lowInput = input.toLowerCase();
+            if (isReferenceSearch)
+                return result.tuneReference.toLowerCase().includes(lowInput) ||
+                    result.textReference.toLowerCase().includes(lowInput) ||
+                    result.soundReference.toLowerCase().includes(lowInput) ||
+                    result.videoReference.toLowerCase().includes(lowInput);
             return result.tuneReference.toLowerCase().includes(lowInput) ||
                 result.textReference.toLowerCase().includes(lowInput) ||
                 result.soundReference.toLowerCase().includes(lowInput) ||
-                result.videoReference.toLowerCase().includes(lowInput)
+                result.videoReference.toLowerCase().includes(lowInput) ||
+                result.catalogue.toLowerCase().includes(lowInput) ||
+                result.remarks.toLowerCase().includes(lowInput) ||
+                result.publications.toLowerCase().includes(lowInput);
         })
         setInput(input);
         setSearchResults(filtered);
@@ -39,7 +47,7 @@ const SearchComponent = (props) => {
         <Grid item xs={11} container spacing={2} direction='column'>
             <Grid item>
                 <SearchBar
-                    input={input}
+                    keyword={input}
                     setKeyword={updateInput}
                 />
             </Grid>

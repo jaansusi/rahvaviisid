@@ -50,6 +50,13 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                 </Grid>
             );
         case 'dropdown':
+            let handleElementChange = ((event, index) => {
+                const { name, value } = event.target;
+                handleChange({
+                    name: model.field,
+                    value: value.id
+                }, index);
+            });
             if (model.values === undefined)
                 model.values = [];
             return (
@@ -61,7 +68,7 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                     <FormControl className='form-input-element' variant='outlined'>
                         <InputLabel id={model.headerName}>{t(model.headerName)}</InputLabel>
                         <Select name={model.field} labelId={model.headerName} label={t(model.headerName)} variant="outlined"
-                            style={{ backgroundColor: 'white' }} value={elemValue} onChange={(e) => handleChange(e, index)}>
+                            style={{ backgroundColor: 'white' }} value={elemValue} onChange={(e) => handleElementChange(e, index)}>
                             <MenuItem value=''>{t('common.missing')}</MenuItem>
                             {
                                 model.values.map(
@@ -112,6 +119,7 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                 elemValue.splice(i, 1);
             };
             let handleRowChange = (event, index) => {
+
                 const { name, value } = event.target;
                 let temp = elemValue;
                 let selector = model.edit.fields.filter(x => x.field === name)[0].selector;
@@ -135,6 +143,7 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                 >
                     <h3>{t(model.nested.label)}</h3>
                     <Button onClick={addEntryToTable} variant='outlined' color='primary'>{t('action.create')}</Button>
+                    {JSON.stringify(elemValue)}
                     <TableContainer component={Paper}>
                         <Table>
                             <TableHead>
@@ -246,7 +255,7 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                             <Button onClick={() => setExpanded(expanded * -1)}>Komplekteeritud ABC</Button>
                         </Grid>
                         <Grid item>
-                            <Collapse in={expanded === 1} style={{whiteSpace: 'pre-line'}}>{TuneService.CombineData(elemValue)}</Collapse>
+                            <Collapse in={expanded === 1} style={{ whiteSpace: 'pre-line' }}>{TuneService.CombineData(elemValue)}</Collapse>
                         </Grid>
                     </Grid>
                     <PlayerViewComponent elementData={elemValue} index={index} edit={true} />
