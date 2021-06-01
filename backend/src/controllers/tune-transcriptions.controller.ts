@@ -1,3 +1,6 @@
+import { authenticate } from '@loopback/authentication';
+import { authorize } from '@loopback/authorization';
+import { basicAuthorization } from '../services';
 import {
   Count,
   CountSchema,
@@ -30,6 +33,11 @@ export class TuneTranscriptionsController {
   @response(200, {
     description: 'TuneTranscriptions model instance',
     content: {'application/json': {schema: getModelSchemaRef(TuneTranscriptions)}},
+  })
+  @authenticate('jwt')
+  @authorize({
+    allowedRoles: ['admin', 'editor'],
+    voters: [basicAuthorization],
   })
   async create(
     @requestBody({
@@ -81,6 +89,11 @@ export class TuneTranscriptionsController {
     description: 'TuneTranscriptions PATCH success count',
     content: {'application/json': {schema: CountSchema}},
   })
+  @authenticate('jwt')
+  @authorize({
+    allowedRoles: ['admin', 'editor'],
+    voters: [basicAuthorization],
+  })
   async updateAll(
     @requestBody({
       content: {
@@ -115,6 +128,11 @@ export class TuneTranscriptionsController {
   @response(204, {
     description: 'TuneTranscriptions PATCH success',
   })
+  @authenticate('jwt')
+  @authorize({
+    allowedRoles: ['admin', 'editor'],
+    voters: [basicAuthorization],
+  })
   async updateById(
     @param.path.number('id') id: number,
     @requestBody({
@@ -133,6 +151,11 @@ export class TuneTranscriptionsController {
   @response(204, {
     description: 'TuneTranscriptions PUT success',
   })
+  @authenticate('jwt')
+  @authorize({
+    allowedRoles: ['admin', 'editor'],
+    voters: [basicAuthorization],
+  })
   async replaceById(
     @param.path.number('id') id: number,
     @requestBody() TuneTranscriptions: TuneTranscriptions,
@@ -143,6 +166,11 @@ export class TuneTranscriptionsController {
   @del('/tune-transcriptions/{id}')
   @response(204, {
     description: 'TuneTranscriptions DELETE success',
+  })
+  @authenticate('jwt')
+  @authorize({
+    allowedRoles: ['admin', 'editor'],
+    voters: [basicAuthorization],
   })
   async deleteById(@param.path.number('id') id: number): Promise<void> {
     await this.tuneTranscriptionsRepository.deleteById(id);

@@ -3,7 +3,6 @@ export const GetDataGridLocale = ((translateFunction) => {
     Object.keys(DATA_GRID_LOCALE).map((key, index) =>
         tempLocale[key] = translateFunction(DATA_GRID_LOCALE[key])
     );
-    console.log(tempLocale);
     return tempLocale;
 }
 

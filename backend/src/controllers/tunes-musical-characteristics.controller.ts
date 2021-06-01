@@ -1,3 +1,6 @@
+import { authenticate } from '@loopback/authentication';
+import { authorize } from '@loopback/authorization';
+import { basicAuthorization } from '../services';
 import {
   Count,
   CountSchema,
@@ -53,6 +56,11 @@ export class TunesMusicalCharacteristicsController {
       },
     },
   })
+  @authenticate('jwt')
+  @authorize({
+    allowedRoles: ['admin', 'editor'],
+    voters: [basicAuthorization],
+  })
   async create(
     @param.path.number('id') id: typeof Tunes.prototype.id,
     @requestBody({
@@ -78,6 +86,11 @@ export class TunesMusicalCharacteristicsController {
       },
     },
   })
+  @authenticate('jwt')
+  @authorize({
+    allowedRoles: ['admin', 'editor'],
+    voters: [basicAuthorization],
+  })
   async patch(
     @param.path.number('id') id: number,
     @requestBody({
@@ -100,6 +113,11 @@ export class TunesMusicalCharacteristicsController {
         content: {'application/json': {schema: CountSchema}},
       },
     },
+  })
+  @authenticate('jwt')
+  @authorize({
+    allowedRoles: ['admin', 'editor'],
+    voters: [basicAuthorization],
   })
   async delete(
     @param.path.number('id') id: number,

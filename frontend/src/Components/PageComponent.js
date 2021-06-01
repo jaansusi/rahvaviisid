@@ -39,7 +39,7 @@ const PageComponent = ({ pageName }) => {
     return (
         <Grid item xs={8}>
             {
-                AuthService.CanAccess(['editor', 'admin']) && !editing &&
+                AuthService.CanAccess(['admin']) && !editing &&
                 <Button variant='outlined' onClick={() => setEditing(!editing)}>{t('action.edit')}</Button>
             }
             {

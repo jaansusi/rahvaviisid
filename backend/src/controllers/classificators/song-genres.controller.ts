@@ -1,3 +1,6 @@
+import { authenticate } from '@loopback/authentication';
+import { authorize } from '@loopback/authorization';
+import { basicAuthorization } from '../../services';
 import {
   Count,
   CountSchema,
@@ -32,6 +35,11 @@ export class SongGenresController {
         content: {'application/json': {schema: getModelSchemaRef(SongGenres)}},
       },
     },
+  })
+  @authenticate('jwt')
+  @authorize({
+    allowedRoles: ['admin', 'editor'],
+    voters: [basicAuthorization],
   })
   async create(
     @requestBody({
@@ -92,6 +100,11 @@ export class SongGenresController {
       },
     },
   })
+  @authenticate('jwt')
+  @authorize({
+    allowedRoles: ['admin', 'editor'],
+    voters: [basicAuthorization],
+  })
   async updateAll(
     @requestBody({
       content: {
@@ -132,6 +145,11 @@ export class SongGenresController {
       },
     },
   })
+  @authenticate('jwt')
+  @authorize({
+    allowedRoles: ['admin', 'editor'],
+    voters: [basicAuthorization],
+  })
   async updateById(
     @param.path.number('id') id: number,
     @requestBody({
@@ -153,6 +171,11 @@ export class SongGenresController {
       },
     },
   })
+  @authenticate('jwt')
+  @authorize({
+    allowedRoles: ['admin', 'editor'],
+    voters: [basicAuthorization],
+  })
   async replaceById(
     @param.path.number('id') id: number,
     @requestBody() songGenres: SongGenres,
@@ -166,6 +189,11 @@ export class SongGenresController {
         description: 'SongGenres DELETE success',
       },
     },
+  })
+  @authenticate('jwt')
+  @authorize({
+    allowedRoles: ['admin', 'editor'],
+    voters: [basicAuthorization],
   })
   async deleteById(@param.path.number('id') id: number): Promise<void> {
     await this.songGenresRepository.deleteById(id);

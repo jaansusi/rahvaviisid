@@ -80,7 +80,9 @@
         "archive": "Arhiivi tunnused",
         "rhythmType": "Rütmitüüp",
         "location": "Asukoht",
-        "duplicate": "Kopeeri"
+        "duplicate": "Kopeeri",
+        "coding": "Kodeering",
+        "variant": "Variant"
     },
     "user": {
         "role": "Kasutaja roll",

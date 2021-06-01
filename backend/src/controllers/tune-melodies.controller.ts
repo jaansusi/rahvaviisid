@@ -1,3 +1,6 @@
+import { authenticate } from '@loopback/authentication';
+import { authorize } from '@loopback/authorization';
+import { basicAuthorization } from '../services';
 import {
   Count,
   CountSchema,
@@ -30,6 +33,11 @@ export class TuneMelodiesController {
   @response(200, {
     description: 'TuneMelodies model instance',
     content: {'application/json': {schema: getModelSchemaRef(TuneMelodies)}},
+  })
+  @authenticate('jwt')
+  @authorize({
+    allowedRoles: ['admin', 'editor'],
+    voters: [basicAuthorization],
   })
   async create(
     @requestBody({
@@ -81,6 +89,11 @@ export class TuneMelodiesController {
     description: 'TuneMelodies PATCH success count',
     content: {'application/json': {schema: CountSchema}},
   })
+  @authenticate('jwt')
+  @authorize({
+    allowedRoles: ['admin', 'editor'],
+    voters: [basicAuthorization],
+  })
   async updateAll(
     @requestBody({
       content: {
@@ -115,6 +128,11 @@ export class TuneMelodiesController {
   @response(204, {
     description: 'TuneMelodies PATCH success',
   })
+  @authenticate('jwt')
+  @authorize({
+    allowedRoles: ['admin', 'editor'],
+    voters: [basicAuthorization],
+  })
   async updateById(
     @param.path.number('id') id: number,
     @requestBody({
@@ -133,6 +151,11 @@ export class TuneMelodiesController {
   @response(204, {
     description: 'TuneMelodies PUT success',
   })
+  @authenticate('jwt')
+  @authorize({
+    allowedRoles: ['admin', 'editor'],
+    voters: [basicAuthorization],
+  })
   async replaceById(
     @param.path.number('id') id: number,
     @requestBody() tuneMelodies: TuneMelodies,
@@ -143,6 +166,11 @@ export class TuneMelodiesController {
   @del('/tune-melodies/{id}')
   @response(204, {
     description: 'TuneMelodies DELETE success',
+  })
+  @authenticate('jwt')
+  @authorize({
+    allowedRoles: ['admin', 'editor'],
+    voters: [basicAuthorization],
   })
   async deleteById(@param.path.number('id') id: number): Promise<void> {
     await this.tuneMelodiesRepository.deleteById(id);

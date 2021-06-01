@@ -204,6 +204,11 @@ export class UserController {
   @response(204, {
     description: 'User PATCH success',
   })
+  @authenticate('jwt')
+  @authorize({
+    allowedRoles: ['admin', 'editor'],
+    voters: [basicAuthorization],
+  })
   async updateById(
     @param.path.string('id') id: string,
     @requestBody({
@@ -221,6 +226,11 @@ export class UserController {
   @del('/users/{id}')
   @response(204, {
     description: 'User DELETE success',
+  })
+  @authenticate('jwt')
+  @authorize({
+    allowedRoles: ['admin', 'editor'],
+    voters: [basicAuthorization],
   })
   async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.userRepository.deleteById(id);

@@ -1,20 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from "react-i18next";
-import { DataGrid, GRID_DEFAULT_LOCALE_TEXT } from '@material-ui/data-grid';
+import { DataGrid } from '@material-ui/data-grid';
 import Actions from '../Buttons/Actions';
 import CreateButton from '../Buttons/CreateButton';
 import { AuthService } from '../../Services';
 import { GetDataGridLocale } from '../../translations/DataGridLocale';
 
-const ListDataFragment = (({ model, data, rowCount, setOffset, currentView, additionalButtons, actionsWidth }) => {
+const ListDataFragment = (({ model, data, rowCount, updateTable, currentView, additionalButtons, actionsWidth }) => {
     const { t } = useTranslation('common');
     let columns = model.fields.map((x) => {
         x.headerName = t(x.headerName);
         return x;
     });
     let canAccess = AuthService.CanAccess(['editor', 'admin']);
-    columns.push({ field: '', headerName: t('action.actions'), sortable: false, width: actionsWidth ? actionsWidth : 300, 
-        renderCell: (params) => <Actions auth={canAccess} apiPath={model.apiPath} id={params.row.id} currentView={currentView} additionalButtons={additionalButtons} /> 
+    columns.push({
+        field: '', headerName: t('action.actions'), sortable: false, width: actionsWidth ? actionsWidth : 300,
+        renderCell: (params) => <Actions auth={canAccess} apiPath={model.apiPath} id={params.row.id} currentView={currentView} additionalButtons={additionalButtons} />
     });
 
     let tableData = [];
@@ -34,7 +35,9 @@ const ListDataFragment = (({ model, data, rowCount, setOffset, currentView, addi
             }
             return row;
         });
-    
+
+    useEffect(() => {updateTable(0)}, [])
+
     let tableWidth = columns.map(x => x.width).reduce((x, y) => x + y, 0) + 2;
     return (
         <>
@@ -46,9 +49,9 @@ const ListDataFragment = (({ model, data, rowCount, setOffset, currentView, addi
                     rows={tableData}
                     columns={columns}
                     pageSize={10}
-                    onPageChange={(x) => setOffset((x.page-1) * x.pageSize)}
-                    localeText={GetDataGridLocale(t)} 
-                    />
+                    onPageChange={(x) => updateTable((x.page - 1) * x.pageSize)}
+                    localeText={GetDataGridLocale(t)}
+                />
             </div>
         </>
     );
