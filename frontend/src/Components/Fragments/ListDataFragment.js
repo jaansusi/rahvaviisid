@@ -1,9 +1,10 @@
 import React from 'react';
 import { useTranslation } from "react-i18next";
-import { DataGrid } from '@material-ui/data-grid';
+import { DataGrid, GRID_DEFAULT_LOCALE_TEXT } from '@material-ui/data-grid';
 import Actions from '../Buttons/Actions';
 import CreateButton from '../Buttons/CreateButton';
 import { AuthService } from '../../Services';
+import { GetDataGridLocale } from '../../translations/DataGridLocale';
 
 const ListDataFragment = (({ model, data, rowCount, setOffset, currentView, additionalButtons, actionsWidth }) => {
     const { t } = useTranslation('common');
@@ -37,7 +38,6 @@ const ListDataFragment = (({ model, data, rowCount, setOffset, currentView, addi
     let tableWidth = columns.map(x => x.width).reduce((x, y) => x + y, 0) + 2;
     return (
         <>
-        {JSON.stringify()}
             <div style={{ width: tableWidth, height: '500px' }}>
                 <CreateButton />
                 <DataGrid
@@ -46,7 +46,9 @@ const ListDataFragment = (({ model, data, rowCount, setOffset, currentView, addi
                     rows={tableData}
                     columns={columns}
                     pageSize={10}
-                    onPageChange={(x) => setOffset((x.page-1) * x.pageSize)} />
+                    onPageChange={(x) => setOffset((x.page-1) * x.pageSize)}
+                    localeText={GetDataGridLocale(t)} 
+                    />
             </div>
         </>
     );

@@ -1,6 +1,5 @@
 import React from 'react';
 import Header from './Components/Header/Header';
-import Home from './Components/Home/Home';
 import { Helmet } from "react-helmet-async";
 import './App.css';
 import {
@@ -10,12 +9,13 @@ import {
 } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import Footer from './Components/Footer/Footer';
-import MainRouter from './MainRouter';
+import AssetRouter from './AssetRouter';
 import 'react-notifications/lib/notifications.css';
 import { NotificationContainer } from 'react-notifications';
 import Login from './Components/Authentication/Login';
 import UseLocalStorageState from './Components/Authentication/UseLocalStorageState';
 import SearchComponent from './Components/Search/SearchComponent';
+import PageComponent from './Components/PageComponent';
 
 function App() {
   const [authentication, setAuthentication] = UseLocalStorageState('user');
@@ -38,16 +38,19 @@ function App() {
         >
           <Switch>
             <Route exact path="/">
-              <Home />
+              <PageComponent name='home' />
             </Route>
             <Route exact path="/otsing">
+              <SearchComponent />
+            </Route>
+            <Route exact path="/otsinguabi">
               <SearchComponent />
             </Route>
             <Route exact path="/login">
               <Login setAuthentication={setAuthentication} />
             </Route>
             <Route path="/:asset">
-              <MainRouter />
+              <AssetRouter />
             </Route>
           </Switch>
         </Grid>

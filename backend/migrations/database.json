@@ -1,4 +1,11 @@
 {
+    "dev": {
+        "driver": "pg",
+        "host": "localhost",
+        "port": 5432,
+        "user": "local_dev_username",
+        "password": "local_dev_password"
+    },
     "createDB": {
         "driver": "pg",
         "host": {"ENV": "DB_HOST"},

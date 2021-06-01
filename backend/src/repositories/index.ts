@@ -54,3 +54,4 @@ export * from './user.repository';
 export * from './audit.repository';
 export * from './users.repository';
 export * from './user-credentials.repository';
+export * from './pages.repository';

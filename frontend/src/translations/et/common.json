@@ -23,7 +23,8 @@
         "delete": "Kustuta",
         "create": "Loo uus",
         "close": "Sulge",
-        "kivike": "Ava Kivikeses"
+        "kivike": "Ava Kivikeses",
+        "save": "Salvesta"
     },
     "date": {
         "created": "Loodud",

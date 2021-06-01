@@ -48,9 +48,6 @@ const TuneView = () => {
                 direction='column'
                 spacing={3}
             >
-                <Grid item xs={6}>
-                    <Typography variant='h5'>{assetData.pid}</Typography>
-                </Grid>
                 <Grid item container direction='row'>
                     <Grid item xs={2}>
                         <Typography variant='h5'>{t('tune.references')}</Typography>

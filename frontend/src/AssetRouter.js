@@ -11,7 +11,7 @@ import {
     useParams
 } from 'react-router-dom';
 
-function MainRouter() {
+function AssetRouter() {
     let { asset } = useParams();
     let { pathname } = useLocation();
     let wrapper = null;
@@ -36,9 +36,9 @@ function MainRouter() {
             <Switch>
                 <Redirect from="/:url*(/+)" to={pathname.slice(0, -1)} />
             </Switch>
-            { wrapper}
+            { wrapper }
         </>
     );
 }
 
-export default MainRouter;
+export default AssetRouter;

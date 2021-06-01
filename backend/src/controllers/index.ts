@@ -40,3 +40,4 @@ export * from './sexes-persons.controller';
 export * from './sexes-persons.controller';
 export * from './musical-characteristics-rhythm-types.controller';
 export * from './convert.controller';
+export * from './pages.controller';

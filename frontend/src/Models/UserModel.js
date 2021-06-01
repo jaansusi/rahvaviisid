@@ -22,6 +22,7 @@ export const UserModel = ModelService.GenerateDefaults({
             { field: 'email', headerName: 'user.email' },
             { field: 'firstName', headerName: 'user.firstName' },
             { field: 'lastName', headerName: 'user.lastName' },
+            { field: null, type: 'dropdown', apiPath: 'users', headerName: 'user.role' }
         ]
     }
 });
