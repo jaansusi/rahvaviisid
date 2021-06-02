@@ -1,6 +1,6 @@
-import { authenticate } from '@loopback/authentication';
-import { authorize } from '@loopback/authorization';
-import { basicAuthorization } from '../services';
+import {authenticate} from '@loopback/authentication';
+import {authorize} from '@loopback/authorization';
+import {basicAuthorization} from '../services';
 import {
   Count,
   CountSchema,
@@ -26,8 +26,27 @@ import {PagesRepository} from '../repositories';
 export class PagesController {
   constructor(
     @repository(PagesRepository)
-    public pagesRepository : PagesRepository,
+    public pagesRepository: PagesRepository,
   ) {}
+
+  @get('/pages', {
+    responses: {
+      '200': {
+        description: 'Array of Tunes model instances',
+        content: {
+          'application/json': {
+            schema: {
+              type: 'array',
+              items: getModelSchemaRef(Pages, {includeRelations: true}),
+            },
+          },
+        },
+      },
+    },
+  })
+  async find(@param.filter(Pages) filter?: Filter<Pages>): Promise<Pages[]> {
+    return this.pagesRepository.find(filter);
+  }
 
   @get('/pages/{id}')
   @response(200, {
@@ -40,11 +59,11 @@ export class PagesController {
   })
   async findById(
     @param.path.number('id') id: number,
-    @param.filter(Pages, {exclude: 'where'}) filter?: FilterExcludingWhere<Pages>
+    @param.filter(Pages, {exclude: 'where'})
+    filter?: FilterExcludingWhere<Pages>,
   ): Promise<Pages> {
     return this.pagesRepository.findById(id, filter);
   }
-
 
   @patch('/pages/{id}')
   @response(204, {
@@ -68,5 +87,4 @@ export class PagesController {
   ): Promise<void> {
     await this.pagesRepository.updateById(id, pages);
   }
-
 }

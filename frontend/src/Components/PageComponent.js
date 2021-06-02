@@ -8,7 +8,7 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 
-const PageComponent = ({ pageName }) => {
+const PageComponent = ({ name }) => {
     const { t } = useTranslation('common');
 
     let [editing, setEditing] = useState(false);
@@ -26,7 +26,7 @@ const PageComponent = ({ pageName }) => {
 
     useEffect(() => {
         axios
-            .get(config.apiUrl + '/pages?filter=' + JSON.stringify({ where: { 'name': pageName } }))
+            .get(config.apiUrl + '/pages?filter=' + JSON.stringify({ where: { 'name': name } }))
             .then((result) => {
                 let response = result.data[0];
                 if (response) {
@@ -35,7 +35,7 @@ const PageComponent = ({ pageName }) => {
                 }
                     
             });
-    }, [pageName]);
+    }, [name]);
     return (
         <Grid item xs={8}>
             {
