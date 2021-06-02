@@ -12,7 +12,7 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
     let [expanded, setExpanded] = useState(-1);
     if (model.timestamp)
         elemValue = DataService.ParseDate(elemValue);
-    
+
     switch (model.type) {
         case 'boolean':
             return (
@@ -54,9 +54,12 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
         case 'dropdown':
             let handleElementChange = ((event, index) => {
                 const { value } = event.target;
+                console.log(event);
                 handleChange({
-                    name: model.field,
-                    value: value.id
+                    target: {
+                        name: model.field,
+                        value: value
+                    }
                 }, index);
             });
             if (model.values === undefined)

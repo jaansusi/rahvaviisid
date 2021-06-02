@@ -225,5 +225,75 @@
         "tuneForm": "Viisi vorm",
         "textForm": "Teksti vorm",
         "rhythmType": "Rütmitüüp"
+    },
+    "notification": {
+        "saved": "Salvestatud",
+        "failed": "Midagi läks valesti"
+    },
+    "datagrid": {
+        "noRows": "Tulemusi ei ole",
+        "noResults": "Tulemusi ei leitud.",
+        "error": "Ilmnes viga.",
+        "density": {
+            "label": "Tihedus",
+            "compact": "Kompaktne",
+            "standard": "Standard",
+            "comfortable": "Mugav"
+        },
+        "toolbar": {
+            "columns": "Veerud",
+            "filters": "Filtrid",
+            "hideFilters": "Peida filtrid",
+            "showFilters": "Kuva filtrid",
+            "export": "Eksport",
+            "exportCsv": "Lae alla CSV"
+        },
+        "columns": {
+            "label": "Leia veerud",
+            "placeholder": "Veeru pealkiri",
+            "dragLabel": "Veeru järjestamine",
+            "showAll": "Näita kõike",
+            "hideAll": "Peida kõike"
+        },
+        "filter": {
+            "add": "Lisa filter",
+            "deleteLabel": "Kustuta",
+            "operators": "Operaatorid",
+            "and": "Ja",
+            "or": "Või",
+            "columns": "Veerud",
+            "inputLabel": "Väärtus",
+            "inputPlaceholder": "Filtri väärtus",
+            "operator": {
+                "contains": "Sisaldab",
+                "equals": "Võrdub",
+                "startsWith": "Algab",
+                "endsWith": "Lõppeb",
+                "is": "On",
+                "isNot": "Ei ole",
+                "isAfter": "On pärast",
+                "onOrAfter": "on sees või pärast",
+                "isBefore": "on enne",
+                "onOrBefore": "on sees või enne"
+            },
+            "any": "Kõik",
+            "true": "Õige",
+            "false": "Vale"
+        },
+        "column": {
+            "label": "Menüü",
+            "showColumns": "Kuva veerud",
+            "filter": "Filter",
+            "hideColumn": "Peida",
+            "unsort": "Sorteerimata",
+            "sortAsc": "Sorteeri kasvavalt",
+            "sortDesc": "Sorteeri kahanevalt",
+            "filtersLabel": "Näita filtreid",
+            "sortLabel": "Sorteeri"
+        },
+        "footerTotalRows": "Ridu kokku:",
+        "checkboxSelection": "Märkekasti valik",
+        "trueLabel": "Õige",
+        "falseLabel": "Vale"
     }
 }

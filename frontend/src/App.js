@@ -16,6 +16,8 @@ import Login from './Components/Authentication/Login';
 import UseLocalStorageState from './Components/Authentication/UseLocalStorageState';
 import SearchComponent from './Components/Search/SearchComponent';
 import PageComponent from './Components/PageComponent';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const [authentication, setAuthentication] = UseLocalStorageState('user');
@@ -36,6 +38,17 @@ function App() {
           alignItems='center'
           className='body-container'
         >
+          <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
           <Switch>
             <Route exact path="/">
               <PageComponent name='home' />

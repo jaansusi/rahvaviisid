@@ -6,7 +6,9 @@ import config from '../config';
 import EditDataFragment from './Fragments/EditDataFragment';
 import axios from 'axios';
 import Actions from './Buttons/Actions';
-import { DataService } from '../Services';
+import { DataService } from '../Services';  
+import { toast } from 'react-toastify';
+import './EditComponent.css';
 
 const EditComponent = ({ model, newItem }) => {
     newItem = newItem === undefined ? false : newItem;
@@ -144,6 +146,12 @@ const EditComponent = ({ model, newItem }) => {
                 )
                 .then((resData) => {
                     // console.log(resData);
+                    toast.success(t('notification.saved'));
+                    window.scrollTo({top: 0, behavior: 'smooth'});
+                })
+                .catch((error) => {
+                    console.log(error);
+                    toast.error(t('notification.failed'));
                 });
         }
 
@@ -173,6 +181,7 @@ const EditComponent = ({ model, newItem }) => {
                         disabled={submitting}
                         variant="contained"
                         color="primary"
+                        className="save-button"
                     >
                         {t('edit.save')}
                     </Button>

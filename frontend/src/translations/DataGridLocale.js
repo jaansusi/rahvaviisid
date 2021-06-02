@@ -3,6 +3,7 @@ export const GetDataGridLocale = ((translateFunction) => {
     Object.keys(DATA_GRID_LOCALE).map((key, index) =>
         tempLocale[key] = translateFunction(DATA_GRID_LOCALE[key])
     );
+    console.log(tempLocale);
     return tempLocale;
 }
 
@@ -94,7 +95,7 @@ const DATA_GRID_LOCALE = {
             : `${count.toLocaleString()} row selected`,
 
     // Total rows footer text
-    footerTotalRows: 'datagrid.footer.totalRows',
+    footerTotalRows: 'datagrid.footerTotalRows',
 
     // Checkbox selection text
     checkboxSelectionHeaderName: 'datagrid.checkboxSelection',
