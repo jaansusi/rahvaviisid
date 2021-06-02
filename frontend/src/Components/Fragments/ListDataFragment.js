@@ -49,7 +49,7 @@ const ListDataFragment = (({ model, data, rowCount, updateTable, currentView, ad
                     rows={tableData}
                     columns={columns}
                     pageSize={10}
-                    onPageChange={(x) => updateTable((x.page - 1) * x.pageSize)}
+                    onPageChange={(x) => updateTable((x.page) * x.pageSize)}
                     localeText={GetDataGridLocale(t)}
                 />
             </div>
