@@ -283,7 +283,7 @@
         "column": {
             "label": "Menüü",
             "showColumns": "Kuva veerud",
-            "filter": "Filter",
+            "filter": "Filtreeri",
             "hideColumn": "Peida",
             "unsort": "Sorteerimata",
             "sortAsc": "Sorteeri kasvavalt",
