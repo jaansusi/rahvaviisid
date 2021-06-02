@@ -23,12 +23,12 @@ export const TuneTranscriptionModel = ModelService.GenerateDefaults({
         ]
     },
     edit: {
-        label: 'tune.transcription',
+        label: 'tune.coding',
         fields: [
             { field: 'id', hidden: true },
             { field: 'transcriptionSourceId', type: 'dropdown', apiPath: 'transcription-sources', headerName: 'transcription.source' },
-            { field: 'created', type: 'view', headerName: 'date.created' },
-            { field: 'modified', type: 'view', headerName: 'date.modified' },
+            { field: 'created', type: 'view', timestamp: true, headerName: 'date.created' },
+            { field: 'modified', type: 'view', timestamp: true, headerName: 'date.modified' },
             {
                 field: 'tuneMelodies',
                 type: 'model',

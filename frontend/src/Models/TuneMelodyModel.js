@@ -14,7 +14,7 @@ export const TuneMelodyModel = ModelService.GenerateDefaults({
         ]
     },
     edit: {
-        label: 'tune.melody',
+        label: 'tune.variant',
         fields: [
             { field: 'id', hidden: true },
             { field: 'variationIndex', hidden: true },

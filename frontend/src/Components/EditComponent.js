@@ -108,7 +108,6 @@ const EditComponent = ({ model, newItem }) => {
                     }
                 }
             }
-            console.log(requestObject);
             return requestObject;
         }
         let objToSend = recurse(currentModel, Object.assign({}, data));

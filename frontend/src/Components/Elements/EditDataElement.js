@@ -1,5 +1,5 @@
 import { Button, Checkbox, Collapse, FormControl, FormControlLabel, Grid, InputLabel, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@material-ui/core';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { DataService, TuneService } from '../../Services';
 import EditDataFragment from '../Fragments/EditDataFragment';
@@ -10,7 +10,9 @@ import './Css/EditFormElement.css';
 const EditDataElement = (({ model, elemValue, handleChange, index }) => {
     const { t } = useTranslation('common');
     let [expanded, setExpanded] = useState(-1);
-
+    if (model.timestamp)
+        elemValue = DataService.ParseDate(elemValue);
+    
     switch (model.type) {
         case 'boolean':
             return (
@@ -143,7 +145,6 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                 >
                     <h3>{t(model.nested.label)}</h3>
                     <Button onClick={addEntryToTable} variant='outlined' color='primary'>{t('action.create')}</Button>
-                    {JSON.stringify(elemValue)}
                     <TableContainer component={Paper}>
                         <Table>
                             <TableHead>
@@ -212,7 +213,6 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
             if (model.array) {
                 let handleArrayChange = (event, i) => {
                     const { name, value } = event.target;
-                    console.log(event);
                     let temp = elemValue;
                     temp[i][name] = value;
                     handleChange({
@@ -249,8 +249,8 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                 );
         case 'player':
             return (
-                <>
-                    <Grid container direction='column'>
+                <Grid item>
+                    <Grid item container direction='column'>
                         <Grid item>
                             <Button onClick={() => setExpanded(expanded * -1)}>Komplekteeritud ABC</Button>
                         </Grid>
@@ -259,7 +259,7 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                         </Grid>
                     </Grid>
                     <PlayerViewComponent elementData={elemValue} index={index} edit={true} />
-                </>
+                </Grid>
             );
         default:
             return (

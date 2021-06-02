@@ -88,8 +88,8 @@ const TuneView = () => {
                         </Grid>
                         <AssetPropertyElement title={t('tune.verified')} value={assetData.verified} />
                         <AssetPropertyElement title={t('tune.verifiedBy')} value={assetData.verifiedBy} />
-                        <AssetPropertyElement title={t('date.created')} value={assetData.created} />
-                        <AssetPropertyElement title={t('date.modified')} value={assetData.modified} />
+                        <AssetPropertyDateElement title={t('date.created')} value={assetData.created} />
+                        <AssetPropertyDateElement title={t('date.modified')} value={assetData.modified} />
                     </Grid>
                 }
 
@@ -112,8 +112,8 @@ const TuneView = () => {
                                         {
                                             AuthService.CanAccess(['editor', 'admin']) &&
                                             <Grid item xs={4} container direction='row'>
-                                                <AssetPropertyElement size={6} title={t('date.created')} value={transcription.created} />
-                                                <AssetPropertyElement size={6} title={t('date.modified')} value={transcription.modified} />
+                                                <AssetPropertyDateElement size={6} title={t('date.created')} value={transcription.created} />
+                                                <AssetPropertyDateElement size={6} title={t('date.modified')} value={transcription.modified} />
                                             </Grid>
                                         }
                                     </Grid>
@@ -166,6 +166,11 @@ const AssetPropertyElement = ({ title, value, size }) => {
             <Grid item><i>{title}</i></Grid>
             <Grid item><Typography>{value !== '' ? value : '---'}</Typography></Grid>
         </Grid>
+    );
+};
+const AssetPropertyDateElement = ({ title, value, size }) => {
+    return ( 
+        <AssetPropertyElement title={title} value={DataService.ParseDate(value)} size={size} />
     );
 };
 

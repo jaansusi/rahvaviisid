@@ -1,6 +1,7 @@
 import { Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { DataService } from '../../Services';
 import ViewDataFragment from '../Fragments/ViewDataFragment';
 
 const ViewDataElement = (({ model, value }) => {
@@ -75,6 +76,13 @@ const ViewDataElement = (({ model, value }) => {
                     model={model.nested}
                     elementData={value}
                 />
+        case 'timestamp':
+            return (
+                <Grid item xs={2} container direction='column'>
+                    <Grid item>{t(model.headerName)}</Grid>
+                    <Grid item>{DataService.ParseDate(value)}</Grid>
+                </Grid>
+            );
         default:
             return (
                 <Grid item xs={2} container direction='column'>
