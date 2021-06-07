@@ -48,6 +48,10 @@ export class SoundRanges extends Entity {
   })
   modified: string;
 
+  @property({
+    type: 'number',
+  })
+  Id?: number;
   // Define well-known properties here
 
   // Indexer property to allow additional data

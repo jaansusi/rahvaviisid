@@ -1,6 +1,7 @@
-import {Entity, model, property, hasMany} from '@loopback/repository';
+import {Entity, model, property, hasMany, hasOne} from '@loopback/repository';
 import {RhythmTypes} from './rhythm-types.model';
 import {MusicalCharacteristicsRhythmTypes} from './musical-characteristics-rhythm-types.model';
+import {SoundRanges} from './sound-ranges.model';
 
 @model({
   settings: {
@@ -77,6 +78,9 @@ export class MusicalCharacteristics extends Entity {
 
   @hasMany(() => RhythmTypes, {through: {model: () => MusicalCharacteristicsRhythmTypes}})
   rhythmTypes: RhythmTypes[];
+
+  @hasOne(() => SoundRanges, {keyFrom: 'soundRangeId', keyTo: 'Id'})
+  soundRanges: SoundRanges;
   // Define well-known properties here
 
   // Indexer property to allow additional data

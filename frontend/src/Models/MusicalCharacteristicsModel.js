@@ -5,11 +5,10 @@ export const MusicalCharacteristicsModel = ModelService.GenerateDefaults({
     table: {
         label: 'musical.label',
         fields: [
-            { field: 'soundRangeId', headerName: 'musical.soundRange', width: 140 },
+            { field: 'soundRanges', headerName: 'musical.soundRange', width: 140 , selector: 'title'},
             { field: null, headerName: 'musical.tuneForm', width: 140 },
             { field: null, headerName: 'musical.textForm', width: 140 },
             { field: null, headerName: 'musical.rhythmType', width: 140 },
-            { field: null, headerName: 'musical.soundRange', width: 140 },
             { field: 'melostropheNumScore', headerName: 'musical.score', width: 140 },
             { field: 'melostropheNumAudio', headerName: 'musical.audio', width: 150 },
             { field: 'isVariable', type: 'boolean', headerName: 'musical.isVariable', width: 150 }
@@ -17,7 +16,7 @@ export const MusicalCharacteristicsModel = ModelService.GenerateDefaults({
     },
     view: {
         fields: [
-            { field: 'soundRangeId', headerName: 'musical.soundRange', width: 140 },
+            { field: 'soundRanges', headerName: 'musical.soundRange', width: 140, selector: 'title' },
             { field: 'melostropheNumScore', headerName: 'musical.score', width: 140 },
             { field: 'melostropheNumAudio', headerName: 'musical.audio', width: 150 },
             { field: 'isVariable', headerName: 'musical.isVariable', width: 150 },
@@ -27,7 +26,7 @@ export const MusicalCharacteristicsModel = ModelService.GenerateDefaults({
     edit: {
         fields: [
             { field: 'id', hidden: true },
-            { field: 'soundRangeId', headerName: 'musical.soundRange', width: 140 },
+            { field: 'soundRanges', headerName: 'musical.soundRange', width: 140 , selector: 'title'},
             { field: 'melostropheNumScore', headerName: 'musical.score', width: 140 },
             { field: 'melostropheNumAudio', headerName: 'musical.audio', width: 150 },
             { field: 'isVariable', type: 'boolean', headerName: 'musical.isVariable', width: 150 },
