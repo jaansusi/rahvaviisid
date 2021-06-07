@@ -42,6 +42,11 @@ export const TuneModel = ModelService.GenerateDefaults({
             { field: 'created', headerName: 'date.created' },
             { field: 'modified', headerName: 'date.modified' },
             {
+                field: 'externalReferences',
+                type: 'table',
+                nested: ExternalReferenceModel.table
+            },
+            {
                 field: 'tunesPersonsRoles',
                 type: 'table',
                 nested: TunePersonsModel.table
@@ -56,11 +61,7 @@ export const TuneModel = ModelService.GenerateDefaults({
                 type: 'table',
                 nested: TunePerformancesModel.table
             },
-            {
-                field: 'externalReferences',
-                type: 'table',
-                nested: ExternalReferenceModel.table
-            },
+
             {
                 field: 'tuneTranscriptions',
                 type: 'model',

@@ -77,7 +77,7 @@ const TuneView = () => {
                     </Grid>
                     <AssetPropertyElement title={t('tune.publications')} value={assetData.publications} />
                     <AssetPropertyElement title={t('tune.catalogue')} value={assetData.catalogue} />
-                    <AssetPropertyElement title={t('tune.remarks')} value={assetData.remarks} size={4} />
+
                 </Grid>
 
                 <Divider />
@@ -90,6 +90,7 @@ const TuneView = () => {
                         <AssetPropertyElement title={t('tune.verifiedBy')} value={assetData.verifiedBy} />
                         <AssetPropertyDateElement title={t('date.created')} value={assetData.created} />
                         <AssetPropertyDateElement title={t('date.modified')} value={assetData.modified} />
+                        <AssetPropertyElement title={t('tune.remarks')} value={assetData.remarks} size={4} />
                     </Grid>
                 }
 

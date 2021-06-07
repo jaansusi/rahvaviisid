@@ -57,7 +57,7 @@
         "state": "Seisund",
         "genre": "Liik",
         "publications": "Väljaanded",
-        "remarks": "Märkused",
+        "remarks": "Toimetamismärkused",
         "verifiedBy": "Kontrollija",
         "verified": "Kontrollimise aeg",
         "melody": "Meloodia",
@@ -91,7 +91,7 @@
         "lastName": "Perenimi"
     },
     "place": {
-        "place": "Kohad",
+        "place": "Koha andmed",
         "type": "Koha liik",
         "parish": "Kihelkond",
         "municipality": "Vald",
@@ -164,7 +164,7 @@
     },
     "tunepersons": {
         "tunePersonRoleTypes": "Roll",
-        "title": "Viisi tegijad",
+        "title": "Viisiga seotud isikud",
         "actionStartYear": "Tegevuse algusaasta",
         "actionEndYear": "Tegevuse lõppaasta",
         "remarks": "Märkused",
