@@ -10,7 +10,7 @@ export const TableViewComponent = ({ value, model }) => {
                 <TableHead>
                     <TableRow>
                         {
-                            model.nested.fields.map((field, i) => {
+                            model.fields.map((field, i) => {
                                 return (<TableCell align={i === 0 ? 'left' : 'right'} key={i}>{t(field.headerName)}</TableCell>);
                             })
                         }
@@ -22,7 +22,7 @@ export const TableViewComponent = ({ value, model }) => {
                             return (
                                 <TableRow key={i}>
                                     {
-                                        model.nested.fields.map((field, j) => {
+                                        model.fields.map((field, j) => {
                                             if (row[field.field] === undefined) {
                                                 return (<TableCell key={j}> </TableCell>);
                                             }

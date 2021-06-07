@@ -2,10 +2,11 @@ import React, { useEffect, useReducer } from 'react';
 import { Button, Divider, Grid, Typography } from '@material-ui/core';
 import { useParams } from 'react-router';
 import { AuthService, DataService } from '../../Services';
-import { TuneModel } from '../../Models';
+import { ExternalReferenceModel, TuneEncodingModel, TuneModel, TunePerformancesModel, TunePersonsModel, TunePlaceModel, TuneSongsModel, TuneTranscriptionModel } from '../../Models';
 import { useTranslation } from 'react-i18next';
 import { PlayerViewComponent, TableViewComponent } from '../NewComponents';
 import Actions from '../Buttons/Actions';
+import { MusicalCharacteristicsModel } from '../../Models/MusicalCharacteristicsModel';
 
 const TuneView = () => {
     const { t } = useTranslation('common');
@@ -125,7 +126,7 @@ const TuneView = () => {
                                                 return (
                                                     <Grid key={j} item container direction='column' spacing={2}>
                                                         <Grid item container direction='row' spacing={5}>
-                                                        <Grid item><Typography variant='h6'>{t('tune.variant')} {j + 1}</Typography></Grid>
+                                                            <Grid item><Typography variant='h6'>{t('tune.variant')} {j + 1}</Typography></Grid>
                                                             <Grid item><Button onClick={() => alert('Varsti tuleb')} variant='outlined'>{t('melody.export')}</Button></Grid>
                                                         </Grid>
                                                         <Grid item>
@@ -143,18 +144,15 @@ const TuneView = () => {
                         })
                     }
                 </Grid>
+                
+                <AssetPropertyTableElement label={t(ExternalReferenceModel.table.label)} model={ExternalReferenceModel.table} data={assetData['externalReferences']} />
+                <AssetPropertyTableElement label={t(TunePersonsModel.table.label)} model={TunePersonsModel.table} data={assetData['tunesPersonsRoles']} />
+                <AssetPropertyTableElement label={t(TunePlaceModel.table.label)} model={TunePlaceModel.table} data={assetData['tunePlaces']} />
+                <AssetPropertyTableElement label={t(TunePerformancesModel.table.label)} model={TunePerformancesModel.table} data={assetData['tunePerformances']} />
+                <AssetPropertyTableElement label={t(TuneSongsModel.table.label)} model={TuneSongsModel.table} data={assetData['tuneSongs']} />
+                <AssetPropertyTableElement label={t(TuneEncodingModel.table.label)} model={TuneEncodingModel.table} data={assetData['tuneEncodings']} />
+                <AssetPropertyTableElement label={t(MusicalCharacteristicsModel.table.label)} model={MusicalCharacteristicsModel.table} data={assetData['musicalCharacteristics']} />
 
-                {
-                    TuneModel.view.fields.filter(x => x.type === 'table').map((fieldElem, i) => {
-                        return (
-                            <Grid key={i} item>
-                                <Divider />
-                                <Typography variant='h5'>{t(fieldElem.nested.label)}</Typography>
-                                <TableViewComponent model={fieldElem} value={assetData[fieldElem.field]} />
-                            </Grid>
-                        );
-                    })
-                }
             </Grid>
         </Grid>
     );
@@ -170,9 +168,16 @@ const AssetPropertyElement = ({ title, value, size }) => {
     );
 };
 const AssetPropertyDateElement = ({ title, value, size }) => {
-    return ( 
+    return (
         <AssetPropertyElement title={title} value={DataService.ParseDate(value)} size={size} />
     );
 };
+const AssetPropertyTableElement = ({ label, model, data }) => {
+    return (<Grid item>
+        <Divider />
+        <Typography variant='h5'>{label}</Typography>
+        <TableViewComponent model={model} value={data} />
+    </Grid>);
+}
 
 export default TuneView;
