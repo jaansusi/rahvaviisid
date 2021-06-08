@@ -77,10 +77,10 @@ export class MusicalCharacteristics extends Entity {
   modified: string;
 
   @hasMany(() => RhythmTypes, {through: {model: () => MusicalCharacteristicsRhythmTypes}})
-  rhythmTypes: RhythmTypes[];
+  rhythmTypes?: RhythmTypes[];
 
   @hasOne(() => SoundRanges, {keyFrom: 'soundRangeId', keyTo: 'Id'})
-  soundRanges: SoundRanges;
+  soundRanges?: SoundRanges;
   // Define well-known properties here
 
   // Indexer property to allow additional data

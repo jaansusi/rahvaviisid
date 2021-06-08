@@ -1,6 +1,6 @@
-import { authenticate } from '@loopback/authentication';
-import { authorize } from '@loopback/authorization';
-import { basicAuthorization } from '../services';
+import {authenticate} from '@loopback/authentication';
+import {authorize} from '@loopback/authorization';
+import {basicAuthorization} from '../services';
 import {
   Count,
   CountSchema,
@@ -24,7 +24,9 @@ import {
 import {Tunes} from '../models';
 import {
   ActualPerformanceTypesRepository,
+  ExternalReferencesRepository,
   MusicalCharacteristicsRepository,
+  SoundRangesRepository,
   TuneEncodingsRepository,
   TuneMelodiesRepository,
   TunePerformancesRepository,
@@ -36,7 +38,7 @@ import {
 } from '../repositories';
 
 export class TunesController {
-  constructor( 
+  constructor(
     @repository(TunesRepository)
     public tunesRepository: TunesRepository,
     @repository(TuneMelodiesRepository)
@@ -57,6 +59,10 @@ export class TunesController {
     public actualPerformanceTypesRepository: ActualPerformanceTypesRepository,
     @repository(MusicalCharacteristicsRepository)
     public musicalCharacteristicsRepository: MusicalCharacteristicsRepository,
+    @repository(SoundRangesRepository)
+    public soundRangesRepository: SoundRangesRepository,
+    @repository(ExternalReferencesRepository)
+    public externalReferencesRepository: ExternalReferencesRepository,
   ) {}
 
   @post('/tunes', {
@@ -166,7 +172,6 @@ export class TunesController {
     return this.tunesRepository.findById(id, filter);
   }
 
-
   @patch('/tunes/{id}', {
     responses: {
       '204': {
@@ -198,6 +203,8 @@ export class TunesController {
       repository: DefaultCrudRepository<any, number, object>,
     ) => {
       assets?.forEach((x: any) => {
+        if (x.id === undefined)
+          console.log(x);
         repository.updateById(x.id, x);
       });
     };
@@ -206,9 +213,12 @@ export class TunesController {
       delete tunes.tuneEncodings;
     }
     if (tunes.tunePerformances !== undefined) {
-      tunes.tunePerformances.forEach((performance) => {
+      tunes.tunePerformances.forEach(performance => {
         if (performance.actualPerformanceTypes !== undefined) {
-          updateNestedAsset([performance.actualPerformanceTypes], this.actualPerformanceTypesRepository);
+          updateNestedAsset(
+            [performance.actualPerformanceTypes],
+            this.actualPerformanceTypesRepository,
+          );
         }
       });
       delete tunes.tunePerformances;
@@ -222,23 +232,57 @@ export class TunesController {
       delete tunes.tuneSongs;
     }
     if (tunes.tunesPersonsRoles !== undefined) {
-      updateNestedAsset(tunes.tunesPersonsRoles, this.tunesPersonsRolesRepository);
+      updateNestedAsset(
+        tunes.tunesPersonsRoles,
+        this.tunesPersonsRolesRepository,
+      );
       delete tunes.tunesPersonsRoles;
     }
     if (tunes.tuneTranscriptions !== undefined) {
       tunes.tuneTranscriptions.forEach((tuneTranscription, i) => {
-        updateNestedAsset(tuneTranscription.tuneMelodies, this.tuneMelodiesRepository);
+        updateNestedAsset(
+          tuneTranscription.tuneMelodies,
+          this.tuneMelodiesRepository,
+        );
         if (tunes.tuneTranscriptions)
           delete tunes.tuneTranscriptions[i].tuneMelodies;
-      })
-      updateNestedAsset(tunes.tuneTranscriptions, this.tuneTranscriptionsRepository);
+      });
+      updateNestedAsset(
+        tunes.tuneTranscriptions,
+        this.tuneTranscriptionsRepository,
+      );
       delete tunes.tuneTranscriptions;
     }
     if (tunes.musicalCharacteristics !== undefined) {
-      updateNestedAsset(tunes.musicalCharacteristics, this.musicalCharacteristicsRepository);
+      tunes.musicalCharacteristics.forEach((musicalCharacteristics, i) => {
+        updateNestedAsset(
+          musicalCharacteristics.rhythmTypes,
+          this.musicalCharacteristicsRepository,
+        );
+        if (
+          musicalCharacteristics.soundRangeId &&
+          musicalCharacteristics.soundRanges
+        )
+          this.soundRangesRepository.updateById(
+            musicalCharacteristics.soundRangeId,
+            musicalCharacteristics.soundRanges,
+          );
+        if (tunes.musicalCharacteristics) {
+          delete tunes.musicalCharacteristics[i].rhythmTypes;
+          delete tunes.musicalCharacteristics[i].soundRanges;
+        }
+      });
+      updateNestedAsset(
+        tunes.musicalCharacteristics,
+        this.musicalCharacteristicsRepository,
+      );
       delete tunes.musicalCharacteristics;
     }
-    
+    if (tunes.externalReferences !== undefined) {
+      updateNestedAsset(tunes.externalReferences, this.externalReferencesRepository);
+      delete tunes.externalReferences;
+    }
+
     await this.tunesRepository.updateById(id, tunes);
   }
 
