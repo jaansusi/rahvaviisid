@@ -69,17 +69,11 @@ const TuneView = () => {
                     <AssetPropertyElement title={t('tune.language')} value={assetData.languages?.title} />
                     <AssetPropertyElement title={t('tune.country')} value={assetData.countries?.title} />
                 </Grid>
-
+                
+                <AssetPropertyTableElement label={t(ExternalReferenceModel.table.label)} model={ExternalReferenceModel.table} data={assetData['externalReferences']} />
                 <Divider />
 
-                <Grid item container direction='row'>
-                    <Grid item xs={2}>
-                        <Typography variant='h5'>{t('tune.archive')}</Typography>
-                    </Grid>
-                    <AssetPropertyElement title={t('tune.publications')} value={assetData.publications} />
-                    <AssetPropertyElement title={t('tune.catalogue')} value={assetData.catalogue} />
 
-                </Grid>
 
                 <Divider />
                 {AuthService.CanAccess(['editor', 'admin']) &&
@@ -145,14 +139,22 @@ const TuneView = () => {
                     }
                 </Grid>
                 
-                <AssetPropertyTableElement label={t(ExternalReferenceModel.table.label)} model={ExternalReferenceModel.table} data={assetData['externalReferences']} />
+
                 <AssetPropertyTableElement label={t(TunePersonsModel.table.label)} model={TunePersonsModel.table} data={assetData['tunesPersonsRoles']} />
                 <AssetPropertyTableElement label={t(TunePlaceModel.table.label)} model={TunePlaceModel.table} data={assetData['tunePlaces']} />
-                <AssetPropertyTableElement label={t(TunePerformancesModel.table.label)} model={TunePerformancesModel.table} data={assetData['tunePerformances']} />
                 <AssetPropertyTableElement label={t(TuneSongsModel.table.label)} model={TuneSongsModel.table} data={assetData['tuneSongs']} />
+                <AssetPropertyTableElement label={t(TunePerformancesModel.table.label)} model={TunePerformancesModel.table} data={assetData['tunePerformances']} />
                 <AssetPropertyTableElement label={t(TuneEncodingModel.table.label)} model={TuneEncodingModel.table} data={assetData['tuneEncodings']} />
                 <AssetPropertyTableElement label={t(MusicalCharacteristicsModel.table.label)} model={MusicalCharacteristicsModel.table} data={assetData['musicalCharacteristics']} />
+                <Divider />
+                <Grid item container direction='row'>
+                    <Grid item xs={2}>
+                        <Typography variant='h5'>{t('tune.archive')}</Typography>
+                    </Grid>
+                    <AssetPropertyElement title={t('tune.publications')} value={assetData.publications} />
+                    <AssetPropertyElement title={t('tune.catalogue')} value={assetData.catalogue} />
 
+                </Grid>
             </Grid>
         </Grid>
     );

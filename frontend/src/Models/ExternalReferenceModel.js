@@ -12,5 +12,12 @@ export const ExternalReferenceModel = ModelService.GenerateDefaults({
         fields: [
             { field: 'value', headerName: 'reference.pid' },
         ]
+    },
+    edit: {
+        fields: [
+            { field: 'description', headerName: 'reference.description' },
+            { field: 'value', headerName: 'reference.url' }
+            
+        ]
     }
 });

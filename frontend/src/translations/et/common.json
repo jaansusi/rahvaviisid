@@ -39,7 +39,7 @@
         "surname": "Perekonnanimi",
         "nickname": "Hüüdnimi",
         "birthYear": "Sünniaasta",
-        "deathYear": "Surma-aasta",
+        "deathYear": "Surmaaasta",
         "sex": "Sugu",
         "role": "Isiku roll"
     },
@@ -77,7 +77,7 @@
         "height": "Kõrgus",
         "bar": "Võti",
         "verification": "Kontrollimine",
-        "archive": "Arhiivi tunnused",
+        "archive": "Lisaviited",
         "rhythmType": "Rütmitüüp",
         "location": "Asukoht",
         "duplicate": "Kopeeri",

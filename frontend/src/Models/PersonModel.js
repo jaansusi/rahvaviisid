@@ -18,6 +18,11 @@ export const PersonModel = ModelService.GenerateDefaults({
             { field: 'pid', headerName: 'person.pid' },
             { field: 'givenName', headerName: 'person.givenName' },
             { field: 'surname', headerName: 'person.surname' },
+            { field: 'nickname', headerName: 'person.nickname' },
+            { field: 'birthYear', type: 'number', headerName: 'person.birthYear' },
+            { field: 'deathYear', type: 'number', headerName: 'person.deathYear' },
+            { field: 'sexId', type: 'dropdown', apiPath: 'sexes', headerName: 'person.sex' },
+            { field: 'remarks', headerName: 'common.remarks' },
             { field: 'created', headerName: 'date.created' },
             { field: 'modified', headerName: 'date.modified' }
         ]
