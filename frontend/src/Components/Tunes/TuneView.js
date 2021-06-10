@@ -70,7 +70,6 @@ const TuneView = () => {
 
                 <Grid item container direction='row'>
                     <Grid item xs={2}>
-                        <Typography variant='h5'>{t('tune.location')}</Typography>
                     </Grid>
                     <AssetPropertyElement title={t('tune.nation')} value={assetData.nations?.title} />
                     <AssetPropertyElement title={t('tune.language')} value={assetData.languages?.title} />
