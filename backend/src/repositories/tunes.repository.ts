@@ -57,8 +57,8 @@ export class TunesRepository extends AuditRepositoryMixin<
     @repository.getter('TuneSongsRepository') protected tuneSongsRepositoryGetter: Getter<TuneSongsRepository>, 
     @repository.getter('TuneEncodingsRepository') protected tuneEncodingsRepositoryGetter: Getter<TuneEncodingsRepository>,
     @repository.getter('ExternalReferencesRepository') protected externalReferencesRepositoryGetter: Getter<ExternalReferencesRepository>,
-    @repository.getter('AuditLogRepository')
-    public getAuditLogRepository: Getter<AuditLogRepository>, @repository.getter('MusicalCharacteristicsRepository') protected musicalCharacteristicsRepositoryGetter: Getter<MusicalCharacteristicsRepository>,
+    @repository.getter('AuditLogRepository') public getAuditLogRepository: Getter<AuditLogRepository>, 
+    @repository.getter('MusicalCharacteristicsRepository') protected musicalCharacteristicsRepositoryGetter: Getter<MusicalCharacteristicsRepository>,
     ) {
     super(Tunes, dataSource);
     this.musicalCharacteristics = this.createHasManyRepositoryFactoryFor('musicalCharacteristics', musicalCharacteristicsRepositoryGetter,);

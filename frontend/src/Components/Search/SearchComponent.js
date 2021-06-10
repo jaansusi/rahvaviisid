@@ -3,12 +3,16 @@ import React, { useState, useEffect } from 'react';
 import SearchBar from './SearchBar';
 import SearchResults from './SearchResults';
 import config from '../../config';
-import { Grid } from '@material-ui/core';
+import { Button, Grid } from '@material-ui/core';
+import { useTranslation } from 'react-i18next';
+import PageComponent from '../PageComponent';
 
 const SearchComponent = (props) => {
+    const { t } = useTranslation('common');
     let [input, setInput] = useState('');
     let [searchResultsDefault, setSearchResultsDefault] = useState([]);
     let [searchResults, setSearchResults] = useState([]);
+    let [isHelpOpen, setIsHelpOpen] = useState(false);
 
     const fetchData = async () => {
         axios
@@ -45,12 +49,23 @@ const SearchComponent = (props) => {
 
     return (
         <Grid item xs={11} container spacing={2} direction='column'>
-            <Grid item>
-                <SearchBar
-                    keyword={input}
-                    setKeyword={updateInput}
-                />
+            <Grid item container direction='row' alignItems='center' justify='space-between'>
+                <Grid item>
+                    <SearchBar
+                        keyword={input}
+                        setKeyword={updateInput}
+                    />
+                </Grid>
+                <Grid item>
+                    <Button onClick={() => setIsHelpOpen(!isHelpOpen)} variant='outlined'>{t('search.help')}</Button>
+                </Grid>
             </Grid>
+            {
+                isHelpOpen &&
+                <Grid item>
+                    <PageComponent name='searchHelp' />
+                </Grid>
+            }
             <Grid item>
                 <SearchResults
                     showAll={input.length > 2}

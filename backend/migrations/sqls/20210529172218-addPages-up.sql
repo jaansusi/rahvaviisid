@@ -5,4 +5,5 @@ CREATE TABLE folk_tune.pages
     content text
 );
 
-INSERT INTO folk_tune.pages (id, name, content) VALUES (1, 'home', 'Kodu');
+INSERT INTO folk_tune.pages (name, content) VALUES ('home', 'Kodu');
+INSERT INTO folk_tune.pages (name, content) VALUES ('searchHelp', 'Otsingu abi');

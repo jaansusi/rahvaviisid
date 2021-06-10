@@ -172,7 +172,8 @@
     },
     "search": {
         "referenceOnly": "Otsi ainult viidete järgi",
-        "general": "Otsingu märksõna"
+        "general": "Otsingu märksõna",
+        "help": "Otsingu abi"
     },
     "massMod": {
         "start": "Alusta massimuutmist",
