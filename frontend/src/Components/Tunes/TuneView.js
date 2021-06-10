@@ -83,16 +83,21 @@ const TuneView = () => {
 
                 <Divider />
                 {AuthService.CanAccess(['editor', 'admin']) &&
-                    <Grid item container direction='row'>
-                        <Grid item xs={2}>
-                            <Typography variant='h5'>{t('tune.verification')}</Typography>
+                    <>
+                        <Grid item container direction='row'>
+                            <Grid item xs={2}>
+                                <Typography variant='h5'>{t('tune.verification')}</Typography>
+                            </Grid>
+                            <AssetPropertyElement title={t('tune.verified')} value={assetData.verified} />
+                            <AssetPropertyElement title={t('tune.verifiedBy')} value={assetData.verifiedBy} />
+                            <AssetPropertyDateElement title={t('date.created')} value={assetData.created} />
+                            <AssetPropertyDateElement title={t('date.modified')} value={assetData.modified} />
                         </Grid>
-                        <AssetPropertyElement title={t('tune.verified')} value={assetData.verified} />
-                        <AssetPropertyElement title={t('tune.verifiedBy')} value={assetData.verifiedBy} />
-                        <AssetPropertyDateElement title={t('date.created')} value={assetData.created} />
-                        <AssetPropertyDateElement title={t('date.modified')} value={assetData.modified} />
-                        <AssetPropertyElement title={t('tune.remarks')} value={assetData.remarks} size={4} />
-                    </Grid>
+                        <Grid item container direction='row'>
+                            <Grid item xs={2}></Grid>
+                            <AssetPropertyElement title={t('tune.remarks')} value={assetData.remarks} size={8} />
+                        </Grid>
+                    </>
                 }
 
 
@@ -162,7 +167,7 @@ const TuneView = () => {
 
                 </Grid>
             </Grid>
-        </Grid>
+        </Grid >
     );
 };
 
