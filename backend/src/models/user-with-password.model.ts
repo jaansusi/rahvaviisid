@@ -4,10 +4,10 @@
 // License text available at https://opensource.org/licenses/MIT
 
 import {model, property} from '@loopback/repository';
-import {User} from './user.model';
+import {Users} from './users.model';
 
 @model()
-export class UserWithPassword extends User {
+export class UserWithPassword extends Users {
   @property({
     type: 'string',
     required: true,

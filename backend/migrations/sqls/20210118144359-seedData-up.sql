@@ -6,13 +6,6 @@ VALUES
     ('ei ole võimalik määratleda')
 ;
 
-INSERT INTO folk_tune.user_role_types (title) 
-VALUES 
-    ('administraator'),
-    ('toimetaja'),
-    ('tavakasutaja')
-;
-
 INSERT INTO folk_tune.tune_states (title) 
 VALUES 
     ('sisestatud'),
@@ -975,7 +968,7 @@ VALUES
 ;
   
 INSERT INTO folk_tune.song_genres (parent_id, title, description, lft, rght)
-VALUES 
+VALUES
     (NULL, 'hääl', NULL, 1, 12),
     (1, 'hääl_muu', NULL, 2, 3),
     (1, 'linnu', NULL, 4, 5),
@@ -3055,8 +3048,12 @@ VALUES
 ;
 
 
-INSERT INTO folk_tune.users (id, person_id, user_role_type_id, username, password, is_active)
-VALUES
-    (1, 1, 1, 'taivelohmuse@netscape.net', '$2y$10$4EuLXgOaL5O08OFPjb2.cedd3hOjMJcyOiXM7vm.KiZKKg..76rBi', TRUE),
-    (2, 2, 3, 'helen', '$2y$10$BpEAqZucmoQRfqXLBEHSZOrZHaaz23jvgybJT4AZ.oz8ngSK4a1nC', FALSE)
+INSERT INTO folk_tune.users(id, email, roles, firstname, lastname) VALUES 
+('ad7e1b8a-9af9-4df5-ac80-88f3120b0cfe', 'admin@ekm.ee', ARRAY['admin'], 'Admin', 'Istrator'),
+('31554769-b23b-4e3a-b2be-7320c0b3f523', 'taivelohmuse@netscape.net', ARRAY['admin'], 'Taive', 'Lõhmuse'),
+('2a70be90-2c43-4d25-8a3f-4a35de35b0de', 'helen@ekm.ee', ARRAY['admin'], 'Helen', '')
+;
+
+INSERT INTO folk_tune.user_credentials(password, userid)
+(SELECT '$2a$10$NkXNEbcUVbW6jopSkoVvIeTgbX8acFD/BRMBUAFS3FP4lxNNaXnxS', 'ad7e1b8a-9af9-4df5-ac80-88f3120b0cfe')
 ;

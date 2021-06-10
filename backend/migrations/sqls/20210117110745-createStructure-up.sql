@@ -19,21 +19,6 @@ CREATE DOMAIN folk_tune.D_reference varchar(60)
     CONSTRAINT CK_reference_not_empty_string CHECK (VALUE <> '')
 ;
 
-CREATE DOMAIN folk_tune.D_event_action varchar(10) NOT NULL
-    CONSTRAINT CK_event_action_not_only_whitespace CHECK (VALUE !~ '^[[:space:]]+$')
-    CONSTRAINT CK_event_action_not_empty_string CHECK (VALUE <> '')
-;
-
-CREATE DOMAIN folk_tune.D_event_description text NOT NULL
-    CONSTRAINT CK_event_description_not_only_whitespace CHECK (VALUE !~ '^[[:space:]]+$')
-    CONSTRAINT CK_event_description_not_empty_string CHECK (VALUE <> '')
-;
-
-CREATE DOMAIN folk_tune.D_username varchar(40) NOT NULL
-    CONSTRAINT CK_username_no_whitespace CHECK (VALUE !~ '^.*[[:space:]].*$')
-    CONSTRAINT CK_password_not_empty_string CHECK (VALUE <> '')
-;
-
 CREATE DOMAIN folk_tune.D_password varchar(60) NOT NULL
     CONSTRAINT CK_password_not_empty_string CHECK (VALUE <> '')
 ;
@@ -105,44 +90,48 @@ CREATE INDEX IX_persons_sexes ON folk_tune.persons (sex_id)
 CREATE UNIQUE INDEX IX_persons_pid ON folk_tune.persons (UPPER(pid))
 ;
 
-CREATE TABLE folk_tune.user_role_types
-(
-    id smallserial NOT NULL,
-    title folk_tune.D_title,
-    description folk_tune.D_description,
-    is_active boolean NOT NULL DEFAULT TRUE,
-    created folk_tune.D_timestamp,
-    modified folk_tune.D_timestamp,
-    CONSTRAINT PK_user_role_types PRIMARY KEY (id),
-    CONSTRAINT CK_user_role_types_modified_no_earlier_than_created CHECK (modified >= created)
-)
-;
-
-CREATE UNIQUE INDEX IX_user_role_types_title ON folk_tune.user_role_types (UPPER(title))
-;
-
 CREATE TABLE folk_tune.users
 (
-    id serial NOT NULL,
-    person_id integer NOT NULL,
-    user_role_type_id smallint NOT NULL,
-    username folk_tune.D_username,
-    password folk_tune.D_password,
+    id uuid NOT NULL DEFAULT uuid_generate_v4(),
+    realm text,
+    email text UNIQUE NOT NULL,
     is_active boolean NOT NULL DEFAULT TRUE,
+    "emailverified" boolean,
+    "verificationtoken" text,
+    firstname text,
+    lastname text,
+    roles text[],
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
     CONSTRAINT PK_users PRIMARY KEY (id),
-    CONSTRAINT UQ_users_person_id UNIQUE (person_id),
-    CONSTRAINT FK_users_persons FOREIGN KEY (person_id) REFERENCES folk_tune.persons (id),
-    CONSTRAINT FK_users_user_role_types FOREIGN KEY (user_role_type_id) REFERENCES folk_tune.user_role_types (id),
     CONSTRAINT CK_users_modified_no_earlier_than_created CHECK (modified >= created)
 ) WITH (fillfactor = 90)
 ;
 
-CREATE INDEX IX_users_user_role_types ON folk_tune.users (user_role_type_id)
+CREATE TABLE folk_tune."user_credentials"
+(
+    id uuid NOT NULL PRIMARY KEY DEFAULT uuid_generate_v4(),
+    password text NOT NULL,
+    userid uuid UNIQUE,
+    CONSTRAINT fk_user_credentials_user FOREIGN KEY (userid)
+        REFERENCES folk_tune.users (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
 ;
 
-CREATE UNIQUE INDEX IX_users_username ON folk_tune.users (UPPER(username))
+CREATE TABLE folk_tune."refresh_token"
+(
+    id uuid NOT NULL PRIMARY KEY DEFAULT uuid_generate_v4(),
+    userid uuid NOT NULL,
+    refreshToken text,
+    CONSTRAINT fk_refresh_token_user FOREIGN KEY (userid)
+        REFERENCES folk_tune.users (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
 ;
 
 CREATE TABLE folk_tune.tune_states
@@ -223,7 +212,7 @@ CREATE TABLE folk_tune.tunes
     country_id smallint NOT NULL DEFAULT 1,
     publications folk_tune.D_description,
     remarks folk_tune.D_description,
-    verified_by integer,
+    verified_by uuid,
     verified date,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
@@ -269,61 +258,6 @@ CREATE UNIQUE INDEX IX_tunes_references ON folk_tune.tunes
     COALESCE(sound_reference, 'NULL'),
     COALESCE(video_reference, 'NULL')
 )
-;
-
-CREATE TABLE folk_tune.tune_events
-(
-    id serial NOT NULL,
-    tune_id integer NOT NULL,
-    event_object folk_tune.D_title,
-    event_object_ident integer NOT NULL,
-    event_action folk_tune.D_event_action,
-    description folk_tune.D_event_description,
-    user_id integer NOT NULL,
-    created folk_tune.D_timestamp,
-    CONSTRAINT PK_tune_events PRIMARY KEY (id),
-    CONSTRAINT FK_tune_events_users FOREIGN KEY (user_id) REFERENCES folk_tune.users (id)
-)
-;
-
-CREATE INDEX IX_tune_events_tunes ON folk_tune.tune_events (tune_id)
-;
-
-CREATE INDEX IX_tune_events_users ON folk_tune.tune_events (user_id)
-;
-
-CREATE TABLE folk_tune.classifier_events
-(
-    id serial NOT NULL,
-    event_object folk_tune.D_title,
-    event_object_ident integer NOT NULL,
-    event_action folk_tune.D_event_action,
-    description folk_tune.D_event_description,
-    user_id integer NOT NULL,
-    created folk_tune.D_timestamp,
-    CONSTRAINT PK_classifier_events PRIMARY KEY (id),
-    CONSTRAINT FK_classifier_events_users FOREIGN KEY (user_id) REFERENCES folk_tune.users (id)
-)
-;
-
-CREATE INDEX IX_classifier_events_users ON folk_tune.classifier_events (user_id)
-;
-
-CREATE TABLE folk_tune.person_events
-(
-    id serial NOT NULL,
-    event_object folk_tune.D_title,
-    event_object_ident integer NOT NULL,
-    event_action folk_tune.D_event_action,
-    description folk_tune.D_event_description,
-    user_id integer NOT NULL,
-    created folk_tune.D_timestamp,
-    CONSTRAINT PK_person_events PRIMARY KEY (id),
-    CONSTRAINT FK_person_events_users FOREIGN KEY (user_id) REFERENCES folk_tune.users (id)
-)
-;
-
-CREATE INDEX IX_person_events_users ON folk_tune.person_events (user_id)
 ;
 
 CREATE TABLE folk_tune.tune_place_types
@@ -1107,7 +1041,7 @@ CREATE INDEX IX_tune_encodings_measures ON folk_tune.tune_encodings (measure_id)
 
 CREATE OR REPLACE FUNCTION folk_tune.F_change_tune_state() RETURNS TRIGGER AS $$
     DECLARE
-        V_verified_by integer;
+        V_verified_by uuid;
     BEGIN
         V_verified_by := NEW.verified_by;
         IF (V_verified_by) IS NOT NULL THEN
@@ -1129,37 +1063,4 @@ CREATE TRIGGER TR_tunes_change_tune_state
     AFTER INSERT OR UPDATE OF verified_by ON folk_tune.tunes
     FOR EACH ROW 
     EXECUTE PROCEDURE folk_tune.F_change_tune_state()
-;
-
-CREATE OR REPLACE FUNCTION folk_tune.F_change_user() RETURNS TRIGGER AS $$
-    DECLARE
-        V_count_acitve_administrator integer;
-    BEGIN
-        SELECT 
-            count(id) into V_count_acitve_administrator 
-        FROM folk_tune.users 
-        WHERE
-            user_role_type_id = 1 
-            AND is_active = TRUE 
-            AND id <> OLD.id;
-        IF (V_count_acitve_administrator = 0) THEN
-            RAISE EXCEPTION 'constraint "ck_user_cannot_change"';
-        ELSE
-            RETURN NEW;
-        END IF;
-        RETURN NULL;
-    END;
-$$ LANGUAGE plpgsql SECURITY DEFINER
-SET search_path = folk_tune, public, pg_temp
-;
-
-COMMENT ON FUNCTION folk_tune.F_change_user() 
-    IS 'Checks that there is at least one active administrator role after changing a user.'
-;
-
-CREATE TRIGGER TR_users_change_user
-    BEFORE UPDATE OF user_role_type_id, is_active ON folk_tune.users
-    FOR EACH ROW 
-    WHEN (OLD.user_role_type_id = 1 AND (NEW.user_role_type_id <> 1 OR NEW.is_active = FALSE)) 
-    EXECUTE PROCEDURE folk_tune.F_change_user()
 ;

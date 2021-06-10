@@ -1,5 +1,5 @@
 export * from './tune-melodies.controller';
-export * from './user.controller';
+export * from './users.controller';
 export * from './user-role-types.controller';
 export * from './persons.controller';
 export * from './tunes.controller';
@@ -33,7 +33,7 @@ export * from './classificators/pitches.controller';
 export * from './classificators/measures.controller';
 export * from './classificators/tune-places.controller';
 export * from './audit.controller';
-export * from './user.controller';
+export * from './users.controller';
 export * from './musical-characteristics.controller';
 export * from './tunes-musical-characteristics.controller';
 export * from './sexes-persons.controller';

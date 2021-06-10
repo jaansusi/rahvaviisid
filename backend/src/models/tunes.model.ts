@@ -10,8 +10,8 @@ import {TunesPersonsRoles} from './tunes-persons-roles.model';
 import {TuneSongs} from './tune-songs.model';
 import {TuneEncodings} from './tune-encodings.model';
 import { ExternalReferences } from './external-references.model';
-import { Users } from './users.model';
 import {MusicalCharacteristics} from './musical-characteristics.model';
+import { Users } from './users.model';
 
 @model({
   settings: {idInjection: false, postgresql: {schema: 'folk_tune', table: 'tunes'}}
@@ -114,11 +114,11 @@ export class Tunes extends Entity {
   remarks?: string;
 
   @property({
-    type: 'number',
-    scale: 0,
-    postgresql: {columnName: 'verified_by', dataType: 'integer', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'YES'},
+    type: 'string',
+    required: false,
+    postgresql: {columnName: 'verified_by', dataType: 'uuid', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'YES'},
   })
-  verifiedBy?: number;
+  verifiedBy?: string;
 
   @property({
     type: 'date',

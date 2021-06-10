@@ -29,7 +29,7 @@
     "docker:run": "docker run -p 3000:3000 -d jaansusi/ekm-viisid-api",
     "docker:release": "npm run docker:build && docker push jaansusi/ekm-viisid-api",
     "dev:start": "npx cross-env DB_HOST=localhost DB_PORT=5432 DB_USERNAME=local_dev_username DB_DATABASE=kivi DB_PASSWORD=local_dev_password npm start",
-    "devdb:create": "npx cross-env DB_HOST=localhost DB_PORT=5432 DB_USERNAME=local_dev_username DB_DATABASE=kivi DB_PASSWORD=local_dev_password npx db-migrate db:create kivi --env createDB --config ./migrations/database.json",
+    "devdb:create": "npx cross-env DB_HOST=localhost DB_PORT=5432 DB_USERNAME=postgres DB_PASSWORD=a npx db-migrate db:create kivi --env createDB --config ./migrations/database.json",
     "devdb:drop": "npx cross-env DB_HOST=localhost DB_PORT=5432 DB_USERNAME=local_dev_username DB_DATABASE=kivi DB_PASSWORD=local_dev_password npx db-migrate db:drop kivi --env createDB --config ./migrations/database.json",
     "devdb:migrate": "npx cross-env DB_HOST=localhost DB_PORT=5432 DB_USERNAME=local_dev_username DB_DATABASE=kivi DB_PASSWORD=local_dev_password npx db-migrate up --env migrate --config ./migrations/database.json",
     "database:create": "npx db-migrate db:create kivi --env createDB --config ./migrations/database.json",

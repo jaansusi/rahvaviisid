@@ -7,27 +7,27 @@ import {UserService} from '@loopback/authentication';
 import {repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import {securityId, UserProfile} from '@loopback/security';
-import {User, UserWithPassword} from '../models';
-import {Credentials, UserRepository} from '../repositories';
+import {Users, UserWithPassword} from '../models';
+import {Credentials, UsersRepository} from '../repositories';
 import _ from 'lodash';
 import {compare} from 'bcryptjs';
 
-export class UserManagementService implements UserService<User, Credentials> {
+export class UserManagementService implements UserService<Users, Credentials> {
   constructor(
-    @repository(UserRepository)
-    public userRepository: UserRepository,
+    @repository(UsersRepository)
+    public usersRepository: UsersRepository,
   ) {}
 
-  async verifyCredentials(credentials: Credentials): Promise<User> {
+  async verifyCredentials(credentials: Credentials): Promise<Users> {
     const invalidCredentialsError = 'Invalid email or password.';
-    const foundUser = await this.userRepository.findOne({
+    const foundUser = await this.usersRepository.findOne({
       where: {email: credentials.email},
     });
     if (!foundUser) {
       throw new HttpErrors.Unauthorized(invalidCredentialsError);
     }
 
-    const credentialsFound = await this.userRepository.findCredentials(
+    const credentialsFound = await this.usersRepository.findCredentials(
       foundUser.id,
     );
     if (!credentialsFound) {
@@ -45,7 +45,7 @@ export class UserManagementService implements UserService<User, Credentials> {
     return foundUser;
   }
 
-  convertToUserProfile(user: User): UserProfile {
+  convertToUserProfile(user: Users): UserProfile {
     // since first name and lastName are optional, no error is thrown if not provided
     let userName = '';
     if (user.firstName) userName = `${user.firstName}`;

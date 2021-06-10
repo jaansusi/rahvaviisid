@@ -26,8 +26,8 @@ import {
   response,
   SchemaObject,
 } from '@loopback/rest';
-import {User} from '../models';
-import {UserRepository} from '../repositories';
+import {Users} from '../models';
+import {UsersRepository} from '../repositories';
 import {
   UserManagementService,
   JWTService,
@@ -40,7 +40,7 @@ import _ from 'lodash';
 import {authorize} from '@loopback/authorization';
 
 @model()
-export class NewUserRequest extends User {
+export class NewUserRequest extends Users {
   @property({
     type: 'string',
     required: true,
@@ -79,7 +79,7 @@ export const CredentialsRequestBody = {
   allowedRoles: ['admin'],
   voters: [basicAuthorization],
 })
-export class UserController {
+export class UsersController {
   constructor(
     @inject(TokenServiceBindings.TOKEN_SERVICE)
     public jwtService: JWTService,
@@ -87,7 +87,7 @@ export class UserController {
     public userService: UserManagementService,
     @inject(SecurityBindings.USER, {optional: true})
     public user: UserProfile,
-    @repository(UserRepository) protected userRepository: UserRepository,
+    @repository(UsersRepository) protected usersRepository: UsersRepository,
   ) {}
 
   @authenticate.skip()
@@ -132,7 +132,7 @@ export class UserController {
         content: {
           'application/json': {
             schema: {
-              'x-ts-type': User,
+              'x-ts-type': Users,
             },
           },
         },
@@ -150,12 +150,12 @@ export class UserController {
       },
     })
     newUserRequest: NewUserRequest,
-  ): Promise<User> {
+  ): Promise<Users> {
     const password = await hash(newUserRequest.password, await genSalt());
-    const savedUser = await this.userRepository.create(
+    const savedUser = await this.usersRepository.create(
       _.omit(newUserRequest, 'password'),
     );
-    await this.userRepository.userCredentials(savedUser.id).create({password});
+    await this.usersRepository.userCredentials(savedUser.id).create({password});
     return savedUser;
   }
 
@@ -164,8 +164,8 @@ export class UserController {
     description: 'User model count',
     content: {'application/json': {schema: CountSchema}},
   })
-  async count(@param.where(User) where?: Where<User>): Promise<Count> {
-    return this.userRepository.count(where);
+  async count(@param.where(Users) where?: Where<Users>): Promise<Count> {
+    return this.usersRepository.count(where);
   }
 
   @get('/users')
@@ -175,13 +175,13 @@ export class UserController {
       'application/json': {
         schema: {
           type: 'array',
-          items: getModelSchemaRef(User, {includeRelations: true}),
+          items: getModelSchemaRef(Users, {includeRelations: true}),
         },
       },
     },
   })
-  async find(@param.filter(User) filter?: Filter<User>): Promise<User[]> {
-    return this.userRepository.find(filter);
+  async find(@param.filter(Users) filter?: Filter<Users>): Promise<Users[]> {
+    return this.usersRepository.find(filter);
   }
 
   @get('/users/{id}')
@@ -189,50 +189,40 @@ export class UserController {
     description: 'User model instance',
     content: {
       'application/json': {
-        schema: getModelSchemaRef(User, {includeRelations: true}),
+        schema: getModelSchemaRef(Users, {includeRelations: true}),
       },
     },
   })
   async findById(
     @param.path.string('id') id: string,
-    @param.filter(User, {exclude: 'where'}) filter?: FilterExcludingWhere<User>,
-  ): Promise<User> {
-    return this.userRepository.findById(id, filter);
+    @param.filter(Users, {exclude: 'where'}) filter?: FilterExcludingWhere<Users>,
+  ): Promise<Users> {
+    return this.usersRepository.findById(id, filter);
   }
 
   @patch('/users/{id}')
   @response(204, {
     description: 'User PATCH success',
   })
-  @authenticate('jwt')
-  @authorize({
-    allowedRoles: ['admin', 'editor'],
-    voters: [basicAuthorization],
-  })
   async updateById(
     @param.path.string('id') id: string,
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(User, {partial: true}),
+          schema: getModelSchemaRef(Users, {partial: true}),
         },
       },
     })
-    user: User,
+    user: Users,
   ): Promise<void> {
-    await this.userRepository.updateById(id, user);
+    await this.usersRepository.updateById(id, user);
   }
 
   @del('/users/{id}')
   @response(204, {
     description: 'User DELETE success',
   })
-  @authenticate('jwt')
-  @authorize({
-    allowedRoles: ['admin', 'editor'],
-    voters: [basicAuthorization],
-  })
   async deleteById(@param.path.string('id') id: string): Promise<void> {
-    await this.userRepository.deleteById(id);
+    await this.usersRepository.deleteById(id);
   }
 }

@@ -1,84 +1,40 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, hasOne, model, property} from '@loopback/repository';
+import { User as OrigUser, UserCredentials } from '@loopback/authentication-jwt';
 
 @model({
   settings: {idInjection: false, postgresql: {schema: 'folk_tune', table: 'users'}}
 })
-export class Users extends Entity {
-  @property({
-    type: 'number',
-    required: false,
-    scale: 0,
-    id: 1,
-    postgresql: {columnName: 'id', dataType: 'integer', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'NO'},
-  })
-  id: number;
+export class Users extends OrigUser {
 
-  @property({
-    type: 'number',
-    required: true,
-    scale: 0,
-    postgresql: {columnName: 'person_id', dataType: 'integer', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'NO'},
-  })
-  personId: number;
-
-  @property({
-    type: 'number',
-    required: true,
-    scale: 0,
-    postgresql: {columnName: 'user_role_type_id', dataType: 'smallint', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'NO'},
-  })
-  userRoleTypeId: number;
-
-  @property({
-    type: 'string',
-    required: true,
-    length: 40,
-    postgresql: {columnName: 'username', dataType: 'character varying', dataLength: 40, dataPrecision: null, dataScale: null, nullable: 'NO'},
-  })
-  username: string;
-
-  @property({
-    type: 'string',
-    required: true,
-    length: 60,
-    postgresql: {columnName: 'password', dataType: 'character varying', dataLength: 60, dataPrecision: null, dataScale: null, nullable: 'NO'},
-  })
-  password: string;
-
-  @property({
-    type: 'boolean',
-    required: true,
-    postgresql: {columnName: 'is_active', dataType: 'boolean', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'NO'},
-  })
-  isActive: boolean;
-
-  @property({
-    type: 'date',
-    required: false,
-    postgresql: {columnName: 'created', dataType: 'timestamp without time zone', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'NO'},
-  })
-  created: string;
-
-  @property({
-    type: 'date',
-    required: false,
-    postgresql: {columnName: 'modified', dataType: 'timestamp without time zone', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'NO'},
-  })
-  modified: string;
-
-  // Define well-known properties here
-
-  // Indexer property to allow additional data
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [prop: string]: any;
+  @property.array(String, {
+    postgresql: {columnName: 'roles', dataType: 'varchar[]', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'YES'},
+  })
+  roles?: string[];
+
+  @property({
+    type: 'string',
+    required: false,
+    length: 40,
+    postgresql: {columnName: 'firstname', dataType: 'character varying', dataLength: 40, dataPrecision: null, dataScale: null, nullable: 'YES'},
+  })
+  firstName?: string;
+
+  @property({
+    type: 'string',
+    required: false,
+    length: 40,
+    postgresql: {columnName: 'lastname', dataType: 'character varying', dataLength: 40, dataPrecision: null, dataScale: null, nullable: 'YES'},
+  })
+  lastName?: string;
 
   constructor(data?: Partial<Users>) {
     super(data);
   }
 }
 
-export interface UsersRelations {
+export interface UserRelations {
   // describe navigational properties here
 }
 
-export type UsersWithRelations = Users & UsersRelations;
+export type UserWithRelations = Users & UserRelations;
