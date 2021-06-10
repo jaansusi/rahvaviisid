@@ -6,8 +6,9 @@ import config from '../config';
 import EditDataFragment from './Fragments/EditDataFragment';
 import axios from 'axios';
 import Actions from './Buttons/Actions';
-import { DataService } from '../Services';  
+import { DataService } from '../Services';
 import { toast } from 'react-toastify';
+import BarLoader from 'react-spinners/BarLoader';
 import './EditComponent.css';
 
 const EditComponent = ({ model, newItem }) => {
@@ -28,31 +29,32 @@ const EditComponent = ({ model, newItem }) => {
     );
 
     let [submitting, setSubmitting] = useState(false);
-    let [updatedModel, setUpdatedModel ] = useState(model);
+    let [updatedModel, setUpdatedModel] = useState(model);
+    let [isLoading, setIsLoading] = useState(true);
     useEffect(() => {
         let retrievedValues = [];
         let getDropdowns = (currentModel) => {
             return currentModel.fields
-            .map((field, i) => {
-                if (field.type === 'dropdown' && !retrievedValues.includes(field.apiPath)) {
-                    retrievedValues.push(field.apiPath);
-                    return axios
-                        .get(config.apiUrl + '/' + field.apiPath)
-                        .then((result) => {
-                            // Set the "values" field of the model as the result, this way, the choice input is passed on with the model
-                            return {name: field.field, data: result.data};
-                        });
-                        
-                }
-                let selection = [];
-                if (field.edit) {
-                    selection.push(getDropdowns(field.edit));
-                }
-                if (field.nested) {
-                    selection.push(getDropdowns(field.nested));
-                }
-                return selection !== [] ? selection : undefined;
-            });
+                .map((field, i) => {
+                    if (field.type === 'dropdown' && !retrievedValues.includes(field.apiPath)) {
+                        retrievedValues.push(field.apiPath);
+                        return axios
+                            .get(config.apiUrl + '/' + field.apiPath)
+                            .then((result) => {
+                                // Set the "values" field of the model as the result, this way, the choice input is passed on with the model
+                                return { name: field.field, data: result.data };
+                            });
+
+                    }
+                    let selection = [];
+                    if (field.edit) {
+                        selection.push(getDropdowns(field.edit));
+                    }
+                    if (field.nested) {
+                        selection.push(getDropdowns(field.nested));
+                    }
+                    return selection !== [] ? selection : undefined;
+                });
         }
         let modelPromises = getDropdowns(model).flat(100);
         Promise.all(modelPromises).then((x) => {
@@ -67,6 +69,9 @@ const EditComponent = ({ model, newItem }) => {
                     .then((result) => {
                         // Start the model mapping
                         DataService.MapResponseToModel(result.data, model, setElementData);
+                    })
+                    .then(() => {
+                        setIsLoading(false);
                     });
             }
 
@@ -147,7 +152,7 @@ const EditComponent = ({ model, newItem }) => {
                 .then((resData) => {
                     // console.log(resData);
                     toast.success(t('notification.saved'));
-                    window.scrollTo({top: 0, behavior: 'smooth'});
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
                 })
                 .catch((error) => {
                     console.log(error);
@@ -165,6 +170,13 @@ const EditComponent = ({ model, newItem }) => {
             value: type === 'number' ? parseInt(value, 10) : value,
         });
     };
+
+    if (isLoading)
+        return (
+            <Grid item>
+                <BarLoader css='display: block; margin: 50px auto;' />
+            </Grid>
+        );
 
     return (
         <>
@@ -193,18 +205,18 @@ const EditComponent = ({ model, newItem }) => {
 
 const recurseModelValues = (currentModel, options) => {
     currentModel.fields = currentModel.fields
-    .map((field, i) => {
-        if (field.nested) {
-            field.nested = recurseModelValues(field.nested, options);
-        }
-        if (field.edit) {
-            field.edit = recurseModelValues(field.edit, options);
-        }
-        if (field.type === 'dropdown') {
-            field.values = options.filter((y) => y.name === field.field)[0].data;
-        }
-        return field;
-    });
+        .map((field, i) => {
+            if (field.nested) {
+                field.nested = recurseModelValues(field.nested, options);
+            }
+            if (field.edit) {
+                field.edit = recurseModelValues(field.edit, options);
+            }
+            if (field.type === 'dropdown') {
+                field.values = options.filter((y) => y.name === field.field)[0].data;
+            }
+            return field;
+        });
     return currentModel;
 }
 

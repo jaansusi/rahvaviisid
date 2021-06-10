@@ -2,7 +2,7 @@ import axios from "axios";
 import config from "../config";
 
 export const DataService = {
-    RequestAsset(model, id, setFormData) {
+    RequestAsset(model, id, setFormData, setIsLoading) {
         axios
             .get(config.apiUrl + '/' + model.apiPath + '/' + id + '?filter=' + encodeURIComponent(JSON.stringify(this.CreateIncludeFilter(model))))
             .then((result) => {
@@ -21,6 +21,8 @@ export const DataService = {
                         return undefined;
                     })
                     .filter((x) => x !== undefined);
+                if (setIsLoading)
+                    setIsLoading(false);
             });
     },
 
@@ -108,7 +110,7 @@ export const DataService = {
                     value = this.CreateEmptyDataObject(elem.nested.fields);
                 if (elem.edit !== undefined)
                     value = this.CreateEmptyDataObject(elem.edit.fields);
-    
+
                 // If the model field has a type defined, assign it here.
                 switch (elem.type) {
                     case 'boolean':
@@ -141,6 +143,6 @@ export const DataService = {
     ParseDate(date) {
         if (!date)
             return '';
-        return new Intl.DateTimeFormat('et-EE', {year: 'numeric', month: '2-digit',day: '2-digit', hour: '2-digit', minute: '2-digit'}).format(Date.parse(date));
+        return new Intl.DateTimeFormat('et-EE', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }).format(Date.parse(date));
     }
 }

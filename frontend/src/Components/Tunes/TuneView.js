@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import { Button, Divider, Grid, Typography } from '@material-ui/core';
 import { useParams } from 'react-router';
 import { AuthService, DataService } from '../../Services';
@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { PlayerViewComponent, TableViewComponent } from '../NewComponents';
 import Actions from '../Buttons/Actions';
 import { MusicalCharacteristicsModel } from '../../Models/MusicalCharacteristicsModel';
+import BarLoader from 'react-spinners/BarLoader';
 
 const TuneView = () => {
     const { t } = useTranslation('common');
@@ -18,12 +19,18 @@ const TuneView = () => {
         };
     };
     let [assetData, setAssetData] = useReducer(assetReducer, {});
+    let [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        DataService.RequestAsset(TuneModel.view, id, setAssetData);
+        DataService.RequestAsset(TuneModel.view, id, setAssetData, setIsLoading);
     }, [id]);
 
-
+    if (isLoading)
+        return (
+            <Grid item>
+                <BarLoader css='display: block; margin: 50px auto;' />
+            </Grid>
+        );
     return (
         <Grid container item lg={9} md={11}>
             <Grid container>
@@ -69,7 +76,7 @@ const TuneView = () => {
                     <AssetPropertyElement title={t('tune.language')} value={assetData.languages?.title} />
                     <AssetPropertyElement title={t('tune.country')} value={assetData.countries?.title} />
                 </Grid>
-                
+
                 <AssetPropertyTableElement label={t(ExternalReferenceModel.table.label)} model={ExternalReferenceModel.table} data={assetData['externalReferences']} />
                 <Divider />
 
@@ -138,7 +145,7 @@ const TuneView = () => {
                         })
                     }
                 </Grid>
-                
+
 
                 <AssetPropertyTableElement label={t(TunePersonsModel.table.label)} model={TunePersonsModel.table} data={assetData['tunesPersonsRoles']} />
                 <AssetPropertyTableElement label={t(TunePlaceModel.table.label)} model={TunePlaceModel.table} data={assetData['tunePlaces']} />
