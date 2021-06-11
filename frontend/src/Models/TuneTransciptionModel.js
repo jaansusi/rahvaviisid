@@ -6,20 +6,18 @@ export const TuneTranscriptionModel = ModelService.GenerateDefaults({
         label: 'tune.transcription',
         fields: [
             { field: 'transcriptionSources', headerName: 'transcription.source', selector: 'title' },
-            { field: null, headerName: 'transcription.fileReference' }
+            { field: null, headerName: 'transcription.fileReference' },
+            {
+                field: 'transcriptionsPersonsRoles',
+                array: true,
+            }
         ]
     },
     view: {
         label: 'tune.transcription',
         fields: [
             { field: 'transcriptionSources', headerName: 'transcription.source', selector: 'title' },
-            {
-                field: 'tuneMelodies',
-                type: 'model',
-                array: true,
-                sortBy: 'variationIndex',
-                nested: TuneMelodyModel.view
-            }
+            { field: 'transcriptionsPersonsRoles', headerName: 'transcription.source', selector: 'title',array: true }
         ]
     },
     edit: {
@@ -28,14 +26,7 @@ export const TuneTranscriptionModel = ModelService.GenerateDefaults({
             { field: 'id', hidden: true },
             { field: 'transcriptionSourceId', type: 'dropdown', apiPath: 'transcription-sources', headerName: 'transcription.source' },
             { field: 'created', type: 'view', timestamp: true, headerName: 'date.created' },
-            { field: 'modified', type: 'view', timestamp: true, headerName: 'date.modified' },
-            {
-                field: 'tuneMelodies',
-                type: 'model',
-                array: true,
-                sortBy: 'variationIndex',
-                nested: TuneMelodyModel.edit
-            }
+            { field: 'modified', type: 'view', timestamp: true, headerName: 'date.modified' }
         ]
     },
 });

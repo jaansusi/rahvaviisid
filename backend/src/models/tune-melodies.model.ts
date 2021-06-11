@@ -70,7 +70,7 @@ export class TuneMelodies extends Entity {
     scale: 0,
     postgresql: {columnName: 'tune_encodings_id', dataType: 'integer', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'NO'},
   })
-  tuneTranscriptionsId: number;
+  tuneEncodingsId: number;
 
   @property({
     type: 'string',

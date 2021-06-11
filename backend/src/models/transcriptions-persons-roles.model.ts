@@ -1,4 +1,6 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, hasOne} from '@loopback/repository';
+import {Persons} from './persons.model';
+import {TranscriptionPersonRoleTypes} from './transcription-person-role-types.model';
 
 @model({
   settings: {
@@ -22,7 +24,7 @@ export class TranscriptionsPersonsRoles extends Entity {
     scale: 0,
     postgresql: {columnName: 'tune_transcription_id', dataType: 'integer', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'NO'},
   })
-  tuneTranscriptionId: number;
+  tuneTranscriptionsId: number;
 
   @property({
     type: 'number',
@@ -31,7 +33,6 @@ export class TranscriptionsPersonsRoles extends Entity {
     postgresql: {columnName: 'person_id', dataType: 'integer', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'NO'},
   })
   personId: number;
-
   @property({
     type: 'number',
     required: true,
@@ -66,6 +67,7 @@ export class TranscriptionsPersonsRoles extends Entity {
     postgresql: {columnName: 'modified', dataType: 'timestamp without time zone', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'NO'},
   })
   modified: string;
+
 
   // Define well-known properties here
 

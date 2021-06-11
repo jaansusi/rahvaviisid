@@ -75,8 +75,9 @@ export const TuneModel = ModelService.GenerateDefaults({
             },
             {
                 field: 'tuneEncodings',
-                type: 'table',
-                nested: TuneEncodingModel.table
+                type: 'model',
+                array: true,
+                nested: TuneEncodingModel.view
             },
             {
                 field: 'musicalCharacteristics',

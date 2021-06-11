@@ -239,7 +239,7 @@ export class TunesController {
       delete tunes.tunesPersonsRoles;
     }
     if (tunes.tuneEncodings !== undefined) {
-      tunes.tuneEncoding.forEach((tuneEncodings, i) => {
+      tunes.tuneEncodings.forEach((tuneEncodings, i) => {
         updateNestedAsset(
           tuneEncodings.tuneMelodies,
           this.tuneMelodiesRepository,

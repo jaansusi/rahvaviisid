@@ -83,7 +83,8 @@
         "location": "Asukoht",
         "duplicate": "Kopeeri",
         "coding": "Kodeering",
-        "variant": "Variant"
+        "variant": "Variant",
+        "encodings": "Kodeeringud"
     },
     "user": {
         "role": "Kasutaja roll",
@@ -149,7 +150,8 @@
         "supportSound": "Tugiheli",
         "pitch": "Kõrgus",
         "measure": "Taktimõõt",
-        "rhythmType": "Rütmitüüp"
+        "rhythmType": "Rütmitüüp",
+        "tempo": "Tempo"
     },
     "edit": {
         "save": "Salvesta"

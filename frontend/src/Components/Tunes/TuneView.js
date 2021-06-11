@@ -102,32 +102,37 @@ const TuneView = () => {
 
 
                 <Divider />
-                <AssetPropertyTableElement label={t(TuneEncodingModel.table.label)} model={TuneEncodingModel.table} data={assetData['tuneEncodings']} />
                 <Grid item container spacing={2}>
                     <Grid item>
-                        <Typography variant='h5'>{t('tune.transcriptions')}</Typography>
+                        <Typography variant='h5'>{t('tune.encodings')}</Typography>
                     </Grid>
                     {
-                        assetData.tuneTranscriptions?.map((transcription, i) => {
+                        assetData.tuneEncodings?.map((encoding, i) => {
                             return (
                                 <Grid key={i} item container direction='column' spacing={2}>
                                     <Grid item>
                                         <Typography variant='h5'>{t('tune.coding')} {i + 1}</Typography>
                                     </Grid>
                                     <Grid item container direction='row'>
-                                        <AssetPropertyElement title={t('transcription.source')} value={transcription.transcriptionSources?.title} />
+                                        <AssetPropertyElement title={t('encoding.keySignature')} value={encoding.keySignatures.title} />
+                                        <AssetPropertyElement title={t('encoding.supportSound')} value={encoding.supportSounds.title} />
+                                        <AssetPropertyElement title={t('encoding.pitch')} value={encoding.pitches.title} />
+                                        <AssetPropertyElement title={t('encoding.measure')} value={encoding.measures.title} />
+                                        <AssetPropertyElement title={t('encoding.rhythmType')} value={encoding.rhythmType} />
+                                        <AssetPropertyElement title={t('encoding.tempo')} value={encoding.tempo} />
+                                        <AssetPropertyElement title={t('common.remarks')} value={encoding.remarks} size={8} />
                                         {
                                             AuthService.CanAccess(['editor', 'admin']) &&
                                             <Grid item xs={4} container direction='row'>
-                                                <AssetPropertyDateElement size={6} title={t('date.created')} value={transcription.created} />
-                                                <AssetPropertyDateElement size={6} title={t('date.modified')} value={transcription.modified} />
+                                                <AssetPropertyDateElement size={6} title={t('date.created')} value={encoding.created} />
+                                                <AssetPropertyDateElement size={6} title={t('date.modified')} value={encoding.modified} />
                                             </Grid>
                                         }
                                     </Grid>
                                     <Divider />
                                     <Grid item container direction='column' spacing={2}>
                                         {
-                                            transcription.tuneMelodies?.map((melody, j) => {
+                                            encoding.tuneMelodies?.map((melody, j) => {
                                                 return (
                                                     <Grid key={j} item container direction='column' spacing={2}>
                                                         <Grid item container direction='row' spacing={5}>
@@ -149,7 +154,33 @@ const TuneView = () => {
                         })
                     }
                 </Grid>
-
+                <Grid item container spacing={2}>
+                    <Grid item>
+                        <Typography variant='h5'>{t('tune.transcriptions')}</Typography>
+                    </Grid>
+                    {
+                        assetData.tuneTranscriptions?.map((transcription, i) => {
+                            return (
+                                <Grid key={i} item container direction='column' spacing={2}>
+                                    <Grid item>
+                                        <Typography variant='h5'>{t('tune.transcription')} {i + 1}</Typography>
+                                    </Grid>
+                                    <Grid item container direction='row'>
+                                        <AssetPropertyElement title={t('transcription.source')} value={transcription.transcriptionSources.title} />
+                                        <AssetPropertyElement title={t('transcription.fileReference')} value={transcription.fileReference} />
+                                       {
+                                            AuthService.CanAccess(['editor', 'admin']) &&
+                                            <Grid item xs={4} container direction='row'>
+                                                <AssetPropertyDateElement size={6} title={t('date.created')} value={transcription.created} />
+                                                <AssetPropertyDateElement size={6} title={t('date.modified')} value={transcription.modified} />
+                                            </Grid>
+                                        } 
+                                    </Grid>
+                                </Grid>
+                            )
+                        })
+                    }
+                </Grid>
 
                 <AssetPropertyTableElement label={t(TunePersonsModel.table.label)} model={TunePersonsModel.table} data={assetData['tunesPersonsRoles']} />
                 <AssetPropertyTableElement label={t(TunePlaceModel.table.label)} model={TunePlaceModel.table} data={assetData['tunePlaces']} />

@@ -1,6 +1,7 @@
 import {Entity, hasMany, model, property, hasOne} from '@loopback/repository';
 import { TuneMelodies } from './tune-melodies.model';
 import {TranscriptionSources} from './transcription-sources.model';
+import {TranscriptionsPersonsRoles} from './transcriptions-persons-roles.model';
 
 @model({
   settings: {
@@ -35,6 +36,12 @@ export class TuneTranscriptions extends Entity {
   transcriptionSourceId: number;
 
   @property({
+    type: 'string',
+    postgresql: {columnName: 'file_reference', dataType: 'text', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'YES'},
+  })
+  fileReference?: string;
+
+  @property({
     type: 'date',
     required: false,
     postgresql: {columnName: 'created', dataType: 'timestamp without time zone', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'NO'},
@@ -51,6 +58,9 @@ export class TuneTranscriptions extends Entity {
   
   @hasOne(() => TranscriptionSources, {keyFrom: 'transcriptionSourceId', keyTo: 'id'})
   transcriptionSources: TranscriptionSources;
+
+  @hasMany(() => TranscriptionsPersonsRoles)
+  transcriptionsPersonsRoles: TranscriptionsPersonsRoles[];
   // Define well-known properties here
 
   // Indexer property to allow additional data
