@@ -1281,77 +1281,9 @@ VALUES
     ('#f')
 ;
 
-INSERT INTO folk_tune.support_sounds (title) 
-VALUES 
-    ('c'),
-    ('cis'),
-    ('d'),
-    ('dis'),
-    ('e'),
-    ('f'),
-    ('fis'),
-    ('g'),
-    ('gis'),
-    ('a'),
-    ('b'),
-    ('h'),
-    ('c1'),
-    ('cis1'),
-    ('d1'),
-    ('dis1'),
-    ('e1'),
-    ('f1'),
-    ('fis1'),
-    ('g1'),
-    ('gis1'),
-    ('a1'),
-    ('b1'),
-    ('h1'),
-    ('c2')
-;
 
-INSERT INTO folk_tune.pitches (title) 
-VALUES
-    ('g1=c'),
-    ('g1=cis'),
-    ('g1=d'),
-    ('g1=dis'),
-    ('g1=e'),
-    ('g1=f'),
-    ('g1=fis'),
-    ('g1=g'),
-    ('g1=gis'),
-    ('g1=a'),
-    ('g1=b'),
-    ('g1=h'),
-    ('g1=c1'),
-    ('g1=cis1'),
-    ('g1=d1'),
-    ('g1=dis1'),
-    ('g1=e1'),
-    ('g1=f1'),
-    ('g1=fis1'),
-    ('g1=g1'),
-    ('g1=gis1'),
-    ('g1=a1'),
-    ('g1=b1'),
-    ('g1=h1'),
-    ('g1=c2'),
-    ('g1=cis2')
-;
 
-INSERT INTO folk_tune.measures (title) 
-VALUES
-    ('3/8'),
-    ('4/8'),
-    ('6/8'),
-    ('8/8'),
-    ('12/8'),
-    ('2/4'),
-    ('3/4'),
-    ('4/4'),
-    ('5/4')
-;
+
 
 INSERT INTO folk_tune.persons (id, given_name, surname, nickname, birth_year, death_year, sex_id, remarks) 
 VALUES 

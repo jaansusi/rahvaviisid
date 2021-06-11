@@ -58,7 +58,7 @@
         "state": "Seisund",
         "genre": "Liik",
         "publications": "Väljaanded",
-        "remarks": "Toimetamismärkused",
+        "remarks": "Märkused",
         "verifiedBy": "Kontrollija",
         "verified": "Kontrollimise aeg",
         "melody": "Meloodia",
@@ -149,7 +149,7 @@
         "supportSound": "Tugiheli",
         "pitch": "Kõrgus",
         "measure": "Taktimõõt",
-        "tuneEncodingNum": "Kod. num"
+        "rhythmType": "Rütmitüüp"
     },
     "edit": {
         "save": "Salvesta"

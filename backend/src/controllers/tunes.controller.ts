@@ -208,10 +208,10 @@ export class TunesController {
         repository.updateById(x.id, x);
       });
     };
-    if (tunes.tuneEncodings !== undefined) {
-      updateNestedAsset(tunes.tuneEncodings, this.tuneEncodingsRepository);
-      delete tunes.tuneEncodings;
-    }
+    // if (tunes.tuneEncodings !== undefined) {
+    //   updateNestedAsset(tunes.tuneEncodings, this.tuneEncodingsRepository);
+    //   delete tunes.tuneEncodings;
+    // }
     if (tunes.tunePerformances !== undefined) {
       tunes.tunePerformances.forEach(performance => {
         if (performance.actualPerformanceTypes !== undefined) {
@@ -238,20 +238,20 @@ export class TunesController {
       );
       delete tunes.tunesPersonsRoles;
     }
-    if (tunes.tuneTranscriptions !== undefined) {
-      tunes.tuneTranscriptions.forEach((tuneTranscription, i) => {
+    if (tunes.tuneEncodings !== undefined) {
+      tunes.tuneEncoding.forEach((tuneEncodings, i) => {
         updateNestedAsset(
-          tuneTranscription.tuneMelodies,
+          tuneEncodings.tuneMelodies,
           this.tuneMelodiesRepository,
         );
-        if (tunes.tuneTranscriptions)
-          delete tunes.tuneTranscriptions[i].tuneMelodies;
+        if (tunes.tuneEncodings)
+          delete tunes.tuneEncodings[i].tuneMelodies;
       });
       updateNestedAsset(
-        tunes.tuneTranscriptions,
-        this.tuneTranscriptionsRepository,
+        tunes.tuneEncodings,
+        this.tuneEncodingsRepository,
       );
-      delete tunes.tuneTranscriptions;
+      delete tunes.tuneEncodings;
     }
     if (tunes.musicalCharacteristics !== undefined) {
       tunes.musicalCharacteristics.forEach((musicalCharacteristics, i) => {

@@ -1,8 +1,9 @@
-import {Entity, model, property, hasOne} from '@loopback/repository';
+import {Entity, model, property, hasOne, hasMany} from '@loopback/repository';
 import {KeySignatures} from './key-signatures.model';
 import {SupportSounds} from './support-sounds.model';
 import {Measures} from './measures.model';
 import {Pitches} from './pitches.model';
+import { TuneMelodies } from './tune-melodies.model';
 
 @model({
   settings: {idInjection: false, postgresql: {schema: 'folk_tune', table: 'tune_encodings'}}
@@ -24,14 +25,6 @@ export class TuneEncodings extends Entity {
     postgresql: {columnName: 'tune_id', dataType: 'integer', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'NO'},
   })
   tunesId: number;
-
-  @property({
-    type: 'number',
-    required: true,
-    scale: 0,
-    postgresql: {columnName: 'tune_encoding_num', dataType: 'smallint', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'NO'},
-  })
-  tuneEncodingNum: number;
 
   @property({
     type: 'number',
@@ -70,6 +63,13 @@ export class TuneEncodings extends Entity {
 
   @property({
     type: 'string',
+    length: 40,
+    postgresql: {columnName: 'rhythm_type', dataType: 'character varying', dataLength: 40, dataPrecision: null, dataScale: null, nullable: 'YES'},
+  })
+  rhythmType?: string;
+
+  @property({
+    type: 'string',
     postgresql: {columnName: 'remarks', dataType: 'text', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'YES'},
   })
   remarks?: string;
@@ -100,7 +100,8 @@ export class TuneEncodings extends Entity {
   @hasOne(() => Measures, {keyFrom: 'measureId', keyTo: 'id'})
   measures: Measures;
 
-
+  @hasMany(() => TuneMelodies, { keyTo: 'tune_id'})
+  tuneMelodies?: TuneMelodies[];
   // Define well-known properties here
 
   // Indexer property to allow additional data

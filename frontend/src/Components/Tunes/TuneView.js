@@ -102,7 +102,7 @@ const TuneView = () => {
 
 
                 <Divider />
-
+                <AssetPropertyTableElement label={t(TuneEncodingModel.table.label)} model={TuneEncodingModel.table} data={assetData['tuneEncodings']} />
                 <Grid item container spacing={2}>
                     <Grid item>
                         <Typography variant='h5'>{t('tune.transcriptions')}</Typography>
@@ -155,7 +155,6 @@ const TuneView = () => {
                 <AssetPropertyTableElement label={t(TunePlaceModel.table.label)} model={TunePlaceModel.table} data={assetData['tunePlaces']} />
                 <AssetPropertyTableElement label={t(TuneSongsModel.table.label)} model={TuneSongsModel.table} data={assetData['tuneSongs']} />
                 <AssetPropertyTableElement label={t(TunePerformancesModel.table.label)} model={TunePerformancesModel.table} data={assetData['tunePerformances']} />
-                <AssetPropertyTableElement label={t(TuneEncodingModel.table.label)} model={TuneEncodingModel.table} data={assetData['tuneEncodings']} />
                 <AssetPropertyTableElement label={t(MusicalCharacteristicsModel.table.label)} model={MusicalCharacteristicsModel.table} data={assetData['musicalCharacteristics']} />
                 <Divider />
                 <Grid item container direction='row'>

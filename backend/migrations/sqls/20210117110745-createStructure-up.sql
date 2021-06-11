@@ -924,8 +924,8 @@ CREATE TABLE folk_tune.transcriptions_persons_roles
     modified folk_tune.D_timestamp,
     CONSTRAINT PK_transcriptions_persons_roles PRIMARY KEY (id),
     CONSTRAINT UQ_transcriptions_persons_roles UNIQUE (tune_transcription_id, person_id, transcription_person_role_type_id),
-    CONSTRAINT FK_transcriptions_persons_roles_tune_transcriptions FOREIGN KEY (tune_transcription_id)
-        REFERENCES folk_tune.tune_transcriptions (id) ON DELETE CASCADE,
+    -- CONSTRAINT FK_transcriptions_persons_roles_tune_transcriptions FOREIGN KEY (tune_transcription_id)
+        -- REFERENCES folk_tune.tune_transcriptions (id) ON DELETE CASCADE,
     CONSTRAINT FK_transcriptions_persons_roles_persons FOREIGN KEY (person_id) REFERENCES folk_tune.persons (id),
     CONSTRAINT FK_transcriptions_persons_roles_transcription_person_role_types FOREIGN KEY (transcription_person_role_type_id)
         REFERENCES folk_tune.transcription_person_role_types (id),
@@ -1008,18 +1008,17 @@ CREATE TABLE folk_tune.tune_encodings
 (
     id serial NOT NULL,
     tune_id integer NOT NULL,
-    tune_encoding_num smallint NOT NULL,
     key_signature_id smallint,
     support_sound_id smallint,
     pitch_id smallint,
     measure_id smallint,
+    rhythm_type folk_tune.D_text_short,
     tempo folk_tune.D_text_short,
     remarks folk_tune.D_description,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
     CONSTRAINT PK_tune_encodings PRIMARY KEY (id),
-    CONSTRAINT UQ_tune_encodings_tune_id_tune_encoding_num UNIQUE (tune_id, tune_encoding_num),
-    CONSTRAINT FK_tune_encodings_tunes FOREIGN KEY (tune_id) REFERENCES folk_tune.tunes (id) ON DELETE CASCADE,
+    -- CONSTRAINT FK_tune_encodings_tunes FOREIGN KEY (tune_id) REFERENCES folk_tune.tunes (id) ON DELETE CASCADE,
     CONSTRAINT FK_tune_encodings_key_signatures FOREIGN KEY (key_signature_id) REFERENCES folk_tune.key_signatures (id),
     CONSTRAINT FK_tune_encodings_support_sounds FOREIGN KEY (support_sound_id) REFERENCES folk_tune.support_sounds (id),
     CONSTRAINT FK_tune_encodings_pitches FOREIGN KEY (pitch_id) REFERENCES folk_tune.pitches (id),

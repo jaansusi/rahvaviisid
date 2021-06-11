@@ -222,7 +222,7 @@ VALUES
 
 INSERT INTO folk_tune.tune_encodings (tune_id, key_signature_id, support_sound_id, pitch_id, measure_id, tempo, rhythm_type)
 VALUES
-(1,1,NULL,NULL,NULL,NULL,NULL),
+    (1,1,NULL,NULL,NULL,NULL,NULL),
 (2,1,NULL,NULL,NULL,NULL,NULL),
 (3,1,NULL,NULL,NULL,NULL,NULL),
 (4,1,NULL,NULL,NULL,NULL,NULL),

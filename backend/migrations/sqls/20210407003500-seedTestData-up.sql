@@ -45495,6 +45495,3 @@ VALUES
 (609,380,1479,1,1930,NULL);
 
 
-INSERT INTO folk_tune.tune_Encodings (id, tune_id, tune_encoding_num, key_signature_id, support_sound_id, pitch_id, measure_id, tempo, remarks)
-VALUES
-    (1,1,1,1,1,1,1,'kiire','tempo märkus');
