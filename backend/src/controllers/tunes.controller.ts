@@ -253,6 +253,15 @@ export class TunesController {
       );
       delete tunes.tuneEncodings;
     }
+
+    if (tunes.tuneTranscriptions !== undefined) {
+      updateNestedAsset(
+        tunes.tuneTranscriptions,
+        this.tuneTranscriptionsRepository,
+      );
+      delete tunes.tuneTranscriptions;
+    }
+
     if (tunes.musicalCharacteristics !== undefined) {
       tunes.musicalCharacteristics.forEach((musicalCharacteristics, i) => {
         updateNestedAsset(

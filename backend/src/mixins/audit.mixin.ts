@@ -32,19 +32,18 @@ import {keyBy} from 'lodash';
 
 import {Action, AuditLog} from '../models';
 import {AuditLogRepository} from '../repositories';
-import {AuditOptions, IAuditMixin, IAuditMixinOptions} from '../types';
+import {AuditOptions, IAuditMixin, IAuditMixinOptions, UserId} from '../types';
 import {diff} from 'deep-object-diff';
 
 export function AuditRepositoryMixin<
   M extends Entity,
   ID,
   Relations extends object,
-  UserID,
   R extends MixinTarget<EntityCrudRepository<M, ID, Relations>>
 >(superClass: R, opts: IAuditMixinOptions) {
-  class MixedRepository extends superClass implements IAuditMixin<UserID> {
+  class MixedRepository extends superClass implements IAuditMixin {
     getAuditLogRepository: () => Promise<AuditLogRepository>;
-    getCurrentUser?: () => Promise<{id?: UserID}>;
+    getCurrentUser?: () => Promise<UserId>;
 
     /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
     // @ts-ignore
@@ -62,7 +61,7 @@ export function AuditRepositoryMixin<
         const audit = new AuditLog({
           actedAt: new Date(),
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          actor: (user?.id as any).toString() ?? '0',
+          actorId: user?.id,
           action: Action.INSERT_ONE,
           after: created.toJSON(),
           entityId: created.getId(),
@@ -97,7 +96,7 @@ export function AuditRepositoryMixin<
             new AuditLog({
               actedAt: new Date(),
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              actor: (user?.id as any).toString() ?? '0',
+              actorId: user?.id,
               action: Action.INSERT_MANY,
               after: data.toJSON(),
               entityId: data.getId(),
@@ -142,7 +141,7 @@ export function AuditRepositoryMixin<
             new AuditLog({
               actedAt: new Date(),
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              actor: (user?.id as any).toString() ?? '0',
+              actorId: user?.id,
               action: Action.UPDATE_MANY,
               before: (beforeMap[data.getId()] as Entity).toJSON(),
               after: data.toJSON(),
@@ -184,7 +183,7 @@ export function AuditRepositoryMixin<
             new AuditLog({
               actedAt: new Date(),
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              actor: (user?.id as any).toString() ?? '0',
+              actorId: user?.id,
               action: Action.DELETE_MANY,
               before: (beforeMap[data.getId()] as Entity).toJSON(),
               entityId: data.getId(),
@@ -228,9 +227,8 @@ export function AuditRepositoryMixin<
       Object.entries(diffAfter).forEach(
         ([key, value]) => (diffBefore[key] = (before as any)[key]),
       );
-      if (diffAfter !== diffBefore) {
-        //   if (this.getCurrentUser) {
-        //     const user = await this.getCurrentUser();
+      if (this.getCurrentUser && diffAfter !== diffBefore) {
+        const user = await this.getCurrentUser();
         const auditRepo = await this.getAuditLogRepository();
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const extras: any = Object.assign({}, opts);
@@ -238,7 +236,7 @@ export function AuditRepositoryMixin<
         const auditLog = new AuditLog({
           actedAt: new Date(),
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          actor: 1, //(user?.id as any).toString() ?? '0',
+          actorId: user?.id,
           action: Action.UPDATE_ONE,
           before: diffBefore,
           after: diffAfter,
@@ -254,7 +252,6 @@ export function AuditRepositoryMixin<
             `Audit failed for data => ${JSON.stringify(auditLog.toJSON())}`,
           );
         });
-        //   }
       }
     }
 
@@ -281,7 +278,7 @@ export function AuditRepositoryMixin<
         const auditLog = new AuditLog({
           actedAt: new Date(),
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          actor: (user?.id as any).toString() ?? '0',
+          actorId: user?.id,
           action: Action.UPDATE_ONE,
           before: before.toJSON(),
           after: after.toJSON(),
@@ -317,7 +314,7 @@ export function AuditRepositoryMixin<
         const auditLog = new AuditLog({
           actedAt: new Date(),
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          actor: (user?.id as any).toString() ?? '0',
+          actorId: user?.id,
           action: Action.DELETE_ONE,
           before: before.toJSON(),
           entityId: before.getId(),

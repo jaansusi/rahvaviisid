@@ -23,9 +23,15 @@
 import {AuditLogRepository} from './repositories';
 import {Options} from '@loopback/repository';
 
-export interface IAuditMixin<UserID> {
+export interface UserId {
+  id: string,
+  name: string,
+  roles: string[]
+}
+
+export interface IAuditMixin {
   getAuditLogRepository: () => Promise<AuditLogRepository>;
-  getCurrentUser?: () => Promise<{id?: UserID}>;
+  getCurrentUser?: () => Promise<UserId>;
 }
 
 export interface IAuditMixinOptions {

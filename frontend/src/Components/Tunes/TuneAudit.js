@@ -7,7 +7,7 @@ import { DataGrid } from '@material-ui/data-grid';
 import { useTranslation } from 'react-i18next';
 import { Grid } from '@material-ui/core';
 
-const TuneEdit = () => {
+const TuneAudit = () => {
     const { t } = useTranslation('common');
     let { id } = useParams();
     let [logs, setLogs] = useState([]);
@@ -17,12 +17,13 @@ const TuneEdit = () => {
         return x;
     });
     useEffect(() => {
-        axios.get(config.apiUrl + '/' + AuditModel.apiPath + '?filter=' + JSON.stringify({ 'where': { 'entityId': id } }))
+        axios.get(config.apiUrl + '/' + AuditModel.apiPath + '?filter=' + JSON.stringify({ 'include': [{relation:'actor'}], 'where': { 'entityId': id } }))
             .then(
                 (result) => {
                     setLogs(result.data.map((x => {
                         x.before = JSON.stringify(x.before);
                         x.after = JSON.stringify(x.after);
+                        x.name = x.actor.firstName + ' ' + x.actor.lastName;
                         return x
                     })));
                 }
@@ -34,15 +35,15 @@ const TuneEdit = () => {
                 <Grid item container direction='column' alignItems='flex-start'>
                     <Grid item container direction='row' spacing={3}>
                         <Grid item xs={1}>{t('audit.action')}</Grid>
-                        <Grid item xs={1}>{activeEntry.action}</Grid>
+                        <Grid item xs={11}>{activeEntry.action}</Grid>
                     </Grid>
                     <Grid item container direction='row' spacing={3}>
                         <Grid item xs={1}>{t('audit.actedAt')}</Grid>
-                        <Grid item xs={1}>{activeEntry.actedAt}</Grid>
+                        <Grid item xs={11}>{activeEntry.actedAt}</Grid>
                     </Grid>
                     <Grid item container direction='row' spacing={3}>
                         <Grid item xs={1}>{t('audit.actor')}</Grid>
-                        <Grid item xs={1}>{activeEntry.actor}</Grid>
+                        <Grid item xs={11}>{activeEntry.actor?.firstName + ' ' + activeEntry.actor?.lastName}</Grid>
                     </Grid>
                     <Grid item container direction='row' spacing={3}>
                         <Grid item xs={1}>{t('audit.before')}</Grid>
@@ -71,4 +72,4 @@ const TuneEdit = () => {
     );
 };
 
-export default TuneEdit;
+export default TuneAudit;

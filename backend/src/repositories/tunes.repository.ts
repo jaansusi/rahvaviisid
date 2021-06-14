@@ -13,10 +13,11 @@ import {TuneSongsRepository} from './tune-songs.repository';
 import {TuneEncodingsRepository} from './tune-encodings.repository';
 import { ExternalReferences } from '../models/external-references.model';
 import { ExternalReferencesRepository } from './external-references.repository';
-import { IAuditMixinOptions } from '../types';
+import { IAuditMixinOptions, UserId } from '../types';
 import { AuditRepositoryMixin } from '../mixins';
-import { AuditLogRepository } from './audit.repository';
+import { AuditLogRepository } from './audit-log.repository';
 import {MusicalCharacteristicsRepository} from './musical-characteristics.repository';
+import { AuthenticationBindings } from '@loopback/authentication';
 
 const groupAuditOpts: IAuditMixinOptions = {
   actionKey: 'Tunes_Logs',
@@ -26,7 +27,6 @@ export class TunesRepository extends AuditRepositoryMixin<
   Tunes,
   typeof Tunes.prototype.id,
   TunesRelations,
-  number,
   Constructor<
     DefaultCrudRepository<Tunes, typeof Tunes.prototype.id, TunesRelations>
   >
@@ -47,6 +47,8 @@ export class TunesRepository extends AuditRepositoryMixin<
 
   constructor(
     @inject('datasources.db') dataSource: DbDataSource, 
+    @inject.getter(AuthenticationBindings.CURRENT_USER) public getCurrentUser: Getter<UserId>,
+    @repository.getter('AuditLogRepository') public getAuditLogRepository: Getter<AuditLogRepository>, 
     @repository.getter('TuneTranscriptionsRepository') protected tuneTranscriptionsRepositoryGetter: Getter<TuneTranscriptionsRepository>, 
     @repository.getter('CountriesRepository') protected countriesRepositoryGetter: Getter<CountriesRepository>, 
     @repository.getter('NationsRepository') protected nationsRepositoryGetter: Getter<NationsRepository>, 
@@ -57,7 +59,6 @@ export class TunesRepository extends AuditRepositoryMixin<
     @repository.getter('TuneSongsRepository') protected tuneSongsRepositoryGetter: Getter<TuneSongsRepository>, 
     @repository.getter('TuneEncodingsRepository') protected tuneEncodingsRepositoryGetter: Getter<TuneEncodingsRepository>,
     @repository.getter('ExternalReferencesRepository') protected externalReferencesRepositoryGetter: Getter<ExternalReferencesRepository>,
-    @repository.getter('AuditLogRepository') public getAuditLogRepository: Getter<AuditLogRepository>, 
     @repository.getter('MusicalCharacteristicsRepository') protected musicalCharacteristicsRepositoryGetter: Getter<MusicalCharacteristicsRepository>,
     ) {
     super(Tunes, dataSource);

@@ -20,7 +20,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, hasOne} from '@loopback/repository';
+import {Users} from './users.model';
 
 export enum Action {
   INSERT_ONE = 'INSERT_ONE',
@@ -88,10 +89,11 @@ export class AuditLog extends Entity {
   entityId: number;
 
   @property({
+    name: 'actor_id',
     type: 'string',
     required: true,
   })
-  actor: number;
+  actorId: string;
 
   @property({
     type: 'object',
@@ -103,6 +105,8 @@ export class AuditLog extends Entity {
   })
   after?: object;
 
+  @hasOne(() => Users, {keyFrom: 'actorId', keyTo: 'id'})
+  actor: Users;
   // Define well-known properties here
 
   // Indexer property to allow additional data
