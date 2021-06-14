@@ -142,7 +142,9 @@
         "transcription": "Noodistus",
         "source": "Noodistuse alus",
         "personRole": "Tegija roll",
-        "fileReference": "Failiviide"
+        "fileReference": "Failiviide",
+        "actionYear": "Tegevuse aasta",
+        "transcriptionPersons": "Noodistusega seotud isikud"
     },
     "encoding": {
         "encoding": "Kodeeringud",

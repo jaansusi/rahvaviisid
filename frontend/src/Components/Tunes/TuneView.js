@@ -168,7 +168,7 @@ const TuneView = () => {
                                     <Grid item container direction='row'>
                                         <AssetPropertyElement title={t('transcription.source')} value={transcription.transcriptionSources.title} />
                                         <AssetPropertyElement title={t('transcription.fileReference')} value={transcription.fileReference} />
-                                       {
+                                        {
                                             AuthService.CanAccess(['editor', 'admin']) &&
                                             <Grid item xs={4} container direction='row'>
                                                 <AssetPropertyDateElement size={6} title={t('date.created')} value={transcription.created} />
@@ -176,7 +176,34 @@ const TuneView = () => {
                                             </Grid>
                                         } 
                                     </Grid>
-                                </Grid>
+                                        <Divider />
+                                        <Grid item>
+                                            <Typography variant='h5'>{t('transcription.transcriptionPersons')} {i + 1}</Typography>
+                                        </Grid>
+                                        <Divider />
+                                        <Grid item container direction='column' spacing={2}>
+                                        {
+                                            
+                                            transcription.transcriptionsPersonsRoles?.map((personRoles, j) => {
+                                                return (
+                                                    <Grid key={j} item container direction='column' spacing={2}>
+                                                        <Grid item container direction='row' spacing={5}>
+                                                           <AssetPropertyElement title={t('person.givenName')} value={personRoles.persons.givenName} />
+                                                           <AssetPropertyElement title={t('person.surname')} value={personRoles.persons.surname} />
+                                                           <AssetPropertyElement title={t('transcription.actionYear')} value={personRoles.actionYear} />
+                                                           <AssetPropertyElement title={t('transcription.personRole')} value={personRoles.transcriptionPersonRoleTypes.title} />
+                                                           <AssetPropertyElement title={t('common.remarks')} value={personRoles.remarks} />
+                                                            
+                                                        </Grid>
+                                                        <Divider />
+                                                    </Grid>
+                                                );
+                                            })
+                                        }
+                                        </Grid>
+
+                                    </Grid>
+                                
                             )
                         })
                     }
