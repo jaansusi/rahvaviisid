@@ -183,7 +183,7 @@ const TuneView = () => {
                                                     {field: 'name', headerName: t('person.name')},
                                                     {field: 'actionYear', headerName: t('transcription.actionYear')},
                                                     {field: 'roleType', headerName: t('transcription.personRole')},
-                                                    {field: 'remarks', headerName: t('common.remarks')},
+                                                    {field: 'remarks', headerName: t('common.remarks') },
                                                     
                                                 ]}
                                             } data={
@@ -197,21 +197,7 @@ const TuneView = () => {
                                                 }
                                                 )
                                             } />
-                                            // {
-                                            //     return (
-                                            //         <Grid key={j} item container direction='column' spacing={2}>
-                                            //             <Grid item container direction='row' spacing={5}>
-                                            //                <AssetPropertyElement title={t('person.givenName')} value={personRoles.persons.givenName} />
-                                            //                <AssetPropertyElement title={t('person.surname')} value={personRoles.persons.surname} />
-                                            //                <AssetPropertyElement title={t('transcription.actionYear')} value={personRoles.actionYear} />
-                                            //                <AssetPropertyElement title={t('transcription.personRole')} value={personRoles.transcriptionPersonRoleTypes.title} />
-                                            //                <AssetPropertyElement title={t('common.remarks')} value={personRoles.remarks} />
 
-                                            //             </Grid>
-                                            //             <Divider />
-                                            //         </Grid>
-                                            //     );
-                                            // }
                                         }
                                     </Grid>
 
