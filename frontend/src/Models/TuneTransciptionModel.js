@@ -17,7 +17,19 @@ export const TuneTranscriptionModel = ModelService.GenerateDefaults({
         label: 'tune.transcription',
         fields: [
             { field: 'transcriptionSources', headerName: 'transcription.source', selector: 'title' },
-            { field: 'transcriptionsPersonsRoles', headerName: 'transcription.source', selector: 'title',array: true }
+            {
+                field: 'transcriptionsPersonsRoles',
+                headerName: 'transcription.source',
+                type: 'model',
+                nested: {
+                    label: 'transcription.label',
+                    fields: [
+                        { field: 'persons', headerName: 'person.name', selector: ['givenName', 'surname'] },
+                        { field: 'transcriptionPersonRoleTypes', selector: 'title' },
+                        { field: 'tuneReference', headerName: 'tune.tuneReference' },
+                    ]
+                }
+            }
         ]
     },
     edit: {

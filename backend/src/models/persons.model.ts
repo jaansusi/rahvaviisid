@@ -83,7 +83,6 @@ export class Persons extends Entity {
   })
   modified: string;
 
-
   // Define well-known properties here
 
   // Indexer property to allow additional data

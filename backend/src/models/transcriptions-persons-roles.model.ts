@@ -33,6 +33,7 @@ export class TranscriptionsPersonsRoles extends Entity {
     postgresql: {columnName: 'person_id', dataType: 'integer', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'NO'},
   })
   personId: number;
+  
   @property({
     type: 'number',
     required: true,
@@ -68,6 +69,11 @@ export class TranscriptionsPersonsRoles extends Entity {
   })
   modified: string;
 
+  @hasOne(() => Persons, {keyFrom: 'personId', keyTo: 'id'})
+  persons: Persons;
+
+  @hasOne(() => TranscriptionPersonRoleTypes, {keyFrom: 'transcriptionPersonRoleTypeId', keyTo: 'id'})
+  transcriptionPersonRoleTypes: TranscriptionPersonRoleTypes;
 
   // Define well-known properties here
 

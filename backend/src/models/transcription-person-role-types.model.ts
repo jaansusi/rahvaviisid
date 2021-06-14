@@ -51,10 +51,6 @@ export class TranscriptionPersonRoleTypes extends Entity {
   })
   modified: string;
 
-  @property({
-    type: 'number',
-  })
-  transcriptionsPersonsRolesId?: number;
   // Define well-known properties here
 
   // Indexer property to allow additional data
