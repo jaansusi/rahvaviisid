@@ -114,10 +114,10 @@ const TuneView = () => {
                                         <Typography variant='h5'>{t('tune.coding')} {i + 1}</Typography>
                                     </Grid>
                                     <Grid item container direction='row'>
-                                        <AssetPropertyElement title={t('encoding.keySignature')} value={encoding.keySignatures.title} />
-                                        <AssetPropertyElement title={t('encoding.supportSound')} value={encoding.supportSounds.title} />
-                                        <AssetPropertyElement title={t('encoding.pitch')} value={encoding.pitches.title} />
-                                        <AssetPropertyElement title={t('encoding.measure')} value={encoding.measures.title} />
+                                        <AssetPropertyElement title={t('encoding.keySignature')} value={encoding.keySignatures?.title} />
+                                        <AssetPropertyElement title={t('encoding.supportSound')} value={encoding.supportSounds?.title} />
+                                        <AssetPropertyElement title={t('encoding.pitch')} value={encoding.pitches?.title} />
+                                        <AssetPropertyElement title={t('encoding.measure')} value={encoding.measures?.title} />
                                         <AssetPropertyElement title={t('encoding.rhythmType')} value={encoding.rhythmType} />
                                         <AssetPropertyElement title={t('encoding.tempo')} value={encoding.tempo} />
                                         <AssetPropertyElement title={t('common.remarks')} value={encoding.remarks} size={8} />
