@@ -180,20 +180,18 @@ const TuneView = () => {
                                         {
                                             <AssetPropertyTableElement label={t('transcription.transcriptionPersons')} model={
                                                 {fields: [
-                                                    {field: 'givenName', headerName: t('person.givenName')},
-                                                    {field: 'surname', headerName: t('person.givenName')},
-                                                    {field: 'actionYear', headerName: t('person.givenName')},
-                                                    {field: 'roleType', headerName: t('person.givenName')},
-                                                    {field: 'remarks', headerName: t('person.givenName')},
+                                                    {field: 'name', headerName: t('person.name')},
+                                                    {field: 'actionYear', headerName: t('transcription.actionYear')},
+                                                    {field: 'roleType', headerName: t('transcription.personRole')},
+                                                    {field: 'remarks', headerName: t('common.remarks')},
                                                     
                                                 ]}
-                                            } value={
+                                            } data={
                                                 transcription.transcriptionsPersonsRoles?.map((personRoles, j) => {
                                                     return {
-                                                        givenName: personRoles.persons?.givenName,
-                                                        surname: personRoles.persons?.surname,
+                                                        name: personRoles.persons?.givenName + " " + personRoles.persons?.surname,
                                                         actionYear: personRoles.actionYear,
-                                                        roleType: personRoles.transcriptionsPersonsRoleTypes?.title,
+                                                        roleType: personRoles.transcriptionPersonRoleTypes?.title,
                                                         remarks: personRoles.remarks
                                                     }
                                                 }
