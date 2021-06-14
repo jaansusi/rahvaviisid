@@ -174,36 +174,51 @@ const TuneView = () => {
                                                 <AssetPropertyDateElement size={6} title={t('date.created')} value={transcription.created} />
                                                 <AssetPropertyDateElement size={6} title={t('date.modified')} value={transcription.modified} />
                                             </Grid>
-                                        } 
-                                    </Grid>
-                                        <Divider />
-                                        <Grid item>
-                                            <Typography variant='h5'>{t('transcription.transcriptionPersons')} {i + 1}</Typography>
-                                        </Grid>
-                                        <Divider />
-                                        <Grid item container direction='column' spacing={2}>
-                                        {
-                                            
-                                            transcription.transcriptionsPersonsRoles?.map((personRoles, j) => {
-                                                return (
-                                                    <Grid key={j} item container direction='column' spacing={2}>
-                                                        <Grid item container direction='row' spacing={5}>
-                                                           <AssetPropertyElement title={t('person.givenName')} value={personRoles.persons.givenName} />
-                                                           <AssetPropertyElement title={t('person.surname')} value={personRoles.persons.surname} />
-                                                           <AssetPropertyElement title={t('transcription.actionYear')} value={personRoles.actionYear} />
-                                                           <AssetPropertyElement title={t('transcription.personRole')} value={personRoles.transcriptionPersonRoleTypes.title} />
-                                                           <AssetPropertyElement title={t('common.remarks')} value={personRoles.remarks} />
-                                                            
-                                                        </Grid>
-                                                        <Divider />
-                                                    </Grid>
-                                                );
-                                            })
                                         }
-                                        </Grid>
-
                                     </Grid>
-                                
+                                    <Grid item container direction='column' spacing={2}>
+                                        {
+                                            <AssetPropertyTableElement label={t('transcription.transcriptionPersons')} model={
+                                                {fields: [
+                                                    {field: 'givenName', headerName: t('person.givenName')},
+                                                    {field: 'surname', headerName: t('person.givenName')},
+                                                    {field: 'actionYear', headerName: t('person.givenName')},
+                                                    {field: 'roleType', headerName: t('person.givenName')},
+                                                    {field: 'remarks', headerName: t('person.givenName')},
+                                                    
+                                                ]}
+                                            } value={
+                                                transcription.transcriptionsPersonsRoles?.map((personRoles, j) => {
+                                                    return {
+                                                        givenName: personRoles.persons?.givenName,
+                                                        surname: personRoles.persons?.surname,
+                                                        actionYear: personRoles.actionYear,
+                                                        roleType: personRoles.transcriptionsPersonsRoleTypes?.title,
+                                                        remarks: personRoles.remarks
+                                                    }
+                                                }
+                                                )
+                                            } />
+                                            // {
+                                            //     return (
+                                            //         <Grid key={j} item container direction='column' spacing={2}>
+                                            //             <Grid item container direction='row' spacing={5}>
+                                            //                <AssetPropertyElement title={t('person.givenName')} value={personRoles.persons.givenName} />
+                                            //                <AssetPropertyElement title={t('person.surname')} value={personRoles.persons.surname} />
+                                            //                <AssetPropertyElement title={t('transcription.actionYear')} value={personRoles.actionYear} />
+                                            //                <AssetPropertyElement title={t('transcription.personRole')} value={personRoles.transcriptionPersonRoleTypes.title} />
+                                            //                <AssetPropertyElement title={t('common.remarks')} value={personRoles.remarks} />
+
+                                            //             </Grid>
+                                            //             <Divider />
+                                            //         </Grid>
+                                            //     );
+                                            // }
+                                        }
+                                    </Grid>
+
+                                </Grid>
+
                             )
                         })
                     }
