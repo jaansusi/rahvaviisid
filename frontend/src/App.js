@@ -1,5 +1,4 @@
 import React from 'react';
-import Header from './Components/Header/Header';
 import { Helmet } from "react-helmet-async";
 import './App.css';
 import {
@@ -8,7 +7,8 @@ import {
   Route
 } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
-import Footer from './Components/Footer/Footer';
+
+import { Header, Footer } from './Components/Layout';
 import AssetRouter from './AssetRouter';
 import Login from './Components/Authentication/Login';
 import UseLocalStorageState from './Components/Authentication/UseLocalStorageState';
@@ -16,6 +16,7 @@ import SearchComponent from './Components/Search/SearchComponent';
 import PageComponent from './Components/PageComponent';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import LocationHeader from './Components/Layout/LocationHeader';
 
 function App() {
   const [authentication, setAuthentication] = UseLocalStorageState('user');
@@ -31,6 +32,8 @@ function App() {
         <Header authentication={authentication} setAuthentication={setAuthentication} />
         <Grid
           id='content-container'
+          item
+          xs={12}
           container
           direction='column'
           alignItems='center'
@@ -40,13 +43,12 @@ function App() {
             position="top-right"
             autoClose={5000}
             hideProgressBar
-            newestOnTop={false}
             closeOnClick
-            rtl={false}
             pauseOnFocusLoss
             draggable
             pauseOnHover
           />
+          <LocationHeader />
           <Switch>
             <Route exact path="/">
               <PageComponent name='home' />

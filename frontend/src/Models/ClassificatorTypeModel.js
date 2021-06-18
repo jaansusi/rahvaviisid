@@ -31,7 +31,7 @@ export const ClassificatorsModel =
             models: [
                 {
                     name: 'tune.nation',
-                    url: 'rahvas',
+                    url: 'rahvus',
                     apiPath: 'nations',
                     list: {
                         fields: [
@@ -70,11 +70,6 @@ export const ClassificatorsModel =
                     name: 'tune.state',
                     url: 'viisi-seisund',
                     apiPath: 'tune-states'
-                },
-                {
-                    name: 'tune.genre',
-                    url: 'viisi-liik',
-                    apiPath: 'tune-genres'
                 }
             ]
         },
@@ -118,7 +113,7 @@ export const ClassificatorsModel =
                 },
                 {
                     name: 'place.village',
-                    url: 'küla',
+                    url: 'kyla',
                     apiPath: 'villages'
                 }
             ]
@@ -155,6 +150,11 @@ export const ClassificatorsModel =
                     name: 'song.genre',
                     url: 'laulu-liik',
                     apiPath: 'song-genres'
+                },
+                {
+                    name: 'tune.genre',
+                    url: 'viisi-liik',
+                    apiPath: 'tune-genres'
                 },
                 {
                     name: 'song.topic',

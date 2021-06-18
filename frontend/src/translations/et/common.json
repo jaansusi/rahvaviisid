@@ -1,21 +1,4 @@
 {
-    "common": {
-        "home": "Avaleht",
-        "persons": "Isikud",
-        "tunes": "Viisid",
-        "classificators": "Klassifikaatorid",
-        "title": "Nimetus",
-        "active": "On aktiivne",
-        "description": "Kirjeldus",
-        "back": "Tagasi",
-        "remarks": "Märkused",
-        "id": "ID",
-        "missing": "Puudub",
-        "footer": "Eesti Kirjandusmuuseum",
-        "pid": "PID",
-        "audit": "Logi",
-        "deactivate": "Deaktiveeri"
-    },
     "action": {
         "actions": "Tegevused",
         "view": "Vaata",
@@ -26,185 +9,12 @@
         "kivike": "Ava Kivikeses",
         "save": "Salvesta"
     },
-    "date": {
-        "created": "Loodud",
-        "modified": "Muudetud",
-        "verified": "Kontrollitud"
-    },
-    "person": {
-        "person": "Isik",
-        "pid": "PID",
-        "name": "Nimi",
-        "givenName": "Eesnimi",
-        "surname": "Perekonnanimi",
-        "nickname": "Hüüdnimi",
-        "birthYear": "Sünniaasta",
-        "deathYear": "Surmaaasta",
-        "sex": "Sugu",
-        "role": "Isiku roll"
-    },
-    "tune": {
-        "tuneId": "Viisi ID",
-        "tune": "Viis",
-        "references": "Viited",
-        "tuneReference": "Viisiviide",
-        "textReference": "Tekstiviide",
-        "soundReference": "Heliviide",
-        "videoReference": "Videoviide",
-        "catalogue": "Kartoteek",
-        "nation": "Rahvus",
-        "language": "Keel",
-        "country": "Riik",
-        "state": "Seisund",
-        "genre": "Liik",
-        "publications": "Väljaanded",
-        "remarks": "Märkused",
-        "verifiedBy": "Kontrollija",
-        "verified": "Kontrollimise aeg",
-        "melody": "Meloodia",
-        "words": "Sõnad",
-        "alter": "Alter",
-        "tempo": "Tempo",
-        "clef": "Noodivõti",
-        "noteLength": "Noodi pikkus",
-        "title": "Pealkiri",
-        "author": "Autor",
-        "reference": "Viide",
-        "customInput": "Lisaväljad",
-        "variationTitle": "Variatsioon ",
-        "transcription": "Noodistus",
-        "transcriptions": "Noodistused",
-        "supportSound": "Tugiheli",
-        "height": "Kõrgus",
-        "bar": "Võti",
-        "verification": "Kontrollimine",
-        "archive": "Lisaviited",
-        "rhythmType": "Rütmitüüp",
-        "location": "Asukoht",
-        "duplicate": "Kopeeri",
-        "coding": "Kodeering",
-        "variant": "Variant",
-        "encodings": "Kodeeringud"
-    },
-    "user": {
-        "role": "Kasutaja roll",
-        "email": "E-mail",
-        "firstName": "Eesnimi",
-        "lastName": "Perenimi"
-    },
-    "place": {
-        "place": "Koha andmed",
-        "type": "Koha liik",
-        "parish": "Kihelkond",
-        "municipality": "Vald",
-        "village": "Küla",
-        "other": "Muu koht"
-    },
-    "performance": {
-        "performance": "Esitus",
-        "accompaniment": "Saade",
-        "actual": {
-            "type": "Tegelik esitus",
-            "action": "Tegelik tegevus"
-        },
-        "traditional": {
-            "type": "Traditsiooniline esitus",
-            "action": "Traditsiooniline tegevus"
-        }
-    },
-    "reference": {
-        "label": "Välisviited",
-        "description": "Kirjeldus",
-        "url": "Link"
-    },
-    "song": {
-        "song": "Laul",
-        "genre": "Liik",
-        "topic": "Teema",
-        "verse": "Värsivorm",
-        "songType": "Laulutüüp",
-        "songTitle": "Pealkiri",
-        "firstVerse": "Algusvärss",
-        "refrain": "Refrään",
-        "songGenre": "Laululiik",
-        "tuneGenre": "Viisiliik",
-        "songTopic": "Laulu teema",
-        "verseForm": "Värsivorm"
-    },
     "attribute": {
         "attribute": "Tunnus",
         "textForm": "Teksti vorm",
         "tuneForm": "Viisi vorm",
         "soundRange": "Heliulatus",
         "rhythmType": "Rütmitüüp"
-    },
-    "transcription": {
-        "transcription": "Noodistus",
-        "source": "Noodistuse alus",
-        "personRole": "Tegija roll",
-        "fileReference": "Failiviide",
-        "actionYear": "Tegevuse aasta",
-        "transcriptionPersons": "Noodistusega seotud isikud"
-    },
-    "encoding": {
-        "encoding": "Kodeeringud",
-        "keySignature": "Võtmemärk",
-        "supportSound": "Tugiheli",
-        "pitch": "Kõrgus",
-        "measure": "Taktimõõt",
-        "rhythmType": "Rütmitüüp",
-        "tempo": "Tempo"
-    },
-    "edit": {
-        "save": "Salvesta"
-    },
-    "language": {
-        "current": "EST",
-        "est": "EST",
-        "eng": "ENG"
-    },
-    "model": {
-        "true": "Jah",
-        "false": "Ei"
-    },
-    "tunepersons": {
-        "tunePersonRoleTypes": "Roll",
-        "title": "Viisiga seotud isikud",
-        "actionStartYear": "Tegevuse algusaasta",
-        "actionEndYear": "Tegevuse lõppaasta",
-        "remarks": "Märkused",
-        "nameOrigin": "Nime originaalkuju"
-    },
-    "search": {
-        "referenceOnly": "Otsi ainult viidete järgi",
-        "general": "Otsingu märksõna",
-        "help": "Otsingu abi"
-    },
-    "massMod": {
-        "start": "Alusta massimuutmist",
-        "backToAssets": "Tagasi viiside valikusse",
-        "toValues": "Edasi väärtuste juurde",
-        "backToFields": "Tagasi tulpade juurde",
-        "fieldHeader": "Väli"
-    },
-    "login": {
-        "email": "E-maili aadress",
-        "password": "Parool",
-        "rememberMe": "Mäleta mind",
-        "signIn": "Logi sisse",
-        "forgotPassword": "Unustasin parooli",
-        "invalidCredentials": "Vigane e-mail / parool"
-    },
-    "header": {
-        "login": "Logi sisse",
-        "logout": "Logi välja",
-        "search": "Otsing",
-        "users": "Kasutajad"
-    },
-    "melody": {
-        "abc": "ABC kuju",
-        "export": "Eksport",
-        "import": "Import"
     },
     "audit": {
         "action": "Tegevus",
@@ -221,20 +31,22 @@
         "pitch": "Kõrgus",
         "measure": "Taktimõõt"
     },
-    "musical": {
-        "label": "Muusikalised tunnused",
-        "tune": "Viisi number",
-        "score": "Läbilaulude arv (noot)",
-        "audio": "Läbilaulude arv (heli)",
-        "isVariable": "On varieeruv",
-        "soundRange": "Heliulatus",
-        "tuneForm": "Viisi vorm",
-        "textForm": "Teksti vorm",
-        "rhythmType": "Rütmitüüp"
-    },
-    "notification": {
-        "saved": "Salvestatud",
-        "failed": "Midagi läks valesti"
+    "common": {
+        "home": "Avaleht",
+        "persons": "Isikud",
+        "tunes": "Viisid",
+        "classificators": "Klassifikaatorid",
+        "title": "Nimetus",
+        "active": "On aktiivne",
+        "description": "Kirjeldus",
+        "back": "Tagasi",
+        "remarks": "Märkused",
+        "id": "ID",
+        "missing": "Puudub",
+        "footer": "Eesti Kirjandusmuuseum",
+        "pid": "PID",
+        "audit": "Logi",
+        "deactivate": "Deaktiveeri"
     },
     "datagrid": {
         "noRows": "Tulemusi ei ole",
@@ -301,5 +113,229 @@
         "checkboxSelection": "Märkekasti valik",
         "trueLabel": "Õige",
         "falseLabel": "Vale"
+    },
+    "date": {
+        "created": "Loodud",
+        "modified": "Muudetud",
+        "verified": "Kontrollitud"
+    },
+    "edit": {
+        "save": "Salvesta"
+    },
+    "encoding": {
+        "encoding": "Kodeeringud",
+        "keySignature": "Võtmemärk",
+        "supportSound": "Tugiheli",
+        "pitch": "Kõrgus",
+        "measure": "Taktimõõt",
+        "rhythmType": "Rütmitüüp",
+        "tempo": "Tempo"
+    },
+    "header": {
+        "login": "Logi sisse",
+        "logout": "Logi välja",
+        "search": "Otsing",
+        "users": "Kasutajad"
+    },
+    "massMod": {
+        "start": "Alusta massimuutmist",
+        "backToAssets": "Tagasi viiside valikusse",
+        "toValues": "Edasi väärtuste juurde",
+        "backToFields": "Tagasi tulpade juurde",
+        "fieldHeader": "Väli"
+    },
+    "melody": {
+        "abc": "ABC kuju",
+        "export": "Eksport",
+        "import": "Import"
+    },
+    "model": {
+        "true": "Jah",
+        "false": "Ei"
+    },
+    "musical": {
+        "label": "Muusikalised tunnused",
+        "tune": "Viisi number",
+        "score": "Läbilaulude arv (noot)",
+        "audio": "Läbilaulude arv (heli)",
+        "isVariable": "On varieeruv",
+        "soundRange": "Heliulatus",
+        "tuneForm": "Viisi vorm",
+        "textForm": "Teksti vorm",
+        "rhythmType": "Rütmitüüp"
+    },
+    "notification": {
+        "saved": "Salvestatud",
+        "failed": "Midagi läks valesti"
+    },
+    "language": {
+        "current": "EST",
+        "est": "EST",
+        "eng": "ENG"
+    },
+    "location": {
+        "otsing": "Otsing",
+        "viisid": "Viisid",
+        "isikud": "Isikud",
+        "klassifikaatorid": "Klassifikaatorid",
+        "kasutajad": "Kasutajad",
+        "rahvus": "Rahvus",
+        "keel": "Keel",
+        "riik": "Riik",
+        "viisi-seisund": "Viisi seisund",
+        "viisi-tegija-roll": "Viisi tegija roll",
+        "kasutaja-roll": "Kasutaja roll",
+        "sugu": "Sugu",
+        "koha-liik": "Koha liik",
+        "kihelkond": "Kihelkond",
+        "vald": "Vald",
+        "kyla": "Küla",
+        "tegeliku-esituse-liik": "Tegeliku esituse liik",
+        "traditsioonilise-esituse-liik": "Traditsioonilise esituse liik",
+        "tegeliku-tegevuse-liik": "Tegeliku tegevuse liik",
+        "traditsioonilise-tegevuse-liik": "Traditsioonilise tegevuse liik",
+        "laulu-liik": "Laulu liik",
+        "viisi-liik": "Viisi liik",
+        "laulu-teema": "Laulu teema",
+        "varsivorm": "Värsivorm",
+        "teksti-vorm": "Teksti vorm",
+        "viisi-vorm": "Viisi vorm",
+        "heliulatus": "Heliulatus",
+        "rytmityyp": "Rütmitüüp",
+        "noodistuse-alus": "Noodistuse alus",
+        "noodistuse-tegija-roll": "Noodistuse tegija roll",
+        "votmemark": "Võtmemärk",
+        "tugiheli": "Tugiheli",
+        "korgus": "Kõrgus",
+        "taktimoot": "Taktimõõt"
+    },
+    "login": {
+        "email": "E-maili aadress",
+        "password": "Parool",
+        "rememberMe": "Mäleta mind",
+        "signIn": "Logi sisse",
+        "forgotPassword": "Unustasin parooli",
+        "invalidCredentials": "Vigane e-mail / parool"
+    },
+    "performance": {
+        "performance": "Esitus",
+        "accompaniment": "Saade",
+        "actual": {
+            "type": "Tegelik esitus",
+            "action": "Tegelik tegevus"
+        },
+        "traditional": {
+            "type": "Traditsiooniline esitus",
+            "action": "Traditsiooniline tegevus"
+        }
+    },
+    "person": {
+        "person": "Isik",
+        "pid": "PID",
+        "name": "Nimi",
+        "givenName": "Eesnimi",
+        "surname": "Perekonnanimi",
+        "nickname": "Hüüdnimi",
+        "birthYear": "Sünniaasta",
+        "deathYear": "Surmaaasta",
+        "sex": "Sugu",
+        "role": "Isiku roll"
+    },
+    "place": {
+        "place": "Koha andmed",
+        "type": "Koha liik",
+        "parish": "Kihelkond",
+        "municipality": "Vald",
+        "village": "Küla",
+        "other": "Muu koht"
+    },
+    "reference": {
+        "label": "Välisviited",
+        "description": "Kirjeldus",
+        "url": "Link"
+    },
+    "search": {
+        "referenceOnly": "Otsi ainult viidete järgi",
+        "general": "Otsingu märksõna",
+        "help": "Otsingu abi"
+    },
+    "song": {
+        "song": "Laul",
+        "genre": "Liik",
+        "topic": "Teema",
+        "verse": "Värsivorm",
+        "songType": "Laulutüüp",
+        "songTitle": "Pealkiri",
+        "firstVerse": "Algusvärss",
+        "refrain": "Refrään",
+        "songGenre": "Laululiik",
+        "tuneGenre": "Viisiliik",
+        "songTopic": "Laulu teema",
+        "verseForm": "Värsivorm"
+    },
+    "transcription": {
+        "transcription": "Noodistus",
+        "source": "Noodistuse alus",
+        "personRole": "Tegija roll",
+        "fileReference": "Failiviide",
+        "actionYear": "Tegevuse aasta",
+        "transcriptionPersons": "Noodistusega seotud isikud"
+    },
+    "tune": {
+        "tuneId": "Viisi ID",
+        "tune": "Viis",
+        "references": "Viited",
+        "tuneReference": "Viisiviide",
+        "textReference": "Tekstiviide",
+        "soundReference": "Heliviide",
+        "videoReference": "Videoviide",
+        "catalogue": "Kartoteek",
+        "nation": "Rahvus",
+        "language": "Keel",
+        "country": "Riik",
+        "state": "Seisund",
+        "genre": "Liik",
+        "publications": "Väljaanded",
+        "remarks": "Märkused",
+        "verifiedBy": "Kontrollija",
+        "verified": "Kontrollimise aeg",
+        "melody": "Meloodia",
+        "words": "Sõnad",
+        "alter": "Alter",
+        "tempo": "Tempo",
+        "clef": "Noodivõti",
+        "noteLength": "Noodi pikkus",
+        "title": "Pealkiri",
+        "author": "Autor",
+        "reference": "Viide",
+        "customInput": "Lisaväljad",
+        "variationTitle": "Variatsioon ",
+        "transcription": "Noodistus",
+        "transcriptions": "Noodistused",
+        "supportSound": "Tugiheli",
+        "height": "Kõrgus",
+        "bar": "Võti",
+        "verification": "Kontrollimine",
+        "archive": "Lisaviited",
+        "rhythmType": "Rütmitüüp",
+        "location": "Asukoht",
+        "duplicate": "Kopeeri",
+        "coding": "Kodeering",
+        "variant": "Variant",
+        "encodings": "Kodeeringud"
+    },
+    "tunepersons": {
+        "tunePersonRoleTypes": "Roll",
+        "title": "Viisiga seotud isikud",
+        "actionStartYear": "Tegevuse algusaasta",
+        "actionEndYear": "Tegevuse lõppaasta",
+        "remarks": "Märkused",
+        "nameOrigin": "Nime originaalkuju"
+    },
+    "user": {
+        "role": "Kasutaja roll",
+        "email": "E-mail",
+        "firstName": "Eesnimi",
+        "lastName": "Perenimi"
     }
 }

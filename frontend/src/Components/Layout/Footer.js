@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Grid } from '@material-ui/core';
 import './Footer.css';
 
-const Footer = (() => {
+const Footer = () => {
     const { t } = useTranslation('common');
 
     return (
@@ -18,8 +18,8 @@ const Footer = (() => {
             </Grid>
         </Grid>
     );
-});
+};
 
 
 
-export default Footer;
+export { Footer };

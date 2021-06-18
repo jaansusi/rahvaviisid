@@ -74,4 +74,4 @@ const Header = ({ authentication, setAuthentication }) => {
 
 
 
-export default Header;
+export { Header };
