@@ -10,8 +10,6 @@ import {
 import Grid from '@material-ui/core/Grid';
 import Footer from './Components/Footer/Footer';
 import AssetRouter from './AssetRouter';
-import 'react-notifications/lib/notifications.css';
-import { NotificationContainer } from 'react-notifications';
 import Login from './Components/Authentication/Login';
 import UseLocalStorageState from './Components/Authentication/UseLocalStorageState';
 import SearchComponent from './Components/Search/SearchComponent';
@@ -68,7 +66,6 @@ function App() {
           </Switch>
         </Grid>
         <Footer />
-        <NotificationContainer />
       </Router>
     </>
   );
