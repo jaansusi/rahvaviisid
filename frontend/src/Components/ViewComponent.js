@@ -16,14 +16,23 @@ const ViewComponent = ({ model }) => {
             [event.name]: event.value,
         };
     };
-    let [formData, setFormData] = useReducer(
+    let [assetData, setAssetData] = useReducer(
         formReducer,
         {}
     );
     let [isLoading, setIsLoading] = useState(true);
     useEffect(() => {
         console.log(model);
-        DataService.RequestAsset(model, id, setFormData, setIsLoading);
+        DataService.RequestAsset(model, id)
+            .then(asset => {
+                for (const key in asset) {
+                    setAssetData({
+                        'name': key,
+                        'value': asset[key]
+                    });
+                }
+            })
+            .then(() => setIsLoading(false));
     }, [id, model]);
     return (
         isLoading ?
@@ -33,7 +42,7 @@ const ViewComponent = ({ model }) => {
             <>
                 <Actions apiPath={model.apiPath} id={id} currentView='view' />
                 <Grid item>
-                    <ViewDataFragment model={model} elementData={formData} />
+                    <ViewDataFragment model={model} elementData={assetData} />
                 </Grid>
             </>
     );

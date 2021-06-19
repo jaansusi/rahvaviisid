@@ -23,14 +23,12 @@ const EditComponent = ({ model, newItem }) => {
     };
     let { id } = useParams();
 
-    let [elementData, setElementData] = useReducer(
-        formReducer,
-        DataService.CreateEmptyDataObject(model.fields)
-    );
+    const [assetData, setAssetData] = useReducer(formReducer, {});
 
-    let [submitting, setSubmitting] = useState(false);
-    let [updatedModel, setUpdatedModel] = useState(model);
-    let [isLoading, setIsLoading] = useState(true);
+    const [submitting, setSubmitting] = useState(false);
+    const [updatedModel, setUpdatedModel] = useState(model);
+    const [isLoading, setIsLoading] = useState(true);
+
     useEffect(() => {
         let retrievedValues = [];
         let getDropdowns = (currentModel) => {
@@ -44,7 +42,6 @@ const EditComponent = ({ model, newItem }) => {
                                 // Set the "values" field of the model as the result, this way, the choice input is passed on with the model
                                 return { name: field.field, data: result.data };
                             });
-
                     }
                     let selection = [];
                     if (field.edit) {
@@ -57,33 +54,44 @@ const EditComponent = ({ model, newItem }) => {
                 });
         }
         let modelPromises = getDropdowns(model).flat(100);
-        Promise.all(modelPromises).then((x) => {
-            x = x.filter((x) => x !== undefined);
-            setUpdatedModel(recurseModelValues(model, x));
+        Promise.all(modelPromises).then((options) => {
+            options = options.filter((x) => x !== undefined);
+            setUpdatedModel(recurseModelValues(model, options));
             if (newItem) {
-                setElementData(DataService.CreateEmptyDataObject(model.fields));
+                console.log(id);
+                let assetPromise = id ?
+                    DataService.RequestAsset(model, id) :
+                    DataService.CreateEmptyDataObject(model.fields);
+                assetPromise
+                    .then(asset => {
+                        for (const key in asset) {
+                            setAssetData({
+                                'name': key,
+                                'value': asset[key]
+                            });
+                        }
+                    })
+                    .then(() => setIsLoading(false));
             } else {
                 // Retrieve the data
-                axios
-                    .get(config.apiUrl + '/' + model.apiPath + '/' + id + '?filter=' + encodeURIComponent(JSON.stringify(DataService.CreateIncludeFilter(model))))
-                    .then((result) => {
-                        // Start the model mapping
-                        DataService.MapResponseToModel(result.data, model, setElementData);
+                DataService.RequestAsset(model, id)
+                    .then(asset => {
+                        for (const key in asset) {
+                            setAssetData({
+                                'name': key,
+                                'value': asset[key]
+                            });
+                        }
                     })
-                    .then(() => {
-                        setIsLoading(false);
-                    });
+                    .then(() => { setIsLoading(false) });
             }
-
         });
     }, [id, model, newItem]);
 
     const handleSubmit = (event) => {
         event.preventDefault();
         setSubmitting(true);
-
-        submitData(model, elementData);
-
+        submitData(model, assetData);
         setSubmitting(false);
     };
 
@@ -164,7 +172,7 @@ const EditComponent = ({ model, newItem }) => {
 
     const handleChange = (event) => {
         const { name, value, type } = event.target;
-        setElementData({
+        setAssetData({
             name: name,
             // Numbers need to be sent as actual numeric values, not strings
             value: type === 'number' ? parseInt(value, 10) : value,
@@ -184,7 +192,7 @@ const EditComponent = ({ model, newItem }) => {
             <form onSubmit={handleSubmit}>
                 <EditDataFragment
                     model={updatedModel}
-                    elementData={elementData}
+                    elementData={assetData}
                     handleChange={handleChange}
                 />
                 <Grid item xs className="form-edit-item">

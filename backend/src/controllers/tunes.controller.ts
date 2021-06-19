@@ -21,7 +21,7 @@ import {
   del,
   requestBody,
 } from '@loopback/rest';
-import {Tunes} from '../models';
+import {MusicalCharacteristics, TuneEncodings, TunePerformances, Tunes} from '../models';
 import {
   ActualPerformanceTypesRepository,
   ExternalReferencesRepository,
@@ -83,6 +83,8 @@ export class TunesController {
       content: {
         'application/json': {
           schema: getModelSchemaRef(Tunes, {
+            includeRelations: true,
+            partial: 'deep',
             title: 'NewTunes',
             exclude: ['id'],
           }),
@@ -91,6 +93,94 @@ export class TunesController {
     })
     tunes: Omit<Tunes, 'id'>,
   ): Promise<Tunes> {
+    //IMPORTANT: If you make any changes here, you need to also change updateById function!
+    let createNestedAsset = (
+      assets: any[] | undefined,
+      repository: DefaultCrudRepository<any, number, object>,
+    ) => {
+      assets?.forEach((x: any) => {
+        repository.create(x);
+      });
+    };
+    if (tunes.tunePerformances !== undefined) {
+      tunes.tunePerformances.forEach((performance: TunePerformances) => {
+        if (performance.actualPerformanceTypes !== undefined) {
+          createNestedAsset(
+            [performance.actualPerformanceTypes],
+            this.actualPerformanceTypesRepository,
+          );
+        }
+      });
+      delete tunes.tunePerformances;
+    }
+    if (tunes.tunePlaces !== undefined) {
+      createNestedAsset(tunes.tunePlaces, this.tunePlacesRepository);
+      delete tunes.tunePlaces;
+    }
+    if (tunes.tuneSongs !== undefined) {
+      createNestedAsset(tunes.tuneSongs, this.tuneSongsRepository);
+      delete tunes.tuneSongs;
+    }
+    if (tunes.tunesPersonsRoles !== undefined) {
+      createNestedAsset(
+        tunes.tunesPersonsRoles,
+        this.tunesPersonsRolesRepository,
+      );
+      delete tunes.tunesPersonsRoles;
+    }
+    if (tunes.tuneEncodings !== undefined) {
+      tunes.tuneEncodings.forEach((tuneEncodings: TuneEncodings, i: number) => {
+        createNestedAsset(
+          tuneEncodings.tuneMelodies,
+          this.tuneMelodiesRepository,
+        );
+        if (tunes.tuneEncodings)
+          delete tunes.tuneEncodings[i].tuneMelodies;
+      });
+      createNestedAsset(
+        tunes.tuneEncodings,
+        this.tuneEncodingsRepository,
+      );
+      delete tunes.tuneEncodings;
+    }
+
+    if (tunes.tuneTranscriptions !== undefined) {
+      createNestedAsset(
+        tunes.tuneTranscriptions,
+        this.tuneTranscriptionsRepository,
+      );
+      delete tunes.tuneTranscriptions;
+    }
+
+    if (tunes.musicalCharacteristics !== undefined) {
+      tunes.musicalCharacteristics.forEach((musicalCharacteristics: MusicalCharacteristics, i: number) => {
+        createNestedAsset(
+          musicalCharacteristics.rhythmTypes,
+          this.musicalCharacteristicsRepository,
+        );
+        if (
+          musicalCharacteristics.soundRangeId &&
+          musicalCharacteristics.soundRanges
+        )
+          this.soundRangesRepository.updateById(
+            musicalCharacteristics.soundRangeId,
+            musicalCharacteristics.soundRanges,
+          );
+        if (tunes.musicalCharacteristics) {
+          delete tunes.musicalCharacteristics[i].rhythmTypes;
+          delete tunes.musicalCharacteristics[i].soundRanges;
+        }
+      });
+      createNestedAsset(
+        tunes.musicalCharacteristics,
+        this.musicalCharacteristicsRepository,
+      );
+      delete tunes.musicalCharacteristics;
+    }
+    if (tunes.externalReferences !== undefined) {
+      createNestedAsset(tunes.externalReferences, this.externalReferencesRepository);
+      delete tunes.externalReferences;
+    }
     return this.tunesRepository.create(tunes);
   }
 
@@ -123,33 +213,6 @@ export class TunesController {
   })
   async find(@param.filter(Tunes) filter?: Filter<Tunes>): Promise<Tunes[]> {
     return this.tunesRepository.find(filter);
-  }
-
-  @patch('/tunes', {
-    responses: {
-      '200': {
-        description: 'Tunes PATCH success count',
-        content: {'application/json': {schema: CountSchema}},
-      },
-    },
-  })
-  @authenticate('jwt')
-  @authorize({
-    allowedRoles: ['admin', 'editor'],
-    voters: [basicAuthorization],
-  })
-  async updateAll(
-    @requestBody({
-      content: {
-        'application/json': {
-          schema: getModelSchemaRef(Tunes, {partial: true}),
-        },
-      },
-    })
-    tunes: Tunes,
-    @param.where(Tunes) where?: Where<Tunes>,
-  ): Promise<Count> {
-    return this.tunesRepository.updateAll(tunes, where);
   }
 
   @get('/tunes/{id}', {
@@ -198,6 +261,7 @@ export class TunesController {
     })
     tunes: Tunes,
   ): Promise<void> {
+    //IMPORTANT: If you make any changes here, you need to also change create function!
     let updateNestedAsset = (
       assets: any[] | undefined,
       repository: DefaultCrudRepository<any, number, object>,
@@ -208,10 +272,6 @@ export class TunesController {
         repository.updateById(x.id, x);
       });
     };
-    // if (tunes.tuneEncodings !== undefined) {
-    //   updateNestedAsset(tunes.tuneEncodings, this.tuneEncodingsRepository);
-    //   delete tunes.tuneEncodings;
-    // }
     if (tunes.tunePerformances !== undefined) {
       tunes.tunePerformances.forEach(performance => {
         if (performance.actualPerformanceTypes !== undefined) {
@@ -293,25 +353,6 @@ export class TunesController {
     }
 
     await this.tunesRepository.updateById(id, tunes);
-  }
-
-  @put('/tunes/{id}', {
-    responses: {
-      '204': {
-        description: 'Tunes PUT success',
-      },
-    },
-  })
-  @authenticate('jwt')
-  @authorize({
-    allowedRoles: ['admin', 'editor'],
-    voters: [basicAuthorization],
-  })
-  async replaceById(
-    @param.path.number('id') id: number,
-    @requestBody() tunes: Tunes,
-  ): Promise<void> {
-    await this.tunesRepository.replaceById(id, tunes);
   }
 
   @del('/tunes/{id}', {

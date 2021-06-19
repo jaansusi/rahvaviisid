@@ -2,31 +2,13 @@ import axios from "axios";
 import config from "../config";
 
 export const DataService = {
-    RequestAsset(model, id, setFormData, setIsLoading) {
-        axios
+    RequestAsset(model, id) {
+        return axios
             .get(config.apiUrl + '/' + model.apiPath + '/' + id + '?filter=' + encodeURIComponent(JSON.stringify(this.CreateIncludeFilter(model))))
-            .then((result) => {
-                // Start the model mapping
-                this.MapResponseToModel(result.data, model, setFormData);
-                model.fields
-                    .map((field, i) => {
-                        if (field.type === 'external' && result[field.field] !== undefined) {
-                            return axios
-                                .get(config.apiUrl + '/' + field.apiPath + '/' + result[field.field])
-                                .then((result) => {
-                                    // Set the "values" field of the model as the result, this way, the choice input is passed on with the model
-                                    model.fields[i].values = result.data;
-                                });
-                        }
-                        return undefined;
-                    })
-                    .filter((x) => x !== undefined);
-                if (setIsLoading)
-                    setIsLoading(false);
-            });
+            .then((result) => this.MapResponseToModel(result.data, model));
     },
 
-    MapResponseToModel(data, model, setFormData) {
+    MapResponseToModel(data, model) {
         // Create a recursive function to model this object to react
         let setData = (data, currentModel, nested) => {
             let obj = {};
@@ -59,14 +41,6 @@ export const DataService = {
                     }
                 }
 
-                // If the function is not marked as nested, just set the value and be done with it
-                if (!nested) {
-                    setFormData({
-                        name: modelElem.field,
-                        value: fieldValue,
-                    });
-                }
-                // Otherwise assign the nested value to the original field..
                 obj[modelElem.field] = fieldValue;
             });
 
@@ -75,7 +49,7 @@ export const DataService = {
         };
 
         // Start the model mapping
-        setData(data, model, false);
+        return setData(data, model, false);
     },
 
     CreateIncludeFilter(model) {
@@ -97,6 +71,9 @@ export const DataService = {
         return recursiveFun(model);
     },
     CreateEmptyDataObject(currentModel) {
+        return new Promise(resolve => resolve(this.SyncCreateEmptyDataObject(currentModel)));
+    },
+    SyncCreateEmptyDataObject(currentModel) {
         let arr = currentModel.map((elem) => [
             elem.field,
             // Run an IIFE since we don't need a defined function here and a one-liner would be too confusing
@@ -107,9 +84,9 @@ export const DataService = {
                 if (elem.selector !== undefined)
                     value = {};
                 if (elem.nested !== undefined)
-                    value = this.CreateEmptyDataObject(elem.nested.fields);
+                    value = this.SyncCreateEmptyDataObject(elem.nested.fields);
                 if (elem.edit !== undefined)
-                    value = this.CreateEmptyDataObject(elem.edit.fields);
+                    value = this.SyncCreateEmptyDataObject(elem.edit.fields);
 
                 // If the model field has a type defined, assign it here.
                 switch (elem.type) {
@@ -131,7 +108,6 @@ export const DataService = {
         let model = new Map(arr);
         return Object.fromEntries(model);
     },
-
     GetMelody(id) {
         return axios
             .get(config.apiUrl + '/tune-melodies/' + id)

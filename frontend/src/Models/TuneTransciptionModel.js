@@ -1,5 +1,4 @@
 import { ModelService } from '../Services';
-import { TuneMelodyModel } from '.';
 
 export const TuneTranscriptionModel = ModelService.GenerateDefaults({
     table: {

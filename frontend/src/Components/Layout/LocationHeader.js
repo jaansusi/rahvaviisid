@@ -9,8 +9,8 @@ const LocationHeader = ({ location }) => {
     const { t } = useTranslation('common');
     const separator = ' - ';
     const path = location.pathname.slice(1).split('/');
-    //Special case
-    if (path[0] === 'login')
+    //Special cases
+    if (['', 'login', 'otsing'].includes(path[0]))
         return null;
     let translatedString = '';
     if (path.length > 2) {

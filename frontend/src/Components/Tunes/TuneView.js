@@ -2,7 +2,7 @@ import React, { useEffect, useReducer, useState } from 'react';
 import { Button, Divider, Grid, Typography } from '@material-ui/core';
 import { useParams } from 'react-router';
 import { AuthService, DataService } from '../../Services';
-import { ExternalReferenceModel, TuneEncodingModel, TuneModel, TunePerformancesModel, TunePersonsModel, TunePlaceModel, TuneSongsModel, TuneTranscriptionModel } from '../../Models';
+import { ExternalReferenceModel, TuneModel, TunePerformancesModel, TunePersonsModel, TunePlaceModel, TuneSongsModel } from '../../Models';
 import { useTranslation } from 'react-i18next';
 import { PlayerViewComponent, TableViewComponent } from '../NewComponents';
 import Actions from '../Buttons/Actions';
@@ -22,7 +22,16 @@ const TuneView = () => {
     let [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        DataService.RequestAsset(TuneModel.view, id, setAssetData, setIsLoading);
+        DataService.RequestAsset(TuneModel.view, id)
+            .then(asset => {
+                for (const key in asset) {
+                    setAssetData({
+                        'name': key,
+                        'value': asset[key]
+                    });
+                }
+            })
+            .then(() => setIsLoading(false));
     }, [id]);
 
     if (isLoading)
@@ -43,7 +52,7 @@ const TuneView = () => {
                                     <Button href={'audit'} variant="outlined" color="primary">{t('common.audit')}</Button>
                                 </Grid>
                                 <Grid item>
-                                    <Button onClick={() => alert('Varsti tuleb')} variant="outlined" color="primary">{t('tune.duplicate')}</Button>
+                                    <Button href={'kopeeri'} variant="outlined" color="primary">{t('tune.duplicate')}</Button>
                                 </Grid>
                             </> :
                             undefined
@@ -179,13 +188,15 @@ const TuneView = () => {
                                     <Grid item container direction='column' spacing={2}>
                                         {
                                             <AssetPropertyTableElement label={t('transcription.transcriptionPersons')} model={
-                                                {fields: [
-                                                    {field: 'name', headerName: t('person.name')},
-                                                    {field: 'actionYear', headerName: t('transcription.actionYear')},
-                                                    {field: 'roleType', headerName: t('transcription.personRole')},
-                                                    {field: 'remarks', headerName: t('common.remarks') },
-                                                    
-                                                ]}
+                                                {
+                                                    fields: [
+                                                        { field: 'name', headerName: t('person.name') },
+                                                        { field: 'actionYear', headerName: t('transcription.actionYear') },
+                                                        { field: 'roleType', headerName: t('transcription.personRole') },
+                                                        { field: 'remarks', headerName: t('common.remarks') },
+
+                                                    ]
+                                                }
                                             } data={
                                                 transcription.transcriptionsPersonsRoles?.map((personRoles, j) => {
                                                     return {

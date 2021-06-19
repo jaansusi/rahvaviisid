@@ -1,11 +1,10 @@
 import { Button, Checkbox, Collapse, FormControl, FormControlLabel, Grid, InputLabel, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@material-ui/core';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { DataService, TuneService } from '../../Services';
 import EditDataFragment from '../Fragments/EditDataFragment';
 import { PlayerViewComponent } from '../NewComponents';
 import './Css/EditFormElement.css';
-
 
 const EditDataElement = (({ model, elemValue, handleChange, index }) => {
     const { t } = useTranslation('common');
@@ -113,7 +112,7 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
         case 'table':
             let addEntryToTable = () => {
                 setExpanded(elemValue.length);
-                elemValue.push(DataService.CreateEmptyDataObject(model.edit.fields));
+                elemValue.push(DataService.SyncCreateEmptyDataObject(model.edit.fields))
                 console.log(elemValue);
             };
             let deleteEntryFromTable = (i) => {
