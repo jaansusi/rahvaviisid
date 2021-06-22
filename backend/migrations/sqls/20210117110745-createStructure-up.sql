@@ -254,10 +254,10 @@ CREATE INDEX IX_tunes_users ON folk_tune.tunes (verified_by)
 
 CREATE UNIQUE INDEX IX_tunes_references ON folk_tune.tunes 
 (
-    COALESCE(tune_reference, 'NULL'),
-    COALESCE(text_reference, 'NULL'),
-    COALESCE(sound_reference, 'NULL'),
-    COALESCE(video_reference, 'NULL')
+    COALESCE(tune_reference, NULL),
+    COALESCE(text_reference, NULL),
+    COALESCE(sound_reference, NULL),
+    COALESCE(video_reference, NULL)
 )
 ;
 

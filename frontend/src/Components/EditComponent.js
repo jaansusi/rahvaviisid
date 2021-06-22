@@ -96,6 +96,7 @@ const EditComponent = ({ model, newItem }) => {
     };
 
     // Function for submitting form data to API
+    // to-do: clean up or add comments
     let submitData = (currentModel, data) => {
         let recurse = (recursedModel, recursedData) => {
             let requestObject = {};
@@ -127,11 +128,11 @@ const EditComponent = ({ model, newItem }) => {
         }
         let objToSend = recurse(currentModel, Object.assign({}, data));
         if (newItem) {
-            // No DB entry exists, use post request
+            // No DB entry exists, remove ID fields (if they exist) and use post request
             axios
                 .post(
                     config.apiUrl + '/' + currentModel.apiPath,
-                    objToSend,
+                    removeObjectIds(objToSend),
                     {
                         headers: {
                             'Content-Type': 'application/json',
@@ -226,6 +227,18 @@ const recurseModelValues = (currentModel, options) => {
             return field;
         });
     return currentModel;
+}
+
+const removeObjectIds = obj => {
+    for (var key in obj) {
+        if (!obj.hasOwnProperty(key)) continue;
+        if (typeof obj[key] == 'object' || Array.isArray(obj[key])) {
+            removeObjectIds(obj[key]);
+        } else if (key === 'id') {
+            delete obj.id;
+        }
+    }
+    return obj;
 }
 
 export default EditComponent;
