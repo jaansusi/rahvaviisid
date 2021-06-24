@@ -7,8 +7,8 @@ CREATE TABLE folk_tune.audit_log
     action_key text NOT NULL,
     entity_id integer NOT NULL,
     actor_id uuid NOT NULL,
-    before jsonb NOT NULL,
-    after jsonb NOT NULL,
+    before jsonb,
+    after jsonb,
     PRIMARY KEY (id)
 );
 

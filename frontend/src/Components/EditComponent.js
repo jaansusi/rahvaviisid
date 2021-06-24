@@ -58,7 +58,6 @@ const EditComponent = ({ model, newItem }) => {
             options = options.filter((x) => x !== undefined);
             setUpdatedModel(recurseModelValues(model, options));
             if (newItem) {
-                console.log(id);
                 let assetPromise = id ?
                     DataService.RequestAsset(model, id) :
                     DataService.CreateEmptyDataObject(model.fields);
@@ -100,19 +99,21 @@ const EditComponent = ({ model, newItem }) => {
     let submitData = (currentModel, data) => {
         let recurse = (recursedModel, recursedData) => {
             let requestObject = {};
+            //Iterate over each property in the current MODEL
             for (let modelKey in recursedModel.fields) {
+                //Get the current element in MODEL
                 let modelElem = recursedModel.fields[modelKey];
                 if (modelElem !== undefined) {
                     if (modelElem.edit !== undefined) {
+                        //Check if DATA is an array
                         if (Array.isArray(recursedData[modelElem.field])) {
-                            requestObject[modelElem.field] = [];
-                            recursedData[modelElem.field].forEach((dataArrayElem, i) => {
-                                requestObject[modelElem.field].push(recurse(modelElem.edit, dataArrayElem));
+                            requestObject[modelElem.field] = recursedData[modelElem.field].map(dataArrayElem => {
+                                return recurse(modelElem.edit, dataArrayElem);
                             });
                         }
                         else
                             requestObject[modelElem.field] = recurse(modelElem.edit, recursedData[modelElem.field]);
-                    } else if (recursedData[modelElem.field] !== '') {
+                    } else if (recursedData && recursedData[modelElem.field] !== '') {
                         switch (modelElem.type) {
                             case 'number':
                                 requestObject[modelElem.field] = parseInt(recursedData[modelElem.field], 10);
@@ -140,8 +141,8 @@ const EditComponent = ({ model, newItem }) => {
                     }
                 )
                 .then((resData) => {
-                    console.log(resData);
-                    history.push('.');
+                    toast.success(t('notification.saved'));
+                    history.push('../' + resData.data.id + '/vaata');
                 })
                 .catch((error) => {
                     console.log(error.response.data.error);

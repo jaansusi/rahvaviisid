@@ -22,10 +22,16 @@ import {
   requestBody,
 } from '@loopback/rest';
 import {
+  ActualPerformanceTypes,
+  ExternalReferences,
   MusicalCharacteristics,
   TuneEncodings,
   TunePerformances,
+  TunePlaces,
   Tunes,
+  TuneSongs,
+  TunesPersonsRoles,
+  TuneTranscriptions,
 } from '../models';
 import {
   ActualPerformanceTypesRepository,
@@ -104,131 +110,7 @@ export class TunesController {
     })
     tunes: Omit<Tunes, 'id'>,
   ): Promise<Tunes> {
-    //-------------------
-    //IMPORTANT: If you make any changes here, you need to also change updateById function!
-    //-------------------
-
-    //We need the tune created first, but for that, it can't have any nested "navigational" objects in it
-    //so let's just assign them to variables for later use
-    let externalReferences = tunes.externalReferences;
-    delete tunes.externalReferences;
-    let musicalCharacteristics = tunes.musicalCharacteristics;
-    delete tunes.musicalCharacteristics;
-    let tuneTranscriptions = tunes.tuneTranscriptions;
-    delete tunes.tuneTranscriptions;
-    let tuneEncodings = tunes.tuneEncodings;
-    delete tunes.tuneEncodings;
-    let tunesPersonsRoles = tunes.tunesPersonsRoles;
-    delete tunes.tunesPersonsRoles;
-    let tuneSongs = tunes.tuneSongs;
-    delete tunes.tuneSongs;
-    let tunePlaces = tunes.tunePlaces;
-    delete tunes.tunePlaces;
-    let tunePerformances = tunes.tunePerformances;
-    delete tunes.tunePerformances;
-
-    console.log(tunes);
-    //First we need the actual tune so we can link through it's ID
-    let createdTunes = await this.tunesRepository.create(tunes);
-    return createdTunes;
-    if (tunes.externalReferences !== undefined) {
-      this.insertNestedAsset(
-        tunes.externalReferences,
-        this.externalReferencesRepository,
-        createdTunes.id,
-      );
-    }
-
-    if (tunes.musicalCharacteristics !== undefined) {
-      let musicalCharacteristics = await this.insertNestedAsset(
-        tunes.musicalCharacteristics,
-        this.musicalCharacteristicsRepository,
-        createdTunes.id,
-      );
-      musicalCharacteristics.forEach(
-        (musicalCharacteristics: MusicalCharacteristics, i: number) => {
-          let rhythmTypesPromise = this.insertNestedAsset(
-            musicalCharacteristics.rhythmTypes,
-            this.rhythmTypesRepository,
-          );
-          rhythmTypesPromise.then(rhythmTypes => {
-            rhythmTypes.forEach(rhythmType => {
-              this.insertNestedAsset(
-                rhythmType,
-                this.rhythmTypesRepository,
-                musicalCharacteristics.id,
-                'musicalCharacteristicsId',
-                this.musicalCharacteristicsRhythmTypesRepository,
-                'rhythmTypesId'
-              )
-            });
-          });
-          if (
-            musicalCharacteristics.soundRangeId &&
-            musicalCharacteristics.soundRanges
-          )
-            this.soundRangesRepository.create(
-              musicalCharacteristics.soundRanges,
-            );
-          if (tunes.musicalCharacteristics) {
-            delete tunes.musicalCharacteristics[i].rhythmTypes;
-            delete tunes.musicalCharacteristics[i].soundRanges;
-          }
-        },
-      );
-      delete tunes.musicalCharacteristics;
-    }
-
-    // if (tunes.tuneTranscriptions !== undefined) {
-    //   createNestedAsset(
-    //     tunes.tuneTranscriptions,
-    //     this.tuneTranscriptionsRepository,
-    //   );
-    //   
-    // }
-
-    // if (tunes.tuneEncodings !== undefined) {
-    //   tunes.tuneEncodings.forEach((tuneEncodings: TuneEncodings, i: number) => {
-    //     createNestedAsset(
-    //       tuneEncodings.tuneMelodies,
-    //       this.tuneMelodiesRepository,
-    //     );
-    //     if (tunes.tuneEncodings) delete tunes.tuneEncodings[i].tuneMelodies;
-    //   });
-    //   createNestedAsset(tunes.tuneEncodings, this.tuneEncodingsRepository);
-    //   
-    // }
-
-    // if (tunes.tunesPersonsRoles !== undefined) {
-    //   createNestedAsset(
-    //     tunes.tunesPersonsRoles,
-    //     this.tunesPersonsRolesRepository,
-    //   );
-    // }
-
-    // if (tunes.tuneSongs !== undefined) {
-    //   createNestedAsset(tunes.tuneSongs, this.tuneSongsRepository);
-    //   
-    // }
-
-    // if (tunes.tunePlaces !== undefined) {
-    //   createNestedAsset(tunes.tunePlaces, this.tunePlacesRepository);
-    //   
-    // }
-
-    // if (tunes.tunePerformances !== undefined) {
-    //   tunes.tunePerformances.forEach((performance: TunePerformances) => {
-    //     if (performance.actualPerformanceTypes !== undefined) {
-    //       createNestedAsset(
-    //         [performance.actualPerformanceTypes],
-    //         this.actualPerformanceTypesRepository,
-    //       );
-    //     }
-    //   });
-    //   
-    // }
-
-    return createdTunes;
+    return this.insertTune(tunes);
   }
 
   @get('/tunes/count', {
@@ -308,89 +190,7 @@ export class TunesController {
     })
     tunes: Tunes,
   ): Promise<void> {
-    //-------------------
-    //IMPORTANT: If you make any changes here, you need to also change create function!
-    //-------------------
-    if (tunes.tunePerformances !== undefined) {
-      tunes.tunePerformances.forEach(performance => {
-        if (performance.actualPerformanceTypes !== undefined) {
-          this.insertNestedAsset(
-            [performance.actualPerformanceTypes],
-            this.actualPerformanceTypesRepository,
-          );
-        }
-      });
-      delete tunes.tunePerformances;
-    }
-    if (tunes.tunePlaces !== undefined) {
-      this.insertNestedAsset(tunes.tunePlaces, this.tunePlacesRepository);
-      delete tunes.tunePlaces;
-    }
-    if (tunes.tuneSongs !== undefined) {
-      this.insertNestedAsset(tunes.tuneSongs, this.tuneSongsRepository);
-      delete tunes.tuneSongs;
-    }
-    if (tunes.tunesPersonsRoles !== undefined) {
-      this.insertNestedAsset(
-        tunes.tunesPersonsRoles,
-        this.tunesPersonsRolesRepository,
-      );
-      delete tunes.tunesPersonsRoles;
-    }
-    if (tunes.tuneEncodings !== undefined) {
-      tunes.tuneEncodings.forEach((tuneEncodings, i) => {
-        this.insertNestedAsset(
-          tuneEncodings.tuneMelodies,
-          this.tuneMelodiesRepository,
-        );
-        if (tunes.tuneEncodings) delete tunes.tuneEncodings[i].tuneMelodies;
-      });
-      this.insertNestedAsset(tunes.tuneEncodings, this.tuneEncodingsRepository);
-      delete tunes.tuneEncodings;
-    }
-
-    if (tunes.tuneTranscriptions !== undefined) {
-      this.insertNestedAsset(
-        tunes.tuneTranscriptions,
-        this.tuneTranscriptionsRepository,
-      );
-      delete tunes.tuneTranscriptions;
-    }
-
-    if (tunes.musicalCharacteristics !== undefined) {
-      tunes.musicalCharacteristics.forEach((musicalCharacteristics, i) => {
-        this.insertNestedAsset(
-          musicalCharacteristics.rhythmTypes,
-          this.musicalCharacteristicsRepository,
-        );
-        if (
-          musicalCharacteristics.soundRangeId &&
-          musicalCharacteristics.soundRanges
-        )
-          this.soundRangesRepository.updateById(
-            musicalCharacteristics.soundRangeId,
-            musicalCharacteristics.soundRanges,
-          );
-        if (tunes.musicalCharacteristics) {
-          delete tunes.musicalCharacteristics[i].rhythmTypes;
-          delete tunes.musicalCharacteristics[i].soundRanges;
-        }
-      });
-      this.insertNestedAsset(
-        tunes.musicalCharacteristics,
-        this.musicalCharacteristicsRepository,
-      );
-      delete tunes.musicalCharacteristics;
-    }
-    if (tunes.externalReferences !== undefined) {
-      this.insertNestedAsset(
-        tunes.externalReferences,
-        this.externalReferencesRepository,
-      );
-      delete tunes.externalReferences;
-    }
-
-    await this.tunesRepository.updateById(id, tunes);
+    this.insertTune(tunes);
   }
 
   @del('/tunes/{id}', {
@@ -409,30 +209,150 @@ export class TunesController {
     await this.tunesRepository.deleteById(id);
   }
 
+  private async insertTune(
+    tune: Tunes | Omit<Tunes, 'id'>
+  ): Promise<Tunes> {
+    //We need the tune created first, but for that, it can't have any nested "navigational" objects in it
+    //so let's just assign them to variables for later use
+    let externalReferences = tune.externalReferences;
+    delete tune.externalReferences;
+    let musicalCharacteristics = tune.musicalCharacteristics;
+    delete tune.musicalCharacteristics;
+    let tuneTranscriptions = tune.tuneTranscriptions;
+    delete tune.tuneTranscriptions;
+    let tuneEncodings = tune.tuneEncodings;
+    delete tune.tuneEncodings;
+    let tunesPersonsRoles = tune.tunesPersonsRoles;
+    delete tune.tunesPersonsRoles;
+    let tuneSongs = tune.tuneSongs;
+    delete tune.tuneSongs;
+    let tunePlaces = tune.tunePlaces;
+    delete tune.tunePlaces;
+    let tunePerformances = tune.tunePerformances;
+    delete tune.tunePerformances;
+
+    //First we need the actual tune so we can link through it's ID
+    let createdTune = await this.insertNestedAsset(tune, this.tunesRepository);
+
+    //Add external tunes
+    if (externalReferences !== undefined) {
+      externalReferences.forEach((externalReference: ExternalReferences) => {
+        this.insertNestedAsset(
+          externalReference,
+          this.externalReferencesRepository,
+          createdTune.id,
+        );
+      })
+    }
+
+    if (musicalCharacteristics !== undefined) {
+      //Create musical characteristics, we will need the ids
+      musicalCharacteristics.forEach(
+        (musicalCharacteristic: MusicalCharacteristics) => {
+          this.insertNestedAsset(
+            musicalCharacteristic,
+            this.musicalCharacteristicsRepository,
+            createdTune.id,
+          ).then(newMusicalCharacteristic => {
+            musicalCharacteristic.rhythmTypes?.forEach(rhythmType => {
+              this.musicalCharacteristicsRepository
+                .rhythmTypes(newMusicalCharacteristic.id)
+                .create(rhythmType);
+            });
+          });
+        },
+      );
+    }
+
+    if (tuneTranscriptions !== undefined) {
+      tuneTranscriptions.map((tuneTranscription: TuneTranscriptions) => {
+        return this.insertNestedAsset(
+          tuneTranscription,
+          this.tuneTranscriptionsRepository,
+          createdTune.id,
+        );
+      });
+    }
+
+    if (tuneEncodings !== undefined) {
+      tuneEncodings.forEach((tuneEncoding: TuneEncodings) => {
+        let tuneMelodies = tuneEncoding.tuneMelodies;
+        delete tuneEncoding.tuneMelodies;
+        this.insertNestedAsset(
+          tuneEncoding,
+          this.tuneEncodingsRepository,
+          createdTune.id,
+        ).then(createdEncoding => {
+          tuneMelodies?.forEach(tuneMelody => {
+            this.insertNestedAsset(
+              tuneMelody,
+              this.tuneMelodiesRepository,
+              createdEncoding.id,
+            );
+          });
+        });
+      });
+    }
+
+    if (tunesPersonsRoles !== undefined) {
+      tunesPersonsRoles.forEach((tunesPersonsRole: TunesPersonsRoles) => {
+        this.insertNestedAsset(
+          tunesPersonsRole,
+          this.tunesPersonsRolesRepository,
+          createdTune.id,
+        );
+      });
+    }
+
+    if (tuneSongs !== undefined) {
+      tuneSongs.forEach((tuneSong: TuneSongs) => {
+        this.insertNestedAsset(
+          tuneSong,
+          this.tuneSongsRepository,
+          createdTune.id,
+        );
+      });
+    }
+
+    if (tunePlaces !== undefined) {
+      tunePlaces.forEach((tunePlace: TunePlaces) => {
+        this.insertNestedAsset(
+          tunePlace,
+          this.tunePlacesRepository,
+          createdTune.id,
+        );
+      });
+    }
+
+    if (tunePerformances !== undefined) {
+      tunePerformances.forEach((tunePerformance: TunePerformances) => {
+        this.insertNestedAsset(
+          tunePerformance,
+          this.tunePerformancesRepository,
+          createdTune.id,
+        );
+      });
+    }
+
+    return createdTune;
+  }
+
   private async insertNestedAsset(
-    assets: any[] | undefined,
+    asset: any,
     repository: DefaultCrudRepository<any, number, object>,
     externalId?: number,
     externalIdName: string = 'tunesId',
-    mtmRepository?: DefaultCrudRepository<any, number, object>,
-    secondaryExternalIdName?: string,
-  ): Promise<any[]> {
-    if (assets === undefined) return [];
-    return assets.map((x: any) => {
-      if (x.id) return repository.updateById(x.id, x);
+  ): Promise<any> {
+    if (asset === undefined) return undefined;
+    //If we already know the id then it's just a matter of updating the entry
+    if (asset.id) {
+      repository.updateById(asset.id, asset);
+      return asset;
+    }
+    //If not, set the id of the referenced object (probably tune)
+    if (externalId) asset[externalIdName] = externalId;
 
-      if (mtmRepository === undefined) x[externalIdName] = externalId;
-
-      let createdAsset = repository.create(x);
-      createdAsset.then(asset => {
-        if (mtmRepository && secondaryExternalIdName) 
-        mtmRepository.create({
-          [externalIdName]: externalId,
-          [secondaryExternalIdName]: asset.id
-        });
-      })
-      
-      return createdAsset;
-    });
+    //And create a new entry into the db
+    return repository.create(asset);
   }
 }
