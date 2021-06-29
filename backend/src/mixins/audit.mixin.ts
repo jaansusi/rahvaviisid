@@ -79,7 +79,7 @@ export function AuditControllerMixin<
       dataObject: TEntity,
       options?: AuditOptions,
     ): Promise<TEntity> {
-      const created = await this.create(dataObject);
+      const created = await super.create(dataObject);
       if (this.getCurrentUser && !options?.noAudit) {
         const user = await this.getCurrentUser();
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -115,7 +115,7 @@ export function AuditControllerMixin<
       if (options?.noAudit) {
         return super.updateById(id, data);
       }
-      const before = await this.findById(id);
+      const before = await super.findById(id);
       // loopback repository internally calls updateAll so we don't want to create another log
       if (options) {
         options.noAudit = true;
@@ -123,7 +123,7 @@ export function AuditControllerMixin<
         options = {noAudit: true};
       }
       await super.updateById(id, data);
-      const after = await this.findById(id);
+      const after = await super.findById(id);
       let diffAfter: any = diff(before, after);
       let diffBefore: any = {};
       Object.entries(diffAfter).forEach(
@@ -162,7 +162,7 @@ export function AuditControllerMixin<
       if (options?.noAudit) {
         return super.deleteById(id);
       }
-      const before = await this.findById(id);
+      const before = await super.findById(id);
       await super.deleteById(id);
 
       if (this.getCurrentUser) {
