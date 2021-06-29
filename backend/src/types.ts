@@ -22,16 +22,25 @@
 
 import {AuditLogRepository} from './repositories';
 import {Options} from '@loopback/repository';
+import { MixinTarget } from '@loopback/core';
 
 export interface UserId {
-  id: string,
-  name: string,
-  roles: string[]
+  id: string;
+  name: string;
+  roles: string[];
 }
 
-export interface IAuditMixin {
-  getAuditLogRepository: () => Promise<AuditLogRepository>;
+export interface IAuditController<TEntityId, TEntity> extends MixinTarget<object> {
+  auditLogRepository: AuditLogRepository;
   getCurrentUser?: () => Promise<UserId>;
+  create: (entity: Omit<TEntity, 'id'>) => Promise<TEntity>;
+  updateById: (id: TEntityId, entity: TEntity) => Promise<void>;
+  deleteById: (id: TEntityId) => Promise<void>;
+  findById: (id: TEntityId) => Promise<TEntity>;
+}
+
+export interface IEntityWithId {
+  id: number | string;
 }
 
 export interface IAuditMixinOptions {

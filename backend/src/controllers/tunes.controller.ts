@@ -1,4 +1,4 @@
-import {authenticate} from '@loopback/authentication';
+import {authenticate, AuthenticationBindings} from '@loopback/authentication';
 import {authorize} from '@loopback/authorization';
 import {basicAuthorization} from '../services';
 import {
@@ -48,25 +48,42 @@ import {
   TuneTranscriptionsRepository,
 } from '../repositories';
 import { AuditControllerMixin } from '../mixins';
-import { IAuditMixinOptions } from '../types';
-import { MixinTarget } from '@loopback/core';
+import { IAuditMixinOptions, UserId } from '../types';
+import { Getter, inject, MixinTarget } from '@loopback/core';
 
 class TunesBaseController {
   constructor(
+    @inject.getter(AuthenticationBindings.CURRENT_USER) 
+    public getCurrentUser: Getter<UserId>,
+    @repository(TunesRepository)
     public tunesRepository: TunesRepository,
+    @repository(TuneMelodiesRepository)
     public tuneMelodiesRepository: TuneMelodiesRepository,
+    @repository(TuneEncodingsRepository)
     public tuneEncodingsRepository: TuneEncodingsRepository,
+    @repository(TuneSongsRepository)
     public tuneSongsRepository: TuneSongsRepository,
+    @repository(TunePerformancesRepository)
     public tunePerformancesRepository: TunePerformancesRepository,
+    @repository(TunePlacesRepository)
     public tunePlacesRepository: TunePlacesRepository,
+    @repository(TuneTranscriptionsRepository)
     public tuneTranscriptionsRepository: TuneTranscriptionsRepository,
+    @repository(TunesPersonsRolesRepository)
     public tunesPersonsRolesRepository: TunesPersonsRolesRepository,
+    @repository(ActualPerformanceTypesRepository)
     public actualPerformanceTypesRepository: ActualPerformanceTypesRepository,
+    @repository(MusicalCharacteristicsRepository)
     public musicalCharacteristicsRepository: MusicalCharacteristicsRepository,
+    @repository(RhythmTypesRepository)
     public rhythmTypesRepository: RhythmTypesRepository,
+    @repository(MusicalCharacteristicsRhythmTypesRepository)
     public musicalCharacteristicsRhythmTypesRepository: MusicalCharacteristicsRhythmTypesRepository,
+    @repository(SoundRangesRepository)
     public soundRangesRepository: SoundRangesRepository,
+    @repository(ExternalReferencesRepository)
     public externalReferencesRepository: ExternalReferencesRepository,
+    @repository(AuditLogRepository)
     public auditLogRepository: AuditLogRepository,
   ) {
   }

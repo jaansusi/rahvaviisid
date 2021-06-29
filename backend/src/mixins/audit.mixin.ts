@@ -12,7 +12,7 @@
 // The above copyright notice and this permission notice shall be included in all
 // copies or substantial portions of the Software.
 
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// THE SOFTWARE IS PROVTEntityIdED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 // AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
@@ -26,35 +26,62 @@ import {
   DataObject,
   Entity,
   EntityCrudRepository,
+  repository,
   Where,
 } from '@loopback/repository';
 import {keyBy} from 'lodash';
 
 import {Action, AuditLog} from '../models';
-import {AuditLogRepository} from '../repositories';
-import {AuditOptions, IAuditMixin, IAuditMixinOptions, UserId} from '../types';
+import {
+  ActualPerformanceTypesRepository,
+  AuditLogRepository,
+  ExternalReferencesRepository,
+  MusicalCharacteristicsRepository,
+  MusicalCharacteristicsRhythmTypesRepository,
+  RhythmTypesRepository,
+  SoundRangesRepository,
+  TuneEncodingsRepository,
+  TuneMelodiesRepository,
+  TunePerformancesRepository,
+  TunePlacesRepository,
+  TuneSongsRepository,
+  TunesPersonsRolesRepository,
+  TunesRepository,
+  TuneTranscriptionsRepository,
+} from '../repositories';
+import {
+  AuditOptions,
+  IAuditController,
+  IAuditMixinOptions,
+  IEntityWithId,
+  UserId,
+} from '../types';
 import {diff} from 'deep-object-diff';
+import {AuditController} from '../controllers';
 
-export function AuditRepositoryMixin<
-  M extends Entity,
-  ID,
-  Relations extends object,
-  R extends MixinTarget<EntityCrudRepository<M, ID, Relations>>
->(superClass: R, opts: IAuditMixinOptions) {
-  class MixedRepository extends superClass implements IAuditMixin {
-    getAuditLogRepository: () => Promise<AuditLogRepository>;
-    getCurrentUser?: () => Promise<UserId>;
+export function AuditControllerMixin<
+  TEntityId,
+  TEntity extends IEntityWithId,
+  T extends MixinTarget<IAuditController<TEntityId, TEntity>>
+>(superClass: T, opts: IAuditMixinOptions) {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  class auditClass extends superClass {
+    constructor() {
+      super();
+    }
+
+    public entityClass = typeof Entity;
 
     /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
     // @ts-ignore
     async create(
-      dataObject: DataObject<M>,
+      dataObject: TEntity,
       options?: AuditOptions,
-    ): Promise<M> {
-      const created = await super.create(dataObject, options);
+    ): Promise<TEntity> {
+      const created = await this.create(dataObject);
       if (this.getCurrentUser && !options?.noAudit) {
         const user = await this.getCurrentUser();
-        const auditRepo = await this.getAuditLogRepository();
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const extras: any = Object.assign({}, opts);
         delete extras.actionKey;
@@ -63,155 +90,30 @@ export function AuditRepositoryMixin<
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           actorId: user?.id,
           action: Action.INSERT_ONE,
-          after: created.toJSON(),
-          entityId: created.getId(),
-          actedOn: this.entityClass.modelName,
+          after: JSON.stringify(created),
+          entityId: created.id,
+          actedOn: this.entityClass,
           actionKey: opts.actionKey,
           ...extras,
         });
-        auditRepo.create(audit).catch(() => {
+        super.auditLogRepository.create(audit).catch(() => {
           console.error(
-            `Audit failed for data => ${JSON.stringify(audit.toJSON())}`,
+            `Audit failed for data => ${JSON.stringify(JSON.stringify(audit))}`,
           );
         });
       }
       return created;
-    }
-
-    /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
-    // @ts-ignore
-    async createAll(
-      dataObjects: DataObject<M>[],
-      options?: AuditOptions,
-    ): Promise<M[]> {
-      const created = await super.createAll(dataObjects, options);
-      if (this.getCurrentUser && !options?.noAudit) {
-        const user = await this.getCurrentUser();
-        const auditRepo = await this.getAuditLogRepository();
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const extras: any = Object.assign({}, opts);
-        delete extras.actionKey;
-        const audits = created.map(
-          data =>
-            new AuditLog({
-              actedAt: new Date(),
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              actorId: user?.id,
-              action: Action.INSERT_MANY,
-              after: data.toJSON(),
-              entityId: data.getId(),
-              actedOn: this.entityClass.modelName,
-              actionKey: opts.actionKey,
-              ...extras,
-            }),
-        );
-        auditRepo.createAll(audits).catch(() => {
-          const auditsJson = audits.map(a => a.toJSON());
-          console.error(
-            `Audit failed for data => ${JSON.stringify(auditsJson)}`,
-          );
-        });
-      }
-      return created;
-    }
-
-    /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
-    // @ts-ignore
-    async updateAll(
-      dataObject: DataObject<M>,
-      where?: Where<M>,
-      options?: AuditOptions,
-    ): Promise<Count> {
-      if (options?.noAudit) {
-        return super.updateAll(dataObject, where, options);
-      }
-      const toUpdate = await this.find({where});
-      const beforeMap = keyBy(toUpdate, d => d.getId());
-      const updatedCount = await super.updateAll(dataObject, where, options);
-      const updated = await this.find({where});
-
-      if (this.getCurrentUser) {
-        const user = await this.getCurrentUser();
-        const auditRepo = await this.getAuditLogRepository();
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const extras: any = Object.assign({}, opts);
-        delete extras.actionKey;
-        const audits = updated.map(
-          data =>
-            new AuditLog({
-              actedAt: new Date(),
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              actorId: user?.id,
-              action: Action.UPDATE_MANY,
-              before: (beforeMap[data.getId()] as Entity).toJSON(),
-              after: data.toJSON(),
-              entityId: data.getId(),
-              actedOn: this.entityClass.modelName,
-              actionKey: opts.actionKey,
-              ...extras,
-            }),
-        );
-        auditRepo.createAll(audits).catch(() => {
-          const auditsJson = audits.map(a => a.toJSON());
-          console.error(
-            `Audit failed for data => ${JSON.stringify(auditsJson)}`,
-          );
-        });
-      }
-
-      return updatedCount;
-    }
-
-    /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
-    // @ts-ignore
-    async deleteAll(where?: Where<M>, options?: AuditOptions): Promise<Count> {
-      if (options?.noAudit) {
-        return super.deleteAll(where, options);
-      }
-      const toDelete = await this.find({where});
-      const beforeMap = keyBy(toDelete, d => d.getId());
-      const deletedCount = await super.deleteAll(where, options);
-
-      if (this.getCurrentUser) {
-        const user = await this.getCurrentUser();
-        const auditRepo = await this.getAuditLogRepository();
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const extras: any = Object.assign({}, opts);
-        delete extras.actionKey;
-        const audits = toDelete.map(
-          data =>
-            new AuditLog({
-              actedAt: new Date(),
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              actorId: user?.id,
-              action: Action.DELETE_MANY,
-              before: (beforeMap[data.getId()] as Entity).toJSON(),
-              entityId: data.getId(),
-              actedOn: this.entityClass.modelName,
-              actionKey: opts.actionKey,
-              ...extras,
-            }),
-        );
-        auditRepo.createAll(audits).catch(() => {
-          const auditsJson = audits.map(a => a.toJSON());
-          console.error(
-            `Audit failed for data => ${JSON.stringify(auditsJson)}`,
-          );
-        });
-      }
-
-      return deletedCount;
     }
 
     /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
     // @ts-ignore
     async updateById(
-      id: ID,
-      data: DataObject<M>,
+      id: TEntityId,
+      data: TEntity,
       options?: AuditOptions,
     ): Promise<void> {
       if (options?.noAudit) {
-        return super.updateById(id, data, options);
+        return super.updateById(id, data);
       }
       const before = await this.findById(id);
       // loopback repository internally calls updateAll so we don't want to create another log
@@ -220,7 +122,7 @@ export function AuditRepositoryMixin<
       } else {
         options = {noAudit: true};
       }
-      await super.updateById(id, data, options);
+      await super.updateById(id, data);
       const after = await this.findById(id);
       let diffAfter: any = diff(before, after);
       let diffBefore: any = {};
@@ -229,7 +131,6 @@ export function AuditRepositoryMixin<
       );
       if (this.getCurrentUser && diffAfter !== diffBefore) {
         const user = await this.getCurrentUser();
-        const auditRepo = await this.getAuditLogRepository();
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const extras: any = Object.assign({}, opts);
         delete extras.actionKey;
@@ -240,16 +141,16 @@ export function AuditRepositoryMixin<
           action: Action.UPDATE_ONE,
           before: diffBefore,
           after: diffAfter,
-          entityId: before.getId(),
-          actedOn: this.entityClass.modelName,
+          entityId: before.id,
+          actedOn: this.entityClass,
           actionKey: opts.actionKey,
           ...extras,
         });
 
-        auditRepo.create(auditLog).catch(ex => {
+        super.auditLogRepository.create(auditLog).catch(ex => {
           console.error(ex);
           console.error(
-            `Audit failed for data => ${JSON.stringify(auditLog.toJSON())}`,
+            `Audit failed for data => ${JSON.stringify(JSON.stringify(auditLog))}`,
           );
         });
       }
@@ -257,57 +158,15 @@ export function AuditRepositoryMixin<
 
     /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
     // @ts-ignore
-    async replaceById(
-      id: ID,
-      data: DataObject<M>,
-      options?: AuditOptions,
-    ): Promise<void> {
+    async deleteById(id: TEntityId, options?: AuditOptions): Promise<void> {
       if (options?.noAudit) {
-        return super.replaceById(id, data, options);
+        return super.deleteById(id);
       }
       const before = await this.findById(id);
-      await super.replaceById(id, data, options);
-      const after = await this.findById(id);
+      await super.deleteById(id);
 
       if (this.getCurrentUser) {
         const user = await this.getCurrentUser();
-        const auditRepo = await this.getAuditLogRepository();
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const extras: any = Object.assign({}, opts);
-        delete extras.actionKey;
-        const auditLog = new AuditLog({
-          actedAt: new Date(),
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          actorId: user?.id,
-          action: Action.UPDATE_ONE,
-          before: before.toJSON(),
-          after: after.toJSON(),
-          entityId: before.getId(),
-          actedOn: this.entityClass.modelName,
-          actionKey: opts.actionKey,
-          ...extras,
-        });
-
-        auditRepo.create(auditLog).catch(() => {
-          console.error(
-            `Audit failed for data => ${JSON.stringify(auditLog.toJSON())}`,
-          );
-        });
-      }
-    }
-
-    /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
-    // @ts-ignore
-    async deleteById(id: ID, options?: AuditOptions): Promise<void> {
-      if (options?.noAudit) {
-        return super.deleteById(id, options);
-      }
-      const before = await this.findById(id);
-      await super.deleteById(id, options);
-
-      if (this.getCurrentUser) {
-        const user = await this.getCurrentUser();
-        const auditRepo = await this.getAuditLogRepository();
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const extras: any = Object.assign({}, opts);
         delete extras.actionKey;
@@ -316,20 +175,22 @@ export function AuditRepositoryMixin<
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           actorId: user?.id,
           action: Action.DELETE_ONE,
-          before: before.toJSON(),
-          entityId: before.getId(),
-          actedOn: this.entityClass.modelName,
+          before: JSON.stringify(before),
+          entityId: before.id,
+          actedOn: this.entityClass,
           actionKey: opts.actionKey,
           ...extras,
         });
 
-        auditRepo.create(auditLog).catch(() => {
+        super.auditLogRepository.create(auditLog).catch(() => {
           console.error(
-            `Audit failed for data => ${JSON.stringify(auditLog.toJSON())}`,
+            `Audit failed for data => ${JSON.stringify(JSON.stringify(auditLog))}`,
           );
         });
       }
     }
+    
   }
-  return MixedRepository;
+
+  return auditClass;
 }
