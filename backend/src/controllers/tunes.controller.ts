@@ -7,7 +7,6 @@ import {
   DefaultCrudRepository,
   Filter,
   FilterExcludingWhere,
-  Repository,
   repository,
   Where,
 } from '@loopback/repository';
@@ -17,12 +16,10 @@ import {
   get,
   getModelSchemaRef,
   patch,
-  put,
   del,
   requestBody,
 } from '@loopback/rest';
 import {
-  ActualPerformanceTypes,
   ExternalReferences,
   MusicalCharacteristics,
   TuneEncodings,
@@ -35,6 +32,7 @@ import {
 } from '../models';
 import {
   ActualPerformanceTypesRepository,
+  AuditLogRepository,
   ExternalReferencesRepository,
   MusicalCharacteristicsRepository,
   MusicalCharacteristicsRhythmTypesRepository,
@@ -49,38 +47,29 @@ import {
   TunesRepository,
   TuneTranscriptionsRepository,
 } from '../repositories';
+import { AuditControllerMixin } from '../mixins';
+import { IAuditMixinOptions } from '../types';
+import { MixinTarget } from '@loopback/core';
 
-export class TunesController {
+class TunesBaseController {
   constructor(
-    @repository(TunesRepository)
     public tunesRepository: TunesRepository,
-    @repository(TuneMelodiesRepository)
     public tuneMelodiesRepository: TuneMelodiesRepository,
-    @repository(TuneEncodingsRepository)
     public tuneEncodingsRepository: TuneEncodingsRepository,
-    @repository(TuneSongsRepository)
     public tuneSongsRepository: TuneSongsRepository,
-    @repository(TunePerformancesRepository)
     public tunePerformancesRepository: TunePerformancesRepository,
-    @repository(TunePlacesRepository)
     public tunePlacesRepository: TunePlacesRepository,
-    @repository(TuneTranscriptionsRepository)
     public tuneTranscriptionsRepository: TuneTranscriptionsRepository,
-    @repository(TunesPersonsRolesRepository)
     public tunesPersonsRolesRepository: TunesPersonsRolesRepository,
-    @repository(ActualPerformanceTypesRepository)
     public actualPerformanceTypesRepository: ActualPerformanceTypesRepository,
-    @repository(MusicalCharacteristicsRepository)
     public musicalCharacteristicsRepository: MusicalCharacteristicsRepository,
-    @repository(RhythmTypesRepository)
     public rhythmTypesRepository: RhythmTypesRepository,
-    @repository(MusicalCharacteristicsRhythmTypesRepository)
     public musicalCharacteristicsRhythmTypesRepository: MusicalCharacteristicsRhythmTypesRepository,
-    @repository(SoundRangesRepository)
     public soundRangesRepository: SoundRangesRepository,
-    @repository(ExternalReferencesRepository)
     public externalReferencesRepository: ExternalReferencesRepository,
-  ) {}
+    public auditLogRepository: AuditLogRepository,
+  ) {
+  }
 
   @post('/tunes', {
     responses: {
@@ -209,9 +198,7 @@ export class TunesController {
     await this.tunesRepository.deleteById(id);
   }
 
-  private async insertTune(
-    tune: Tunes | Omit<Tunes, 'id'>
-  ): Promise<Tunes> {
+  private async insertTune(tune: Tunes | Omit<Tunes, 'id'>): Promise<Tunes> {
     //We need the tune created first, but for that, it can't have any nested "navigational" objects in it
     //so let's just assign them to variables for later use
     let externalReferences = tune.externalReferences;
@@ -242,7 +229,7 @@ export class TunesController {
           this.externalReferencesRepository,
           createdTune.id,
         );
-      })
+      });
     }
 
     if (musicalCharacteristics !== undefined) {
@@ -355,4 +342,10 @@ export class TunesController {
     //And create a new entry into the db
     return repository.create(asset);
   }
+}
+
+const groupAuditOpts: IAuditMixinOptions = {
+  actionKey: 'Tunes_Logs',
+};
+export class TunesController extends AuditControllerMixin<number, Tunes, MixinTarget<TunesBaseController>>(TunesBaseController, groupAuditOpts) {
 }
