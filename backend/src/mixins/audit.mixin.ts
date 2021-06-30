@@ -67,13 +67,8 @@ export function AuditControllerMixin<
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   class auditClass extends superClass {
-    constructor(
-      @repository(AuditLogRepository)
-      public auditLogRepository: AuditLogRepository,
-    ) {
-      super();
-    }
     getCurrentUser?: () => Promise<UserId>;
+    getAuditLogRepository: () => Promise<AuditLogRepository>;
 
     public entityClass = typeof Entity;
 
@@ -86,6 +81,7 @@ export function AuditControllerMixin<
       const created = await super.create(dataObject);
       if (this.getCurrentUser && !options?.noAudit) {
         const user = await this.getCurrentUser();
+        const auditRepo = await this.getAuditLogRepository();
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const extras: any = Object.assign({}, opts);
         delete extras.actionKey;
@@ -100,7 +96,7 @@ export function AuditControllerMixin<
           actionKey: opts.actionKey,
           ...extras,
         });
-        super.auditLogRepository.create(audit).catch(() => {
+        auditRepo.create(audit).catch(() => {
           console.error(
             `Audit failed for data => ${JSON.stringify(JSON.stringify(audit))}`,
           );
@@ -115,19 +111,10 @@ export function AuditControllerMixin<
       @param.path.number('id') 
       id: number,
       @requestBody()
-      data: TEntity,
-      options?: AuditOptions,
+      data: TEntity
     ): Promise<void> {
-      if (options?.noAudit) {
-        return super.updateById(id, data);
-      }
       const before = await super.findById(id);
-      // loopback repository internally calls updateAll so we don't want to create another log
-      if (options) {
-        options.noAudit = true;
-      } else {
-        options = {noAudit: true};
-      }
+      
       await super.updateById(id, data);
       const after = await super.findById(id);
       let diffAfter: any = diff(before, after);
@@ -137,6 +124,7 @@ export function AuditControllerMixin<
       );
       if (this.getCurrentUser && diffAfter !== diffBefore) {
         const user = await this.getCurrentUser();
+        const auditRepo = await this.getAuditLogRepository();
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const extras: any = Object.assign({}, opts);
         delete extras.actionKey;
@@ -153,7 +141,7 @@ export function AuditControllerMixin<
           ...extras,
         });
 
-        super.auditLogRepository.create(auditLog).catch(ex => {
+        auditRepo.create(auditLog).catch(ex => {
           console.error(ex);
           console.error(
             `Audit failed for data => ${JSON.stringify(
@@ -175,6 +163,7 @@ export function AuditControllerMixin<
 
       if (this.getCurrentUser) {
         const user = await this.getCurrentUser();
+        const auditRepo = await this.getAuditLogRepository();
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const extras: any = Object.assign({}, opts);
         delete extras.actionKey;
@@ -190,7 +179,7 @@ export function AuditControllerMixin<
           ...extras,
         });
 
-        super.auditLogRepository.create(auditLog).catch(() => {
+        auditRepo.create(auditLog).catch(() => {
           console.error(
             `Audit failed for data => ${JSON.stringify(
               JSON.stringify(auditLog),

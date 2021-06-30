@@ -31,7 +31,7 @@ export interface UserId {
 }
 
 export interface IAuditController<TEntityId, TEntity> extends MixinTarget<object> {
-  auditLogRepository: AuditLogRepository;
+  getAuditLogRepository: () => Promise<AuditLogRepository>;
   getCurrentUser?: () => Promise<UserId>;
   create: (entity: Omit<TEntity, 'id'>) => Promise<TEntity>;
   updateById: (id: TEntityId, entity: TEntity) => Promise<void>;

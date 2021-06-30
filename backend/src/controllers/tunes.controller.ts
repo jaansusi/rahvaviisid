@@ -55,6 +55,8 @@ class TunesBaseController {
   constructor(
     @inject.getter(AuthenticationBindings.CURRENT_USER) 
     public getCurrentUser: Getter<UserId>,
+    @repository.getter('AuditLogRepository') 
+    public getAuditLogRepository: Getter<AuditLogRepository>, 
     @repository(AuditLogRepository)
     public auditLogRepository: AuditLogRepository,
     @repository(TunesRepository)
@@ -369,8 +371,8 @@ export class TunesController extends AuditControllerMixin<
   MixinTarget<TunesBaseController>
 >(TunesBaseController, groupAuditOpts) {
   constructor(
-    @inject.getter(AuthenticationBindings.CURRENT_USER) 
-    public getCurrentUser: Getter<UserId>,
+    @inject.getter(AuthenticationBindings.CURRENT_USER) public getCurrentUser: Getter<UserId>,
+    @repository.getter('AuditLogRepository') public getAuditLogRepository: Getter<AuditLogRepository>, 
     @repository(AuditLogRepository)
     public auditLogRepository: AuditLogRepository,
     @repository(TunesRepository)
@@ -402,6 +404,6 @@ export class TunesController extends AuditControllerMixin<
     @repository(ExternalReferencesRepository)
     public externalReferencesRepository: ExternalReferencesRepository,
   ) {
-    super(auditLogRepository);
+    super();
   }
 }
