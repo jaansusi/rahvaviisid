@@ -47,14 +47,16 @@ import {
   TunesRepository,
   TuneTranscriptionsRepository,
 } from '../repositories';
-import { AuditControllerMixin } from '../mixins';
-import { IAuditMixinOptions, UserId } from '../types';
-import { Getter, inject, MixinTarget } from '@loopback/core';
+import {AuditControllerMixin} from '../mixins';
+import {IAuditMixinOptions, UserId} from '../types';
+import {Getter, inject, MixinTarget} from '@loopback/core';
 
 class TunesBaseController {
   constructor(
     @inject.getter(AuthenticationBindings.CURRENT_USER) 
     public getCurrentUser: Getter<UserId>,
+    @repository(AuditLogRepository)
+    public auditLogRepository: AuditLogRepository,
     @repository(TunesRepository)
     public tunesRepository: TunesRepository,
     @repository(TuneMelodiesRepository)
@@ -83,10 +85,7 @@ class TunesBaseController {
     public soundRangesRepository: SoundRangesRepository,
     @repository(ExternalReferencesRepository)
     public externalReferencesRepository: ExternalReferencesRepository,
-    @repository(AuditLogRepository)
-    public auditLogRepository: AuditLogRepository,
-  ) {
-  }
+  ) {}
 
   @post('/tunes', {
     responses: {
@@ -147,6 +146,7 @@ class TunesBaseController {
     },
   })
   async find(@param.filter(Tunes) filter?: Filter<Tunes>): Promise<Tunes[]> {
+    console.log(this.tunesRepository);
     return this.tunesRepository.find(filter);
   }
 
@@ -364,5 +364,44 @@ class TunesBaseController {
 const groupAuditOpts: IAuditMixinOptions = {
   actionKey: 'Tunes_Logs',
 };
-export class TunesController extends AuditControllerMixin<number, Tunes, MixinTarget<TunesBaseController>>(TunesBaseController, groupAuditOpts) {
+export class TunesController extends AuditControllerMixin<
+  Tunes,
+  MixinTarget<TunesBaseController>
+>(TunesBaseController, groupAuditOpts) {
+  constructor(
+    @inject.getter(AuthenticationBindings.CURRENT_USER) 
+    public getCurrentUser: Getter<UserId>,
+    @repository(AuditLogRepository)
+    public auditLogRepository: AuditLogRepository,
+    @repository(TunesRepository)
+    public tunesRepository: TunesRepository,
+    @repository(TuneMelodiesRepository)
+    public tuneMelodiesRepository: TuneMelodiesRepository,
+    @repository(TuneEncodingsRepository)
+    public tuneEncodingsRepository: TuneEncodingsRepository,
+    @repository(TuneSongsRepository)
+    public tuneSongsRepository: TuneSongsRepository,
+    @repository(TunePerformancesRepository)
+    public tunePerformancesRepository: TunePerformancesRepository,
+    @repository(TunePlacesRepository)
+    public tunePlacesRepository: TunePlacesRepository,
+    @repository(TuneTranscriptionsRepository)
+    public tuneTranscriptionsRepository: TuneTranscriptionsRepository,
+    @repository(TunesPersonsRolesRepository)
+    public tunesPersonsRolesRepository: TunesPersonsRolesRepository,
+    @repository(ActualPerformanceTypesRepository)
+    public actualPerformanceTypesRepository: ActualPerformanceTypesRepository,
+    @repository(MusicalCharacteristicsRepository)
+    public musicalCharacteristicsRepository: MusicalCharacteristicsRepository,
+    @repository(RhythmTypesRepository)
+    public rhythmTypesRepository: RhythmTypesRepository,
+    @repository(MusicalCharacteristicsRhythmTypesRepository)
+    public musicalCharacteristicsRhythmTypesRepository: MusicalCharacteristicsRhythmTypesRepository,
+    @repository(SoundRangesRepository)
+    public soundRangesRepository: SoundRangesRepository,
+    @repository(ExternalReferencesRepository)
+    public externalReferencesRepository: ExternalReferencesRepository,
+  ) {
+    super(auditLogRepository);
+  }
 }

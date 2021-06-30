@@ -12,7 +12,7 @@
 // The above copyright notice and this permission notice shall be included in all
 // copies or substantial portions of the Software.
 
-// THE SOFTWARE IS PROVTEntityIdED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 // AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
@@ -58,18 +58,22 @@ import {
 } from '../types';
 import {diff} from 'deep-object-diff';
 import {AuditController} from '../controllers';
+import { getModelSchemaRef, param, requestBody } from '@loopback/openapi-v3';
 
 export function AuditControllerMixin<
-  TEntityId,
   TEntity extends IEntityWithId,
-  T extends MixinTarget<IAuditController<TEntityId, TEntity>>
+  T extends MixinTarget<IAuditController<number, TEntity>>
 >(superClass: T, opts: IAuditMixinOptions) {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   class auditClass extends superClass {
-    constructor() {
+    constructor(
+      @repository(AuditLogRepository)
+      public auditLogRepository: AuditLogRepository,
+    ) {
       super();
     }
+    getCurrentUser?: () => Promise<UserId>;
 
     public entityClass = typeof Entity;
 
@@ -108,7 +112,9 @@ export function AuditControllerMixin<
     /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
     // @ts-ignore
     async updateById(
-      id: TEntityId,
+      @param.path.number('id') 
+      id: number,
+      @requestBody()
       data: TEntity,
       options?: AuditOptions,
     ): Promise<void> {
@@ -150,7 +156,9 @@ export function AuditControllerMixin<
         super.auditLogRepository.create(auditLog).catch(ex => {
           console.error(ex);
           console.error(
-            `Audit failed for data => ${JSON.stringify(JSON.stringify(auditLog))}`,
+            `Audit failed for data => ${JSON.stringify(
+              JSON.stringify(auditLog),
+            )}`,
           );
         });
       }
@@ -158,7 +166,7 @@ export function AuditControllerMixin<
 
     /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
     // @ts-ignore
-    async deleteById(id: TEntityId, options?: AuditOptions): Promise<void> {
+    async deleteById(id: number, options?: AuditOptions): Promise<void> {
       if (options?.noAudit) {
         return super.deleteById(id);
       }
@@ -184,12 +192,13 @@ export function AuditControllerMixin<
 
         super.auditLogRepository.create(auditLog).catch(() => {
           console.error(
-            `Audit failed for data => ${JSON.stringify(JSON.stringify(auditLog))}`,
+            `Audit failed for data => ${JSON.stringify(
+              JSON.stringify(auditLog),
+            )}`,
           );
         });
       }
     }
-    
   }
 
   return auditClass;
