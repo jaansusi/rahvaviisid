@@ -8,7 +8,6 @@ export const MusicalCharacteristicsModel = ModelService.GenerateDefaults({
             { field: 'soundRanges', headerName: 'musical.soundRange', width: 140 , selector: 'title'},
             { field: null, headerName: 'musical.tuneForm', width: 140 },
             { field: null, headerName: 'musical.textForm', width: 140 },
-            { field: null, headerName: 'musical.rhythmType', width: 140 },
             { field: 'melostropheNumScore', headerName: 'musical.score', width: 140 },
             { field: 'melostropheNumAudio', headerName: 'musical.audio', width: 150 },
             { field: 'isVariable', type: 'boolean', headerName: 'musical.isVariable', width: 150 }
