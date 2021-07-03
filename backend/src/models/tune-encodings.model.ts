@@ -89,16 +89,16 @@ export class TuneEncodings extends Entity {
   modified: string;
 
   @hasOne(() => KeySignatures, {keyFrom: 'keySignatureId', keyTo: 'id'})
-  keySignatures: KeySignatures;
+  keySignatures?: KeySignatures;
 
   @hasOne(() => SupportSounds, {keyFrom: 'supportSoundId', keyTo: 'id'})
-  supportSounds: SupportSounds;
+  supportSounds?: SupportSounds;
 
   @hasOne(() => Pitches, {keyFrom: 'pitchId', keyTo: 'id'})
-  pitches: Pitches;
+  pitches?: Pitches;
   
   @hasOne(() => Measures, {keyFrom: 'measureId', keyTo: 'id'})
-  measures: Measures;
+  measures?: Measures;
 
   @hasMany(() => TuneMelodies, { keyTo: 'tune_id'})
   tuneMelodies?: TuneMelodies[];

@@ -61,7 +61,7 @@ import {AuditController} from '../controllers';
 import { getModelSchemaRef, param, requestBody } from '@loopback/openapi-v3';
 
 export function AuditControllerMixin<
-  TEntity extends IEntityWithId,
+  TEntity extends IEntityWithId & object,
   T extends MixinTarget<IAuditController<number, TEntity>>
 >(superClass: T, opts: IAuditMixinOptions) {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -113,15 +113,23 @@ export function AuditControllerMixin<
       @requestBody()
       data: TEntity
     ): Promise<void> {
-      const before = await super.findById(id);
+      let after = Object.assign({}, data);
+      let before: TEntity;
+      if (opts?.queryIncludeFilter?.include !== undefined) {
+        before = await super.findById(id, opts.queryIncludeFilter);
+        delete opts.queryIncludeFilter;
+      }
+      else
+        before = await super.findById(id);
       
       await super.updateById(id, data);
-      const after = await super.findById(id);
       let diffAfter: any = diff(before, after);
       let diffBefore: any = {};
       Object.entries(diffAfter).forEach(
         ([key, value]) => (diffBefore[key] = (before as any)[key]),
       );
+      console.log(diffBefore);
+      console.log(diffAfter);
       if (this.getCurrentUser && diffAfter !== diffBefore) {
         const user = await this.getCurrentUser();
         const auditRepo = await this.getAuditLogRepository();

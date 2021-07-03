@@ -62,8 +62,8 @@ const TuneAudit = () => {
                     <DataGrid
                         columns={columns}
                         rows={logs}
-                        onSelectionModelChange={(newSelection) => {
-                            setActiveEntry(logs[newSelection.selectionModel[0]-1]);
+                        onRowSelected={(e) => {
+                            setActiveEntry(e.data);
                         }}
                     />
                 </div>

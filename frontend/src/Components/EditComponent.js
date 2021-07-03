@@ -98,38 +98,50 @@ const EditComponent = ({ model, newItem }) => {
     // to-do: clean up or add comments
     let submitData = (currentModel, data) => {
         let recurse = (recursedModel, recursedData) => {
-            let requestObject = {};
+            let requestObject = Object.assign({}, recursedData);
             //Iterate over each property in the current MODEL
             for (let modelKey in recursedModel.fields) {
                 //Get the current element in MODEL
                 let modelElem = recursedModel.fields[modelKey];
-                if (modelElem !== undefined) {
-                    if (modelElem.edit !== undefined) {
-                        //Check if DATA is an array
-                        if (Array.isArray(recursedData[modelElem.field])) {
-                            requestObject[modelElem.field] = recursedData[modelElem.field].map(dataArrayElem => {
-                                return recurse(modelElem.edit, dataArrayElem);
-                            });
-                        }
-                        else
-                            requestObject[modelElem.field] = recurse(modelElem.edit, recursedData[modelElem.field]);
-                    } else if (recursedData && recursedData[modelElem.field] !== '') {
-                        switch (modelElem.type) {
-                            case 'number':
-                                requestObject[modelElem.field] = parseInt(recursedData[modelElem.field], 10);
-                                break;
-                            default:
-                                requestObject[modelElem.field] = recursedData[modelElem.field]
-                                break;
-                        }
+                //Get the DATA value
+                const value = recursedData[modelElem.field];
+
+                //If there is a MODEL defined for this field..
+                if (modelElem?.edit !== undefined) {
+                    //If DATA object is an array
+                    if (Array.isArray(value)) {
+                        //Map over each of the array elements by recursing with this function
+                        requestObject[modelElem.field] = value.map(dataArrayElem => {
+                            return recurse(modelElem.edit, dataArrayElem);
+                        });
+                    }
+                    //If not, recurse normally
+                    else
+                        requestObject[modelElem.field] = recurse(modelElem.edit, recursedData[modelElem.field]);
+                }
+                //Otherwise, check if DATA is actually there
+                else if (recursedData) {
+                    //And then modify it based on the MODEL type
+                    switch (modelElem.type) {
+                        case 'number':
+                            requestObject[modelElem.field] = parseInt(value, 10);
+                            break;
+                        default:
+                            requestObject[modelElem.field] = value;
+                            break;
                     }
                 }
             }
             return requestObject;
         }
+        //First let's make sure that all the necessary models are using the correct data type
         let objToSend = recurse(currentModel, Object.assign({}, data));
+
+        //Then, as API does not like empty strings, make those nulls instead
+        objToSend = cleanNulls(objToSend);
+
         if (newItem) {
-            // No DB entry exists, remove ID fields (if they exist) and use post request
+            // No DB entry exists, use post request
             axios
                 .post(
                     config.apiUrl + '/' + currentModel.apiPath,
@@ -240,6 +252,20 @@ const removeObjectIds = obj => {
         }
     }
     return obj;
+}
+
+
+const cleanNulls = data => {
+    for (let key in data) {
+        let value = data[key];
+        if (value === '')
+            data[key] = null;
+        if (Array.isArray(value))
+            data[key] = value.map(x => cleanNulls(x));
+        if (typeof value === 'object' && value !== null)
+            data[key] = cleanNulls(value);
+    }
+    return data;
 }
 
 export default EditComponent;

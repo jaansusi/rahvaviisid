@@ -2,7 +2,7 @@ CREATE TABLE folk_tune.audit_log
 (
     id bigserial NOT NULL,
     action text NOT NULL,
-    acted_at date NOT NULL,
+    acted_at timestamp NOT NULL,
     acted_on text NOT NULL,
     action_key text NOT NULL,
     entity_id integer NOT NULL,

@@ -91,19 +91,19 @@ export class TunePlaces extends Entity {
   modified: string;
 
   @hasOne(() => Persons, {keyFrom: 'personId', keyTo: 'id'})
-  persons: Persons;
+  persons?: Persons;
 
   @hasOne(() => TunePlaceTypes, {keyFrom: 'tunePlaceTypeId', keyTo: 'id'})
-  tunePlaceTypes: TunePlaceTypes;
+  tunePlaceTypes?: TunePlaceTypes;
 
   @hasOne(() => Parishes, {keyFrom: 'parishId', keyTo: 'id'})
-  parishes: Parishes;
+  parishes?: Parishes;
 
   @hasOne(() => Municipalities, {keyFrom: 'municipalityId', keyTo: 'id'})
-  municipalities: Municipalities;
+  municipalities?: Municipalities;
 
   @hasOne(() => Villages, {keyFrom: 'villageId', keyTo: 'id'})
-  villages: Villages;
+  villages?: Villages;
   // Define well-known properties here
 
   // Indexer property to allow additional data

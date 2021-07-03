@@ -16,7 +16,7 @@ axios.interceptors.response.use((response) => {
         }
         return tempObj;
     });
-    response.data = replaceNulls(response.data); 
+    response.data = replaceNulls(response.data);
     return response;
 });
 

@@ -21,7 +21,7 @@
 // SOFTWARE.
 
 import {AuditLogRepository} from './repositories';
-import {Options} from '@loopback/repository';
+import {FilterExcludingWhere, Options} from '@loopback/repository';
 import { MixinTarget } from '@loopback/core';
 
 export interface UserId {
@@ -30,13 +30,13 @@ export interface UserId {
   roles: string[];
 }
 
-export interface IAuditController<TEntityId, TEntity> extends MixinTarget<object> {
+export interface IAuditController<TEntityId, TEntity extends object> extends MixinTarget<object> {
   getAuditLogRepository: () => Promise<AuditLogRepository>;
   getCurrentUser?: () => Promise<UserId>;
   create: (entity: Omit<TEntity, 'id'>) => Promise<TEntity>;
   updateById: (id: TEntityId, entity: TEntity) => Promise<void>;
   deleteById: (id: TEntityId) => Promise<void>;
-  findById: (id: TEntityId) => Promise<TEntity>;
+  findById: (id: TEntityId, filter?: FilterExcludingWhere<TEntity>) => Promise<TEntity>;
 }
 
 export interface IEntityWithId {
@@ -45,6 +45,7 @@ export interface IEntityWithId {
 
 export interface IAuditMixinOptions {
   actionKey: string;
+  queryIncludeFilter?: any;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
 }

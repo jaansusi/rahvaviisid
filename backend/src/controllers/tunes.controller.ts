@@ -50,6 +50,7 @@ import {
 import {AuditControllerMixin} from '../mixins';
 import {IAuditMixinOptions, UserId} from '../types';
 import {Getter, inject, MixinTarget} from '@loopback/core';
+import { TunesFilter } from '../keys';
 
 class TunesBaseController {
   constructor(
@@ -148,7 +149,6 @@ class TunesBaseController {
     },
   })
   async find(@param.filter(Tunes) filter?: Filter<Tunes>): Promise<Tunes[]> {
-    console.log(this.tunesRepository);
     return this.tunesRepository.find(filter);
   }
 
@@ -255,6 +255,7 @@ class TunesBaseController {
       //Create musical characteristics, we will need the ids
       musicalCharacteristics.forEach(
         (musicalCharacteristic: MusicalCharacteristics) => {
+          delete musicalCharacteristic.soundRanges;
           this.insertNestedAsset(
             musicalCharacteristic,
             this.musicalCharacteristicsRepository,
@@ -282,6 +283,10 @@ class TunesBaseController {
 
     if (tuneEncodings !== undefined) {
       tuneEncodings.forEach((tuneEncoding: TuneEncodings) => {
+        delete tuneEncoding.keySignatures;
+        delete tuneEncoding.supportSounds;
+        delete tuneEncoding.pitches;
+        delete tuneEncoding.measures;
         let tuneMelodies = tuneEncoding.tuneMelodies;
         delete tuneEncoding.tuneMelodies;
         this.insertNestedAsset(
@@ -302,6 +307,8 @@ class TunesBaseController {
 
     if (tunesPersonsRoles !== undefined) {
       tunesPersonsRoles.forEach((tunesPersonsRole: TunesPersonsRoles) => {
+        delete tunesPersonsRole.persons;
+        delete tunesPersonsRole.tunePersonRoleTypes;
         this.insertNestedAsset(
           tunesPersonsRole,
           this.tunesPersonsRolesRepository,
@@ -322,6 +329,11 @@ class TunesBaseController {
 
     if (tunePlaces !== undefined) {
       tunePlaces.forEach((tunePlace: TunePlaces) => {
+        delete tunePlace.persons;
+        delete tunePlace.tunePlaceTypes;
+        delete tunePlace.parishes;
+        delete tunePlace.municipalities;
+        delete tunePlace.villages;
         this.insertNestedAsset(
           tunePlace,
           this.tunePlacesRepository,
@@ -332,6 +344,9 @@ class TunesBaseController {
 
     if (tunePerformances !== undefined) {
       tunePerformances.forEach((tunePerformance: TunePerformances) => {
+        delete tunePerformance.actualPerformanceTypes;
+        delete tunePerformance.traditionalPerformanceTypes;
+        delete tunePerformance.actualActionTypes;
         this.insertNestedAsset(
           tunePerformance,
           this.tunePerformancesRepository,
@@ -365,6 +380,7 @@ class TunesBaseController {
 
 const groupAuditOpts: IAuditMixinOptions = {
   actionKey: 'Tunes_Logs',
+  queryIncludeFilter: TunesFilter.TUNES_INCLUDE_ALL_FILTER
 };
 export class TunesController extends AuditControllerMixin<
   Tunes,

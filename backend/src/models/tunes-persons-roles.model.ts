@@ -91,10 +91,10 @@ export class TunesPersonsRoles extends Entity {
   modified: string;
 
   @hasOne(() => Persons, {keyFrom: 'personId', keyTo: 'id'})
-  persons: Persons;
+  persons?: Persons;
 
   @hasOne(() => TunePersonRoleTypes, {keyFrom: 'tunePersonRoleTypeId', keyTo: 'id'})
-  tunePersonRoleTypes: TunePersonRoleTypes;
+  tunePersonRoleTypes?: TunePersonRoleTypes;
   // Define well-known properties here
 
   // Indexer property to allow additional data

@@ -78,13 +78,13 @@ export class TunePerformances extends Entity {
   modified: string;
 
   @hasOne(() => ActualPerformanceTypes, {keyFrom: 'actualPerformanceTypeId?', keyTo: 'id'})
-  actualPerformanceTypes: ActualPerformanceTypes;
+  actualPerformanceTypes?: ActualPerformanceTypes;
 
   @hasOne(() => ActualActionTypes, {keyFrom: 'actualActionTypeId', keyTo: 'id'})
-  actualActionTypes: ActualActionTypes;
+  actualActionTypes?: ActualActionTypes;
 
   @hasOne(() => TraditionalPerformanceTypes, {keyFrom: 'traditionalPerformanceTypeId', keyTo: 'id'})
-  traditionalPerformanceTypes: TraditionalPerformanceTypes;
+  traditionalPerformanceTypes?: TraditionalPerformanceTypes;
 
 
   // Define well-known properties here
