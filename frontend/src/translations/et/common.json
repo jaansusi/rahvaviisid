@@ -258,7 +258,8 @@
     "search": {
         "referenceOnly": "Otsi ainult viidete järgi",
         "general": "Otsingu märksõna",
-        "help": "Otsingu abi"
+        "help": "Otsingu abi",
+        "closeHelp": "Sulge otsingu abi"
     },
     "song": {
         "song": "Laul",

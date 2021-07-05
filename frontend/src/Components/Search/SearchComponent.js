@@ -57,7 +57,7 @@ const SearchComponent = (props) => {
                     />
                 </Grid>
                 <Grid item>
-                    <Button onClick={() => setIsHelpOpen(!isHelpOpen)} variant='outlined'>{t('search.help')}</Button>
+                    <Button onClick={() => setIsHelpOpen(!isHelpOpen)} variant='outlined'>{isHelpOpen ? t('search.closeHelp') : t('search.help')}</Button>
                 </Grid>
             </Grid>
             {
