@@ -2,11 +2,13 @@ import React from 'react';
 import ListComponent from '../ListComponent';
 import { TuneModel } from '../../Models';
 import { DataService } from '../../Services';
+import { Grid } from '@material-ui/core';
+import './TunesList.css';
 
 const TunesList = () => {
   return (
-    <ListComponent model={TuneModel.list}
-    filter={DataService.CreateIncludeFilter(TuneModel.list)} />
+      <ListComponent model={TuneModel.list}
+        filter={DataService.CreateIncludeFilter(TuneModel.list)} />
   );
 };
 

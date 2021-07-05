@@ -8,7 +8,7 @@ const CreateButton = (({ url }) => {
     const location = useLocation();
     return (
         <Button href={url === undefined ? location.pathname + '/uus' : url} variant='outlined' color='primary'>{t('action.create')}</Button>
-    )
+    );
 });
 
 export default CreateButton;

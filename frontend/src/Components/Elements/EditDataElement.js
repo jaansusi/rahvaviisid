@@ -200,8 +200,8 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                                                     })
                                                 }
                                                 <TableCell>
-                                                    <Button onClick={() => { setExpanded(i) }}>{t('action.edit')}</Button>
-                                                    <Button onClick={() => { deleteEntryFromTable(i) }}>{t('action.delete')}</Button>
+                                                    <Button onClick={() => { setExpanded(i) }} variant='outlined' color='primary'>{t('action.edit')}</Button>
+                                                    <Button onClick={() => { deleteEntryFromTable(i) }} variant='outlined' color='primary'>{t('action.delete')}</Button>
                                                 </TableCell>
                                             </TableRow>
                                     })

@@ -9,6 +9,8 @@ import Actions from '../Buttons/Actions';
 import { MusicalCharacteristicsModel } from '../../Models/MusicalCharacteristicsModel';
 import BarLoader from 'react-spinners/BarLoader';
 
+const headerVariant = 'h2';
+
 const TuneView = () => {
     const { t } = useTranslation('common');
     let { id } = useParams();
@@ -20,6 +22,7 @@ const TuneView = () => {
     };
     let [assetData, setAssetData] = useReducer(assetReducer, {});
     let [isLoading, setIsLoading] = useState(true);
+
 
     useEffect(() => {
         DataService.RequestAsset(TuneModel.view, id)
@@ -67,7 +70,7 @@ const TuneView = () => {
             >
                 <Grid item container direction='row'>
                     <Grid item xs={2}>
-                        <Typography variant='h5'>{t('tune.references')}</Typography>
+                        <Typography variant={headerVariant}>{t('tune.references')}</Typography>
                     </Grid>
                     <AssetPropertyElement title={t('tune.tuneReference')} value={assetData.tuneReference} />
                     <AssetPropertyElement title={t('tune.soundReference')} value={assetData.soundReference} />
@@ -95,7 +98,7 @@ const TuneView = () => {
                     <>
                         <Grid item container direction='row'>
                             <Grid item xs={2}>
-                                <Typography variant='h5'>{t('tune.verification')}</Typography>
+                                <Typography variant={headerVariant}>{t('tune.verification')}</Typography>
                             </Grid>
                             <AssetPropertyElement title={t('tune.verified')} value={assetData.verified} />
                             <AssetPropertyElement title={t('tune.verifiedBy')} value={assetData.verifiedBy} />
@@ -114,14 +117,14 @@ const TuneView = () => {
                 <AssetPropertyTableElement label={t(MusicalCharacteristicsModel.table.label)} model={MusicalCharacteristicsModel.table} data={assetData['musicalCharacteristics']} />
                 <Grid item container spacing={2}>
                     <Grid item>
-                        <Typography variant='h5'>{t('tune.encodings')}</Typography>
+                        <Typography variant={headerVariant}>{t('tune.encodings')}</Typography>
                     </Grid>
                     {
                         assetData.tuneEncodings?.map((encoding, i) => {
                             return (
                                 <Grid key={i} item container direction='column' spacing={2}>
                                     <Grid item>
-                                        <Typography variant='h5'>{t('tune.coding')} {i + 1}</Typography>
+                                        <Typography variant={headerVariant}>{t('tune.coding')} {i + 1}</Typography>
                                     </Grid>
                                     <Grid item container direction='row'>
                                         <AssetPropertyElement title={t('encoding.keySignature')} value={encoding.keySignatures?.title} />
@@ -166,14 +169,14 @@ const TuneView = () => {
                 </Grid>
                 <Grid item container spacing={2}>
                     <Grid item>
-                        <Typography variant='h5'>{t('tune.transcriptions')}</Typography>
+                        <Typography variant={headerVariant}>{t('tune.transcriptions')}</Typography>
                     </Grid>
                     {
                         assetData.tuneTranscriptions?.map((transcription, i) => {
                             return (
                                 <Grid key={i} item container direction='column' spacing={2}>
                                     <Grid item>
-                                        <Typography variant='h5'>{t('tune.transcription')} {i + 1}</Typography>
+                                        <Typography variant={headerVariant}>{t('tune.transcription')} {i + 1}</Typography>
                                     </Grid>
                                     <Grid item container direction='row'>
                                         <AssetPropertyElement title={t('transcription.source')} value={transcription.transcriptionSources.title} />
@@ -228,7 +231,7 @@ const TuneView = () => {
                 <Divider />
                 <Grid item container direction='row'>
                     <Grid item xs={2}>
-                        <Typography variant='h5'>{t('tune.archive')}</Typography>
+                        <Typography variant={headerVariant}>{t('tune.archive')}</Typography>
                     </Grid>
                     <AssetPropertyElement title={t('tune.publications')} value={assetData.publications} />
                     <AssetPropertyElement title={t('tune.catalogue')} value={assetData.catalogue} />
@@ -243,7 +246,7 @@ const AssetPropertyElement = ({ title, value, size }) => {
     if (!size) size = 2;
     return (
         <Grid item xs={size} container wrap='nowrap' direction='column'>
-            <Grid item><i>{title}</i></Grid>
+            <Grid item><Typography><i>{title}</i></Typography></Grid>
             <Grid item><Typography>{value !== '' ? value : '---'}</Typography></Grid>
         </Grid>
     );
@@ -254,11 +257,13 @@ const AssetPropertyDateElement = ({ title, value, size }) => {
     );
 };
 const AssetPropertyTableElement = ({ label, model, data }) => {
-    return (<Grid item>
-        <Divider />
-        <Typography variant='h5'>{label}</Typography>
-        <TableViewComponent model={model} value={data} />
-    </Grid>);
+    return (
+        <Grid item>
+            <Divider />
+            <Typography variant={headerVariant}>{label}</Typography>
+            <TableViewComponent model={model} value={data} />
+        </Grid>
+    );
 }
 
 export default TuneView;

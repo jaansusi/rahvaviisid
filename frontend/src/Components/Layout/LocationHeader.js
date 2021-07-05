@@ -26,7 +26,7 @@ const LocationHeader = ({ location }) => {
     return (
         <Grid container justify='flex-start' item xs={11}>
             <Grid item xs={12}>
-                <Typography variant='h5'>
+                <Typography variant='h2'>
                     {translatedString}
                 </Typography>
                 <Divider />

@@ -36,24 +36,22 @@ const ListDataFragment = (({ model, data, rowCount, updateTable, currentView, ad
             return row;
         });
 
-    useEffect(() => {updateTable(0)}, [])
+    useEffect(() => { updateTable(0) }, [])
 
     let tableWidth = columns.map(x => x.width).reduce((x, y) => x + y, 0) + 2;
     return (
-        <>
-            <div style={{ width: tableWidth, height: '500px' }}>
-                <CreateButton />
-                <DataGrid
-                    paginationMode='server'
-                    rowCount={rowCount}
-                    rows={tableData}
-                    columns={columns}
-                    pageSize={10}
-                    onPageChange={(x) => updateTable((x.page) * x.pageSize)}
-                    localeText={GetDataGridLocale(t)}
-                />
-            </div>
-        </>
+        <div style={{ width: tableWidth, height: '80vh' }}>
+            <CreateButton />
+            <DataGrid
+                paginationMode='server'
+                rowCount={rowCount}
+                rows={tableData}
+                columns={columns}
+                pageSize={10}
+                onPageChange={(x) => updateTable((x.page) * x.pageSize)}
+                localeText={GetDataGridLocale(t)}
+            />
+        </div>
     );
 });
 

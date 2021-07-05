@@ -1,4 +1,4 @@
-import { Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
+import { Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@material-ui/core';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { DataService } from '../../Services';
@@ -79,15 +79,15 @@ const ViewDataElement = (({ model, value }) => {
         case 'timestamp':
             return (
                 <Grid item xs={2} container direction='column'>
-                    <Grid item>{t(model.headerName)}</Grid>
-                    <Grid item>{DataService.ParseDate(value)}</Grid>
+                    <Grid item><Typography>{t(model.headerName)}</Typography></Grid>
+                    <Grid item><Typography>{DataService.ParseDate(value)}</Typography></Grid>
                 </Grid>
             );
         default:
             return (
                 <Grid item xs={2} container direction='column'>
-                    <Grid item>{t(model.headerName)}</Grid>
-                    <Grid item>{value}</Grid>
+                    <Grid item><Typography>{t(model.headerName)}</Typography></Grid>
+                    <Grid item><Typography>{value}</Typography></Grid>
                 </Grid>
             );
     }

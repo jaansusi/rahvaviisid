@@ -14,11 +14,11 @@ const DeleteButton = (({ apiPath, id }) => {
                     console.log(result);
                 }
             );
-    }
+    };
 
     return (
         <Button href='#' onClick={deleteObject} variant='outlined' color='primary'>{t('action.delete')}</Button>
-    )
+    );
 });
 
 export default DeleteButton;

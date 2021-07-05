@@ -1,15 +1,13 @@
 import React from 'react';
-import { useTranslation } from "react-i18next";
 import { Grid } from '@material-ui/core';
 import './Footer.css';
 import ekmLogo from '../../assets/ekm-logo.png';
 import eraLogo from '../../assets/era-logo.jpg';
 
 const Footer = () => {
-    const { t } = useTranslation('common');
-
     return (
         <Grid
+            item
             container
             id='footer-container'
             alignItems='center'
