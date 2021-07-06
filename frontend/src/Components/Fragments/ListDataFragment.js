@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from "react-i18next";
 import { DataGrid } from '@material-ui/data-grid';
 import Actions from '../Buttons/Actions';

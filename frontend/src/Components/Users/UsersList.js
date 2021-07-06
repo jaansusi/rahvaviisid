@@ -1,4 +1,4 @@
-import { Button, Grid } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import ListComponent from '../ListComponent';
