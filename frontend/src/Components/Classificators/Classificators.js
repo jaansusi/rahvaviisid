@@ -3,7 +3,7 @@ import {
     useParams
 } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { Button, Grid } from '@material-ui/core';
+import { Button, Divider, Grid, Typography } from '@material-ui/core';
 import { ClassificatorsModel } from '../../Models';
 
 const Classificators = () => {
@@ -15,13 +15,14 @@ const Classificators = () => {
                 {
                     ClassificatorsModel.groups.map((group, i) => {
                         return (
+                            <>
                             <Grid item key={i}>
-                                <h3>{t(group.name)}</h3>
-                                <Grid container direction='row'>
+                                <Typography variant='h5'>{t(group.name)}</Typography>
+                                <Grid container direction='row' spacing={1}>
                                     {
                                         group.models.map((model, j) => {
                                             return (
-                                            <Grid>
+                                            <Grid item>
                                                 <Button key={j} className='classificator-link' href={`${asset}/${model.url}`} variant='outlined'>{t(model.name)}</Button>
                                             </Grid>
                                             );
@@ -29,6 +30,8 @@ const Classificators = () => {
                                     }
                                 </Grid>
                             </Grid>
+                            <Divider style={{marginTop: 5}} />
+                            </>
                         )
                     })
                 }

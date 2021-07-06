@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 import './EditDataFragment.css';
 import EditDataElement from '../Elements/EditDataElement';
 
@@ -12,7 +12,7 @@ const EditDataFragment = ({
 }) => {
     return (
         <Grid container direction='column'>
-            <h4>{title !== undefined ? title : null}</h4>
+            <Typography variant='h4'>{title !== undefined ? title : null}</Typography>
             <Grid container direction='row'>
                 {
                     // Create form fields based on the model

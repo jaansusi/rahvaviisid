@@ -1,4 +1,4 @@
-import { Button, Checkbox, Collapse, FormControl, FormControlLabel, Grid, InputLabel, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@material-ui/core';
+import { Button, Checkbox, Collapse, FormControl, FormControlLabel, Grid, InputLabel, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from '@material-ui/core';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { DataService, TuneService } from '../../Services';
@@ -145,7 +145,7 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                     item
                     xs={12}
                 >
-                    <h3>{t(model.nested.label)}</h3>
+                    <Typography variant ='h3'>{t(model.nested.label)}</Typography>
                     <Button onClick={addEntryToTable} variant='outlined' color='primary'>{t('action.create')}</Button>
                     <TableContainer component={Paper}>
                         <Table>

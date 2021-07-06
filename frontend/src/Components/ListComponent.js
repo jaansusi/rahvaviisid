@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import config from '../config';
 import ListDataFragment from './Fragments/ListDataFragment';
 import axios from 'axios';
+import { Grid } from '@material-ui/core';
 
 const ListComponent = (({ model, filter, currentView, additionalButtons, actionsWidth }) => {
     let [data, setData] = useState([]);
@@ -32,15 +33,17 @@ const ListComponent = (({ model, filter, currentView, additionalButtons, actions
             );
     }, [filter, model.apiPath, rowCount]);
     return (
-        <ListDataFragment
-            model={model}
-            apiPath={model.apiPath}
-            data={data}
-            rowCount={rowCount}
-            updateTable={updateTable}
-            currentView={currentView}
-            additionalButtons={additionalButtons}
-            actionsWidth={actionsWidth} />
+        <Grid container alignItems='center'>
+            <ListDataFragment
+                model={model}
+                apiPath={model.apiPath}
+                data={data}
+                rowCount={rowCount}
+                updateTable={updateTable}
+                currentView={currentView}
+                additionalButtons={additionalButtons}
+                actionsWidth={actionsWidth} />
+        </Grid>
     );
 });
 

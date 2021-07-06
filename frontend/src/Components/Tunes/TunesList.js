@@ -2,7 +2,6 @@ import React from 'react';
 import ListComponent from '../ListComponent';
 import { TuneModel } from '../../Models';
 import { DataService } from '../../Services';
-import { Grid } from '@material-ui/core';
 import './TunesList.css';
 
 const TunesList = () => {

@@ -24,12 +24,12 @@ const LocationHeader = ({ location }) => {
         translatedString = path.map(x => t('location.' + x)).join(separator);
     }
     return (
-        <Grid container justify='flex-start' item xs={11}>
+        <Grid container item xs={11} style={{ marginBottom: 10 }}>
             <Grid item xs={12}>
-                <Typography variant='h2'>
+                <Typography variant='h4'>
                     {translatedString}
                 </Typography>
-                <Divider />
+            <Divider />
             </Grid>
         </Grid>
     );

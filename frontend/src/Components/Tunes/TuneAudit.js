@@ -5,7 +5,7 @@ import axios from 'axios';
 import config from '../../config';
 import { DataGrid } from '@material-ui/data-grid';
 import { useTranslation } from 'react-i18next';
-import { Grid } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 
 const TuneAudit = () => {
     const { t } = useTranslation('common');
@@ -55,7 +55,7 @@ const TuneAudit = () => {
                     </Grid> 
                 </Grid>
                 :
-                <Grid><h5>{t('audit.chooseOne')}</h5></Grid>
+                <Grid><Typography variant='h2'>{t('audit.chooseOne')}</Typography></Grid>
             }
             <Grid item xs={12}>
                 <div style={{ width: '90vw', height: '500px' }}>

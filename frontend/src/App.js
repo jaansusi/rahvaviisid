@@ -31,7 +31,7 @@ function App() {
         <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
       </Helmet>
       <Router>
-        <ThemeProvider theme={createMuiTheme({typography: {fontSize: '1.5rem !important',},})}>
+        <ThemeProvider theme={createMuiTheme({ typography: { fontSize: 15, }, })}>
           <Grid container direction='column'>
             <Grid item>
               <Header authentication={authentication} setAuthentication={setAuthentication} />

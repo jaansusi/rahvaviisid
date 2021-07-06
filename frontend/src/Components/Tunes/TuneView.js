@@ -9,7 +9,7 @@ import Actions from '../Buttons/Actions';
 import { MusicalCharacteristicsModel } from '../../Models/MusicalCharacteristicsModel';
 import BarLoader from 'react-spinners/BarLoader';
 
-const headerVariant = 'h2';
+const headerVariant = 'h5';
 
 const TuneView = () => {
     const { t } = useTranslation('common');
@@ -50,14 +50,10 @@ const TuneView = () => {
                     additionalButtons=
                     {
                         AuthService.CanAccess(['editor', 'admin']) ?
-                            <>
-                                <Grid item>
-                                    <Button href={'audit'} variant="outlined" color="primary">{t('common.audit')}</Button>
-                                </Grid>
-                                <Grid item>
-                                    <Button href={'kopeeri'} variant="outlined" color="primary">{t('tune.duplicate')}</Button>
-                                </Grid>
-                            </> :
+                            [
+                                <Button className='actionButton' href={'audit'} variant="outlined" color="primary">{t('common.audit')}</Button>,
+                                <Button className='actionButton' href={'kopeeri'} variant="outlined" color="primary">{t('tune.duplicate')}</Button>
+                            ] :
                             undefined
                     }
                 />
@@ -88,12 +84,10 @@ const TuneView = () => {
                     <AssetPropertyElement title={t('tune.country')} value={assetData.countries?.title} />
                 </Grid>
 
+                <Divider />
+
                 <AssetPropertyTableElement label={t(ExternalReferenceModel.table.label)} model={ExternalReferenceModel.table} data={assetData['externalReferences']} />
-                <Divider />
 
-
-
-                <Divider />
                 {AuthService.CanAccess(['editor', 'admin']) &&
                     <>
                         <Grid item container direction='row'>
@@ -109,12 +103,12 @@ const TuneView = () => {
                             <Grid item xs={2}></Grid>
                             <AssetPropertyElement title={t('tune.remarks')} value={assetData.remarks} size={8} />
                         </Grid>
+                        <Divider />
                     </>
                 }
 
-
-                <Divider />
                 <AssetPropertyTableElement label={t(MusicalCharacteristicsModel.table.label)} model={MusicalCharacteristicsModel.table} data={assetData['musicalCharacteristics']} />
+
                 <Grid item container spacing={2}>
                     <Grid item>
                         <Typography variant={headerVariant}>{t('tune.encodings')}</Typography>
@@ -123,6 +117,8 @@ const TuneView = () => {
                         assetData.tuneEncodings?.map((encoding, i) => {
                             return (
                                 <Grid key={i} item container direction='column' spacing={2}>
+
+                                    <Divider />
                                     <Grid item>
                                         <Typography variant={headerVariant}>{t('tune.coding')} {i + 1}</Typography>
                                     </Grid>
@@ -149,8 +145,8 @@ const TuneView = () => {
                                                 return (
                                                     <Grid key={j} item container direction='column' spacing={2}>
                                                         <Grid item container direction='row' spacing={5}>
-                                                            <Grid item><Typography variant='h6'>{t('tune.variant')} {j + 1}</Typography></Grid>
-                                                            <Grid item><Button onClick={() => alert('Varsti tuleb')} variant='outlined'>{t('melody.export')}</Button></Grid>
+                                                            <Grid item xs={3}><Typography variant='h6'>{t('tune.variant')} {j + 1}</Typography></Grid>
+                                                            <Grid item xs={3}><Button onClick={() => alert('Varsti tuleb')} variant='outlined'>{t('melody.export')}</Button></Grid>
                                                         </Grid>
                                                         <Grid item>
                                                             <PlayerViewComponent elementData={melody} index={i.toString() + j.toString()} />
@@ -161,12 +157,14 @@ const TuneView = () => {
                                             })
                                         }
                                     </Grid>
-                                    <Divider />
                                 </Grid>
                             )
                         })
                     }
                 </Grid>
+
+                <Divider />
+
                 <Grid item container spacing={2}>
                     <Grid item>
                         <Typography variant={headerVariant}>{t('tune.transcriptions')}</Typography>
@@ -189,6 +187,7 @@ const TuneView = () => {
                                             </Grid>
                                         }
                                     </Grid>
+
                                     <Grid item container direction='column' spacing={2}>
                                         {
                                             <AssetPropertyTableElement label={t('transcription.transcriptionPersons')} model={
@@ -212,12 +211,9 @@ const TuneView = () => {
                                                 }
                                                 )
                                             } />
-
                                         }
                                     </Grid>
-
                                 </Grid>
-
                             )
                         })
                     }
@@ -228,7 +224,6 @@ const TuneView = () => {
                 <AssetPropertyTableElement label={t(TuneSongsModel.table.label)} model={TuneSongsModel.table} data={assetData['tuneSongs']} />
                 <AssetPropertyTableElement label={t(TunePerformancesModel.table.label)} model={TunePerformancesModel.table} data={assetData['tunePerformances']} />
 
-                <Divider />
                 <Grid item container direction='row'>
                     <Grid item xs={2}>
                         <Typography variant={headerVariant}>{t('tune.archive')}</Typography>
@@ -258,11 +253,14 @@ const AssetPropertyDateElement = ({ title, value, size }) => {
 };
 const AssetPropertyTableElement = ({ label, model, data }) => {
     return (
-        <Grid item>
+        <>
+            <Grid item>
+                <Typography variant={headerVariant}>{label}</Typography>
+                <TableViewComponent model={model} value={data} />
+            </Grid>
+
             <Divider />
-            <Typography variant={headerVariant}>{label}</Typography>
-            <TableViewComponent model={model} value={data} />
-        </Grid>
+        </>
     );
 }
 

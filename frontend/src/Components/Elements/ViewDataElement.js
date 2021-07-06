@@ -12,7 +12,7 @@ const ViewDataElement = (({ model, value }) => {
         case 'table':
             return (
                 <>
-                    <h2>{t(model.nested.label)}</h2>
+                    <Typography variant='h2'>{t(model.nested.label)}</Typography>
                     <TableContainer component={Paper}>
                         <Table>
                             <TableHead>

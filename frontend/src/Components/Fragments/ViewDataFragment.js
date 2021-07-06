@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from "react-i18next";
-import { Grid, Divider } from '@material-ui/core';
+import { Grid, Divider, Typography } from '@material-ui/core';
 import ViewDataElement from '../Elements/ViewDataElement';
 
 const ViewDataFragment = (({ model, elementData }) => {
@@ -9,7 +9,7 @@ const ViewDataFragment = (({ model, elementData }) => {
         return null;
     return (
         <>
-            <Grid item><h2>{t(model.label)}</h2></Grid>
+            <Grid item><Typography variant='h2'>{t(model.label)}</Typography></Grid>
             <Divider />
             <Grid item xs={9} container direction='column' spacing={2}>
                 {

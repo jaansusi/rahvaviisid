@@ -8,7 +8,7 @@ const UsersList = () => {
     const { t } = useTranslation('common');
     return (
         <ListComponent model={UserModel.list} currentView='delete'
-            additionalButtons={<Grid item><Button variant="outlined" color="primary">{t('common.deactivate')}</Button></Grid>}
+            additionalButtons={[<Button className='actionButton' variant="outlined" color="primary">{t('common.deactivate')}</Button>]}
             actionsWidth={350}
         />
     );

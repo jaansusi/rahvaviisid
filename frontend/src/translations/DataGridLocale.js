@@ -1,12 +1,18 @@
 export const GetDataGridLocale = ((translateFunction) => {
+
+    let locale = DATA_GRID_LOCALE;
+    
     let tempLocale = {};
-    Object.keys(DATA_GRID_LOCALE).map((key, index) =>
-        tempLocale[key] = translateFunction(DATA_GRID_LOCALE[key])
+    Object.keys(locale).map(key =>
+        tempLocale[key] = translateFunction(locale[key])
     );
-    console.log(tempLocale);
+
+    tempLocale.toolbarFiltersTooltipActive = (count) => count !== 1 ? `${count} ` + translateFunction('datagrid.activeFilter') : `${count} ` + translateFunction('datagrid.activeFilters');
+    tempLocale.columnHeaderFiltersTooltipActive = (count) => count !== 1 ? `${count} ` + translateFunction('datagrid.activeFilter') : `${count} ` + translateFunction('datagrid.activeFilters');
+    tempLocale.footerRowSelected = (count) => count !== 1 ? `${count.toLocaleString()} ` + translateFunction('datagrid.rowsSelected') : `${count.toLocaleString()} ` + translateFunction('datagrid.rowSelected');
+
     return tempLocale;
 }
-
 );
 
 const DATA_GRID_LOCALE = {
@@ -31,8 +37,7 @@ const DATA_GRID_LOCALE = {
     toolbarFiltersLabel: 'datagrid.toolbar.filters',
     toolbarFiltersTooltipHide: 'datagrid.toolbar.hideFilters',
     toolbarFiltersTooltipShow: 'datagrid.toolbar.showFilters',
-    toolbarFiltersTooltipActive: (count) =>
-        count !== 1 ? `${count} active filters` : `${count} active filter`,
+    toolbarFiltersTooltipActive: (count) => '',
 
     // Export selector toolbar button text
     toolbarExport: 'datagrid.toolbar.export',
@@ -83,16 +88,12 @@ const DATA_GRID_LOCALE = {
     columnMenuSortDesc: 'datagrid.column.sortDesc',
 
     // Column header text
-    columnHeaderFiltersTooltipActive: (count) =>
-        count !== 1 ? `${count} active filters` : `${count} active filter`,
+    columnHeaderFiltersTooltipActive: (count) => '',
     columnHeaderFiltersLabel: 'datagrid.column.filtersLabel',
     columnHeaderSortIconLabel: 'datagrid.column.sortLabel',
 
     // Rows selected footer text
-    footerRowSelected: (count) =>
-        count !== 1
-            ? `${count.toLocaleString()} rows selected`
-            : `${count.toLocaleString()} row selected`,
+    footerRowSelected: (count) => '',
 
     // Total rows footer text
     footerTotalRows: 'datagrid.footerTotalRows',

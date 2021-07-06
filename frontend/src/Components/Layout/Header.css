@@ -1,11 +1,11 @@
 #header-container {
-    height: 80px;
+    height: 10vh;
     background-color: #FFFFFF;
 }
 
 .logo-image {
     margin-left: 20px;
-    height: 80px;
+    height: 10vh;
 }
 
 .menu > a {

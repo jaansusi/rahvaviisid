@@ -49,6 +49,10 @@
         "deactivate": "Deaktiveeri"
     },
     "datagrid": {
+        "activeFilter": "aktiivne filter",
+        "activeFilters": "aktiivset filtrit",
+        "rowSelected": "rida valitud",
+        "rowsSelected": "rida valitud",
         "noRows": "Tulemusi ei ole",
         "noResults": "Tulemusi ei leitud.",
         "error": "Ilmnes viga.",
@@ -146,8 +150,8 @@
     },
     "melody": {
         "abc": "ABC kuju",
-        "export": "Eksport",
-        "import": "Import"
+        "export": "Lae alla MusicXML",
+        "import": "Lae üles MusicXML"
     },
     "model": {
         "true": "Jah",

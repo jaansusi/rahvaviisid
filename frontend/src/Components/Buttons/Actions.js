@@ -4,12 +4,14 @@ import { useTranslation } from "react-i18next";
 import { useLocation } from 'react-router-dom';
 import DeleteButton from './DeleteButton';
 import { AuthService } from '../../Services';
+import './ActionButton.css';
 
-const Actions = (({ id, apiPath, auth, pathOverride, spacing, currentView, additionalButtons }) => {
+const Actions = (({ id, apiPath, auth, pathOverride, spacing, currentView, additionalButtons, }) => {
     const { t } = useTranslation('common');
     let { pathname } = useLocation();
     let beforeInt = true;
-    let path = pathname.split('/').map((elem, index) => {
+
+    let path = pathname.split('/').map(elem => {
         if (!isNaN(elem) && !isNaN(parseInt(elem)))
             beforeInt = false;
         if (!beforeInt)
@@ -24,11 +26,17 @@ const Actions = (({ id, apiPath, auth, pathOverride, spacing, currentView, addit
         <Grid container
             justify='flex-end'
             spacing={spacing ? spacing : 0}>
-            { additionalButtons }
-            { currentView !== 'view' && <Grid item><Button href={`${path}/` + id + '/vaata'} variant="outlined" color="primary">{t('action.view')}</Button></Grid>}
+            {
+                additionalButtons.map(button =>
+                    <Grid item>
+                        {button}
+                    </Grid>
+                )
+            }
+            { currentView !== 'view' && <Grid item><Button className='actionButton' href={`${path}/` + id + '/vaata'} variant="outlined" color="primary">{t('action.view')}</Button></Grid>}
             { auth &&
                 <>
-                    { currentView !== 'edit' && <Grid item><Button href={`${path}/` + id + '/muuda'} variant="outlined" color="primary">{t('action.edit')}</Button></Grid>}
+                    { currentView !== 'edit' && <Grid item><Button className='actionButton' href={`${path}/` + id + '/muuda'} variant="outlined" color="primary">{t('action.edit')}</Button></Grid>}
                     { currentView !== 'delete' && <Grid item><DeleteButton apiPath={apiPath} id={id} /></Grid>}
                 </>
             }
