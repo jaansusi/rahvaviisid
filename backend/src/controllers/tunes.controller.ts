@@ -47,12 +47,16 @@ import {
   TunesRepository,
   TuneTranscriptionsRepository,
 } from '../repositories';
-import {AuditControllerMixin} from '../mixins';
 import {IAuditMixinOptions, UserId} from '../types';
-import {Getter, inject, MixinTarget} from '@loopback/core';
+import {Getter, inject} from '@loopback/core';
 import { TunesFilter } from '../keys';
+import { AuditBaseController } from './auditbase.controller';
 
-class TunesBaseController {
+const groupAuditOpts: IAuditMixinOptions = {
+  actionKey: 'Tunes_Logs'
+};
+
+export class TunesController extends AuditBaseController<Tunes> {
   constructor(
     @inject.getter(AuthenticationBindings.CURRENT_USER) 
     public getCurrentUser: Getter<UserId>,
@@ -88,7 +92,11 @@ class TunesBaseController {
     public soundRangesRepository: SoundRangesRepository,
     @repository(ExternalReferencesRepository)
     public externalReferencesRepository: ExternalReferencesRepository,
-  ) {}
+  ) {
+    super(
+      groupAuditOpts
+    )
+  }
 
   @post('/tunes', {
     responses: {
@@ -118,7 +126,9 @@ class TunesBaseController {
     })
     tunes: Omit<Tunes, 'id'>,
   ): Promise<Tunes> {
-    return this.insertTune(tunes);
+    let created = await this.insertTune(tunes);
+    super.auditCreate(created);
+    return created;
   }
 
   @get('/tunes/count', {
@@ -198,7 +208,10 @@ class TunesBaseController {
     })
     tunes: Tunes,
   ): Promise<void> {
-    this.insertTune(tunes);
+    let before = await this.tunesRepository.findById(id, TunesFilter.INCLUDE_ALL);
+    await this.insertTune(tunes);
+    let after = await this.tunesRepository.findById(id, TunesFilter.INCLUDE_ALL);
+    super.auditUpdate(before, after);
   }
 
   @del('/tunes/{id}', {
@@ -214,7 +227,9 @@ class TunesBaseController {
     voters: [basicAuthorization],
   })
   async deleteById(@param.path.number('id') id: number): Promise<void> {
+    let before = await this.tunesRepository.findById(id, TunesFilter.INCLUDE_ALL);
     await this.tunesRepository.deleteById(id);
+    super.auditDelete(before);
   }
 
   private async insertTune(tune: Tunes | Omit<Tunes, 'id'>): Promise<Tunes> {
@@ -367,59 +382,13 @@ class TunesBaseController {
     if (asset === undefined) return undefined;
     //If we already know the id then it's just a matter of updating the entry
     if (asset.id) {
-      repository.updateById(asset.id, asset);
+      await repository.updateById(asset.id, asset);
       return asset;
     }
     //If not, set the id of the referenced object (probably tune)
     if (externalId) asset[externalIdName] = externalId;
 
     //And create a new entry into the db
-    return repository.create(asset);
-  }
-}
-
-const groupAuditOpts: IAuditMixinOptions = {
-  actionKey: 'Tunes_Logs',
-  queryIncludeFilter: TunesFilter.TUNES_INCLUDE_ALL_FILTER
-};
-export class TunesController extends AuditControllerMixin<
-  Tunes,
-  MixinTarget<TunesBaseController>
->(TunesBaseController, groupAuditOpts) {
-  constructor(
-    @inject.getter(AuthenticationBindings.CURRENT_USER) public getCurrentUser: Getter<UserId>,
-    @repository.getter('AuditLogRepository') public getAuditLogRepository: Getter<AuditLogRepository>, 
-    @repository(AuditLogRepository)
-    public auditLogRepository: AuditLogRepository,
-    @repository(TunesRepository)
-    public tunesRepository: TunesRepository,
-    @repository(TuneMelodiesRepository)
-    public tuneMelodiesRepository: TuneMelodiesRepository,
-    @repository(TuneEncodingsRepository)
-    public tuneEncodingsRepository: TuneEncodingsRepository,
-    @repository(TuneSongsRepository)
-    public tuneSongsRepository: TuneSongsRepository,
-    @repository(TunePerformancesRepository)
-    public tunePerformancesRepository: TunePerformancesRepository,
-    @repository(TunePlacesRepository)
-    public tunePlacesRepository: TunePlacesRepository,
-    @repository(TuneTranscriptionsRepository)
-    public tuneTranscriptionsRepository: TuneTranscriptionsRepository,
-    @repository(TunesPersonsRolesRepository)
-    public tunesPersonsRolesRepository: TunesPersonsRolesRepository,
-    @repository(ActualPerformanceTypesRepository)
-    public actualPerformanceTypesRepository: ActualPerformanceTypesRepository,
-    @repository(MusicalCharacteristicsRepository)
-    public musicalCharacteristicsRepository: MusicalCharacteristicsRepository,
-    @repository(RhythmTypesRepository)
-    public rhythmTypesRepository: RhythmTypesRepository,
-    @repository(MusicalCharacteristicsRhythmTypesRepository)
-    public musicalCharacteristicsRhythmTypesRepository: MusicalCharacteristicsRhythmTypesRepository,
-    @repository(SoundRangesRepository)
-    public soundRangesRepository: SoundRangesRepository,
-    @repository(ExternalReferencesRepository)
-    public externalReferencesRepository: ExternalReferencesRepository,
-  ) {
-    super();
+    return await repository.create(asset);
   }
 }

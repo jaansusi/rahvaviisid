@@ -26,14 +26,6 @@ export class Tunes extends Entity {
   })
   id: number;
 
-  
-  @property({
-    type: 'string',
-    length: 60,
-    postgresql: {columnName: 'pid', dataType: 'character varying', dataLength: 60, dataPrecision: null, dataScale: null, nullable: 'YES'},
-  })
-  pid?: string;
-
   @property({
     type: 'number',
     required: true,
@@ -44,35 +36,45 @@ export class Tunes extends Entity {
 
   @property({
     type: 'string',
-    length: 60,
+    jsonSchema: {
+      maxLength: 60
+    },
     postgresql: {columnName: 'tune_reference', dataType: 'character varying', dataLength: 60, dataPrecision: null, dataScale: null, nullable: 'YES'},
   })
   tuneReference?: string;
 
   @property({
     type: 'string',
-    length: 60,
+    jsonSchema: {
+      maxLength: 60
+    },
     postgresql: {columnName: 'text_reference', dataType: 'character varying', dataLength: 60, dataPrecision: null, dataScale: null, nullable: 'YES'},
   })
   textReference?: string;
 
   @property({
     type: 'string',
-    length: 60,
+    jsonSchema: {
+      maxLength: 60
+    },
     postgresql: {columnName: 'sound_reference', dataType: 'character varying', dataLength: 60, dataPrecision: null, dataScale: null, nullable: 'YES'},
   })
   soundReference?: string;
 
   @property({
     type: 'string',
-    length: 60,
+    jsonSchema: {
+      maxLength: 60
+    },
     postgresql: {columnName: 'video_reference', dataType: 'character varying', dataLength: 60, dataPrecision: null, dataScale: null, nullable: 'YES'},
   })
   videoReference?: string;
 
   @property({
     type: 'string',
-    length: 60,
+    jsonSchema: {
+      maxLength: 60
+    },
     postgresql: {columnName: 'catalogue', dataType: 'character varying', dataLength: 60, dataPrecision: null, dataScale: null, nullable: 'YES'},
   })
   catalogue?: string;

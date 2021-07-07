@@ -52,10 +52,10 @@ const TuneAudit = () => {
                     <Grid item container direction='row' spacing={3}>
                         <Grid item xs={1}>{t('audit.after')}</Grid>
                         <Grid item xs={11}>{activeEntry.after}</Grid>
-                    </Grid> 
+                    </Grid>
                 </Grid>
                 :
-                <Grid><Typography variant='h2'>{t('audit.chooseOne')}</Typography></Grid>
+                <Grid><Typography variant='h5'>{t('audit.chooseOne')}</Typography></Grid>
             }
             <Grid item xs={12}>
                 <div style={{ width: '90vw', height: '500px' }}>

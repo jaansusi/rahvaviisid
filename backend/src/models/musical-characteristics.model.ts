@@ -37,14 +37,18 @@ export class MusicalCharacteristics extends Entity {
 
   @property({
     type: 'string',
-    length: 40,
+    jsonSchema: {
+      maxLength: 40
+    },
     postgresql: {columnName: 'melostrophe_num_score', dataType: 'character varying', dataLength: 40, dataPrecision: null, dataScale: null, nullable: 'YES'},
   })
   melostropheNumScore?: string;
 
   @property({
     type: 'string',
-    length: 40,
+    jsonSchema: {
+      maxLength: 40
+    },
     postgresql: {columnName: 'melostrophe_num_audio', dataType: 'character varying', dataLength: 40, dataPrecision: null, dataScale: null, nullable: 'YES'},
   })
   melostropheNumAudio?: string;

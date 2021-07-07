@@ -21,7 +21,7 @@
 // SOFTWARE.
 
 import {AuditLogRepository} from './repositories';
-import {FilterExcludingWhere, Options} from '@loopback/repository';
+import {Entity, FilterExcludingWhere, Options} from '@loopback/repository';
 import { MixinTarget } from '@loopback/core';
 
 export interface UserId {
@@ -39,13 +39,12 @@ export interface IAuditController<TEntityId, TEntity extends object> extends Mix
   findById: (id: TEntityId, filter?: FilterExcludingWhere<TEntity>) => Promise<TEntity>;
 }
 
-export interface IEntityWithId {
+export interface IEntityWithId extends Entity {
   id: number | string;
 }
 
 export interface IAuditMixinOptions {
   actionKey: string;
-  queryIncludeFilter?: any;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
 }

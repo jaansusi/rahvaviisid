@@ -55,7 +55,9 @@ export class TunePerformances extends Entity {
 
   @property({
     type: 'string',
-    length: 255,
+    jsonSchema: {
+      maxLength: 1000
+    },
     postgresql: {columnName: 'accompaniment', dataType: 'character varying', dataLength: 255, dataPrecision: null, dataScale: null, nullable: 'YES'},
   })
   accompaniment?: string;

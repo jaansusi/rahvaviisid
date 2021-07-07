@@ -1,52 +1,12 @@
-CREATE DOMAIN folk_tune.D_title varchar(100) NOT NULL
-    CONSTRAINT CK_title_not_only_whitespace CHECK (VALUE !~ '^[[:space:]]+$')
-    CONSTRAINT CK_title_not_empty_string CHECK (VALUE <> '')
-;
-
-CREATE DOMAIN folk_tune.D_description text
-    CONSTRAINT CK_description_not_only_whitespace CHECK (VALUE !~ '^[[:space:]]+$')
-    CONSTRAINT CK_description_not_empty_string CHECK (VALUE <> '')
-    CONSTRAINT CK_description_length CHECK (LENGTH(VALUE) <= 2000)
-;
-
-CREATE DOMAIN folk_tune.D_person_name varchar(1000)
-    CONSTRAINT CK_person_name_not_only_whitespace CHECK (VALUE !~ '^[[:space:]]+$')
-    CONSTRAINT CK_person_name_not_empty_string CHECK (VALUE <> '')
-;
-
-CREATE DOMAIN folk_tune.D_reference varchar(60)
-    CONSTRAINT CK_reference_not_only_whitespace CHECK (VALUE !~ '^[[:space:]]+$')
-    CONSTRAINT CK_reference_not_empty_string CHECK (VALUE <> '')
-;
-
-CREATE DOMAIN folk_tune.D_password varchar(60) NOT NULL
-    CONSTRAINT CK_password_not_empty_string CHECK (VALUE <> '')
-;
-
-CREATE DOMAIN folk_tune.D_text_short varchar(40)
-    CONSTRAINT CK_text_short_not_only_whitespace CHECK (VALUE !~ '^[[:space:]]+$')
-    CONSTRAINT CK_text_short_not_empty_string CHECK (VALUE <> '')
-;
-
-CREATE DOMAIN folk_tune.D_text_long varchar(255)
-    CONSTRAINT CK_text_long_not_only_whitespace CHECK (VALUE !~ '^[[:space:]]+$')
-    CONSTRAINT CK_text_long_not_empty_string CHECK (VALUE <> '')
-;
-
 CREATE DOMAIN folk_tune.D_timestamp timestamp NOT NULL DEFAULT localtimestamp(0)
     CONSTRAINT CK_timestamp_check CHECK (VALUE BETWEEN '2020-01-01' AND '2200-01-01')
-;
-
-CREATE DOMAIN folk_tune.D_year smallint
-    CONSTRAINT CK_year_check CHECK (VALUE BETWEEN 0 AND 2200)
-    CONSTRAINT CK_year_no_greater_than_current_year CHECK (VALUE <= date_part('year', localtimestamp(0)))
 ;
 
 CREATE TABLE folk_tune.sexes
 (
     id smallserial NOT NULL,
-    title folk_tune.D_title,
-    description folk_tune.D_description,
+    title text,
+    description text,
     is_active boolean NOT NULL DEFAULT TRUE,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
@@ -57,18 +17,18 @@ CREATE TABLE folk_tune.sexes
 
 CREATE UNIQUE INDEX IX_sexes_title ON folk_tune.sexes (UPPER(title))
 ;
- 
+
 CREATE TABLE folk_tune.persons
 (
     id serial NOT NULL,
-    pid folk_tune.D_text_short,
-    given_name folk_tune.D_person_name,
-    surname folk_tune.D_person_name,
-    nickname folk_tune.D_person_name,
-    birth_year folk_tune.D_year,
-    death_year folk_tune.D_year,
+    pid text,
+    given_name text,
+    surname text,
+    nickname text,
+    birth_year smallint,
+    death_year smallint,
     sex_id smallint NOT NULL,
-    remarks folk_tune.D_description,
+    remarks text,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
     CONSTRAINT PK_persons PRIMARY KEY (id),
@@ -138,8 +98,8 @@ CREATE TABLE folk_tune."refresh_token"
 CREATE TABLE folk_tune.tune_states
 (
     id smallserial NOT NULL,
-    title folk_tune.D_title,
-    description folk_tune.D_description,
+    title text,
+    description text,
     is_active boolean NOT NULL DEFAULT TRUE,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
@@ -154,8 +114,8 @@ CREATE UNIQUE INDEX IX_tune_states_title ON folk_tune.tune_states (UPPER(title))
 CREATE TABLE folk_tune.nations
 (
     id smallserial NOT NULL,
-    title folk_tune.D_title,
-    description folk_tune.D_description,
+    title text,
+    description text,
     is_active boolean NOT NULL DEFAULT TRUE,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
@@ -170,8 +130,8 @@ CREATE UNIQUE INDEX IX_nations_title ON folk_tune.nations (UPPER(title))
 CREATE TABLE folk_tune.languages
 (
     id smallserial NOT NULL,
-    title folk_tune.D_title,
-    description folk_tune.D_description,
+    title text,
+    description text,
     is_active boolean NOT NULL DEFAULT TRUE,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
@@ -186,8 +146,8 @@ CREATE UNIQUE INDEX IX_languages_title ON folk_tune.languages (UPPER(title))
 CREATE TABLE folk_tune.countries
 (
     id smallserial NOT NULL,
-    title folk_tune.D_title,
-    description folk_tune.D_description,
+    title text,
+    description text,
     is_active boolean NOT NULL DEFAULT TRUE,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
@@ -203,16 +163,16 @@ CREATE TABLE folk_tune.tunes
 (
     id serial NOT NULL,
     tune_state_id smallint NOT NULL DEFAULT 1,
-    tune_reference folk_tune.D_reference,
-    text_reference folk_tune.D_reference,
-    sound_reference folk_tune.D_reference,
-    video_reference folk_tune.D_reference,
-    catalogue folk_tune.D_reference,
+    tune_reference text,
+    text_reference text,
+    sound_reference text,
+    video_reference text,
+    catalogue text,
     nation_id smallint NOT NULL DEFAULT 1,
     language_id smallint NOT NULL DEFAULT 1,
     country_id smallint NOT NULL DEFAULT 1,
-    publications folk_tune.D_description,
-    remarks folk_tune.D_description,
+    publications text,
+    remarks text,
     verified_by uuid,
     verified date,
     created folk_tune.D_timestamp,
@@ -252,20 +212,11 @@ CREATE INDEX IX_tunes_countries ON folk_tune.tunes (country_id)
 CREATE INDEX IX_tunes_users ON folk_tune.tunes (verified_by)
 ;
 
-CREATE UNIQUE INDEX IX_tunes_references ON folk_tune.tunes 
-(
-    COALESCE(tune_reference, NULL),
-    COALESCE(text_reference, NULL),
-    COALESCE(sound_reference, NULL),
-    COALESCE(video_reference, NULL)
-)
-;
-
 CREATE TABLE folk_tune.tune_place_types
 (
     id smallserial NOT NULL,
-    title folk_tune.D_title,
-    description folk_tune.D_description,
+    title text,
+    description text,
     is_active boolean NOT NULL DEFAULT TRUE,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
@@ -280,8 +231,8 @@ CREATE UNIQUE INDEX IX_tune_place_types_title ON folk_tune.tune_place_types (UPP
 CREATE TABLE folk_tune.parishes
 (
     id smallserial NOT NULL,
-    title folk_tune.D_title,
-    description folk_tune.D_description,
+    title text,
+    description text,
     is_active boolean NOT NULL DEFAULT TRUE,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
@@ -296,8 +247,8 @@ CREATE UNIQUE INDEX IX_parishes_title ON folk_tune.parishes (UPPER(title))
 CREATE TABLE folk_tune.municipalities
 (
     id smallserial NOT NULL,
-    title folk_tune.D_title,
-    description folk_tune.D_description,
+    title text,
+    description text,
     is_active boolean NOT NULL DEFAULT TRUE,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
@@ -312,8 +263,8 @@ CREATE UNIQUE INDEX IX_municipalities_title ON folk_tune.municipalities (UPPER(t
 CREATE TABLE folk_tune.villages
 (
     id smallserial NOT NULL,
-    title folk_tune.D_title,
-    description folk_tune.D_description,
+    title text,
+    description text,
     is_active boolean NOT NULL DEFAULT TRUE,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
@@ -334,8 +285,8 @@ CREATE TABLE folk_tune.tune_places
     parish_id smallint NOT NULL,
     municipality_id smallint,
     village_id smallint,
-    other_place folk_tune.D_text_long,
-    remarks folk_tune.D_description,
+    other_place text,
+    remarks text,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
     CONSTRAINT PK_tune_places PRIMARY KEY (id),
@@ -370,8 +321,8 @@ CREATE INDEX IX_tune_places_villages ON folk_tune.tune_places (village_id)
 CREATE TABLE folk_tune.actual_performance_types
 (
     id smallserial NOT NULL,
-    title folk_tune.D_title,
-    description folk_tune.D_description,
+    title text,
+    description text,
     is_active boolean NOT NULL DEFAULT TRUE,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
@@ -386,8 +337,8 @@ CREATE UNIQUE INDEX IX_actual_performance_types_title ON folk_tune.actual_perfor
 CREATE TABLE folk_tune.traditional_performance_types
 (
     id smallserial NOT NULL,
-    title folk_tune.D_title,
-    description folk_tune.D_description,
+    title text,
+    description text,
     is_active boolean NOT NULL DEFAULT TRUE,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
@@ -402,8 +353,8 @@ CREATE UNIQUE INDEX IX_traditional_performance_types_title ON folk_tune.traditio
 CREATE TABLE folk_tune.actual_action_types
 (
     id smallserial NOT NULL,
-    title folk_tune.D_title,
-    description folk_tune.D_description,
+    title text,
+    description text,
     is_active boolean NOT NULL DEFAULT TRUE,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
@@ -422,8 +373,8 @@ CREATE TABLE folk_tune.tune_performances
     actual_performance_type_id smallint NOT NULL,
     traditional_performance_type_id smallint,
     actual_action_type_id smallint,
-    accompaniment folk_tune.D_text_long,
-    remarks folk_tune.D_description,
+    accompaniment text,
+    remarks text,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
     CONSTRAINT PK_tune_performances PRIMARY KEY (id),
@@ -451,8 +402,8 @@ CREATE INDEX IX_tune_performances_actual_action_types ON folk_tune.tune_performa
 CREATE TABLE folk_tune.traditional_action_types
 (
     id smallserial NOT NULL,
-    title folk_tune.D_title,
-    description folk_tune.D_description,
+    title text,
+    description text,
     is_active boolean NOT NULL DEFAULT TRUE,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
@@ -488,11 +439,11 @@ CREATE TABLE folk_tune.tune_songs
 (
     id serial NOT NULL,
     tune_id integer NOT NULL,
-    song_type folk_tune.D_text_long,
-    song_title folk_tune.D_text_long,
-    first_verse folk_tune.D_text_long,
-    refrain folk_tune.D_text_long,
-    remarks folk_tune.D_description,
+    song_type text,
+    song_title text,
+    first_verse text,
+    refrain text,
+    remarks text,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
     CONSTRAINT PK_tune_songs PRIMARY KEY (id),
@@ -506,8 +457,8 @@ CREATE TABLE folk_tune.song_genres
 (
     id smallserial NOT NULL,
     parent_id smallint DEFAULT NULL,
-    title folk_tune.D_title,
-    description folk_tune.D_description,
+    title text,
+    description text,
     is_active boolean NOT NULL DEFAULT TRUE,
     lft smallint DEFAULT NULL,
     rght smallint DEFAULT NULL,
@@ -533,8 +484,8 @@ CREATE TABLE folk_tune.tune_genres
 (
     id smallserial NOT NULL,
     parent_id smallint DEFAULT NULL,
-    title folk_tune.D_title,
-    description folk_tune.D_description,
+    title text,
+    description text,
     is_active boolean NOT NULL DEFAULT TRUE,
     lft smallint DEFAULT NULL,
     rght smallint DEFAULT NULL,
@@ -596,8 +547,8 @@ CREATE TABLE folk_tune.song_topics
 (
     id smallserial NOT NULL,
     parent_id smallint DEFAULT NULL,
-    title folk_tune.D_title,
-    description folk_tune.D_description,
+    title text,
+    description text,
     is_active boolean NOT NULL DEFAULT TRUE,
     lft smallint DEFAULT NULL,
     rght smallint DEFAULT NULL,
@@ -640,8 +591,8 @@ CREATE INDEX IX_tsst_song_topics ON folk_tune.tune_songs_song_topics (song_topic
 CREATE TABLE folk_tune.verse_forms
 (
     id smallserial NOT NULL,
-    title folk_tune.D_title,
-    description folk_tune.D_description,
+    title text,
+    description text,
     is_active boolean NOT NULL DEFAULT TRUE,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
@@ -674,8 +625,8 @@ CREATE INDEX IX_tsvf_verse_forms ON folk_tune.tune_songs_verse_forms (verse_form
 CREATE TABLE folk_tune.sound_ranges
 (
     id smallserial NOT NULL,
-    title folk_tune.D_title,
-    description folk_tune.D_description,
+    title text,
+    description text,
     is_active boolean NOT NULL DEFAULT TRUE,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
@@ -692,10 +643,10 @@ CREATE TABLE folk_tune.musical_characteristics
     id serial NOT NULL,
     tune_id integer NOT NULL,
     sound_range_id smallint NOT NULL,
-    melostrophe_num_score folk_tune.D_text_short,
-    melostrophe_num_audio folk_tune.D_text_short,
+    melostrophe_num_score text,
+    melostrophe_num_audio text,
     is_variable boolean NOT NULL DEFAULT FALSE,
-    remarks folk_tune.D_description,
+    remarks text,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
     CONSTRAINT PK_musical_characteristics PRIMARY KEY (id),
@@ -712,8 +663,8 @@ CREATE INDEX IX_musical_characteristics_sound_ranges ON folk_tune.musical_charac
 CREATE TABLE folk_tune.rhythm_types
 (
     id smallserial NOT NULL,
-    title folk_tune.D_title,
-    description folk_tune.D_description,
+    title text,
+    description text,
     is_active boolean NOT NULL DEFAULT TRUE,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
@@ -747,8 +698,8 @@ CREATE INDEX IX_mcrt_rhythm_types ON folk_tune.musical_characteristics_rhythm_ty
 CREATE TABLE folk_tune.tune_forms
 (
     id smallserial NOT NULL,
-    title folk_tune.D_title,
-    description folk_tune.D_description,
+    title text,
+    description text,
     is_active boolean NOT NULL DEFAULT TRUE,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
@@ -782,8 +733,8 @@ CREATE INDEX IX_mctf_tune_forms ON folk_tune.musical_characteristics_tune_forms 
 CREATE TABLE folk_tune.text_forms
 (
     id smallserial NOT NULL,
-    title folk_tune.D_title,
-    description folk_tune.D_description,
+    title text,
+    description text,
     is_active boolean NOT NULL DEFAULT TRUE,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
@@ -817,8 +768,8 @@ CREATE INDEX IX_mcft_text_forms ON folk_tune.musical_characteristics_text_forms 
 CREATE TABLE folk_tune.tune_person_role_types
 (
     id smallserial NOT NULL,
-    title folk_tune.D_title,
-    description folk_tune.D_description,
+    title text,
+    description text,
     is_active boolean NOT NULL DEFAULT TRUE,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
@@ -835,12 +786,12 @@ CREATE TABLE folk_tune.tunes_persons_roles
     id serial NOT NULL,
     tune_id integer NOT NULL,
     person_id integer,
-    name_origin folk_tune.D_person_name,
+    name_origin text,
     person_age smallint,
     tune_person_role_type_id smallint NOT NULL,
-    action_start_year folk_tune.D_year,
-    action_end_year folk_tune.D_year,
-    remarks folk_tune.D_description,
+    action_start_year smallint,
+    action_end_year smallint,
+    remarks text,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
     CONSTRAINT PK_tunes_persons_roles PRIMARY KEY (id),
@@ -864,8 +815,8 @@ CREATE INDEX IX_tunes_persons_roles_tune_person_role_types ON folk_tune.tunes_pe
 CREATE TABLE folk_tune.transcription_sources
 (
     id smallserial NOT NULL,
-    title folk_tune.D_title,
-    description folk_tune.D_description,
+    title text,
+    description text,
     is_active boolean NOT NULL DEFAULT TRUE,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
@@ -899,8 +850,8 @@ CREATE INDEX IX_tune_transcriptions_transcription_sources ON folk_tune.tune_tran
 CREATE TABLE folk_tune.transcription_person_role_types
 (
     id smallserial NOT NULL,
-    title folk_tune.D_title,
-    description folk_tune.D_description,
+    title text,
+    description text,
     is_active boolean NOT NULL DEFAULT TRUE,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
@@ -918,8 +869,8 @@ CREATE TABLE folk_tune.transcriptions_persons_roles
     tune_transcription_id integer NOT NULL,
     person_id integer NOT NULL,
     transcription_person_role_type_id smallint NOT NULL,
-    action_year folk_tune.D_year,
-    remarks folk_tune.D_description,
+    action_year smallint,
+    remarks text,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
     CONSTRAINT PK_transcriptions_persons_roles PRIMARY KEY (id),
@@ -943,8 +894,8 @@ CREATE INDEX IX_transcriptions_persons_roles_transcription_person_role_types ON 
 CREATE TABLE folk_tune.key_signatures
 (
     id smallserial NOT NULL,
-    title folk_tune.D_title,
-    description folk_tune.D_description,
+    title text,
+    description text,
     is_active boolean NOT NULL DEFAULT TRUE,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
@@ -959,8 +910,8 @@ CREATE UNIQUE INDEX IX_key_signatures_title ON folk_tune.key_signatures (UPPER(t
 CREATE TABLE folk_tune.pitches
 (
     id smallserial NOT NULL,
-    title folk_tune.D_title,
-    description folk_tune.D_description,
+    title text,
+    description text,
     is_active boolean NOT NULL DEFAULT TRUE,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
@@ -975,8 +926,8 @@ CREATE UNIQUE INDEX IX_pitches_title ON folk_tune.pitches (UPPER(title))
 CREATE TABLE folk_tune.support_sounds
 (
     id smallserial NOT NULL,
-    title folk_tune.D_title,
-    description folk_tune.D_description,
+    title text,
+    description text,
     is_active boolean NOT NULL DEFAULT TRUE,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
@@ -991,8 +942,8 @@ CREATE UNIQUE INDEX IX_support_sounds_title ON folk_tune.support_sounds (UPPER(t
 CREATE TABLE folk_tune.measures
 (
     id smallserial NOT NULL,
-    title folk_tune.D_title,
-    description folk_tune.D_description,
+    title text,
+    description text,
     is_active boolean NOT NULL DEFAULT TRUE,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
@@ -1012,9 +963,9 @@ CREATE TABLE folk_tune.tune_encodings
     support_sound_id smallint,
     pitch_id smallint,
     measure_id smallint,
-    rhythm_type folk_tune.D_text_short,
-    tempo folk_tune.D_text_short,
-    remarks folk_tune.D_description,
+    rhythm_type text,
+    tempo text,
+    remarks text,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
     CONSTRAINT PK_tune_encodings PRIMARY KEY (id),

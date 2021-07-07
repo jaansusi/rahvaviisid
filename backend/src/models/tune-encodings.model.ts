@@ -60,14 +60,18 @@ export class TuneEncodings extends Entity {
 
   @property({
     type: 'string',
-    length: 40,
+    jsonSchema: {
+      maxLength: 40
+    },
     postgresql: {columnName: 'tempo', dataType: 'character varying', dataLength: 40, dataPrecision: null, dataScale: null, nullable: 'YES'},
   })
   tempo?: string;
 
   @property({
     type: 'string',
-    length: 40,
+    jsonSchema: {
+      maxLength: 40
+    },
     postgresql: {columnName: 'rhythm_type', dataType: 'character varying', dataLength: 40, dataPrecision: null, dataScale: null, nullable: 'YES'},
   })
   rhythmType?: string;

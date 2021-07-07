@@ -15,28 +15,36 @@ export class Persons extends Entity {
 
   @property({
     type: 'string',
-    length: 40,
+    jsonSchema: {
+      maxLength: 40
+    },
     postgresql: {columnName: 'pid', dataType: 'character varying', dataLength: 40, dataPrecision: null, dataScale: null, nullable: 'YES'},
   })
   pid?: string;
 
   @property({
     type: 'string',
-    length: 1000,
+    jsonSchema: {
+      maxLength: 1000
+    },
     postgresql: {columnName: 'given_name', dataType: 'character varying', dataLength: 1000, dataPrecision: null, dataScale: null, nullable: 'YES'},
   })
   givenName?: string;
 
   @property({
     type: 'string',
-    length: 1000,
+    jsonSchema: {
+      maxLength: 1000
+    },
     postgresql: {columnName: 'surname', dataType: 'character varying', dataLength: 1000, dataPrecision: null, dataScale: null, nullable: 'YES'},
   })
   surname?: string;
 
   @property({
     type: 'string',
-    length: 1000,
+    jsonSchema: {
+      maxLength: 1000
+    },
     postgresql: {columnName: 'nickname', dataType: 'character varying', dataLength: 1000, dataPrecision: null, dataScale: null, nullable: 'YES'},
   })
   nickname?: string;

@@ -70,7 +70,9 @@ export class TunePlaces extends Entity {
 
   @property({
     type: 'string',
-    length: 255,
+    jsonSchema: {
+      maxLength: 1000
+    },
     postgresql: {columnName: 'other_place', dataType: 'character varying', dataLength: 255, dataPrecision: null, dataScale: null, nullable: 'YES'},
   })
   otherPlace?: string;

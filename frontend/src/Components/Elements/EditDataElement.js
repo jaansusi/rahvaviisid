@@ -275,6 +275,7 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                             name={model.field}
                             label={t(model.headerName)}
                             value={model.selector ? elemValue[model.selector] : elemValue}
+                            required={model.required}
                             onChange={(e) => handleChange(e, index)}
                             style={{ backgroundColor: 'white' }}
                             variant='outlined' />

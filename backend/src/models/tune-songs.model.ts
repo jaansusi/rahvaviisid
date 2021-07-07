@@ -23,28 +23,36 @@ export class TuneSongs extends Entity {
 
   @property({
     type: 'string',
-    length: 255,
+    jsonSchema: {
+      maxLength: 1000
+    },
     postgresql: {columnName: 'song_type', dataType: 'character varying', dataLength: 255, dataPrecision: null, dataScale: null, nullable: 'YES'},
   })
   songType?: string;
 
   @property({
     type: 'string',
-    length: 255,
+    jsonSchema: {
+      maxLength: 1000
+    },
     postgresql: {columnName: 'song_title', dataType: 'character varying', dataLength: 255, dataPrecision: null, dataScale: null, nullable: 'YES'},
   })
   songTitle?: string;
 
   @property({
     type: 'string',
-    length: 255,
+    jsonSchema: {
+      maxLength: 1000
+    },
     postgresql: {columnName: 'first_verse', dataType: 'character varying', dataLength: 255, dataPrecision: null, dataScale: null, nullable: 'YES'},
   })
   firstVerse?: string;
 
   @property({
     type: 'string',
-    length: 255,
+    jsonSchema: {
+      maxLength: 1000
+    },
     postgresql: {columnName: 'refrain', dataType: 'character varying', dataLength: 255, dataPrecision: null, dataScale: null, nullable: 'YES'},
   })
   refrain?: string;
