@@ -98,7 +98,7 @@ const EditComponent = ({ model, newItem }) => {
     // to-do: clean up or add comments
     let submitData = (currentModel, data) => {
         let recurse = (recursedModel, recursedData) => {
-            let requestObject = Object.assign({}, recursedData);
+            let requestObject = {};
             //Iterate over each property in the current MODEL
             for (let modelKey in recursedModel.fields) {
                 //Get the current element in MODEL
@@ -123,8 +123,24 @@ const EditComponent = ({ model, newItem }) => {
                 else if (recursedData) {
                     //And then modify it based on the MODEL type
                     switch (modelElem.type) {
+                        //Can't send a number as a string
                         case 'number':
                             requestObject[modelElem.field] = parseInt(value, 10);
+                            break;
+                        //Most dropdowns are integers with one exception, users, hence this check.
+                        case 'dropdown':
+                            const regex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+                            let arr = regex.exec(value);
+                            if (arr !== null)
+                                requestObject[modelElem.field] = value;
+                            else
+                                requestObject[modelElem.field] = parseInt(value, 10);
+                            break;
+                        case 'date':
+                            if (value === '')
+                                requestObject[modelElem.field] = null;
+                            else
+                                requestObject[modelElem.field] = value;
                             break;
                         default:
                             requestObject[modelElem.field] = value;
@@ -137,8 +153,6 @@ const EditComponent = ({ model, newItem }) => {
         //First let's make sure that all the necessary models are using the correct data type
         let objToSend = recurse(currentModel, Object.assign({}, data));
 
-        //Then, as API does not like empty strings, make those nulls instead
-        objToSend = cleanNulls(objToSend);
 
         if (newItem) {
             // No DB entry exists, use post request
@@ -252,20 +266,6 @@ const removeObjectIds = obj => {
         }
     }
     return obj;
-}
-
-
-const cleanNulls = data => {
-    for (let key in data) {
-        let value = data[key];
-        if (value === '')
-            data[key] = null;
-        if (Array.isArray(value))
-            data[key] = value.map(x => cleanNulls(x));
-        if (typeof value === 'object' && value !== null)
-            data[key] = cleanNulls(value);
-    }
-    return data;
 }
 
 export default EditComponent;

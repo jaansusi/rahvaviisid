@@ -6,7 +6,7 @@ import DeleteButton from './DeleteButton';
 import { AuthService } from '../../Services';
 import './ActionButton.css';
 
-const Actions = (({ id, apiPath, auth, pathOverride, spacing, currentView, additionalButtons, }) => {
+const Actions = (({ id, apiPath, auth, pathOverride, spacing, currentView, additionalButtons }) => {
     const { t } = useTranslation('common');
     let { pathname } = useLocation();
     let beforeInt = true;
@@ -27,7 +27,7 @@ const Actions = (({ id, apiPath, auth, pathOverride, spacing, currentView, addit
             justify='flex-end'
             spacing={spacing ? spacing : 0}>
             {
-                additionalButtons.map(button =>
+                additionalButtons?.map(button =>
                     <Grid item>
                         {button}
                     </Grid>

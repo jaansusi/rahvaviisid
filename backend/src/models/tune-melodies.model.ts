@@ -81,6 +81,7 @@ export class TuneMelodies extends Entity {
   @property({
     type: 'number',
     scale: 0,
+    jsonSchema: {nullable: true},
     postgresql: {columnName: 'variation_index', dataType: 'integer', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'YES'},
   })
   variationIndex?: number;

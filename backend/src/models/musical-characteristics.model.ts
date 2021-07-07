@@ -79,7 +79,7 @@ export class MusicalCharacteristics extends Entity {
   @hasMany(() => RhythmTypes, {through: {model: () => MusicalCharacteristicsRhythmTypes}})
   rhythmTypes?: RhythmTypes[];
 
-  @hasOne(() => SoundRanges, {keyFrom: 'soundRangeId', keyTo: 'Id'})
+  @hasOne(() => SoundRanges, {keyFrom: 'soundRangeId', keyTo: 'id'})
   soundRanges?: SoundRanges;
   // Define well-known properties here
 

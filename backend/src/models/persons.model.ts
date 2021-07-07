@@ -44,6 +44,7 @@ export class Persons extends Entity {
   @property({
     type: 'number',
     scale: 0,
+    jsonSchema: {nullable: true},
     postgresql: {columnName: 'birth_year', dataType: 'smallint', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'YES'},
   })
   birthYear?: number;
@@ -51,6 +52,7 @@ export class Persons extends Entity {
   @property({
     type: 'number',
     scale: 0,
+    jsonSchema: {nullable: true},
     postgresql: {columnName: 'death_year', dataType: 'smallint', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'YES'},
   })
   deathYear?: number;

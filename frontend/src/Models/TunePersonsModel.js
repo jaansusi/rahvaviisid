@@ -20,8 +20,8 @@ export const TunePersonsModel = ModelService.GenerateDefaults({
             { field: 'personId', type: 'dropdown', apiPath: 'persons', headerName: 'person.person', selector: ['givenName', 'surname'] },
             { field: 'nameOrigin', headerName: 'tunepersons.nameOrigin'},
             { field: 'tunePersonRoleTypeId', type: 'dropdown', apiPath: 'tune-person-role-types', headerName: 'tunepersons.tunePersonRoleTypes', selector: 'title'},
-            { field: 'actionStartYear', headerName: 'tunepersons.actionStartYear'},
-            { field: 'actionEndYear', headerName: 'tunepersons.actionEndYear'},
+            { field: 'actionStartYear', type: 'number', headerName: 'tunepersons.actionStartYear'},
+            { field: 'actionEndYear', type: 'number', headerName: 'tunepersons.actionEndYear'},
             { field: 'remarks', type: 'textbox', headerName: 'common.remarks'}
         ]
     }

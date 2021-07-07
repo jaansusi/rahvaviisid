@@ -16,6 +16,7 @@ export class SongGenres extends Entity {
   @property({
     type: 'number',
     scale: 0,
+    jsonSchema: {nullable: true},
     postgresql: {columnName: 'parent_id', dataType: 'smallint', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'YES'},
   })
   parentId?: number;
@@ -44,6 +45,7 @@ export class SongGenres extends Entity {
   @property({
     type: 'number',
     scale: 0,
+    jsonSchema: {nullable: true},
     postgresql: {columnName: 'lft', dataType: 'smallint', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'YES'},
   })
   lft?: number;
@@ -51,6 +53,7 @@ export class SongGenres extends Entity {
   @property({
     type: 'number',
     scale: 0,
+    jsonSchema: {nullable: true},
     postgresql: {columnName: 'rght', dataType: 'smallint', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'YES'},
   })
   rght?: number;

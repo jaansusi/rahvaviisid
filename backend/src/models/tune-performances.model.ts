@@ -32,6 +32,7 @@ export class TunePerformances extends Entity {
     type: 'number',
     required: true,
     scale: 0,
+    jsonSchema: {nullable: true},
     postgresql: {columnName: 'actual_performance_type_id', dataType: 'smallint', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'NO'},
   })
   actualPerformanceTypeId?: number;
@@ -39,6 +40,7 @@ export class TunePerformances extends Entity {
   @property({
     type: 'number',
     scale: 0,
+    jsonSchema: {nullable: true},
     postgresql: {columnName: 'traditional_performance_type_id', dataType: 'smallint', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'YES'},
   })
   traditionalPerformanceTypeId?: number;
@@ -46,6 +48,7 @@ export class TunePerformances extends Entity {
   @property({
     type: 'number',
     scale: 0,
+    jsonSchema: {nullable: true},
     postgresql: {columnName: 'actual_action_type_id', dataType: 'smallint', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'YES'},
   })
   actualActionTypeId?: number;

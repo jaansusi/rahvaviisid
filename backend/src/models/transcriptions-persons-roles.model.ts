@@ -45,6 +45,7 @@ export class TranscriptionsPersonsRoles extends Entity {
   @property({
     type: 'number',
     scale: 0,
+    jsonSchema: {nullable: true},
     postgresql: {columnName: 'action_year', dataType: 'smallint', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'YES'},
   })
   actionYear?: number;

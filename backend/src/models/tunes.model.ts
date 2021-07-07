@@ -122,6 +122,7 @@ export class Tunes extends Entity {
 
   @property({
     type: 'date',
+    jsonSchema: {nullable: true},
     postgresql: {columnName: 'verified', dataType: 'date', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'YES'},
   })
   verified?: string;
@@ -143,6 +144,7 @@ export class Tunes extends Entity {
   @property({
     type: 'number',
     scale: 0,
+    jsonSchema: {nullable: true},
     postgresql: {columnName: 'rhythm_type_id', dataType: 'integer', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'YES'},
   })
   rhythmTypeId?: number;

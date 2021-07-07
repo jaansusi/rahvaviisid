@@ -29,6 +29,7 @@ export class TunePlaces extends Entity {
   @property({
     type: 'number',
     scale: 0,
+    jsonSchema: {nullable: true},
     postgresql: {columnName: 'person_id', dataType: 'integer', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'YES'},
   })
   personId?: number;
@@ -37,6 +38,7 @@ export class TunePlaces extends Entity {
     type: 'number',
     required: true,
     scale: 0,
+    jsonSchema: {nullable: true},
     postgresql: {columnName: 'tune_place_type_id', dataType: 'smallint', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'NO'},
   })
   tunePlaceTypeId: number;
@@ -45,6 +47,7 @@ export class TunePlaces extends Entity {
     type: 'number',
     required: true,
     scale: 0,
+    jsonSchema: {nullable: true},
     postgresql: {columnName: 'parish_id', dataType: 'smallint', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'NO'},
   })
   parishId: number;
@@ -52,6 +55,7 @@ export class TunePlaces extends Entity {
   @property({
     type: 'number',
     scale: 0,
+    jsonSchema: {nullable: true},
     postgresql: {columnName: 'municipality_id', dataType: 'smallint', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'YES'},
   })
   municipalityId?: number;
@@ -59,6 +63,7 @@ export class TunePlaces extends Entity {
   @property({
     type: 'number',
     scale: 0,
+    jsonSchema: {nullable: true},
     postgresql: {columnName: 'village_id', dataType: 'smallint', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'YES'},
   })
   villageId?: number;
