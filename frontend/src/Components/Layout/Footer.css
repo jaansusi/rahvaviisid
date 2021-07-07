@@ -1,8 +1,10 @@
 #footer-container {
-    height: 80px;
+    min-height: 50px;
+    height: 10vh;
     background-color: #FFF;
 }
 
 .footer-image {
-    height: 80px;
+    min-height: 50px;
+    height: 10vh;
 }
