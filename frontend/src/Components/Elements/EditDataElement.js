@@ -83,10 +83,10 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                                                 key={i}
                                                 value={elem.id}>
                                                 {
-                                                    model.selector ?
-                                                        Array.isArray(model.selector) ?
-                                                            model.selector.map(x => elem[x]).join(' ') :
-                                                            elem[model.selector] :
+                                                    model.title ?
+                                                        Array.isArray(model.title) ?
+                                                            model.title.map(x => elem[x]).join(' ') :
+                                                            elem[model.title] :
                                                         elem.title
                                                 }
                                             </MenuItem>
@@ -123,7 +123,6 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                 elemValue.splice(i, 1);
             };
             let handleRowChange = (event, index) => {
-
                 const { name, value } = event.target;
                 let temp = elemValue;
                 let selector = model.edit.fields.filter(x => x.field === name)[0].selector;

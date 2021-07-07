@@ -35,10 +35,10 @@ export const TuneEncodingModel = ModelService.GenerateDefaults({
         fields: [
             { field: 'id', hidden: true },            
             { field: 'rhythmType', headerName: 'encoding.rhythmType'},
-            { field: 'keySignatureId', type: 'dropdown', apiPath: 'key-signatures', headerName: 'encoding.keySignature', selector: 'title'},
-            { field: 'supportSoundId', type: 'dropdown', apiPath: 'support-sounds', headerName: 'encoding.supportSound', selector: 'title'},
-            { field: 'pitchId', type: 'dropdown', apiPath: 'pitches', headerName: 'encoding.pitch', selector: 'title'},
-            { field: 'measureId', type: 'dropdown', apiPath: 'measures', headerName: 'encoding.measure', selector: 'title'},
+            { field: 'keySignatureId', type: 'dropdown', apiPath: 'key-signatures', headerName: 'encoding.keySignature', title: 'title'},
+            { field: 'supportSoundId', type: 'dropdown', apiPath: 'support-sounds', headerName: 'encoding.supportSound', title: 'title'},
+            { field: 'pitchId', type: 'dropdown', apiPath: 'pitches', headerName: 'encoding.pitch', title: 'title'},
+            { field: 'measureId', type: 'dropdown', apiPath: 'measures', headerName: 'encoding.measure', title: 'title'},
             { field: 'tempo', headerName: 'tune.tempo' },
             { field: 'remarks', headerName: 'tune.remarks' },
             {
