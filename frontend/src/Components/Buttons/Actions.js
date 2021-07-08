@@ -27,8 +27,8 @@ const Actions = (({ id, apiPath, auth, pathOverride, spacing, currentView, addit
             justify='flex-end'
             spacing={spacing ? spacing : 0}>
             {
-                additionalButtons?.map(button =>
-                    <Grid item>
+                additionalButtons?.map((button, i) =>
+                    <Grid item key={i}>
                         {button}
                     </Grid>
                 )

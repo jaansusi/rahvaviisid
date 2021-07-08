@@ -46,7 +46,8 @@
         "footer": "Eesti Kirjandusmuuseum",
         "pid": "PID",
         "audit": "Logi",
-        "deactivate": "Deaktiveeri"
+        "deactivate": "Deaktiveeri",
+        "selectmulti": "Vali mitu"
     },
     "datagrid": {
         "activeFilter": "aktiivne filter",

@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { DataService, TuneService } from '../../Services';
 import EditDataFragment from '../Fragments/EditDataFragment';
 import { PlayerViewComponent } from '../NewComponents';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import './Css/EditFormElement.css';
 
 const EditDataElement = (({ model, elemValue, handleChange, index }) => {
@@ -96,6 +97,55 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                     </FormControl>
                 </Grid>
             );
+        case 'multiselect':
+            let handleMultiChange = ((value) => {
+                handleChange({
+                    target: {
+                        name: model.field,
+                        value: value
+                    }
+                }, index);
+            });
+            if (model.values === undefined)
+                model.values = [];
+            return (
+                <Grid
+                    item
+                    xs={4}
+                    className='form-edit-item'
+                >
+                    <Autocomplete
+                        multiple
+                        options={
+                            model.values
+                        }
+                        getOptionLabel={
+                            (option) => option === undefined ? '' :
+                                model.title ?
+                                    Array.isArray(model.title) ?
+                                        model.title.map(x => option[x]).join(' ') :
+                                        option[model.title] :
+                                    option.title
+                        }
+                        value = {elemValue.map(elem => model.values.find(x => x.value === elem))}
+                        getOptionSelected={
+                            (option) => elemValue.includes(option.value)
+                        }
+                        filterSelectedOptions
+                        renderInput={(params) => (
+                            <TextField
+                                {...params}
+                                variant="outlined"
+                                label={t(model.headerName)}
+                            />
+                        )}
+                        onChange={(event, newValues) => 
+                            handleMultiChange(newValues.map(x => x.value))
+                        }
+                        style={{ backgroundColor: 'white' }}
+                    />
+                </Grid>
+            );
         case 'view':
             return (
                 <Grid
@@ -144,7 +194,7 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                     item
                     xs={12}
                 >
-                    <Typography variant ='h3'>{t(model.nested.label)}</Typography>
+                    <Typography variant='h3'>{t(model.nested.label)}</Typography>
                     <Button onClick={addEntryToTable} variant='outlined' color='primary'>{t('action.create')}</Button>
                     <TableContainer component={Paper}>
                         <Table>

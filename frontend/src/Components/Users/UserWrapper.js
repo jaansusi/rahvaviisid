@@ -5,6 +5,7 @@ import {
 } from 'react-router-dom';
 import UserView from './UserView';
 import UserEdit from './UserEdit';
+import UserCreate from './UserCreate';
 
 const UserWrapper = () => {
 
@@ -14,7 +15,7 @@ const UserWrapper = () => {
         <UsersList />
       </Route>
       <Route exact path={`/:asset/uus`}>
-        <UserEdit newItem={true} />
+        <UserCreate />
       </Route>
       <Route exact path={`/:asset/:id/vaata`}>
         <UserView />

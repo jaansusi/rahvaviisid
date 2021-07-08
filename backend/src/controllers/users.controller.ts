@@ -125,7 +125,7 @@ export class UsersController {
     };
   }
 
-  @post('/signup', {
+  @post('/users', {
     responses: {
       '200': {
         description: 'User',

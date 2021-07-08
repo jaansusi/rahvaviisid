@@ -2,13 +2,12 @@ import React from 'react';
 import EditComponent from '../EditComponent';
 import { UserModel } from '../../Models';
 
-
-const UserEdit = () => {
+const UserCreate = () => {
     return (
         <EditComponent
-            model={UserModel.edit}
-        />
+            model={UserModel.create}
+            newItem={true} />
     );
 };
 
-export default UserEdit;
+export default UserCreate;

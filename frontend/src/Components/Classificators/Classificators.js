@@ -15,23 +15,21 @@ const Classificators = () => {
                 {
                     ClassificatorsModel.groups.map((group, i) => {
                         return (
-                            <>
                             <Grid item key={i}>
                                 <Typography variant='h5'>{t(group.name)}</Typography>
                                 <Grid container direction='row' spacing={1}>
                                     {
                                         group.models.map((model, j) => {
                                             return (
-                                            <Grid item>
-                                                <Button key={j} className='classificator-link' href={`${asset}/${model.url}`} variant='outlined'>{t(model.name)}</Button>
-                                            </Grid>
+                                                <Grid item key={j}>
+                                                    <Button className='classificator-link' href={`${asset}/${model.url}`} variant='outlined'>{t(model.name)}</Button>
+                                                </Grid>
                                             );
                                         })
                                     }
                                 </Grid>
+                                <Divider style={{ marginTop: 5 }} />
                             </Grid>
-                            <Divider style={{marginTop: 5}} />
-                            </>
                         )
                     })
                 }

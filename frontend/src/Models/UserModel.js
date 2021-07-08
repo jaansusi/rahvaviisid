@@ -6,7 +6,7 @@ export const UserModel = ModelService.GenerateDefaults({
         fields: [
             { field: 'email', headerName: 'user.email', width: 200 },
             { field: 'firstName', headerName: 'user.firstName', width: 140 },
-            { field: 'lastName', headerName: 'user.lastName', width: 150 },
+            { field: 'lastName', headerName: 'user.roles', width: 150 },
         ]
     },
     view: {
@@ -22,7 +22,22 @@ export const UserModel = ModelService.GenerateDefaults({
             { field: 'email', headerName: 'user.email' },
             { field: 'firstName', headerName: 'user.firstName' },
             { field: 'lastName', headerName: 'user.lastName' },
-            { field: null, type: 'dropdown', apiPath: 'users', headerName: 'user.role' }
+            {
+                field: 'roles', type: 'multiselect', apiPath: 'users', headerName: 'user.role', values: [
+                    { title: 'Kasutaja', value: 'user' },
+                    { title: 'Toimetaja', value: 'editor' },
+                    { title: 'Administraator', value: 'admin' }
+                ]
+            }
+        ]
+    },
+    create: {
+        fields: [
+            { field: 'email', headerName: 'user.email' },
+            { field: 'password', headerName: 'user.password' },
+            { field: 'firstName', headerName: 'user.firstName' },
+            { field: 'lastName', headerName: 'user.lastName' },
+            { field: 'roles', type: 'multiselect', apiPath: 'users', headerName: 'user.role', values: ['user', 'editor', 'admin'] }
         ]
     }
 });

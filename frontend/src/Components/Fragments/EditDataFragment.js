@@ -32,11 +32,6 @@ const EditDataFragment = ({
                             );
                         }
 
-                        // In addition, if the value for some reason is undefined, don't do anything
-                        if (elementData[modelField.field] === undefined) {
-                            return null;
-                        }
-
                         // If the model field is defined as nested, create another handler function
                         // to-do: introduce recursion to allow for multiple levels of depth for nested models
                         if (modelField.nested !== undefined) {
