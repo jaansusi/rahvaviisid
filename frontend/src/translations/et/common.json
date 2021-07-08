@@ -24,6 +24,10 @@
         "after": "Pärast",
         "chooseOne": "Vajuta real, et avada kirje"
     },
+    "authentication": {
+        "userInactive": "Kasutaja ei ole aktiivne",
+        "invalidCredentials": "Vigane e-mail / parool"
+    },
     "coding": {
         "coding": "Kodeering",
         "keySignature": "Võtmemärk",

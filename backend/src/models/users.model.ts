@@ -27,6 +27,13 @@ export class Users extends OrigUser {
     postgresql: {columnName: 'lastname', dataType: 'character varying', dataLength: 40, dataPrecision: null, dataScale: null, nullable: 'YES'},
   })
   lastName?: string;
+  
+  @property({
+    type: 'boolean',
+    required: true,
+    postgresql: {columnName: 'is_active', dataType: 'boolean', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'NO'},
+  })
+  isActive: boolean;
 
   constructor(data?: Partial<Users>) {
     super(data);

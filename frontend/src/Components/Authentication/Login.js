@@ -41,16 +41,24 @@ let Login = ({ setAuthentication }) => {
   let [email, setEmail] = useState('');
   let [password, setPassword] = useState('');
   let [credentialsValid, setCredentialsValid] = useState(true);
+  let [errorMessage, setErrorMessage] = useState('');
 
   let tryLogin = (e) => {
     e.preventDefault();
     AuthService.Login(email, password, setAuthentication)
-      .then((res) => {
-        setCredentialsValid(res);
-        if (res)
-          history.push('/');
+      .then(() => {
+        setCredentialsValid(true);
+        history.push('/');
       }
-      );
+      )
+      .catch(err => {
+        let response = err.response.data;
+        setCredentialsValid(false);
+        if (response.error.statusCode === 401)
+          setErrorMessage(response.error.message);
+        else
+          setErrorMessage('authentication.invalidCredentials');
+      });
   }
 
   return (
@@ -90,7 +98,7 @@ let Login = ({ setAuthentication }) => {
           {
             !credentialsValid &&
             <Typography color='error'>
-              {t('login.invalidCredentials')}
+              {t(errorMessage)}
             </Typography>
           }
           <Button

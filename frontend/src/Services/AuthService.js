@@ -16,11 +16,7 @@ export const AuthService = {
                         setAuthentication(response.data);
                     }
                     return response.data;
-                })
-            .catch((error) => {
-                console.log(error);
-                return false;
-            });
+                });
     },
 
     Logout(setAuthentication) {

@@ -19,7 +19,7 @@ export class UserManagementService implements UserService<Users, Credentials> {
   ) {}
 
   async verifyCredentials(credentials: Credentials): Promise<Users> {
-    const invalidCredentialsError = 'Invalid email or password.';
+    const invalidCredentialsError = 'authentication.invalidCredentials';
     const foundUser = await this.usersRepository.findOne({
       where: {email: credentials.email},
     });
@@ -42,6 +42,10 @@ export class UserManagementService implements UserService<Users, Credentials> {
     if (!passwordMatched) {
       throw new HttpErrors.Unauthorized(invalidCredentialsError);
     }
+
+    if (!foundUser.isActive)
+      throw new HttpErrors.Unauthorized('authentication.userInactive');
+
     return foundUser;
   }
 
@@ -57,7 +61,7 @@ export class UserManagementService implements UserService<Users, Credentials> {
       [securityId]: user.id,
       name: userName,
       id: user.id,
-      roles: user.roles,
+      roles: user.roles
     };
   }
 }
