@@ -32,12 +32,19 @@ export const UserModel = ModelService.GenerateDefaults({
         ]
     },
     create: {
+        apiPath: 'users',
         fields: [
             { field: 'email', headerName: 'user.email' },
             { field: 'password', headerName: 'user.password' },
             { field: 'firstName', headerName: 'user.firstName' },
             { field: 'lastName', headerName: 'user.lastName' },
-            { field: 'roles', type: 'multiselect', apiPath: 'users', headerName: 'user.role', values: ['user', 'editor', 'admin'] }
+            {
+                field: 'roles', type: 'multiselect', apiPath: 'users', headerName: 'user.role', values: [
+                    { title: 'Kasutaja', value: 'user' },
+                    { title: 'Toimetaja', value: 'editor' },
+                    { title: 'Administraator', value: 'admin' }
+                ]
+            }
         ]
     }
 });

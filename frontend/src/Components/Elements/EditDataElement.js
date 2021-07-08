@@ -127,7 +127,7 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                                         option[model.title] :
                                     option.title
                         }
-                        value = {elemValue.map(elem => model.values.find(x => x.value === elem))}
+                        value = {elemValue ? elemValue.map(elem => model.values.find(x => x.value === elem)) : []}
                         getOptionSelected={
                             (option) => elemValue.includes(option.value)
                         }
