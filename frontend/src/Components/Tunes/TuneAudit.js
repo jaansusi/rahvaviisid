@@ -31,7 +31,7 @@ const TuneAudit = () => {
     }, [id]);
     return (
         <Grid item container spacing={2} direction='column' alignItems='center'>
-            <Grid item>
+            <Grid container item>
                 {activeEntry ?
                     <Grid item container direction='column' alignItems='flex-start'>
                         <Grid item container direction='row' spacing={3}>
@@ -46,14 +46,22 @@ const TuneAudit = () => {
                             <Grid item xs={1}>{t('audit.actor')}</Grid>
                             <Grid item xs={11}>{activeEntry.actor?.firstName + ' ' + activeEntry.actor?.lastName}</Grid>
                         </Grid>
-                        <Grid item container direction='row' spacing={3}>
-                            <Grid item xs={1}>{t('audit.before')}</Grid>
-                            <Grid item xs={11}>{activeEntry.before}</Grid>
-                        </Grid>
-                        <Grid item container direction='row' spacing={3}>
-                            <Grid item xs={1}>{t('audit.after')}</Grid>
-                            <Grid item xs={11}>{activeEntry.after}</Grid>
-                        </Grid>
+                        {
+                            activeEntry.before !== '""' ?
+                                <Grid item container direction='row' spacing={3}>
+                                    <Grid item xs={1}>{t('audit.before')}</Grid>
+                                    <Grid item xs={11}>{activeEntry.before}</Grid>
+                                </Grid>
+                                : null
+                        }
+                        {
+                            activeEntry.after !== '""' ?
+                                <Grid item container direction='row' spacing={3}>
+                                    <Grid item xs={1}>{t('audit.after')}</Grid>
+                                    <Grid item xs={11}>{activeEntry.after}</Grid>
+                                </Grid>
+                                : null
+                        }
                     </Grid>
                     :
                     <Grid><Typography variant='h5'>{t('audit.chooseOne')}</Typography></Grid>
