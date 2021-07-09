@@ -54,6 +54,7 @@ function App() {
                 pauseOnHover
               />
               <LocationHeader />
+              <Grid container item xs={11} justify='center'>
               <Switch>
                 <Route exact path="/">
                   <PageComponent name='home' />
@@ -71,6 +72,7 @@ function App() {
                   <AssetRouter />
                 </Route>
               </Switch>
+              </Grid>
             </Grid>
             <Grid item>
               <Footer />

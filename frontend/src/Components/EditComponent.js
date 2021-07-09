@@ -216,7 +216,8 @@ const EditComponent = ({ model, newItem }) => {
 
     return (
         <>
-            { !newItem ? <Actions apiPath={model.apiPath} id={id} spacing={2} currentView='edit' /> : null}
+            {!newItem ? <Actions apiPath={model.apiPath} id={id} currentView='edit' justify='flex-end' spacing={2} /> : null}
+
             <form onSubmit={handleSubmit}>
                 <EditDataFragment
                     model={updatedModel}

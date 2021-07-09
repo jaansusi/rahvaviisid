@@ -44,20 +44,19 @@ const TuneView = () => {
             </Grid>
         );
     return (
-        <Grid container item lg={9} md={11}>
-            <Grid container>
-                <Actions apiPath={TuneModel.apiPath} id={id} spacing={2} currentView='view'
-                    additionalButtons=
-                    {
-                        AuthService.CanAccess(['editor', 'admin']) ?
-                            [
-                                <Button className='actionButton' href={'audit'} variant="outlined" color="primary">{t('common.audit')}</Button>,
-                                <Button className='actionButton' href={'kopeeri'} variant="outlined" color="primary">{t('tune.duplicate')}</Button>
-                            ] :
-                            undefined
-                    }
-                />
-            </Grid>
+        <Grid container item>
+            <Actions apiPath={TuneModel.apiPath} id={id} currentView='view'
+                additionalButtons=
+                {
+                    AuthService.CanAccess(['editor', 'admin']) ?
+                        [
+                            <Button className='actionButton' href={'audit'} variant="outlined" color="primary">{t('common.audit')}</Button>,
+                            <Button className='actionButton' href={'kopeeri'} variant="outlined" color="primary">{t('tune.duplicate')}</Button>
+                        ] :
+                        undefined
+                }
+                justify='flex-end'
+            />
             <Grid
                 item
                 container

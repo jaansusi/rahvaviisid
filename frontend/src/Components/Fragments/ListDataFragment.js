@@ -10,7 +10,7 @@ import { Grid } from '@material-ui/core';
 const ListDataFragment = (({ model, data, rowCount, updateTable, currentView, additionalButtons }) => {
     const { t } = useTranslation('common');
 
-    if(!additionalButtons)
+    if (!additionalButtons)
         additionalButtons = [];
 
     let columns = model.fields.map((x) => {
@@ -18,9 +18,10 @@ const ListDataFragment = (({ model, data, rowCount, updateTable, currentView, ad
         return x;
     });
     let canAccess = AuthService.CanAccess(['editor', 'admin']);
-    
+    let actionButtonCount = (currentView !== undefined ? 2 : 3) + additionalButtons.length;
+    let actionsWidth = canAccess ? actionButtonCount * 110 : 150;
     columns.push({
-        field: '', headerName: t('action.actions'), sortable: false, width: canAccess ? 3 * 100 + additionalButtons.length * 100 + 30 : 150,
+        field: '', headerName: t('action.actions'), sortable: false, width: actionsWidth,
         renderCell: (params) => <Actions auth={canAccess} apiPath={model.apiPath} id={params.row.id} currentView={currentView} additionalButtons={additionalButtons} />
     });
 

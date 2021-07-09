@@ -6,7 +6,7 @@ import DeleteButton from './DeleteButton';
 import { AuthService } from '../../Services';
 import './ActionButton.css';
 
-const Actions = (({ id, apiPath, auth, pathOverride, spacing, currentView, additionalButtons }) => {
+const Actions = (({ id, apiPath, auth, pathOverride, currentView, additionalButtons, justify, spacing }) => {
     const { t } = useTranslation('common');
     let { pathname } = useLocation();
     let beforeInt = true;
@@ -22,24 +22,30 @@ const Actions = (({ id, apiPath, auth, pathOverride, spacing, currentView, addit
         path = pathOverride;
     if (auth === undefined)
         auth = AuthService.CanAccess(['editor', 'admin']);
+    if (justify === undefined)
+        justify = 'space-between';
     return (
-        <Grid container
-            justify='flex-end'
-            spacing={spacing ? spacing : 0}>
-            {
-                additionalButtons?.map((button, i) =>
-                    <Grid item key={i}>
-                        {button}
-                    </Grid>
-                )
-            }
-            { currentView !== 'view' && <Grid item><Button className='actionButton' href={`${path}/` + id + '/vaata'} variant="outlined" color="primary">{t('action.view')}</Button></Grid>}
-            { auth &&
-                <>
-                    { currentView !== 'edit' && <Grid item><Button className='actionButton' href={`${path}/` + id + '/muuda'} variant="outlined" color="primary">{t('action.edit')}</Button></Grid>}
-                    { currentView !== 'delete' && <Grid item><DeleteButton apiPath={apiPath} id={id} /></Grid>}
-                </>
-            }
+        <Grid item xs={12}
+        justify='flex-end'>
+            <Grid container item
+                justify={justify}
+                spacing={spacing ? 2 : undefined}
+            >
+                {
+                    additionalButtons?.map((button, i) =>
+                        <Grid item key={i}>
+                            {button}
+                        </Grid>
+                    )
+                }
+                {currentView !== 'view' && <Grid item><Button className='actionButton' href={`${path}/` + id + '/vaata'} variant="outlined" color="primary">{t('action.view')}</Button></Grid>}
+                {auth &&
+                    <>
+                        {currentView !== 'edit' && <Grid item><Button className='actionButton' href={`${path}/` + id + '/muuda'} variant="outlined" color="primary">{t('action.edit')}</Button></Grid>}
+                        {currentView !== 'delete' && <Grid item><DeleteButton apiPath={apiPath} id={id} /></Grid>}
+                    </>
+                }
+            </Grid>
         </Grid>
     );
 });
