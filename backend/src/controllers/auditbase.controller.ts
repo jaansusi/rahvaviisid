@@ -44,15 +44,8 @@ export abstract class AuditBaseController<TEntity extends IEntityWithId> {
   /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
   // @ts-ignore
   async auditUpdate(before: TEntity, after: TEntity): Promise<void> {
-    let diffAfter: any = diff(before, after);
-    console.log(JSON.stringify(diffAfter));
-    let diffBefore: any = {};
-    Object.entries(diffAfter).forEach(
-      ([key, value]) => (diffBefore[key] = (before as any)[key]),
-    );
-    // console.log(diffBefore);
-    // console.log(diffAfter);
-    if (this.getCurrentUser && diffAfter !== diffBefore) {
+    let diffAfter: any = this.diff(before, after);
+    if (this.getCurrentUser) {
       const user = await this.getCurrentUser();
       const auditRepo = await this.getAuditLogRepository();
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -63,7 +56,6 @@ export abstract class AuditBaseController<TEntity extends IEntityWithId> {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         actorId: user?.id,
         action: Action.UPDATE_ONE,
-        before: diffBefore,
         after: diffAfter,
         entityId: before.id,
         actedOn: this.entityClass,
@@ -109,5 +101,46 @@ export abstract class AuditBaseController<TEntity extends IEntityWithId> {
         );
       });
     }
+  }
+  private diff(base: TEntity, object: TEntity) {
+    const changes: any = {};
+  
+    function walkObject(base: any, object: any, path = '') {
+      for (const key of Object.keys(base)) {
+        if (key === 'modified')
+          continue;
+        const currentPath = path === ''
+          ? key
+          : `${path}.${key}`;
+  
+        if (object[key] === undefined) {
+          changes[currentPath] = '-';
+        }
+      }
+  
+      for (const [key, value] of Object.entries(object)) {
+        const currentPath = Array.isArray(object)
+          ? path + `[${key}]`
+          : path === ''
+            ? key
+            : `${path}.${key}`;
+  
+        if (base[key] === undefined) {
+          changes[currentPath] = '+';
+        }
+        else if (value !== base[key]) {
+          if (typeof value === 'object' && typeof base[key] === 'object') {
+            walkObject(base[key], value, currentPath)
+          }
+          else {
+            changes[currentPath] = object[key];
+          }
+        }
+      }
+    }
+  
+    walkObject(base, object);
+  
+    return changes
   }
 }
