@@ -25,7 +25,7 @@ const Actions = (({ id, apiPath, auth, pathOverride, currentView, additionalButt
     if (justify === undefined)
         justify = 'space-between';
     return (
-        <Grid item xs={12}
+        <Grid container item xs={12}
         justify='flex-end'>
             <Grid container item
                 justify={justify}

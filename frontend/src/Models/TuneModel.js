@@ -116,6 +116,7 @@ export const TuneModel = ModelService.GenerateDefaults({
                 edit: ExternalReferenceModel.edit
             },
             {
+                label: 'tune.transcriptions',
                 field: 'tuneTranscriptions',
                 type: 'model',
                 array: true,

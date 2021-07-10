@@ -12,7 +12,7 @@ const EditDataFragment = ({
 }) => {
     return (
         <Grid container direction='column'>
-            <Typography variant='h4'>{title !== undefined ? title : null}</Typography>
+            <Typography variant='h5'>{title !== undefined ? title : null}</Typography>
             <Grid container direction='row'>
                 {
                     // Create form fields based on the model

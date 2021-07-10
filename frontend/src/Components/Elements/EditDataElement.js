@@ -1,5 +1,5 @@
 import { Button, Checkbox, Collapse, FormControl, FormControlLabel, Grid, InputLabel, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from '@material-ui/core';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { DataService, TuneService } from '../../Services';
 import EditDataFragment from '../Fragments/EditDataFragment';
@@ -12,6 +12,8 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
     let [expanded, setExpanded] = useState(-1);
     if (model.timestamp)
         elemValue = DataService.ParseDate(elemValue);
+
+    useEffect(() => { }, [elemValue]);
 
     switch (model.type) {
         case 'boolean':
@@ -127,7 +129,7 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                                         option[model.title] :
                                     option.title
                         }
-                        value = {elemValue ? elemValue.map(elem => model.values.find(x => x.value === elem)) : []}
+                        value={elemValue ? elemValue.map(elem => model.values.find(x => x.value === elem)) : []}
                         getOptionSelected={
                             (option) => elemValue.includes(option.value)
                         }
@@ -139,7 +141,7 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                                 label={t(model.headerName)}
                             />
                         )}
-                        onChange={(event, newValues) => 
+                        onChange={(event, newValues) =>
                             handleMultiChange(newValues.map(x => x.value))
                         }
                         style={{ backgroundColor: 'white' }}
@@ -162,7 +164,7 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
         case 'table':
             let addEntryToTable = () => {
                 setExpanded(elemValue.length);
-                elemValue.push(DataService.SyncCreateEmptyDataObject(model.edit.fields))
+                elemValue.push(DataService.SyncCreateEmptyDataObject(model.edit.fields));
                 console.log(elemValue);
             };
             let deleteEntryFromTable = (i) => {
@@ -263,9 +265,24 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
         case 'model':
             if (model.array) {
                 let handleArrayChange = (event, i) => {
-                    const { name, value } = event.target;
                     let temp = elemValue;
-                    temp[i][name] = value;
+
+                    // If event is undefined then remove the element
+                    if (event === undefined) {
+                        temp.splice(i, 1);
+                    } else {
+                        // If the element in array doesn't exist, create one
+                        if(temp[i] === undefined)
+                            temp[i] = DataService.SyncCreateEmptyDataObject(model.nested.fields);
+                        // Otherwise modify the value based on the event
+                        else {
+                            const { name, value } = event.target;
+                            temp[i][name] = value;
+                        }
+                    }
+
+                    // Finally, send the "new" modified object up the chain
+                    // Note: it has to be a new object, otherwise React doesn't know something changed
                     handleChange({
                         target: {
                             name: model.field,
@@ -274,18 +291,30 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                         },
                     });
                 };
+                
                 let data =
                     model.sortBy === undefined
                         ? elemValue
                         : elemValue.sort((a, b) => a[model.sortBy] - b[model.sortBy]);
-                return data.map((elemValue, i) =>
-                    <EditDataFragment
-                        title={t(model.nested.label) + ' ' + (i + 1)}
-                        model={model.nested}
-                        elementData={elemValue}
-                        handleChange={(e) => handleArrayChange(e, i)}
-                        key={i}
-                    />
+                return (
+                    <Grid item>
+                        <Typography variant='h4'>{model.label !== undefined ? t(model.label) : null}</Typography>
+                        <Button onClick={() => handleArrayChange({}, elemValue.length)} variant='outlined' color='primary'>{t('action.create')}</Button>
+                        
+                        {
+                            data.map((elemValue, i) =>
+                                <Grid item key={i}>
+                                    <EditDataFragment
+                                        title={t(model.nested.label) + ' ' + (i + 1)}
+                                        model={model.nested}
+                                        elementData={elemValue}
+                                        handleChange={(e) => handleArrayChange(e, i)}
+                                    />
+                                    <Button onClick={() => { handleArrayChange(undefined, i) }} variant='outlined' color='primary'>{t('action.delete')}</Button>
+                                </Grid>
+                            )
+                        }
+                    </Grid>
                 );
             }
             else
