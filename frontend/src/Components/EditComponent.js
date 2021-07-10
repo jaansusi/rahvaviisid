@@ -168,7 +168,7 @@ const EditComponent = ({ model, newItem }) => {
                 )
                 .then((resData) => {
                     toast.success(t('notification.saved'));
-                    history.push('../' + resData.data.id + '/vaata');
+                    history.push('./' + resData.data.id + '/vaata');
                 })
                 .catch((error) => {
                     console.log(error.response.data.error);
