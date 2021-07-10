@@ -171,7 +171,9 @@
         "soundRange": "Heliulatus",
         "tuneForm": "Viisi vorm",
         "textForm": "Teksti vorm",
-        "rhythmType": "Rütmitüüp"
+        "rhythmType": "Rütmitüüp",
+        "characteristics": "Muusikalised tunnused"
+
     },
     "notification": {
         "saved": "Salvestatud",
@@ -272,7 +274,7 @@
     },
     "song": {
         "song": "Laul",
-        "genre": "Liik",
+        "genre": "Laulu liik",
         "topic": "Teema",
         "verse": "Värsivorm",
         "songType": "Laulutüüp",
@@ -305,7 +307,7 @@
         "language": "Keel",
         "country": "Riik",
         "state": "Seisund",
-        "genre": "Liik",
+        "genre": "Viisi liik",
         "publications": "Väljaanded",
         "remarks": "Märkused",
         "verifiedBy": "Kontrollija",

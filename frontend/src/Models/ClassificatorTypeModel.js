@@ -82,11 +82,6 @@ export const ClassificatorsModel =
                     apiPath: 'tune-person-role-types'
                 },
                 {
-                    name: 'user.role',
-                    url: 'kasutaja-roll',
-                    apiPath: 'user-role-types'
-                },
-                {
                     name: 'person.sex',
                     url: 'sugu',
                     apiPath: 'sexes'
@@ -169,7 +164,7 @@ export const ClassificatorsModel =
             ]
         },
         {
-            name: 'song.song',
+            name: 'musical.characteristics',
             models: [
                 {
                     name: 'attribute.textForm',
