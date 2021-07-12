@@ -165,7 +165,6 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
             let addEntryToTable = () => {
                 setExpanded(elemValue.length);
                 elemValue.push(DataService.SyncCreateEmptyDataObject(model.edit.fields));
-                console.log(elemValue);
             };
             let deleteEntryFromTable = (i) => {
                 if (expanded === i)
@@ -302,7 +301,7 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                         <Button onClick={() => handleArrayChange({}, elemValue.length)} variant='outlined' color='primary'>{t('action.create')}</Button>
                         
                         {
-                            data.map((elemValue, i) =>
+                            data?.map((elemValue, i) =>
                                 <Grid item key={i}>
                                     <EditDataFragment
                                         title={t(model.nested.label) + ' ' + (i + 1)}

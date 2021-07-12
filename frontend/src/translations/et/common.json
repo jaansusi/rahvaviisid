@@ -176,8 +176,9 @@
 
     },
     "notification": {
+        "failed": "Midagi läks valesti",
         "saved": "Salvestatud",
-        "failed": "Midagi läks valesti"
+        "shouldBe": "peab olema"
     },
     "language": {
         "current": "EST",

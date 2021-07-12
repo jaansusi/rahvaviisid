@@ -191,8 +191,17 @@ const EditComponent = ({ model, newItem }) => {
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 })
                 .catch((error) => {
-                    console.log(error);
-                    toast.error(t('notification.failed'));
+                    console.log(error.response);
+                    if (error.response.status === 422) {
+                        error.response.data.error.details.forEach(x => {
+                            toast.warning(x.path + '\n' + x.message.replace('should be', t('notification.shouldBe')), {
+                                autoClose: false
+                            })
+                        });
+                        console.log(error.response.data.error.details);
+                    } 
+                    else
+                        toast.error(t('notification.failed'));
                 });
         }
 

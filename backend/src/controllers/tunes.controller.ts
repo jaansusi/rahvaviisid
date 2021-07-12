@@ -415,7 +415,6 @@ export class TunesController extends AuditBaseController<Tunes> {
     let toBeDeleted = originals.filter(
       x => !current?.map(y => y.getId()).includes(x.getId()),
     );
-    console.log(toBeDeleted);
     toBeDeleted?.forEach(x => repo.deleteById(x.getId()));
   }
 }
