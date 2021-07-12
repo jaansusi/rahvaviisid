@@ -19,6 +19,8 @@ const EditDataFragment = ({
                     model.fields.map((modelField, i) => {
                         // There's no need to create an input for a value the user can't interact with
                         if (modelField.hidden) return null;
+                        if (modelField.type && (modelField.type === 'table' || modelField.type.array) && elementData[modelField.field] === undefined)
+                            elementData[modelField.field] = [];
 
                         if (modelField.type === 'player') {
                             return (

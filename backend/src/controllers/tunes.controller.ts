@@ -5,6 +5,7 @@ import {
   Count,
   CountSchema,
   DefaultCrudRepository,
+  Entity,
   Filter,
   FilterExcludingWhere,
   repository,
@@ -49,19 +50,19 @@ import {
 } from '../repositories';
 import {IAuditMixinOptions, UserId} from '../types';
 import {Getter, inject} from '@loopback/core';
-import { TunesFilter } from '../keys';
-import { AuditBaseController } from './auditbase.controller';
+import {TunesFilter} from '../keys';
+import {AuditBaseController} from './auditbase.controller';
 
 const groupAuditOpts: IAuditMixinOptions = {
-  actionKey: 'Tunes_Logs'
+  actionKey: 'Tunes_Logs',
 };
 
 export class TunesController extends AuditBaseController<Tunes> {
   constructor(
-    @inject.getter(AuthenticationBindings.CURRENT_USER) 
+    @inject.getter(AuthenticationBindings.CURRENT_USER)
     public getCurrentUser: Getter<UserId>,
-    @repository.getter('AuditLogRepository') 
-    public getAuditLogRepository: Getter<AuditLogRepository>, 
+    @repository.getter('AuditLogRepository')
+    public getAuditLogRepository: Getter<AuditLogRepository>,
     @repository(AuditLogRepository)
     public auditLogRepository: AuditLogRepository,
     @repository(TunesRepository)
@@ -93,9 +94,7 @@ export class TunesController extends AuditBaseController<Tunes> {
     @repository(ExternalReferencesRepository)
     public externalReferencesRepository: ExternalReferencesRepository,
   ) {
-    super(
-      groupAuditOpts
-    )
+    super(groupAuditOpts);
   }
 
   @post('/tunes', {
@@ -208,9 +207,15 @@ export class TunesController extends AuditBaseController<Tunes> {
     })
     tunes: Tunes,
   ): Promise<void> {
-    let before = await this.tunesRepository.findById(id, TunesFilter.INCLUDE_ALL);
-    await this.insertTune(tunes);
-    let after = await this.tunesRepository.findById(id, TunesFilter.INCLUDE_ALL);
+    let before = await this.tunesRepository.findById(
+      id,
+      TunesFilter.ALL_NO_CLASSIFICATORS,
+    );
+    await this.insertTune(tunes, before);
+    let after = await this.tunesRepository.findById(
+      id,
+      TunesFilter.ALL_NO_CLASSIFICATORS,
+    );
     super.auditUpdate(before, after);
   }
 
@@ -227,12 +232,18 @@ export class TunesController extends AuditBaseController<Tunes> {
     voters: [basicAuthorization],
   })
   async deleteById(@param.path.number('id') id: number): Promise<void> {
-    let before = await this.tunesRepository.findById(id, TunesFilter.INCLUDE_ALL);
+    let before = await this.tunesRepository.findById(
+      id,
+      TunesFilter.ALL_NO_CLASSIFICATORS,
+    );
     await this.tunesRepository.deleteById(id);
     super.auditDelete(before);
   }
 
-  private async insertTune(tune: Tunes | Omit<Tunes, 'id'>): Promise<Tunes> {
+  private async insertTune(
+    tune: Tunes | Omit<Tunes, 'id'>,
+    original?: Tunes,
+  ): Promise<Tunes> {
     //We need the tune created first, but for that, it can't have any nested "navigational" objects in it
     //so let's just assign them to variables for later use
     let externalReferences = tune.externalReferences;
@@ -256,15 +267,19 @@ export class TunesController extends AuditBaseController<Tunes> {
     let createdTune = await this.insertNestedAsset(tune, this.tunesRepository);
 
     //Add external tunes
-    if (externalReferences !== undefined) {
-      externalReferences.forEach((externalReference: ExternalReferences) => {
-        this.insertNestedAsset(
-          externalReference,
-          this.externalReferencesRepository,
-          createdTune.id,
-        );
-      });
-    }
+    if (original?.externalReferences)
+      this.deleteNestedAssets(
+        original.externalReferences,
+        externalReferences,
+        this.externalReferencesRepository,
+      );
+    externalReferences?.forEach((externalReference: ExternalReferences) => {
+      this.insertNestedAsset(
+        externalReference,
+        this.externalReferencesRepository,
+        createdTune.id,
+      );
+    });
 
     if (musicalCharacteristics !== undefined) {
       //Create musical characteristics, we will need the ids
@@ -390,5 +405,17 @@ export class TunesController extends AuditBaseController<Tunes> {
 
     //And create a new entry into the db
     return await repository.create(asset);
+  }
+
+  private async deleteNestedAssets(
+    originals: Entity[],
+    current: Entity[],
+    repo: DefaultCrudRepository<any, number>,
+  ) {
+    let toBeDeleted = originals.filter(
+      x => !current?.map(y => y.getId()).includes(x.getId()),
+    );
+    console.log(toBeDeleted);
+    toBeDeleted?.forEach(x => repo.deleteById(x.getId()));
   }
 }

@@ -83,7 +83,7 @@ export namespace RefreshTokenServiceBindings {
 }
 
 export namespace TunesFilter {
-  export const INCLUDE_ALL = {
+  export const ALL_NO_CLASSIFICATORS = {
     include: [
       // {relation: 'nations'},
       // {relation: 'languages'},

@@ -212,7 +212,7 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                             </TableHead>
                             <TableBody>
                                 {
-                                    elemValue.map((row, i) => {
+                                    elemValue?.map((row, i) => {
                                         return (expanded === i) ?
                                             <TableRow key={i}>
                                                 <TableCell colSpan={model.nested.fields.length + 1}>
