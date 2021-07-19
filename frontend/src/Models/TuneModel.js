@@ -135,10 +135,11 @@ export const TuneModel = ModelService.GenerateDefaults({
                 edit: TunePlaceModel.edit
             },
             {
+                label: 'tune.encodings',
                 field: 'tuneEncodings',
-                type: 'table',
-                nested: TuneEncodingModel.table,
-                edit: TuneEncodingModel.edit
+                type: 'model',
+                array: true,
+                nested: TuneEncodingModel.edit
             },
             {
                 field: 'tunePerformances',

@@ -12,6 +12,7 @@ const EditDataFragment = ({
 }) => {
     return (
         <Grid container direction='column'>
+            {JSON.stringify(elementData)}
             <Typography variant='h5'>{title !== undefined ? title : null}</Typography>
             <Grid container direction='row'>
                 {
