@@ -105,7 +105,11 @@ const EditComponent = ({ model, newItem }) => {
                 let modelElem = recursedModel.fields[modelKey];
                 //Get the DATA value
                 const value = recursedData[modelElem.field];
-
+                //If the value is empty, check if there is a default in the model
+                if (value === '' && modelElem.default) {
+                    requestObject[modelElem.field] = modelElem.default;
+                    continue;
+                }
                 //If there is a MODEL defined for this field..
                 if (modelElem?.edit !== undefined) {
                     //If DATA object is an array
@@ -146,7 +150,7 @@ const EditComponent = ({ model, newItem }) => {
                             requestObject[modelElem.field] = value;
                             break;
                     }
-                }
+                }  
             }
             return requestObject;
         }
@@ -159,7 +163,7 @@ const EditComponent = ({ model, newItem }) => {
             axios
                 .post(
                     config.apiUrl + '/' + currentModel.apiPath,
-                    removeObjectIds(objToSend),
+                    removeObjectIds(objToSend, true),
                     {
                         headers: {
                             'Content-Type': 'application/json',
@@ -178,7 +182,7 @@ const EditComponent = ({ model, newItem }) => {
             axios
                 .patch(
                     config.apiUrl + '/' + currentModel.apiPath + '/' + objToSend.id,
-                    objToSend,
+                    removeObjectIds(objToSend, false),
                     {
                         headers: {
                             'Content-Type': 'application/json',
@@ -199,7 +203,7 @@ const EditComponent = ({ model, newItem }) => {
                             })
                         });
                         console.log(error.response.data.error.details);
-                    } 
+                    }
                     else
                         toast.error(t('notification.failed'));
                 });
@@ -266,13 +270,14 @@ const recurseModelValues = (currentModel, options) => {
     return currentModel;
 }
 
-const removeObjectIds = obj => {
+const removeObjectIds = (obj, removeAll) => {
     for (var key in obj) {
         if (!obj.hasOwnProperty(key)) continue;
         if (typeof obj[key] == 'object' || Array.isArray(obj[key])) {
             removeObjectIds(obj[key]);
         } else if (key === 'id') {
-            delete obj.id;
+            if (removeAll || obj.id === '')
+                delete obj.id;
         }
     }
     return obj;

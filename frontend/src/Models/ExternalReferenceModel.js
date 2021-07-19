@@ -18,7 +18,7 @@ export const ExternalReferenceModel = ModelService.GenerateDefaults({
             { field: 'id', hidden: true },
             { field: 'description', headerName: 'reference.description' },
             { field: 'value', headerName: 'reference.url' },
-            { field: 'typeId', hidden: true }
+            { field: 'typeId', type: 'number', default: 1, hidden: true }
         ]
     }
 });
