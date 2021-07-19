@@ -112,7 +112,7 @@ export const DataService = {
         return axios
             .get(config.apiUrl + '/tune-melodies/' + id)
             .then((response) => {
-                console.log(response);
+                // console.log(response);
             });
     },
 

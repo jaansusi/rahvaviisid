@@ -1,6 +1,7 @@
 import axios from "axios";
 import config from "../config";
 import jwt_decode from 'jwt-decode';
+import { toast } from 'react-toastify';
 
 export const AuthService = {
     Login(email, password, setAuthentication) {
@@ -35,6 +36,13 @@ export const AuthService = {
         let token = jwt_decode(userData.token);
         if (token === undefined || !token.roles)
             return false;
+            
+        if (token.exp < Math.floor(Date.now() / 1000)) {
+            localStorage.removeItem('user');
+            window.location.replace('/login');
+            toast.error('Sessioon aegus, palun logi uuesti sisse.');
+            return false;
+        }
         return allowedRoles.some(role => token.roles.includes(role));
     },
 }

@@ -10,8 +10,8 @@ import {Credentials} from '@loopback/authentication-jwt';
 import {RefreshTokenService} from '@loopback/authentication-jwt';
 
 export namespace TokenServiceConstants {
-  export const TOKEN_SECRET_VALUE = 'myjwts3cr3t';
-  export const TOKEN_EXPIRES_IN_VALUE = '21600';
+  export const TOKEN_SECRET_VALUE = '!1sV7kAk!q2Y!UxA8!rFq';
+  export const TOKEN_EXPIRES_IN_VALUE = '345600';
 }
 
 export namespace TokenServiceBindings {
@@ -43,7 +43,7 @@ export namespace RefreshTokenConstants {
   /**
    * The default secret used when generating refresh token.
    */
-  export const REFRESH_SECRET_VALUE = 'r3fr35htok3n';
+  export const REFRESH_SECRET_VALUE = '5E22aw*bEQc!^O@7gk5O%';
   /**
    * The default expiration time for refresh token.
    */

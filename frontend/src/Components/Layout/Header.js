@@ -33,7 +33,7 @@ const Header = ({ authentication, setAuthentication }) => {
     let [isAdmin, setIsAdmin] = useState(false);
 
     useEffect(() => {
-        setIsAdmin(AuthService.CanAccess(['admin'], authentication));
+        setIsAdmin(AuthService.CanAccess(['admin']));
     }, [authentication]);
     return (
         <Grid id="header-container" container direction='row' justify='center' alignItems='center'>
