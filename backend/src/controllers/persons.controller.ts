@@ -20,12 +20,15 @@ import {
   requestBody,
 } from '@loopback/rest';
 import {Persons} from '../models';
-import {PersonsRepository} from '../repositories';
+import {PersonsRepository, SexesRepository} from '../repositories';
+
 
 export class PersonsController {
   constructor(
     @repository(PersonsRepository)
     public personsRepository : PersonsRepository,
+    @repository(SexesRepository)
+    public sexesRepository : SexesRepository,
   ) {}
 
   @post('/persons', {

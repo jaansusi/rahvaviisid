@@ -1,5 +1,6 @@
 import { ModelService } from '../Services';
 
+
 export const PersonModel = ModelService.GenerateDefaults({
     apiPath: 'persons',
     list: {
@@ -10,7 +11,8 @@ export const PersonModel = ModelService.GenerateDefaults({
             { field: 'nickname', headerName: 'person.nickname', width: 140 },
             { field: 'birthYear', type: 'number', headerName: 'person.birthYear', width: 150 },
             { field: 'deathYear', type: 'number', headerName: 'person.deathYear', width: 150 },
-            { field: 'sex', headerName: 'person.sex', width: 120 }
+            // { field: 'sex', headerName: 'person.sex', width: 120 },
+            { field: 'sexes', headerName: 'person.sex', selector: 'title'},
         ]
     },
     view: {
@@ -21,10 +23,11 @@ export const PersonModel = ModelService.GenerateDefaults({
             { field: 'nickname', headerName: 'person.nickname' },
             { field: 'birthYear', type: 'number', headerName: 'person.birthYear' },
             { field: 'deathYear', type: 'number', headerName: 'person.deathYear' },
-            { field: 'sexId', apiPath: 'sexes', headerName: 'person.sex' },
+            { field: 'sexes', headerName: 'person.sex', selector: 'title'},
             { field: 'remarks', headerName: 'common.remarks' },
             { field: 'created', headerName: 'date.created' },
-            { field: 'modified', headerName: 'date.modified' }
+            { field: 'modified', headerName: 'date.modified' },
+
         ]
     },
     edit: {

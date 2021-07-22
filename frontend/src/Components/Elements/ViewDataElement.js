@@ -87,7 +87,7 @@ const ViewDataElement = (({ model, value }) => {
             return (
                 <Grid item xs={2} container direction='column'>
                     <Grid item><Typography>{t(model.headerName)}</Typography></Grid>
-                    <Grid item><Typography>{value}</Typography></Grid>
+                    <Grid item><Typography>{model.selector?value[model.selector]:value}</Typography></Grid>
                 </Grid>
             );
     }

@@ -49,6 +49,8 @@ export class Sexes extends Entity {
   })
   modified: string;
 
+
+  
   @hasOne(() => Persons, {keyTo: 'sexId'})
   persons: Persons;
   // Define well-known properties here

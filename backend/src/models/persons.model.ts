@@ -95,7 +95,7 @@ export class Persons extends Entity {
   modified: string;
 
   @hasOne(() => Sexes, { keyFrom: 'sexId', keyTo: 'id'})
-  sexName: Sexes;
+  sexes: Sexes;
 
 
   // Define well-known properties here
