@@ -39,7 +39,8 @@ export const AuthService = {
             
         if (token.exp < Math.floor(Date.now() / 1000)) {
             localStorage.removeItem('user');
-            window.location.replace('/login');
+            if (window.location.pathname !== '/login')
+                window.location.replace('/login');
             toast.error('Sessioon aegus, palun logi uuesti sisse.');
             return false;
         }
