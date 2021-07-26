@@ -151,30 +151,6 @@ export class Tunes extends Entity {
   })
   rhythmTypeId?: number;
 
-  @property({
-    type: 'string',
-    postgresql: {columnName: 'clef', dataType: 'text', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'YES'},
-  })
-  clef?: string;
-
-  @property({
-    type: 'string',
-    postgresql: {columnName: 'support_sound', dataType: 'text', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'YES'},
-  })
-  supportSound?: string;
-
-  @property({
-    type: 'string',
-    postgresql: {columnName: 'height', dataType: 'text', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'YES'},
-  })
-  height?: string;
-
-  @property({
-    type: 'string',
-    postgresql: {columnName: 'bar', dataType: 'text', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'YES'},
-  })
-  bar?: string;
-
   @hasMany(() => TuneTranscriptions, { keyTo: 'tune_id'})
   tuneTranscriptions?: TuneTranscriptions[];
 

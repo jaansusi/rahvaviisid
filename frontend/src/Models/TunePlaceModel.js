@@ -12,7 +12,7 @@ export const TunePlaceModel = ModelService.GenerateDefaults({
             { field: 'municipalities', headerName: 'place.municipality', selector: 'title' },
             { field: 'villages', headerName: 'place.village', selector: 'title' },
             { field: 'otherPlace', headerName: 'place.other' },
-            { field: 'remarks', headerName: 'tune.remarks' }
+            { field: 'remarks', type: 'textbox', headerName: 'tune.remarks' }
         ]
     },
     edit: {

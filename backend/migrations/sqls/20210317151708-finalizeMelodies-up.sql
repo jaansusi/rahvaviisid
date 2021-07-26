@@ -13,18 +13,6 @@ ALTER TABLE folk_tune.tune_melodies
     ON DELETE NO ACTION
     NOT VALID;
 
-ALTER TABLE folk_tune.tunes
-    ADD COLUMN clef text;
-
-ALTER TABLE folk_tune.tunes
-    ADD COLUMN support_sound text;
-
-ALTER TABLE folk_tune.tunes
-    ADD COLUMN height text;
-
-ALTER TABLE folk_tune.tunes
-    ADD COLUMN bar text;
-
 ALTER TABLE folk_tune.tune_melodies
     RENAME rhythm_type_id TO rhythm_type;
 ALTER TABLE folk_tune.tune_melodies DROP CONSTRAINT fk_tune_melodies_rhythm_types;

@@ -38,11 +38,15 @@ export const TableViewComponent = ({ value, model }) => {
                                                                 {t('action.kivike')}
                                                             </a>
                                                             :
-                                                            field.selector ?
-                                                                Array.isArray(field.selector) ?
-                                                                    field.selector.map(x => row[field.field][x]).join(' ') :
-                                                                    row[field.field][field.selector] :
-                                                                row[field.field]
+                                                            <span title={field.alt ? row[field.field][field.alt] : undefined}>
+                                                                {
+                                                                    field.selector ?
+                                                                    Array.isArray(field.selector) ?
+                                                                        field.selector.map(x => row[field.field][x]).join(' ') :
+                                                                        row[field.field][field.selector] :
+                                                                    row[field.field]
+                                                                }
+                                                            </span>
                                                     }
                                                 </TableCell>
                                             );

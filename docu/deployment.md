@@ -31,7 +31,7 @@ During current development cycle, the latest version is also available as a cont
 Configuration is managed through environment variables.
 
 Web service:
-* PORT - defaults to 3000 (when changing this value, make sure that the Dockerfile expose command matches this value)
+* PORT - defaults to 3000 (when changing this, make sure that the Dockerfile expose command matches this value)
 
 Database connection:
 * DB_HOST - defaults to 'localhost'

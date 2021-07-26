@@ -10,7 +10,7 @@ export const TunePersonsModel = ModelService.GenerateDefaults({
             { field: 'tunePersonRoleTypes', headerName: 'tunepersons.tunePersonRoleTypes', selector: 'title'},
             { field: 'actionStartYear', headerName: 'tunepersons.actionStartYear'},
             { field: 'actionEndYear', headerName: 'tunepersons.actionEndYear'},
-            { field: 'remarks', headerName: 'common.remarks'}
+            { field: 'remarks', type: 'textbox', headerName: 'common.remarks'}
         ]
     },
     edit: {

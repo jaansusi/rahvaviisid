@@ -4,12 +4,12 @@ export const TunePerformancesModel = ModelService.GenerateDefaults({
     table: {
         label: 'performance.performance',
         fields: [
-            { field: 'actualPerformanceTypes', headerName: 'performance.actual.type', selector: 'description'},
-            { field: 'traditionalPerformanceTypes', headerName: 'performance.traditional.type', selector: 'description'},
-            { field: 'actualActionTypes', headerName: 'performance.actual.action', selector: 'description'},
+            { field: 'actualPerformanceTypes', headerName: 'performance.actual.type', selector: 'title', alt: 'description' },
+            { field: 'traditionalPerformanceTypes', headerName: 'performance.traditional.type', selector: 'title', alt: 'description' },
+            { field: 'actualActionTypes', headerName: 'performance.actual.action', selector: 'title', alt: 'description' },
             { field: null, headerName: 'performance.traditional.action'},
             { field: 'accompaniment', headerName: 'performance.accompaniment'},
-            { field: 'remarks', headerName: 'common.remarks'}        
+            { field: 'remarks', type: 'textbox', headerName: 'common.remarks'}        
         ]
     },
     edit: {
@@ -19,8 +19,9 @@ export const TunePerformancesModel = ModelService.GenerateDefaults({
             { field: 'actualPerformanceTypeId', type: 'dropdown', apiPath: 'actual-performance-types', headerName: 'performance.actual.type' },
             { field: 'traditionalPerformanceTypeId', type: 'dropdown', apiPath: 'traditional-performance-types', headerName: 'performance.traditional.type' },
             { field: 'actualActionTypeId', type: 'dropdown', apiPath: 'actual-action-types', headerName: 'performance.actual.action' },
+            { field: null, headerName: 'performance.traditional.action'},
             { field: 'accompaniment', headerName: 'performance.accompaniment'},
-            { field: 'remarks', headerName: 'common.remarks'}
+            { field: 'remarks', type: 'textbox', headerName: 'common.remarks'}
         ]
     }
 });

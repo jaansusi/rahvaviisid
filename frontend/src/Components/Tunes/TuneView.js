@@ -195,7 +195,7 @@ const TuneView = () => {
                                                         { field: 'name', headerName: t('person.name') },
                                                         { field: 'actionYear', headerName: t('transcription.actionYear') },
                                                         { field: 'roleType', headerName: t('transcription.personRole') },
-                                                        { field: 'remarks', headerName: t('common.remarks') },
+                                                        { field: 'remarks', type: 'textbox', headerName: t('common.remarks') },
 
                                                     ]
                                                 }

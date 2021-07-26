@@ -36,7 +36,7 @@ export const TuneModel = ModelService.GenerateDefaults({
             { field: 'countries', headerName: 'tune.country', selector: 'title' },
             { field: 'publications', headerName: 'tune.publications' },
             { field: 'catalogue', headerName: 'tune.catalogue' },
-            { field: 'remarks', headerName: 'tune.remarks' },
+            { field: 'remarks', type: 'textbox', headerName: 'tune.remarks' },
             { field: 'verifiedBy', headerName: 'tune.verifiedBy' },
             { field: 'verified', headerName: 'tune.verified' },
             { field: 'created', headerName: 'date.created' },
@@ -95,15 +95,9 @@ export const TuneModel = ModelService.GenerateDefaults({
             { field: 'tuneReference', headerName: 'tune.tuneReference', required: true },
             { field: 'soundReference', headerName: 'tune.soundReference', required: true },
             { field: 'videoReference', headerName: 'tune.videoReference', required: true },
-            { field: 'catalogue', headerName: 'tune.catalogue', required: true },
-            { field: 'supportSound', headerName: 'tune.supportSound' },
-            { field: 'height', headerName: 'tune.height' },
-            { field: 'bar', headerName: 'tune.bar' },
-            { field: 'clef', headerName: 'tune.clef' },
             { field: 'nationId', type: 'dropdown', apiPath: 'nations', headerName: 'tune.nation' },
             { field: 'languageId', type: 'dropdown', apiPath: 'languages', headerName: 'tune.language' },
             { field: 'countryId', type: 'dropdown', apiPath: 'countries', headerName: 'tune.country' },
-            { field: 'publications', headerName: 'tune.publications' },
             { field: 'remarks', type: 'textbox', headerName: 'tune.remarks' },
             { field: 'verifiedBy', type: 'dropdown', apiPath: 'users', headerName: 'tune.verifiedBy', title: 'email' },
             { field: 'verified', type: 'date', headerName: 'date.verified' },
@@ -114,6 +108,19 @@ export const TuneModel = ModelService.GenerateDefaults({
                 type: 'table',
                 nested: ExternalReferenceModel.table,
                 edit: ExternalReferenceModel.edit
+            }, 
+            {
+                field: 'musicalCharacteristics',
+                type: 'table',
+                nested: MusicalCharacteristicsModel.table,
+                edit: MusicalCharacteristicsModel.edit
+            },
+            {
+                label: 'tune.encodings',
+                field: 'tuneEncodings',
+                type: 'model',
+                array: true,
+                nested: TuneEncodingModel.edit
             },
             {
                 label: 'tune.transcriptions',
@@ -135,11 +142,10 @@ export const TuneModel = ModelService.GenerateDefaults({
                 edit: TunePlaceModel.edit
             },
             {
-                label: 'tune.encodings',
-                field: 'tuneEncodings',
-                type: 'model',
-                array: true,
-                nested: TuneEncodingModel.edit
+                field: 'tuneSongs',
+                type: 'table',
+                nested: TuneSongsModel.table,
+                edit: TuneSongsModel.edit
             },
             {
                 field: 'tunePerformances',
@@ -147,18 +153,8 @@ export const TuneModel = ModelService.GenerateDefaults({
                 nested: TunePerformancesModel.table,
                 edit: TunePerformancesModel.edit
             },
-            {
-                field: 'tuneSongs',
-                type: 'table',
-                nested: TuneSongsModel.table,
-                edit: TuneSongsModel.edit
-            }, 
-            {
-                field: 'musicalCharacteristics',
-                type: 'table',
-                nested: MusicalCharacteristicsModel.table,
-                edit: MusicalCharacteristicsModel.edit
-            },
+            { field: 'catalogue', headerName: 'tune.catalogue', required: true },
+            { field: 'publications', headerName: 'tune.publications' },
         ]
     }
 });

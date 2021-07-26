@@ -10,7 +10,8 @@ export const MusicalCharacteristicsModel = ModelService.GenerateDefaults({
             { field: null, headerName: 'musical.textForm', width: 140 },
             { field: 'melostropheNumScore', headerName: 'musical.score', width: 140 },
             { field: 'melostropheNumAudio', headerName: 'musical.audio', width: 150 },
-            { field: 'isVariable', type: 'boolean', headerName: 'musical.isVariable', width: 150 }
+            { field: 'isVariable', type: 'boolean', headerName: 'musical.isVariable', width: 150 },
+            { field: 'remarks', type: 'textbox', headerName: 'common.remarks' }
         ]
     },
     view: {
@@ -19,17 +20,19 @@ export const MusicalCharacteristicsModel = ModelService.GenerateDefaults({
             { field: 'melostropheNumScore', headerName: 'musical.score', width: 140 },
             { field: 'melostropheNumAudio', headerName: 'musical.audio', width: 150 },
             { field: 'isVariable', headerName: 'musical.isVariable', width: 150 },
-            { field: 'remarks', headerName: 'common.remarks', width: 120 }
+            { field: 'remarks', type: 'textbox', headerName: 'common.remarks', width: 120 }
         ]
     },
     edit: {
         fields: [
             { field: 'id', hidden: true },
             { field: 'soundRangeId', type: 'dropdown', apiPath: 'sound-ranges', headerName: 'musical.soundRange' },
-            { field: 'melostropheNumScore', headerName: 'musical.score', width: 140 },
-            { field: 'melostropheNumAudio', headerName: 'musical.audio', width: 150 },
-            { field: 'isVariable', type: 'boolean', headerName: 'musical.isVariable', width: 150 },
-            { field: 'remarks', type: 'textbox', headerName: 'common.remarks', width: 120 }
+            { field: null, headerName: 'musical.tuneForm' },
+            { field: null, headerName: 'musical.textForm' },
+            { field: 'melostropheNumScore', headerName: 'musical.score' },
+            { field: 'melostropheNumAudio', headerName: 'musical.audio' },
+            { field: 'isVariable', type: 'boolean', headerName: 'musical.isVariable' },
+            { field: 'remarks', type: 'textbox', headerName: 'common.remarks' }
         ]
     }
 });
