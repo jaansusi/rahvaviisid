@@ -305,11 +305,11 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                                 <Grid item key={i}>
                                     <EditDataFragment
                                         title={t(model.nested.label) + ' ' + (i + 1)}
+                                        deleteButton={<Button onClick={() => { handleArrayChange(undefined, i) }} variant='outlined' color='primary'>{t('action.delete')}</Button>}
                                         model={model.nested}
                                         elementData={elemValue}
                                         handleChange={(e) => handleArrayChange(e, i)}
                                     />
-                                    <Button onClick={() => { handleArrayChange(undefined, i) }} variant='outlined' color='primary'>{t('action.delete')}</Button>
                                 </Grid>
                             )
                         }

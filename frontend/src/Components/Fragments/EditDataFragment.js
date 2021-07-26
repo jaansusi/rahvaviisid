@@ -6,13 +6,25 @@ import EditDataElement from '../Elements/EditDataElement';
 const EditDataFragment = ({
     model,
     elementData,
+    deleteButton,
     handleChange,
     index,
     title,
 }) => {
     return (
-        <Grid container direction='column'>
-            <Typography variant='h5'>{title !== undefined ? title : null}</Typography>
+        <Grid item container direction='column' xs={12}>
+            <Grid item container direction='row' margin={2}>
+                <Grid item xs={2}>
+                    <Typography variant='h5'>{title !== undefined ? title : null}</Typography>
+                </Grid>
+                <Grid item xs={2}>
+                    {
+                        deleteButton
+                    }
+                </Grid>
+            </Grid>
+
+
             <Grid container direction='row'>
                 {
                     // Create form fields based on the model
