@@ -146,7 +146,9 @@
         "keySignatures": "Key",
         "supportSounds": "Support sound",
         "pitches": "Pitch",
-        "measures": "Tempo"
+        "measures": "Tempo",
+        "alter": "Alter",
+        "length": "Length"
     },
     "edit": {
         "save": "Save"

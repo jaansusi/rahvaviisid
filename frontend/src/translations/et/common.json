@@ -138,7 +138,9 @@
         "pitch": "Kõrgus",
         "measure": "Taktimõõt",
         "rhythmType": "Rütmitüüp",
-        "tempo": "Tempo"
+        "tempo": "Tempo",
+        "alter": "Alter",
+        "length": "Noodipikkus"
     },
     "header": {
         "login": "Logi sisse",
