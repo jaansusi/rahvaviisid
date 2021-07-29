@@ -44,7 +44,7 @@ export const TuneTranscriptionModel = ModelService.GenerateDefaults({
                 edit: {
                     label: '',
                     fields: [
-                        { field: 'personId', type: 'dropdown', apiPath: 'persons', headerName: 'person.person', title: ['givenName', 'surname'] },
+                        { field: 'personId', type: 'dropdown', apiPath: 'persons', headerName: 'person.person', title: ['id', 'givenName', 'surname'] },
                         { field: 'actionYear', headerName: 'transcription.actionYear' },
                         { field: 'transcriptionPersonRoleTypeId', type: 'dropdown', apiPath: 'transcription-person-role-types', headerName: 'transcription.personRole' },
                         { field: 'remarks', type: 'textbox', headerName: 'common.remarks' },
