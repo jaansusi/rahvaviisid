@@ -17,11 +17,7 @@ export const TuneModel = ModelService.GenerateDefaults({
             { field: 'textReference', headerName: 'tune.textReference', width: 170 },
             { field: 'soundReference', headerName: 'tune.soundReference', width: 170 },
             { field: 'videoReference', headerName: 'tune.videoReference', width: 170 },
-            { field: 'catalogue', headerName: 'tune.catalogue', width: 170 },
-            { field: 'nations', headerName: 'tune.nation', selector: 'title', width: 170 },
-            { field: 'languages', headerName: 'tune.language', selector: 'title', width: 100 },
-            { field: 'countries', headerName: 'tune.country', selector: 'title', width: 100 }
-        ]
+         ]
     },
     view: {
         label: 'tune.tune',
