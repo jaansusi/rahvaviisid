@@ -1,4 +1,5 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, hasMany} from '@loopback/repository';
+import {Tunes} from './tunes.model';
 
 @model({
   settings: {idInjection: false, postgresql: {schema: 'folk_tune', table: 'nations'}}
@@ -48,6 +49,8 @@ export class Nations extends Entity {
   })
   modified: string;
 
+  @hasMany(() => Tunes, {keyTo: 'nationId'})
+  tunesForClassificator: Tunes[];
   // Define well-known properties here
 
   // Indexer property to allow additional data
