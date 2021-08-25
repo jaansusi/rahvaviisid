@@ -56,7 +56,7 @@ export class Parishes extends Entity {
       keyFrom: 'parishId',
       keyTo: 'tunesId'
     }})
-  tunes: Tunes[];
+  tunes?: Tunes[];
 
   // Define well-known properties here
 

@@ -11,14 +11,14 @@ export class LanguagesRepository extends DefaultCrudRepository<
 > {
 
 
-  public readonly tunesForClassificator: HasManyRepositoryFactory<Tunes, typeof Languages.prototype.id>;
+  public readonly tunes: HasManyRepositoryFactory<Tunes, typeof Languages.prototype.id>;
 
   constructor(
     @inject('datasources.db') dataSource: DbDataSource,
     @repository.getter('TunesRepository') protected tunesRepositoryGetter: Getter<TunesRepository>,
   ) {
     super(Languages, dataSource);
-    this.tunesForClassificator = this.createHasManyRepositoryFactoryFor('tunesForClassificator', tunesRepositoryGetter,);
-    this.registerInclusionResolver('tunesForClassificator', this.tunesForClassificator.inclusionResolver);
+    this.tunes = this.createHasManyRepositoryFactoryFor('tunes', tunesRepositoryGetter,);
+    this.registerInclusionResolver('tunes', this.tunes.inclusionResolver);
   }
 }

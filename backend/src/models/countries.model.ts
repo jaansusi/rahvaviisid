@@ -50,7 +50,7 @@ export class Countries extends Entity {
   modified: string;
 
   @hasMany(() => Tunes, {keyTo: 'countryId'})
-  tunesForClassificator: Tunes[];
+  tunes: Tunes[];
   // Define well-known properties here
 
   // Indexer property to allow additional data

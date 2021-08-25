@@ -11,7 +11,7 @@ export class ParishesRepository extends DefaultCrudRepository<
   ParishesRelations
 > {
 
-  public readonly tunesForClassificator: HasManyThroughRepositoryFactory<
+  public readonly tunes: HasManyThroughRepositoryFactory<
   Tunes, 
   typeof Tunes.prototype.id,
   TunePlaces,
@@ -28,11 +28,11 @@ export class ParishesRepository extends DefaultCrudRepository<
     tunePlacesRepositoryGetter: Getter<TunePlacesRepository>,
   ) {
     super(Parishes, dataSource);
-    this.tunesForClassificator = this.createHasManyThroughRepositoryFactoryFor(
+    this.tunes = this.createHasManyThroughRepositoryFactoryFor(
       'tunes',
       tunesRepositoryGetter,
       tunePlacesRepositoryGetter,     
     );
-    this.registerInclusionResolver('tunesForClassificator', this.tunesForClassificator.inclusionResolver);
+    this.registerInclusionResolver('tunes', this.tunes.inclusionResolver);
   }
 }

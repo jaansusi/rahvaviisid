@@ -10,13 +10,13 @@ export class CountriesRepository extends DefaultCrudRepository<
   CountriesRelations
 > {
 
-  public readonly tunesForClassificator: HasManyRepositoryFactory<Tunes, typeof Countries.prototype.id>;
+  public readonly tunes: HasManyRepositoryFactory<Tunes, typeof Countries.prototype.id>;
 
   constructor(
     @inject('datasources.db') dataSource: DbDataSource, @repository.getter('TunesRepository') protected tunesRepositoryGetter: Getter<TunesRepository>,
   ) {
     super(Countries, dataSource);
-    this.tunesForClassificator = this.createHasManyRepositoryFactoryFor('tunesForClassificator', tunesRepositoryGetter,);
-    this.registerInclusionResolver('tunesForClassificator', this.tunesForClassificator.inclusionResolver);
+    this.tunes = this.createHasManyRepositoryFactoryFor('tunes', tunesRepositoryGetter,);
+    this.registerInclusionResolver('tunes', this.tunes.inclusionResolver);
   }
 }

@@ -10,15 +10,15 @@ export class NationsRepository extends DefaultCrudRepository<
   NationsRelations
 > {
 
-  public readonly tunesForClassificator: HasManyRepositoryFactory<Tunes, typeof Nations.prototype.id>;
+  public readonly tunes: HasManyRepositoryFactory<Tunes, typeof Nations.prototype.id>;
  
   constructor(
     @inject('datasources.db') dataSource: DbDataSource,
     @repository.getter('TunesRepository') protected tunesRepositoryGetter: Getter<TunesRepository>,
   ) {
     super(Nations, dataSource);
-    this.tunesForClassificator = this.createHasManyRepositoryFactoryFor('tunesForClassificator', tunesRepositoryGetter,);
-    this.registerInclusionResolver('tunesForClassificator', this.tunesForClassificator.inclusionResolver);
+    this.tunes = this.createHasManyRepositoryFactoryFor('tunes', tunesRepositoryGetter,);
+    this.registerInclusionResolver('tunes', this.tunes.inclusionResolver);
  
   }
 }

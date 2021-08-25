@@ -160,4 +160,82 @@ export namespace TunesFilter {
       },
     ],
   };
+
+  export const ALL = {
+    include: [
+      {relation: 'nations'},
+      {relation: 'languages'},
+      {relation: 'countries'},
+      {relation: 'externalReferences', scope: {}},
+      {
+        relation: 'tunesPersonsRoles',
+        scope: {
+          include: [
+            {relation: 'persons', scope: {}},
+            {relation: 'tunePersonRoleTypes'},
+          ],
+        },
+      },
+      {
+        relation: 'tunePlaces',
+        scope: {
+          include: [
+            {relation: 'persons'},
+            {relation: 'tunePlaceTypes'},
+            {relation: 'parishes'},
+            {relation: 'municipalities'},
+            {relation: 'villages'},
+          ],
+        },
+      },
+      {
+        relation: 'tunePerformances',
+        scope: {
+          include: [
+            {relation: 'actualPerformanceTypes'},
+            {relation: 'traditionalPerformanceTypes'},
+            {relation: 'actualActionTypes'},
+          ],
+        },
+      },
+      {
+        relation: 'tuneTranscriptions',
+        scope: {
+          include: [
+            {relation: 'transcriptionSources'},
+            {
+              relation: 'transcriptionsPersonsRoles',
+              scope: {
+                include: [
+                  {relation: 'persons'},
+                  {relation: 'transcriptionPersonRoleTypes'},
+                ],
+              },
+            },
+          ],
+        },
+      },
+      {relation: 'tuneSongs', scope: {}},
+      {
+        relation: 'tuneEncodings',
+        scope: {
+          include: [
+            {relation: 'keySignatures'},
+            {relation: 'supportSounds'},
+            {relation: 'pitches'},
+            {relation: 'measures'},
+            {relation: 'tuneMelodies', scope: {}},
+          ],
+        },
+      },
+      {
+        relation: 'musicalCharacteristics',
+        scope: {
+          include: [
+            {relation: 'soundRanges'}
+          ],
+        },
+      },
+    ],
+  };
 }
