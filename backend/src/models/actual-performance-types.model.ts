@@ -1,4 +1,6 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, hasMany} from '@loopback/repository';
+import { TunePerformances } from './tune-performances.model';
+import { Tunes } from './tunes.model';
 
 @model({
   settings: {
@@ -50,6 +52,14 @@ export class ActualPerformanceTypes extends Entity {
     postgresql: {columnName: 'modified', dataType: 'timestamp without time zone', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'NO'},
   })
   modified: string;
+
+  @hasMany(() => Tunes, {
+    through: {
+      model: () => TunePerformances,
+      keyFrom: 'actualPerformanceTypeId',
+      keyTo: 'tunesId'
+    }})
+  tunes?: Tunes[];
 
   // Define well-known properties here
 

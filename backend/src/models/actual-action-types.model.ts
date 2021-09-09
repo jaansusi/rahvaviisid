@@ -1,4 +1,6 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, hasMany} from '@loopback/repository';
+import { TunePerformances } from './tune-performances.model';
+import { Tunes } from './tunes.model';
 
 @model({
   settings: {
@@ -51,6 +53,13 @@ export class ActualActionTypes extends Entity {
   })
   modified: string;
 
+  @hasMany(() => Tunes, {
+    through: {
+      model: () => TunePerformances,
+      keyFrom: 'actualActionTypeId',
+      keyTo: 'tunesId'
+    }})
+  tunes?: Tunes[];
   // Define well-known properties here
 
   // Indexer property to allow additional data

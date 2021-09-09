@@ -16,7 +16,6 @@ export class ParishesRepository extends DefaultCrudRepository<
   typeof Tunes.prototype.id,
   TunePlaces,
   typeof Parishes.prototype.id
-
   >;
  
 
