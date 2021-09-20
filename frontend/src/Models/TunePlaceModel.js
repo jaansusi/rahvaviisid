@@ -1,5 +1,5 @@
 import { ModelService } from '../Services';
-import { PersonModel } from '.';
+import { PersonModel } from './PersonModel';
 
 export const TunePlaceModel = ModelService.GenerateDefaults({
     apiPath: 'tune-places',

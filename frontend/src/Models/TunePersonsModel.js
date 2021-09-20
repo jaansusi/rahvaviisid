@@ -1,4 +1,4 @@
-import { PersonModel } from '.';
+import { PersonModel } from './PersonModel';
 import { ModelService } from '../Services';
 
 export const TunePersonsModel = ModelService.GenerateDefaults({

@@ -6,8 +6,6 @@ import ViewDataFragment from '../Fragments/ViewDataFragment';
 
 const ViewDataElement = (({ model, value }) => {
     const { t } = useTranslation('common');
-    if (value === undefined)
-        return null;
     switch (model.type) {
         case 'table':
             return (
@@ -83,11 +81,18 @@ const ViewDataElement = (({ model, value }) => {
                     <Grid item><Typography>{DataService.ParseDate(value)}</Typography></Grid>
                 </Grid>
             );
+        case 'associatedAssetsTable':
+            let tunes = DataService.RequestAssociatedAssets(model.associatedModel, model.filterableProperty, value);
+            return (
+                <>
+                    {JSON.stringify(tunes)}
+                </>
+            );
         default:
             return (
                 <Grid item xs={2} container direction='column'>
                     <Grid item><Typography>{t(model.headerName)}</Typography></Grid>
-                    <Grid item><Typography>{model.selector?value[model.selector]:value}</Typography></Grid>
+                    <Grid item><Typography>{model.selector ? value[model.selector] : value}</Typography></Grid>
                 </Grid>
             );
     }

@@ -1,3 +1,5 @@
+import { TuneModel } from "./TuneModel";
+
 export const ClassificatorsModel =
 {
     default: {
@@ -44,7 +46,8 @@ export const ClassificatorsModel =
                         fields: [
                             { field: 'title', headerName: 'common.title' },
                             { field: 'description', headerName: 'common.description' },
-                            { field: 'isActive', headerName: 'common.active' }
+                            { field: 'isActive', headerName: 'common.active' },
+                            { field: 'id', type: 'associatedAssetsTable', associatedModel: TuneModel.view, filterableProperty: ['nationId'] }
                         ]
                     },
                     edit: {

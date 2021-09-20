@@ -100,11 +100,12 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                 </Grid>
             );
         case 'multiselect':
-            let handleMultiChange = ((value) => {
+            let handleMultiChange = ((newValues) => {
+                console.log(model.field);
                 handleChange({
                     target: {
                         name: model.field,
-                        value: value
+                        value: newValues.map(x => x.id)
                     }
                 }, index);
             });
@@ -129,7 +130,7 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                                         option[model.title] :
                                     option.title
                         }
-                        value={elemValue ? elemValue.map(elem => model.values.find(x => x.value === elem)) : []}
+                        value={elemValue ? elemValue.map(elem => model.values.find(x => (model.selector ? x[model.selector] : x.value) === elem)) : []}
                         getOptionSelected={
                             (option) => elemValue.includes(option.value)
                         }
@@ -142,7 +143,7 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                             />
                         )}
                         onChange={(event, newValues) =>
-                            handleMultiChange(newValues.map(x => x.value))
+                            handleMultiChange(newValues)
                         }
                         style={{ backgroundColor: 'white' }}
                     />

@@ -33,8 +33,8 @@ const EditComponent = ({ model, newItem }) => {
         let retrievedValues = [];
         let getDropdowns = (currentModel) => {
             return currentModel.fields
-                .map((field, i) => {
-                    if (field.type === 'dropdown' && !retrievedValues.includes(field.apiPath)) {
+                .map((field) => {
+                    if (field.apiPath && (field.type === 'dropdown' || field.type === 'multiselect') && !retrievedValues.includes(field.apiPath)) {
                         retrievedValues.push(field.apiPath);
                         return axios
                             .get(config.apiUrl + '/' + field.apiPath)
@@ -150,7 +150,7 @@ const EditComponent = ({ model, newItem }) => {
                             requestObject[modelElem.field] = value;
                             break;
                     }
-                }  
+                }
             }
             return requestObject;
         }
@@ -256,15 +256,17 @@ const EditComponent = ({ model, newItem }) => {
 const recurseModelValues = (currentModel, options) => {
     currentModel.fields = currentModel.fields
         .map((field, i) => {
-            if (field.nested) {
+            if (field.nested)
                 field.nested = recurseModelValues(field.nested, options);
-            }
-            if (field.edit) {
+
+            if (field.edit)
                 field.edit = recurseModelValues(field.edit, options);
+
+            if (field.type === 'dropdown' || field.type === 'multiselect') {
+                if (field.apiPath)
+                    field.values = options.filter((y) => y.name === field.field)[0].data;
             }
-            if (field.type === 'dropdown') {
-                field.values = options.filter((y) => y.name === field.field)[0].data;
-            }
+
             return field;
         });
     return currentModel;

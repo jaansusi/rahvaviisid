@@ -1,4 +1,6 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, hasMany} from '@loopback/repository';
+import {TunePerformances} from './tune-performances.model';
+import {TunePerformancesTraditionalActions} from './tune-performances-traditional-actions.model';
 
 @model({
   settings: {

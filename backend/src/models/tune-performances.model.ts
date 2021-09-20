@@ -3,6 +3,7 @@ import {ActualPerformanceTypes} from './actual-performance-types.model';
 import {ActualActionTypes} from './actual-action-types.model';
 import {TraditionalPerformanceTypes} from './traditional-performance-types.model';
 import {TunePerformancesTraditionalActions} from './tune-performances-traditional-actions.model';
+import {TraditionalActionTypes} from './traditional-action-types.model';
 
 @model({
   settings: {
@@ -91,9 +92,9 @@ export class TunePerformances extends Entity {
   @hasOne(() => TraditionalPerformanceTypes, {keyFrom: 'traditionalPerformanceTypeId', keyTo: 'id'})
   traditionalPerformanceTypes?: TraditionalPerformanceTypes;
 
-  @hasMany(() => TunePerformancesTraditionalActions, {keyFrom: 'id', keyTo: 'tunePerformanceId'})
-  tunePerformancesTraditionalActions?: TunePerformancesTraditionalActions;
-
+  @hasMany(() => TraditionalActionTypes, {through: {model: () => TunePerformancesTraditionalActions}})
+  traditionalActionTypes: TraditionalActionTypes[];
+ 
 
   // Define well-known properties here
 
