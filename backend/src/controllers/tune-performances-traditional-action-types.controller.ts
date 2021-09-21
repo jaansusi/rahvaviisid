@@ -44,8 +44,6 @@ export class TunePerformancesTraditionalActionTypesController {
     @param.path.number('id') id: number,
     @param.query.object('filter') filter?: Filter<TraditionalActionTypes>,
   ): Promise<TraditionalActionTypes[]> {
-    console.log(await this.tunePerformancesRepository.traditionalActionTypes(id).create({title: 'TEEEEEEEEST', isActive: true}));
-    console.log(await this.tunePerformancesTraditionalActionTypesRepository.find());
     return this.tunePerformancesRepository.traditionalActionTypes(id).find(filter);
   }
 
