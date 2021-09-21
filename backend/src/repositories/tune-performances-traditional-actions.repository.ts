@@ -1,16 +1,16 @@
 import {DefaultCrudRepository} from '@loopback/repository';
-import {TunePerformancesTraditionalActions, TunePerformancesTraditionalActionsRelations} from '../models';
+import {TunePerformancesTraditionalActionsTypes, TunePerformancesTraditionalActionsRelations} from '../models';
 import {DbDataSource} from '../datasources';
 import {inject} from '@loopback/core';
 
-export class TunePerformancesTraditionalActionsRepository extends DefaultCrudRepository<
-  TunePerformancesTraditionalActions,
-  typeof TunePerformancesTraditionalActions.prototype.id,
+export class TunePerformancesTraditionalActionsTypesRepository extends DefaultCrudRepository<
+  TunePerformancesTraditionalActionsTypes,
+  typeof TunePerformancesTraditionalActionsTypes.prototype.id,
   TunePerformancesTraditionalActionsRelations
 > {
   constructor(
     @inject('datasources.db') dataSource: DbDataSource,
   ) {
-    super(TunePerformancesTraditionalActions, dataSource);
+    super(TunePerformancesTraditionalActionsTypes, dataSource);
   }
 }

@@ -2,7 +2,7 @@ import {Entity, model, property, hasOne, hasMany} from '@loopback/repository';
 import {ActualPerformanceTypes} from './actual-performance-types.model';
 import {ActualActionTypes} from './actual-action-types.model';
 import {TraditionalPerformanceTypes} from './traditional-performance-types.model';
-import {TunePerformancesTraditionalActions} from './tune-performances-traditional-actions.model';
+import {TunePerformancesTraditionalActionsTypes} from './tune-performances-traditional-action-types.model';
 import {TraditionalActionTypes} from './traditional-action-types.model';
 
 @model({
@@ -92,7 +92,7 @@ export class TunePerformances extends Entity {
   @hasOne(() => TraditionalPerformanceTypes, {keyFrom: 'traditionalPerformanceTypeId', keyTo: 'id'})
   traditionalPerformanceTypes?: TraditionalPerformanceTypes;
 
-  @hasMany(() => TraditionalActionTypes, {through: {model: () => TunePerformancesTraditionalActions}})
+  @hasMany(() => TraditionalActionTypes, {through: {model: () => TunePerformancesTraditionalActionsTypes, keyFrom: 'tunePerformanceId', keyTo: 'traditionalActionTypeId'}})
   traditionalActionTypes: TraditionalActionTypes[];
  
 

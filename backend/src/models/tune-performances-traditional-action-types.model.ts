@@ -6,7 +6,7 @@ import {Entity, model, property} from '@loopback/repository';
     postgresql: {schema: 'folk_tune', table: 'tune_performances_traditional_actions'}
   }
 })
-export class TunePerformancesTraditionalActions extends Entity {
+export class TunePerformancesTraditionalActionsTypes extends Entity {
   @property({
     type: 'number',
     required: false,
@@ -46,28 +46,13 @@ export class TunePerformancesTraditionalActions extends Entity {
   })
   modified: string;
 
-  @property({
-    type: 'number',
-    required: true,
-    scale: 0,
-    postgresql: {columnName: 'traditional_action_type_id', dataType: 'smallint', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'NO'},
-  })
-  traditionalActionTypesId?: number;
-
-  @property({
-    type: 'number',
-    required: true,
-    scale: 0,
-    postgresql: {columnName: 'tune_performance_id', dataType: 'smallint', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'NO'},
-  })
-  tunePerformancesId?: number;
   // Define well-known properties here
 
   // Indexer property to allow additional data
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [prop: string]: any;
 
-  constructor(data?: Partial<TunePerformancesTraditionalActions>) {
+  constructor(data?: Partial<TunePerformancesTraditionalActionsTypes>) {
     super(data);
   }
 }
@@ -76,4 +61,4 @@ export interface TunePerformancesTraditionalActionsRelations {
   // describe navigational properties here
 }
 
-export type TunePerformancesTraditionalActionsWithRelations = TunePerformancesTraditionalActions & TunePerformancesTraditionalActionsRelations;
+export type TunePerformancesTraditionalActionsWithRelations = TunePerformancesTraditionalActionsTypes & TunePerformancesTraditionalActionsRelations;

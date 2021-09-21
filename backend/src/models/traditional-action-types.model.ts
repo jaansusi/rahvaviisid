@@ -1,6 +1,6 @@
 import {Entity, model, property, hasMany} from '@loopback/repository';
 import {TunePerformances} from './tune-performances.model';
-import {TunePerformancesTraditionalActions} from './tune-performances-traditional-actions.model';
+import {TunePerformancesTraditionalActionsTypes} from './tune-performances-traditional-action-types.model';
 
 @model({
   settings: {
@@ -52,6 +52,9 @@ export class TraditionalActionTypes extends Entity {
     postgresql: {columnName: 'modified', dataType: 'timestamp without time zone', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'NO'},
   })
   modified: string;
+
+  @hasMany(() => TunePerformances, {through: {model: () => TunePerformancesTraditionalActionsTypes, keyFrom: 'traditionalActionTypeId', keyTo: 'tunePerformanceId'}})
+  tunePerformances: TunePerformances[];
 
   // Define well-known properties here
 

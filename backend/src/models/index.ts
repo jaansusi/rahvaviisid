@@ -17,7 +17,7 @@ export * from './traditional-performance-types.model';
 export * from './actual-action-types.model';
 export * from './tune-performances.model';
 export * from './traditional-action-types.model';
-export * from './tune-performances-traditional-actions.model';
+export * from './tune-performances-traditional-action-types.model';
 export * from './tune-songs.model';
 export * from './tune-genres.model';
 export * from './song-genres.model';

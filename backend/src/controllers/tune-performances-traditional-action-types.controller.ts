@@ -17,20 +17,21 @@ import {
 } from '@loopback/rest';
 import {
 TunePerformances,
-TunePerformancesTraditionalActions,
+TunePerformancesTraditionalActionsTypes,
 TraditionalActionTypes,
 } from '../models';
-import {TunePerformancesRepository} from '../repositories';
+import {TunePerformancesRepository, TunePerformancesTraditionalActionsTypesRepository} from '../repositories';
 
 export class TunePerformancesTraditionalActionTypesController {
   constructor(
     @repository(TunePerformancesRepository) protected tunePerformancesRepository: TunePerformancesRepository,
+    @repository(TunePerformancesTraditionalActionsTypesRepository) protected tunePerformancesTraditionalActionTypesRepository: TunePerformancesTraditionalActionsTypesRepository,
   ) { }
 
   @get('/tune-performances/{id}/traditional-action-types', {
     responses: {
       '200': {
-        description: 'Array of TunePerformances has many TraditionalActionTypes through TunePerformancesTraditionalActions',
+        description: 'Array of TunePerformances has many TraditionalActionTypes through TunePerformancesTraditionalActionsTypes',
         content: {
           'application/json': {
             schema: {type: 'array', items: getModelSchemaRef(TraditionalActionTypes)},
@@ -43,6 +44,8 @@ export class TunePerformancesTraditionalActionTypesController {
     @param.path.number('id') id: number,
     @param.query.object('filter') filter?: Filter<TraditionalActionTypes>,
   ): Promise<TraditionalActionTypes[]> {
+    console.log(await this.tunePerformancesRepository.traditionalActionTypes(id).create({title: 'TEEEEEEEEST', isActive: true}));
+    console.log(await this.tunePerformancesTraditionalActionTypesRepository.find());
     return this.tunePerformancesRepository.traditionalActionTypes(id).find(filter);
   }
 
