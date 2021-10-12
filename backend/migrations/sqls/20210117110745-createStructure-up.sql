@@ -928,8 +928,6 @@ CREATE TABLE folk_tune.pitches
 )
 ;
 
-CREATE UNIQUE INDEX IX_pitches_title ON folk_tune.pitches (UPPER(title))
-;
 
 CREATE TABLE folk_tune.support_sounds
 (
@@ -944,8 +942,6 @@ CREATE TABLE folk_tune.support_sounds
 )
 ;
 
-CREATE UNIQUE INDEX IX_support_sounds_title ON folk_tune.support_sounds (UPPER(title))
-;
 
 CREATE TABLE folk_tune.measures
 (
