@@ -12,6 +12,7 @@ CREATE TABLE folk_tune.tune_melodies
     custom_input text,
     words text,
     tune_encodings_id integer NOT NULL,
+    remarks text,
     PRIMARY KEY (id)
 )
 WITH (
