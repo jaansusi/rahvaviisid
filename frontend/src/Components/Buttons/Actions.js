@@ -25,11 +25,11 @@ const Actions = (({ id, apiPath, auth, pathOverride, currentView, additionalButt
     if (justify === undefined)
         justify = 'space-between';
     return (
-        <Grid container item xs={12}
+        <Grid item xs={12}
         justify='flex-end'>
-            <Grid container item
+            <Grid container item xs={12}
                 justify={justify}
-                spacing={spacing ? 2 : undefined}
+                spacing={spacing ? spacing : 2}
             >
                 {
                     additionalButtons?.map((button, i) =>

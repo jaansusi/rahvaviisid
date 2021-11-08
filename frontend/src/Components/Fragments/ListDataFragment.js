@@ -18,8 +18,8 @@ const ListDataFragment = (({ model, data, rowCount, updateTable, currentView, ad
         return x;
     });
     let canAccess = AuthService.CanAccess(['editor', 'admin']);
-    let actionButtonCount = (currentView !== undefined ? 2 : 3) + additionalButtons.length;
-    let actionsWidth = canAccess ? actionButtonCount * 110 : 150;
+    let actionButtonCount = canAccess ? (currentView !== undefined ? 2 : 3) : 1 + additionalButtons.length;
+    let actionsWidth = actionButtonCount === 1 ? 150 : actionButtonCount * 130;
     columns.push({
         field: '', headerName: t('action.actions'), sortable: false, width: actionsWidth,
         renderCell: (params) => <Actions auth={canAccess} apiPath={model.apiPath} id={params.row.id} currentView={currentView} additionalButtons={additionalButtons} />
@@ -27,13 +27,13 @@ const ListDataFragment = (({ model, data, rowCount, updateTable, currentView, ad
 
     let tableData = [];
     if (data !== undefined)
-        tableData = data.map((row, index) => {
+        tableData = data.map((row) => {
             for (let field in row) {
                 let modelField = model.fields.find((x) => field === x.field);
                 if (modelField === undefined)
                     continue;
-                // I don't know what is going on here, why this undefined check is necessary, 
-                // but for some reason, the data.map is triggered twice, and it would end up undefined otherwise
+                // I don't know why this undefined check is necessary
+                // but for some reason, the data.map is triggered twice and it would end up undefined otherwise
                 if (modelField.selector && row[field][modelField.selector] !== undefined) {
                     //console.log(data[index][field][modelField.selector]);
                     //console.log(row);
@@ -45,7 +45,7 @@ const ListDataFragment = (({ model, data, rowCount, updateTable, currentView, ad
 
     useEffect(() => { updateTable(0) }, []);
 
-    let tableWidth = columns.map(x => x.width).reduce((x, y) => x + y, 0) + 2;
+    let tableWidth = columns.map(x => x.width ? x.width : 130).reduce((x, y) => x + y, 0) + 2;
     return (
         <Grid item
             container
@@ -59,7 +59,6 @@ const ListDataFragment = (({ model, data, rowCount, updateTable, currentView, ad
                     <CreateButton />
                 </Grid>
             }
-
             <div style={{ width: tableWidth, height: '80vh' }}>
                 <DataGrid
                     paginationMode='server'

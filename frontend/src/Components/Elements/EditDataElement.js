@@ -102,10 +102,11 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
         case 'multiselect':
             let handleMultiChange = ((newValues) => {
                 console.log(model.field);
+                console.log(newValues);
                 handleChange({
                     target: {
                         name: model.field,
-                        value: newValues.map(x => x.id)
+                        value: newValues
                     }
                 }, index);
             });
@@ -130,9 +131,15 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                                         option[model.title] :
                                     option.title
                         }
-                        value={elemValue ? elemValue.map(elem => model.values.find(x => (model.selector ? x[model.selector] : x.value) === elem)) : []}
+                        value={
+                            elemValue ?
+                                elemValue.map(elem =>
+                                    model.values.find(x => (model.selector ? x[model.selector] : x.id) === elem.id)
+                                ) :
+                                []
+                        }
                         getOptionSelected={
-                            (option) => elemValue.includes(option.value)
+                            (option) => elemValue.map(x => x.id).includes(option.id)
                         }
                         filterSelectedOptions
                         renderInput={(params) => (
@@ -272,7 +279,7 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                         temp.splice(i, 1);
                     } else {
                         // If the element in array doesn't exist, create one
-                        if(temp[i] === undefined)
+                        if (temp[i] === undefined)
                             temp[i] = DataService.SyncCreateEmptyDataObject(model.nested.fields);
                         // Otherwise modify the value based on the event
                         else {
@@ -291,7 +298,7 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                         },
                     });
                 };
-                
+
                 let data =
                     model.sortBy === undefined
                         ? elemValue
@@ -300,7 +307,7 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                     <Grid item>
                         <Typography variant='h4'>{model.label !== undefined ? t(model.label) : null}</Typography>
                         <Button onClick={() => handleArrayChange({}, elemValue.length)} variant='outlined' color='primary'>{t('action.create')}</Button>
-                        
+
                         {
                             data?.map((elemValue, i) =>
                                 <Grid item key={i}>

@@ -208,11 +208,11 @@ const EditComponent = ({ model, newItem }) => {
                         toast.error(t('notification.failed'));
                 });
         }
-
     };
 
     const handleChange = (event) => {
         const { name, value, type } = event.target;
+        console.log(event.target);
         setAssetData({
             name: name,
             // Numbers need to be sent as actual numeric values, not strings

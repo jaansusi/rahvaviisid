@@ -17,6 +17,7 @@ import {
   TuneSongs,
   TuneEncodings,
   MusicalCharacteristics,
+  Users,
 } from '../models';
 import {DbDataSource} from '../datasources';
 import {inject, Getter} from '@loopback/core';
@@ -35,6 +36,7 @@ import {IAuditMixinOptions, UserId} from '../types';
 import {AuditLogRepository} from './audit-log.repository';
 import {MusicalCharacteristicsRepository} from './musical-characteristics.repository';
 import {AuthenticationBindings} from '@loopback/authentication';
+import { UsersRepository } from './users.repository';
 
 export class TunesRepository extends DefaultCrudRepository<
   Tunes,
@@ -56,6 +58,10 @@ export class TunesRepository extends DefaultCrudRepository<
   public readonly languages: HasOneRepositoryFactory<
     Languages,
     typeof Tunes.prototype.id
+  >;
+  public readonly users: HasOneRepositoryFactory<
+    Users,
+    typeof Users.prototype.id
   >;
   public readonly tunePerformances: HasManyRepositoryFactory<
     TunePerformances,
@@ -101,6 +107,8 @@ export class TunesRepository extends DefaultCrudRepository<
     protected nationsRepositoryGetter: Getter<NationsRepository>,
     @repository.getter('LanguagesRepository')
     protected languagesRepositoryGetter: Getter<LanguagesRepository>,
+    @repository.getter('UsersRepository')
+    protected usersRepositoryGetter: Getter<UsersRepository>,
     @repository.getter('TunePerformancesRepository')
     protected tunePerformancesRepositoryGetter: Getter<TunePerformancesRepository>,
     @repository.getter('TunePlacesRepository')
@@ -172,6 +180,14 @@ export class TunesRepository extends DefaultCrudRepository<
     this.registerInclusionResolver(
       'languages',
       this.languages.inclusionResolver,
+    );
+    this.users = this.createHasOneRepositoryFactoryFor(
+      'users',
+      usersRepositoryGetter,
+    );
+    this.registerInclusionResolver(
+      'users',
+      this.users.inclusionResolver,
     );
     this.nations = this.createHasOneRepositoryFactoryFor(
       'nations',

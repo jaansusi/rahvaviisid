@@ -5,14 +5,13 @@ export const PersonModel = ModelService.GenerateDefaults({
     apiPath: 'persons',
     list: {
         fields: [
-            { field: 'pid', headerName: 'person.pid', width: 80 },
-            { field: 'surname', headerName: 'person.surname', width: 170 },
+            { field: 'id', headerName: 'person.pid', width: 110 },
+            { field: 'surname', headerName: 'person.surname', width: 180 },
             { field: 'givenName', headerName: 'person.givenName', width: 140 },
-            { field: 'nickname', headerName: 'person.nickname', width: 140 },
-            { field: 'birthYear', type: 'number', headerName: 'person.birthYear', width: 150 },
-            { field: 'deathYear', type: 'number', headerName: 'person.deathYear', width: 150 },
-            // { field: 'sex', headerName: 'person.sex', width: 120 },
-            { field: 'sexes', headerName: 'person.sex', selector: 'title'},
+            { field: 'nickname', headerName: 'person.nickname', width: 160 },
+            { field: 'birthYear', type: 'number', headerName: 'person.birthYear', width: 200 },
+            { field: 'deathYear', type: 'number', headerName: 'person.deathYear', width: 200 },
+            { field: 'sexes', headerName: 'person.sex', selector: 'title', width: 150},
         ]
     },
     view: {

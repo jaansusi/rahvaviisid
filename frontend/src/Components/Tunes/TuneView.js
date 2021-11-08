@@ -94,7 +94,7 @@ const TuneView = () => {
                                 <Typography variant={headerVariant}>{t('tune.verification')}</Typography>
                             </Grid>
                             <AssetPropertyElement title={t('tune.verified')} value={assetData.verified} />
-                            <AssetPropertyElement title={t('tune.verifiedBy')} value={assetData.verifiedBy} />
+                            <AssetPropertyElement title={t('tune.verifiedBy')} value={assetData.users?.firstName + ' ' + assetData.users?.lastName} />
                             <AssetPropertyDateElement title={t('date.created')} value={assetData.created} />
                             <AssetPropertyDateElement title={t('date.modified')} value={assetData.modified} />
                         </Grid>
@@ -108,117 +108,127 @@ const TuneView = () => {
 
                 <AssetPropertyTableElement label={t(MusicalCharacteristicsModel.table.label)} model={MusicalCharacteristicsModel.table} data={assetData['musicalCharacteristics']} />
 
-                <Grid item container spacing={2}>
-                    <Grid item>
-                        <Typography variant={headerVariant}>{t('tune.encodings')}</Typography>
-                    </Grid>
-                    {
-                        assetData.tuneEncodings?.map((encoding, i) => {
-                            return (
-                                <Grid key={i} item container direction='column' spacing={2}>
+                {
+                    assetData.tuneEncodings ?
+                        <>
+                            <Grid item container spacing={2}>
 
-                                    <Divider />
-                                    <Grid item>
-                                        <Typography variant={headerVariant}>{t('tune.coding')} {i + 1}</Typography>
-                                    </Grid>
-                                    <Grid item container direction='row'>
-                                        <AssetPropertyElement title={t('encoding.alter')} value={encoding.keySignatures?.title} />
-                                        <AssetPropertyElement title={t('encoding.supportSound')} value={encoding.supportSounds?.title} />
-                                        <AssetPropertyElement title={t('encoding.pitch')} value={encoding.pitches?.title} />
-                                        <AssetPropertyElement title={t('encoding.measure')} value={encoding.measures?.title} />
-                                        <AssetPropertyElement title={t('encoding.rhythmType')} value={encoding.rhythmType} />
-                                        <AssetPropertyElement title={t('encoding.tempo')} value={encoding.tempo} />
-                                        <AssetPropertyElement title={t('encoding.length')} value={encoding.length} />
-                                        <AssetPropertyElement title={t('common.remarks')} value={encoding.remarks} size={8} />
-                                        {
-                                            AuthService.CanAccess(['editor', 'admin']) &&
-                                            <Grid item xs={4} container direction='row'>
-                                                <AssetPropertyDateElement size={6} title={t('date.created')} value={encoding.created} />
-                                                <AssetPropertyDateElement size={6} title={t('date.modified')} value={encoding.modified} />
-                                            </Grid>
-                                        }
-                                    </Grid>
-                                    <Divider />
-                                    <Grid item container direction='column' spacing={2}>
-                                        {
-                                            encoding.tuneMelodies?.map((melody, j) => {
-                                                return (
-                                                    <Grid key={j} item container direction='column' spacing={2}>
-                                                        <Grid item container direction='row' spacing={5}>
-                                                            <Grid item xs={3}><Typography variant='h6'>{t('tune.variant')} {j + 1}</Typography></Grid>
-                                                            <Grid item xs={3}><Button onClick={() => alert('Varsti tuleb')} variant='outlined'>{t('melody.export')}</Button></Grid>
-                                                        </Grid>
-                                                        <Grid item>
-                                                            <PlayerViewComponent elementData={melody} index={i.toString() + j.toString()} />
-                                                        </Grid>
-                                                        <Divider />
-                                                    </Grid>
-                                                );
-                                            })
-                                        }
-                                    </Grid>
+                                <Grid item>
+                                    <Typography variant={headerVariant}>{t('tune.encodings')}</Typography>
                                 </Grid>
-                            )
-                        })
-                    }
-                </Grid>
+                                {
+                                    assetData.tuneEncodings?.map((encoding, i) => {
+                                        return (
+                                            <Grid key={i} item container direction='column' spacing={2}>
 
-                <Divider />
-
-                <Grid item container spacing={2}>
-                    <Grid item>
-                        <Typography variant={headerVariant}>{t('tune.transcriptions')}</Typography>
-                    </Grid>
-                    {
-                        assetData.tuneTranscriptions?.map((transcription, i) => {
-                            return (
-                                <Grid key={i} item container direction='column' spacing={2}>
-                                    <Grid item>
-                                        <Typography variant={headerVariant}>{t('tune.transcription')} {i + 1}</Typography>
-                                    </Grid>
-                                    <Grid item container direction='row'>
-                                        <AssetPropertyElement title={t('transcription.source')} value={transcription.transcriptionSources.title} />
-                                        <AssetPropertyElement title={t('transcription.fileReference')} value={transcription.fileReference} />
-                                        {
-                                            AuthService.CanAccess(['editor', 'admin']) &&
-                                            <Grid item xs={4} container direction='row'>
-                                                <AssetPropertyDateElement size={6} title={t('date.created')} value={transcription.created} />
-                                                <AssetPropertyDateElement size={6} title={t('date.modified')} value={transcription.modified} />
-                                            </Grid>
-                                        }
-                                    </Grid>
-
-                                    <Grid item container direction='column' spacing={2}>
-                                        {
-                                            <AssetPropertyTableElement label={t('transcription.transcriptionPersons')} model={
-                                                {
-                                                    fields: [
-                                                        { field: 'name', headerName: t('person.name') },
-                                                        { field: 'actionYear', headerName: t('transcription.actionYear') },
-                                                        { field: 'roleType', headerName: t('transcription.personRole') },
-                                                        { field: 'remarks', type: 'textbox', headerName: t('common.remarks') },
-
-                                                    ]
-                                                }
-                                            } data={
-                                                transcription.transcriptionsPersonsRoles?.map((personRoles, j) => {
-                                                    return {
-                                                        name: personRoles.persons?.givenName + " " + personRoles.persons?.surname,
-                                                        actionYear: personRoles.actionYear,
-                                                        roleType: personRoles.transcriptionPersonRoleTypes?.title,
-                                                        remarks: personRoles.remarks
+                                                <Divider />
+                                                <Grid item>
+                                                    <Typography variant={headerVariant}>{t('tune.coding')} {i + 1}</Typography>
+                                                </Grid>
+                                                <Grid item container direction='row'>
+                                                    <AssetPropertyElement title={t('encoding.alter')} value={encoding.keySignatures?.title} />
+                                                    <AssetPropertyElement title={t('encoding.supportSound')} value={encoding.supportSounds?.title} />
+                                                    <AssetPropertyElement title={t('encoding.pitch')} value={encoding.pitches?.title} />
+                                                    <AssetPropertyElement title={t('encoding.measure')} value={encoding.measures?.title} />
+                                                    <AssetPropertyElement title={t('encoding.rhythmType')} value={encoding.rhythmType} />
+                                                    <AssetPropertyElement title={t('encoding.tempo')} value={encoding.tempo} />
+                                                    <AssetPropertyElement title={t('encoding.length')} value={encoding.length} />
+                                                    <AssetPropertyElement title={t('common.remarks')} value={encoding.remarks} size={8} />
+                                                    {
+                                                        AuthService.CanAccess(['editor', 'admin']) &&
+                                                        <Grid item xs={4} container direction='row'>
+                                                            <AssetPropertyDateElement size={6} title={t('date.created')} value={encoding.created} />
+                                                            <AssetPropertyDateElement size={6} title={t('date.modified')} value={encoding.modified} />
+                                                        </Grid>
                                                     }
-                                                }
-                                                )
-                                            } />
-                                        }
-                                    </Grid>
-                                </Grid>
-                            )
-                        })
-                    }
-                </Grid>
+                                                </Grid>
+                                                <Divider />
+                                                <Grid item container direction='column' spacing={2}>
+                                                    {
+                                                        encoding.tuneMelodies?.map((melody, j) => {
+                                                            return (
+                                                                <Grid key={j} item container direction='column' spacing={2}>
+                                                                    <Grid item container direction='row' spacing={5}>
+                                                                        <Grid item xs={3}><Typography variant='h6'>{t('tune.variant')} {j + 1}</Typography></Grid>
+                                                                        <Grid item xs={3}><Button onClick={() => alert('Varsti tuleb')} variant='outlined'>{t('melody.export')}</Button></Grid>
+                                                                    </Grid>
+                                                                    <Grid item>
+                                                                        <PlayerViewComponent elementData={melody} index={i.toString() + j.toString()} />
+                                                                    </Grid>
+                                                                    <Divider />
+                                                                </Grid>
+                                                            );
+                                                        })
+                                                    }
+                                                </Grid>
+                                            </Grid>
+                                        )
+                                    })
+                                }
+                            </Grid>
 
+                            <Divider />
+
+                        </>
+                        : null
+                }
+                {
+                    assetData.tuneTranscriptions ?
+                        <Grid item container spacing={2}>
+                            <Grid item>
+                                <Typography variant={headerVariant}>{t('tune.transcriptions')}</Typography>
+                            </Grid>
+                            {
+                                assetData.tuneTranscriptions?.map((transcription, i) => {
+                                    return (
+                                        <Grid key={i} item container direction='column' spacing={2}>
+                                            <Grid item>
+                                                <Typography variant={headerVariant}>{t('tune.transcription')} {i + 1}</Typography>
+                                            </Grid>
+                                            <Grid item container direction='row'>
+                                                <AssetPropertyElement title={t('transcription.source')} value={transcription.transcriptionSources.title} />
+                                                <AssetPropertyElement title={t('transcription.fileReference')} value={transcription.fileReference} />
+                                                {
+                                                    AuthService.CanAccess(['editor', 'admin']) &&
+                                                    <Grid item xs={4} container direction='row'>
+                                                        <AssetPropertyDateElement size={6} title={t('date.created')} value={transcription.created} />
+                                                        <AssetPropertyDateElement size={6} title={t('date.modified')} value={transcription.modified} />
+                                                    </Grid>
+                                                }
+                                            </Grid>
+
+                                            <Grid item container direction='column' spacing={2}>
+                                                {
+                                                    <AssetPropertyTableElement label={t('transcription.transcriptionPersons')} model={
+                                                        {
+                                                            fields: [
+                                                                { field: 'name', headerName: t('person.name') },
+                                                                { field: 'actionYear', headerName: t('transcription.actionYear') },
+                                                                { field: 'roleType', headerName: t('transcription.personRole') },
+                                                                { field: 'remarks', type: 'textbox', headerName: t('common.remarks') },
+
+                                                            ]
+                                                        }
+                                                    } data={
+                                                        transcription.transcriptionsPersonsRoles?.map((personRoles, j) => {
+                                                            return {
+                                                                name: personRoles.persons?.givenName + " " + personRoles.persons?.surname,
+                                                                actionYear: personRoles.actionYear,
+                                                                roleType: personRoles.transcriptionPersonRoleTypes?.title,
+                                                                remarks: personRoles.remarks
+                                                            }
+                                                        }
+                                                        )
+                                                    } />
+                                                }
+                                            </Grid>
+                                        </Grid>
+                                    )
+                                })
+                            }
+                        </Grid>
+                        : null
+                }
                 <AssetPropertyTableElement label={t(TunePersonsModel.table.label)} model={TunePersonsModel.table} data={assetData['tunesPersonsRoles']} />
                 <AssetPropertyTableElement label={t(TunePlaceModel.table.label)} model={TunePlaceModel.table} data={assetData['tunePlaces']} />
                 <AssetPropertyTableElement label={t(TuneSongsModel.table.label)} model={TuneSongsModel.table} data={assetData['tuneSongs']} />

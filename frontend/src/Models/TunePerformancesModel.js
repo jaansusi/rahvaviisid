@@ -4,8 +4,8 @@ export const TunePerformancesModel = ModelService.GenerateDefaults({
     table: {
         label: 'performance.performance',
         fields: [
-            { field: 'actualPerformanceTypes', headerName: 'performance.actual.type', selector: 'title', alt: 'description' },
-            { field: 'traditionalPerformanceTypes', headerName: 'performance.traditional.type', selector: 'title', alt: 'description' },
+            { field: 'actualPerformanceTypes', headerName: 'performance.actual.type', selector: 'title', alt: 'description', type: 'reference', reference: '/klassifikaatorid/tegeliku-esituse-liik' },
+            { field: 'traditionalPerformanceTypes', headerName: 'performance.traditional.type', selector: 'title', alt: 'description', type: 'reference', reference: '/klassifikaatorid/traditsioonilise-esituse-liik' },
             { field: 'actualActionTypes', headerName: 'performance.actual.action', selector: 'title', alt: 'description' },
             { field: 'traditionalActionTypes', headerName: 'performance.traditional.action', selector: 'title', alt: 'description' },
             { field: 'accompaniment', headerName: 'performance.accompaniment'},

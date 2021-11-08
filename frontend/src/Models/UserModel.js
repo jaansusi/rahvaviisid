@@ -6,7 +6,7 @@ export const UserModel = ModelService.GenerateDefaults({
         fields: [
             { field: 'email', headerName: 'user.email', width: 200 },
             { field: 'firstName', headerName: 'user.firstName', width: 140 },
-            { field: 'lastName', headerName: 'user.roles', width: 150 },
+            { field: 'lastName', headerName: 'user.lastName', width: 150 },
         ]
     },
     view: {

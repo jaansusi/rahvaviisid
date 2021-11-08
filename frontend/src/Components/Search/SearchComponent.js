@@ -48,7 +48,7 @@ const SearchComponent = (props) => {
     }, []);
 
     return (
-        <Grid item xs={11} container spacing={2} direction='column'>
+        <Grid item xs={12} container spacing={2} direction='column'>
             <Grid item container direction='row' alignItems='center' justify='space-between'>
                 <Grid item>
                     <SearchBar
