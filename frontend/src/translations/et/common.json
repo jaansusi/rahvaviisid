@@ -300,6 +300,7 @@
     "tune": {
         "tuneId": "Viisi ID",
         "tune": "Viis",
+        "description": "Kirjeldus",
         "references": "Viited",
         "tuneReference": "Viisiviide",
         "textReference": "Tekstiviide",

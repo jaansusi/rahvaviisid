@@ -150,7 +150,7 @@ const TuneView = () => {
                                                                 <Grid key={j} item container direction='column' spacing={2}>
                                                                     <Grid item container direction='row' spacing={5}>
                                                                         <Grid item xs={3}><Typography variant='h6'>{t('tune.variant')} {j + 1}</Typography></Grid>
-                                                                        <Grid item xs={3}><Button onClick={() => alert('Varsti tuleb')} variant='outlined'>{t('melody.export')}</Button></Grid>
+                                                                        {/* <Grid item xs={3}><Button onClick={() => alert('Varsti tuleb')} variant='outlined'>{t('melody.export')}</Button></Grid> */}
                                                                     </Grid>
                                                                     <Grid item>
                                                                         <PlayerViewComponent elementData={melody} index={i.toString() + j.toString()} />

@@ -24,14 +24,14 @@ export const PlayerViewComponent = ({ elementData, index, edit }) => {
 				<Grid item>
 					<div id={'player' + index}></div>
 				</Grid>
-				<Grid item>
+				{/* <Grid item>
 					{
 						!edit ?
 							null :
 							<Button onClick={() => alert('Varsti tuleb')} variant='outlined'>{t('melody.import')}</Button>
 					}
 
-				</Grid>
+				</Grid> */}
 			</Grid>
 			<div
 				style={{

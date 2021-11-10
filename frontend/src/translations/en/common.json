@@ -48,6 +48,7 @@
     "tune": {
         "tune": "Tune",
         "references": "References",
+        "description": "Description",
         "tuneReference": "Tune reference",
         "textReference": "Text reference",
         "soundReference": "Sound reference",
