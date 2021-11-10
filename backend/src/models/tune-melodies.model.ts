@@ -79,6 +79,12 @@ export class TuneMelodies extends Entity {
   words?: string;
 
   @property({
+    type: 'string',
+    postgresql: {columnName: 'remarks', dataType: 'text', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'YES'},
+  })
+  remarks?: string;
+
+  @property({
     type: 'number',
     scale: 0,
     jsonSchema: {nullable: true},
