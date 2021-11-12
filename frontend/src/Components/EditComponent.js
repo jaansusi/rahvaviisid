@@ -276,7 +276,7 @@ const removeObjectIds = (obj, removeAll) => {
     for (var key in obj) {
         if (!obj.hasOwnProperty(key)) continue;
         if (typeof obj[key] == 'object' || Array.isArray(obj[key])) {
-            removeObjectIds(obj[key], removeAll);
+            obj[key] = removeObjectIds(obj[key], removeAll);
         } else if (key === 'id') {
             if (removeAll || obj.id === '')
                 delete obj.id;

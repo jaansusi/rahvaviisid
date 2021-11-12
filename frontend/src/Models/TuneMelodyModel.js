@@ -10,6 +10,7 @@ export const TuneMelodyModel = ModelService.GenerateDefaults({
             { field: 'height', headerName: 'tune.height' },
             { field: 'bar', headerName: 'tune.bar' },
             { field: 'clef', headerName: 'tune.clef' },
+            { field: 'author', headerName: 'tune.author' },
             { field: 'remarks', headerName: 'tune.description' },
             { type: 'player', headerName: 'tune.player' }
         ]
@@ -22,6 +23,7 @@ export const TuneMelodyModel = ModelService.GenerateDefaults({
             { field: 'alter', headerName: 'tune.alter' },
             { field: 'tempo', headerName: 'tune.tempo' },
             { field: 'noteLength', headerName: 'tune.noteLength' },
+            { field: 'author', headerName: 'tune.author' },
             { field: 'melody', type: 'textbox', headerName: 'tune.melody' },
             { field: 'words', type: 'textbox', headerName: 'tune.words' },
             { field: 'remarks', type: 'textbox', headerName: 'tune.description' },

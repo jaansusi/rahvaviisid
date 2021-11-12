@@ -19,6 +19,7 @@ export const TuneModel = ModelService.GenerateDefaults({
             { field: 'videoReference', headerName: 'tune.videoReference', width: 170 },
          ]
     },
+    // This model is not used to generate the tune view, just to request data
     view: {
         label: 'tune.tune',
         fields: [

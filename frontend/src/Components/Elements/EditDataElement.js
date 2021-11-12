@@ -156,6 +156,57 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                     />
                 </Grid>
             );
+        case 'staticMultiselect':
+            let handleStaticMultiChange = ((newValues) => {
+                handleChange({
+                    target: {
+                        name: model.field,
+                        value: newValues.map(x => x.value)
+                    }
+                }, index);
+            });
+            if (model.values === undefined)
+                model.values = [];
+            return (
+                <Grid
+                    item
+                    xs={4}
+                    className='form-edit-item'
+                >
+                    <Autocomplete
+                        multiple
+                        options={
+                            model.values
+                        }
+                        getOptionLabel={
+                            (option) => option === undefined ? '' :
+                                option.title
+                        }
+                        value={
+                            elemValue ?
+                                elemValue.map(elem =>
+                                    model.values.find(x => x.value === elem)
+                                ) :
+                                []
+                        }
+                        getOptionSelected={
+                            (option) => elemValue.includes(option.value)
+                        }
+                        filterSelectedOptions
+                        renderInput={(params) => (
+                            <TextField
+                                {...params}
+                                variant="outlined"
+                                label={t(model.headerName)}
+                            />
+                        )}
+                        onChange={(event, newValues) =>
+                            handleStaticMultiChange(newValues)
+                        }
+                        style={{ backgroundColor: 'white' }}
+                    />
+                </Grid>
+            );
         case 'view':
             return (
                 <Grid
