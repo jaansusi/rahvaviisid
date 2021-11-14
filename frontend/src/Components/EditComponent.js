@@ -95,44 +95,72 @@ const EditComponent = ({ model, newItem }) => {
     };
 
     // Function for submitting form data to API
-    // to-do: clean up or add comments
     let submitData = (currentModel, data) => {
         let recurse = (recursedModel, recursedData) => {
+            if (recursedData === undefined)
+                return undefined;
             let requestObject = {};
-            //Iterate over each property in the current MODEL
+            // Iterate over each property in the current MODEL
             for (let modelKey in recursedModel.fields) {
-                //Get the current element in MODEL
+                // Get the current element in MODEL
                 let modelElem = recursedModel.fields[modelKey];
-                //Get the DATA value
+                // Get the DATA value
                 const value = recursedData[modelElem.field];
-                //If the value is empty, check if there is a default in the model
+                // If the value is empty and the model type is dropdown then ignore this value
+                if (modelElem.type === 'dropdown') {
+                    if (!value)
+                        delete requestObject[modelElem.field];
+                    continue;
+                }
+
+                // If the value is empty, check if there is a default in the model
                 if (value === '' && modelElem.default) {
                     requestObject[modelElem.field] = modelElem.default;
                     continue;
                 }
-                //If there is a MODEL defined for this field..
+                // If there is a MODEL defined for this field..
                 if (modelElem?.edit !== undefined) {
-                    //If DATA object is an array
+                    // If DATA object is an array
                     if (Array.isArray(value)) {
-                        //Map over each of the array elements by recursing with this function
+                        // Map over each of the array elements by recursing with this function
                         requestObject[modelElem.field] = value.map(dataArrayElem => {
                             return recurse(modelElem.edit, dataArrayElem);
                         });
                     }
-                    //If not, recurse normally
+                    // If not, recurse normally
                     else
-                        requestObject[modelElem.field] = recurse(modelElem.edit, recursedData[modelElem.field]);
+                        requestObject[modelElem.field] = recurse(modelElem.edit, value);
                 }
-                //Otherwise, check if DATA is actually there
+                else if (modelElem?.nested !== undefined) {
+                    console.log(recursedModel)
+                    console.log(value)
+                    // If DATA object is an array
+                    if (Array.isArray(value)) {
+                        // Map over each of the array elements by recursing with this function
+                        requestObject[modelElem.field] = value.map(dataArrayElem => {
+                            return recurse(modelElem.nested, dataArrayElem);
+                        });
+                    }
+                    // If not, recurse normally
+                    else {
+                        console.log('B')
+                        console.log(modelElem)
+                        console.log(recursedData)
+                        requestObject[modelElem.field] = recurse(modelElem.nested, value);
+
+                    }
+                }
+                // Otherwise, check if DATA is actually there
                 else if (recursedData) {
-                    //And then modify it based on the MODEL type
+                    // And then modify it based on the MODEL type
                     switch (modelElem.type) {
-                        //Can't send a number as a string
+                        // Can't send a number as a string
                         case 'number':
                             requestObject[modelElem.field] = parseInt(value, 10);
                             break;
-                        //Most dropdowns are integers with one exception, users, hence this check.
+                        // Most dropdowns are integers with one exception, users, hence this check.
                         case 'dropdown':
+                            // This is a regex for an uuid
                             const regex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
                             let arr = regex.exec(value);
                             if (arr !== null)
@@ -197,12 +225,16 @@ const EditComponent = ({ model, newItem }) => {
                 .catch((error) => {
                     console.log(error.response);
                     if (error.response.status === 422) {
-                        error.response.data.error.details.forEach(x => {
-                            toast.warning(x.path + '\n' + x.message.replace('should be', t('notification.shouldBe')), {
+                        if (error.response.data.error.message)
+                            toast.warning(t(error.response.data.error.message), {
                                 autoClose: false
                             })
-                        });
-                        console.log(error.response.data.error.details);
+                        else
+                            error.response.data.error.details.forEach(x => {
+                                toast.warning(x.path + '\n' + x.message.replace('should be', t('notification.shouldBe')), {
+                                    autoClose: false
+                                })
+                            });
                     }
                     else
                         toast.error(t('notification.failed'));

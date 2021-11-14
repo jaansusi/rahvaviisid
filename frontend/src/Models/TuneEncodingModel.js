@@ -18,7 +18,7 @@ export const TuneEncodingModel = ModelService.GenerateDefaults({
     view: {
         label: 'encoding.encoding',
         fields: [
-            { field: 'keySignatures', headerName: 'encoding.keySignature', selector: 'title'},
+            { field: 'keySignatures', headerName: 'encoding.keySignature', selector: 'title' },
             { field: 'supportSounds', headerName: 'encoding.supportSound', selector: 'title'},
             { field: 'pitches', headerName: 'encoding.pitch', selector: 'title'},
             { field: 'measures', headerName: 'encoding.measure', selector: 'title'},

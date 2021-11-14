@@ -282,5 +282,10 @@
         "checkboxSelection": "Märkekasti valik",
         "trueLabel": "Õige",
         "falseLabel": "Vale"
+    },
+    "validation": {
+        "tunes": {
+            "invalidReferences": "Populate at least one: text-, tune-, videoreference"
+        }
     }
 }

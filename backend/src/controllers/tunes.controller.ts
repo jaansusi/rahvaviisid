@@ -9,7 +9,7 @@ import {
   Filter,
   FilterExcludingWhere,
   repository,
-  Where,
+  Where
 } from '@loopback/repository';
 import {
   post,
@@ -56,6 +56,11 @@ import {AuditBaseController} from './auditbase.controller';
 const groupAuditOpts: IAuditMixinOptions = {
   actionKey: 'Tunes_Logs',
 };
+
+class ValidationError extends Error {
+  code?: string;
+  statusCode?: number;
+}
 
 export class TunesController extends AuditBaseController<Tunes> {
   constructor(
@@ -207,6 +212,13 @@ export class TunesController extends AuditBaseController<Tunes> {
     })
     tunes: Tunes,
   ): Promise<void> {
+    if (!(tunes.tuneReference || tunes.soundReference || tunes.videoReference)) {
+      let err: ValidationError = new ValidationError(
+        'validation.tunes.invalidReferences',
+      );
+      err.statusCode = 422;
+      throw err;
+    }
     let before = await this.tunesRepository.findById(
       id,
       TunesFilter.ALL_NO_CLASSIFICATORS,

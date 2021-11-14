@@ -354,5 +354,10 @@
         "email": "E-mail",
         "firstName": "Eesnimi",
         "lastName": "Perenimi"
+    },
+    "validation": {
+        "tunes": {
+            "invalidReferences": "Üks kolmest on kohustuslik: viisiviide, heliviide, videoviide"
+        }
     }
 }

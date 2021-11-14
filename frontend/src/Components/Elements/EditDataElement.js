@@ -56,7 +56,6 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
         case 'dropdown':
             let handleElementChange = ((event, index) => {
                 const { value } = event.target;
-                console.log(event);
                 handleChange({
                     target: {
                         name: model.field,
