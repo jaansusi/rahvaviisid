@@ -100,8 +100,6 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
             );
         case 'multiselect':
             let handleMultiChange = ((newValues) => {
-                console.log(model.field);
-                console.log(newValues);
                 handleChange({
                     target: {
                         name: model.field,
@@ -408,6 +406,9 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                     <FormControl className='form-input-element' variant='outlined'>
                         <TextField
                             name={model.field}
+                            error={ model.type === 'number' ? isNaN(elemValue) : false }
+                            inputProps={ model.type === 'number' ? { inputMode: 'numeric', pattern: '[0-9]*' } : undefined}
+                            helperText={ model.type === 'number' && elemValue.length > 0 && isNaN(elemValue) ? t('validation.mustBeNumber') : undefined }
                             label={t(model.headerName)}
                             value={model.selector ? elemValue[model.selector] : elemValue}
                             required={model.required}

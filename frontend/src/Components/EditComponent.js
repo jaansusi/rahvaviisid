@@ -132,8 +132,6 @@ const EditComponent = ({ model, newItem }) => {
                         requestObject[modelElem.field] = recurse(modelElem.edit, value);
                 }
                 else if (modelElem?.nested !== undefined) {
-                    console.log(recursedModel)
-                    console.log(value)
                     // If DATA object is an array
                     if (Array.isArray(value)) {
                         // Map over each of the array elements by recursing with this function
@@ -143,11 +141,7 @@ const EditComponent = ({ model, newItem }) => {
                     }
                     // If not, recurse normally
                     else {
-                        console.log('B')
-                        console.log(modelElem)
-                        console.log(recursedData)
                         requestObject[modelElem.field] = recurse(modelElem.nested, value);
-
                     }
                 }
                 // Otherwise, check if DATA is actually there
@@ -203,7 +197,7 @@ const EditComponent = ({ model, newItem }) => {
                     history.push('./' + resData.data.id + '/vaata');
                 })
                 .catch((error) => {
-                    console.log(error.response.data.error);
+                    // console.log(error.response.data.error);
                 });
         } else {
             // DB entry already exists, use patch request
@@ -217,22 +211,27 @@ const EditComponent = ({ model, newItem }) => {
                         }
                     }
                 )
-                .then((resData) => {
-                    // console.log(resData);
+                .then(() => {
                     toast.success(t('notification.saved'));
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 })
                 .catch((error) => {
-                    console.log(error.response);
                     if (error.response.status === 422) {
-                        if (error.response.data.error.message)
+                        if (!error.response.data.error.details)
                             toast.warning(t(error.response.data.error.message), {
+                                closeButton: true,
                                 autoClose: false
                             })
                         else
                             error.response.data.error.details.forEach(x => {
-                                toast.warning(x.path + '\n' + x.message.replace('should be', t('notification.shouldBe')), {
-                                    autoClose: false
+                                let message = x.message;
+                                message = message.replace('should be', t('notification.shouldBe'));
+                                let path = x.path.split('/');
+                                path.shift();
+                                path = path.map(x => isNaN(x) ? t('validation.' + x) : parseInt(x) + 1).join(' > ');
+                                toast.warning(path + ' ' + message, {
+                                    closeButton: true,
+                                    autoClose: false,
                                 })
                             });
                     }
@@ -244,7 +243,6 @@ const EditComponent = ({ model, newItem }) => {
 
     const handleChange = (event) => {
         const { name, value, type } = event.target;
-        console.log(event.target);
         setAssetData({
             name: name,
             // Numbers need to be sent as actual numeric values, not strings

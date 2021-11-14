@@ -22,7 +22,6 @@ const ViewComponent = ({ model }) => {
     );
     let [isLoading, setIsLoading] = useState(true);
     useEffect(() => {
-        console.log(model);
         DataService.RequestAsset(model, id)
             .then(asset => {
                 for (const key in asset) {

@@ -11,7 +11,7 @@ const DeleteButton = (({ apiPath, id }) => {
         axios.delete(config.apiUrl + '/' + apiPath + '/' + id)
             .then(
                 (result) => {
-                    console.log(result);
+                    // console.log(result);
                 }
             );
     };

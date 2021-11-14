@@ -35,8 +35,6 @@ const ListDataFragment = (({ model, data, rowCount, updateTable, currentView, ad
                 // I don't know why this undefined check is necessary
                 // but for some reason, the data.map is triggered twice and it would end up undefined otherwise
                 if (modelField.selector && row[field][modelField.selector] !== undefined) {
-                    //console.log(data[index][field][modelField.selector]);
-                    //console.log(row);
                     row[field] = row[field][modelField.selector];
                 }
             }

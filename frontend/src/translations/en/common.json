@@ -286,6 +286,9 @@
     "validation": {
         "tunes": {
             "invalidReferences": "Populate at least one: text-, tune-, videoreference"
-        }
+        },
+        "mustBeNumber": "Must be a number",
+        "tunesPersonsRoles": "Persons involved",
+        "actionStartYear": "Year started"
     }
 }

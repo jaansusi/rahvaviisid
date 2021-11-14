@@ -51,7 +51,7 @@ const MassModification = ({ assets }) => {
           }
         )
         .then((resData) => {
-          console.log(resData);
+          // console.log(resData);
         });
     });
 
@@ -118,7 +118,6 @@ const MassModification = ({ assets }) => {
                   autoHeight
                   hideFooter
                   onSelectionModelChange={(selectedRows) => {
-                    console.log(selectedRows)
                     setSelectedAssets(selectedRows.selectionModel)
                   }}
                 />
@@ -133,7 +132,6 @@ const MassModification = ({ assets }) => {
                 autoHeight
                 hideFooter
                 onSelectionModelChange={(selectedRows) => {
-                  console.log(selectedRows)
                   setSelectedFields(selectedRows.selectionModel)
                 }}
               />

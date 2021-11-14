@@ -358,6 +358,9 @@
     "validation": {
         "tunes": {
             "invalidReferences": "Üks kolmest on kohustuslik: viisiviide, heliviide, videoviide"
-        }
+        },
+        "mustBeNumber": "Peab olema number",
+        "tunesPersonsRoles": "Viisiga seotud isikud",
+        "actionStartYear": "Tegevuse algusaasta"
     }
 }

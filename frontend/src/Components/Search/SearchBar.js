@@ -30,7 +30,6 @@ const SearchBar = ({ keyword, setKeyword }) => {
               value={referenceSearch}
               name='test'
               onChange={(e) => {
-                console.log(e)
                 setReferenceSearch(e.target.checked)
               }}
               color="primary"
