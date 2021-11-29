@@ -1,4 +1,6 @@
-CREATE DOMAIN folk_tune.D_timestamp timestamp NOT NULL DEFAULT localtimestamp(0);
+CREATE DOMAIN folk_tune.D_timestamp timestamp NOT NULL DEFAULT localtimestamp(0)
+    CONSTRAINT CK_timestamp_check CHECK (VALUE BETWEEN '2020-01-01' AND '2200-01-01')
+;
 
 CREATE TABLE folk_tune.sexes
 (
@@ -8,7 +10,8 @@ CREATE TABLE folk_tune.sexes
     is_active boolean NOT NULL DEFAULT TRUE,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
-    CONSTRAINT PK_sexes PRIMARY KEY (id)
+    CONSTRAINT PK_sexes PRIMARY KEY (id),
+    CONSTRAINT CK_sexes_modified_no_earlier_than_created CHECK (modified >= created)
 )
 ;
 
@@ -29,7 +32,15 @@ CREATE TABLE folk_tune.persons
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
     CONSTRAINT PK_persons PRIMARY KEY (id),
-    CONSTRAINT FK_persons_sexes FOREIGN KEY (sex_id) REFERENCES folk_tune.sexes (id)
+    CONSTRAINT FK_persons_sexes FOREIGN KEY (sex_id) REFERENCES folk_tune.sexes (id),
+    CONSTRAINT CK_persons_name_exist CHECK 
+    (
+        (given_name IS NOT NULL) OR 
+        (surname IS NOT NULL) OR
+        (nickname IS NOT NULL)
+    ),
+    CONSTRAINT CK_persons_death_year_no_earlier_than_birth_year CHECK (death_year >= birth_year),
+    CONSTRAINT CK_persons_modified_no_earlier_than_created CHECK (modified >= created)
 ) WITH (fillfactor = 90)
 ;
 
@@ -53,7 +64,8 @@ CREATE TABLE folk_tune.users
     roles text[],
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
-    CONSTRAINT PK_users PRIMARY KEY (id)
+    CONSTRAINT PK_users PRIMARY KEY (id),
+    CONSTRAINT CK_users_modified_no_earlier_than_created CHECK (modified >= created)
 ) WITH (fillfactor = 90)
 ;
 
@@ -91,7 +103,8 @@ CREATE TABLE folk_tune.tune_states
     is_active boolean NOT NULL DEFAULT TRUE,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
-    CONSTRAINT PK_tune_states PRIMARY KEY (id)
+    CONSTRAINT PK_tune_states PRIMARY KEY (id),
+    CONSTRAINT CK_tune_states_modified_no_earlier_than_created CHECK (modified >= created)
 )
 ;
 
@@ -106,7 +119,8 @@ CREATE TABLE folk_tune.nations
     is_active boolean NOT NULL DEFAULT TRUE,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
-    CONSTRAINT PK_nations PRIMARY KEY (id)
+    CONSTRAINT PK_nations PRIMARY KEY (id),
+    CONSTRAINT CK_nations_modified_no_earlier_than_created CHECK (modified >= created)
 )
 ;
 
@@ -121,7 +135,8 @@ CREATE TABLE folk_tune.languages
     is_active boolean NOT NULL DEFAULT TRUE,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
-    CONSTRAINT PK_languages PRIMARY KEY (id)
+    CONSTRAINT PK_languages PRIMARY KEY (id),
+    CONSTRAINT CK_languages_modified_no_earlier_than_created CHECK (modified >= created)
 )
 ;
 
@@ -136,7 +151,8 @@ CREATE TABLE folk_tune.countries
     is_active boolean NOT NULL DEFAULT TRUE,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
-    CONSTRAINT PK_countries PRIMARY KEY (id)
+    CONSTRAINT PK_countries PRIMARY KEY (id),
+    CONSTRAINT CK_countries_modified_no_earlier_than_created CHECK (modified >= created)
 )
 ;
 
@@ -169,7 +185,18 @@ CREATE TABLE folk_tune.tunes
     CONSTRAINT FK_tunes_nations FOREIGN KEY (nation_id) REFERENCES folk_tune.nations (id),
     CONSTRAINT FK_tunes_languages FOREIGN KEY (language_id) REFERENCES folk_tune.languages (id),
     CONSTRAINT FK_tunes_countries FOREIGN KEY (country_id) REFERENCES folk_tune.countries (id),
-    CONSTRAINT FK_tunes_users FOREIGN KEY (verified_by) REFERENCES folk_tune.users (id)
+    CONSTRAINT FK_tunes_users FOREIGN KEY (verified_by) REFERENCES folk_tune.users (id),
+    CONSTRAINT CK_tunes_reference_exist CHECK 
+    (
+        (tune_reference IS NOT NULL) OR 
+        (text_reference IS NOT NULL) OR
+        (sound_reference IS NOT NULL) OR
+        (video_reference IS NOT NULL)
+    ),
+    CONSTRAINT CK_tunes_verified_consistent_with_verified_by CHECK (NOT (verified IS NOT NULL) OR (verified_by IS NOT NULL)),
+    CONSTRAINT CK_tunes_verified_check CHECK (verified BETWEEN '2000-01-01' AND '2200-01-01'),
+    CONSTRAINT CK_tunes_verified_no_greater_than_current_date CHECK (verified <= date_trunc('day', localtimestamp(0))),
+    CONSTRAINT CK_tunes_modified_no_earlier_than_created CHECK (modified >= created)
 ) WITH (fillfactor = 90)
 ;
 
@@ -196,7 +223,8 @@ CREATE TABLE folk_tune.tune_place_types
     is_active boolean NOT NULL DEFAULT TRUE,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
-    CONSTRAINT PK_tune_place_types PRIMARY KEY (id)
+    CONSTRAINT PK_tune_place_types PRIMARY KEY (id),
+    CONSTRAINT CK_tune_place_types_modified_no_earlier_than_created CHECK (modified >= created)
 )
 ;
 
@@ -211,7 +239,8 @@ CREATE TABLE folk_tune.parishes
     is_active boolean NOT NULL DEFAULT TRUE,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
-    CONSTRAINT PK_parishes PRIMARY KEY (id)
+    CONSTRAINT PK_parishes PRIMARY KEY (id),
+    CONSTRAINT CK_parishes_modified_no_earlier_than_created CHECK (modified >= created)
 )
 ;
 
@@ -226,7 +255,8 @@ CREATE TABLE folk_tune.municipalities
     is_active boolean NOT NULL DEFAULT TRUE,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
-    CONSTRAINT PK_municipalities PRIMARY KEY (id)
+    CONSTRAINT PK_municipalities PRIMARY KEY (id),
+    CONSTRAINT CK_municipalities_modified_no_earlier_than_created CHECK (modified >= created)
 )
 ;
 
@@ -241,7 +271,8 @@ CREATE TABLE folk_tune.villages
     is_active boolean NOT NULL DEFAULT TRUE,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
-    CONSTRAINT PK_villages PRIMARY KEY (id)
+    CONSTRAINT PK_villages PRIMARY KEY (id),
+    CONSTRAINT CK_villages_modified_no_earlier_than_created CHECK (modified >= created)
 )
 ;
 
@@ -267,7 +298,8 @@ CREATE TABLE folk_tune.tune_places
     CONSTRAINT FK_tune_places_tune_place_types FOREIGN KEY (tune_place_type_id) REFERENCES folk_tune.tune_place_types (id),
     CONSTRAINT FK_tune_places_parishes FOREIGN KEY (parish_id) REFERENCES folk_tune.parishes (id),
     CONSTRAINT FK_tune_places_municipalities FOREIGN KEY (municipality_id) REFERENCES folk_tune.municipalities (id),
-    CONSTRAINT FK_tune_places_villages FOREIGN KEY (village_id) REFERENCES folk_tune.villages (id)
+    CONSTRAINT FK_tune_places_villages FOREIGN KEY (village_id) REFERENCES folk_tune.villages (id),
+    CONSTRAINT CK_tune_places_modified_no_earlier_than_created CHECK (modified >= created)
 ) WITH (fillfactor = 90)
 ;
 
@@ -297,7 +329,8 @@ CREATE TABLE folk_tune.actual_performance_types
     is_active boolean NOT NULL DEFAULT TRUE,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
-    CONSTRAINT PK_actual_performance_types PRIMARY KEY (id)
+    CONSTRAINT PK_actual_performance_types PRIMARY KEY (id),
+    CONSTRAINT CK_actual_performance_types_modified_no_earlier_than_created CHECK (modified >= created)
 )
 ;
 
@@ -312,7 +345,8 @@ CREATE TABLE folk_tune.traditional_performance_types
     is_active boolean NOT NULL DEFAULT TRUE,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
-    CONSTRAINT PK_traditional_performance_types PRIMARY KEY (id)
+    CONSTRAINT PK_traditional_performance_types PRIMARY KEY (id),
+    CONSTRAINT CK_tpt_modified_no_earlier_than_created CHECK (modified >= created)
 )
 ;
 
@@ -327,7 +361,8 @@ CREATE TABLE folk_tune.actual_action_types
     is_active boolean NOT NULL DEFAULT TRUE,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
-    CONSTRAINT PK_actual_action_types PRIMARY KEY (id)
+    CONSTRAINT PK_actual_action_types PRIMARY KEY (id),
+    CONSTRAINT CK_actual_action_types_modified_no_earlier_than_created CHECK (modified >= created)
 )
 ;
 
@@ -353,7 +388,8 @@ CREATE TABLE folk_tune.tune_performances
     CONSTRAINT FK_tune_performances_traditional_performance_types FOREIGN KEY (traditional_performance_type_id)
         REFERENCES folk_tune.traditional_performance_types (id),
     CONSTRAINT FK_tune_performances_actual_action_types FOREIGN KEY (actual_action_type_id)
-        REFERENCES folk_tune.actual_action_types (id)
+        REFERENCES folk_tune.actual_action_types (id),
+    CONSTRAINT CK_tune_performances_modified_no_earlier_than_created CHECK (modified >= created)
 ) WITH (fillfactor = 90)
 ;
 
@@ -374,7 +410,8 @@ CREATE TABLE folk_tune.traditional_action_types
     is_active boolean NOT NULL DEFAULT TRUE,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
-    CONSTRAINT PK_traditional_action_types PRIMARY KEY (id)
+    CONSTRAINT PK_traditional_action_types PRIMARY KEY (id),
+    CONSTRAINT CK_traditional_action_types_modified_no_earlier_than_created CHECK (modified >= created)
 )
 ;
 
@@ -393,7 +430,8 @@ CREATE TABLE folk_tune.tune_performances_traditional_actions
     CONSTRAINT FK_tpta_tune_performances FOREIGN KEY (tune_performance_id)
         REFERENCES folk_tune.tune_performances (id) ON DELETE CASCADE,
     CONSTRAINT FK_tpta_traditional_action_types FOREIGN KEY (traditional_action_type_id)
-        REFERENCES folk_tune.traditional_action_types (id)
+        REFERENCES folk_tune.traditional_action_types (id),
+    CONSTRAINT CK_tpta_modified_no_earlier_than_created CHECK (modified >= created)
 )
 ;
 
@@ -413,7 +451,8 @@ CREATE TABLE folk_tune.tune_songs
     modified folk_tune.D_timestamp,
     CONSTRAINT PK_tune_songs PRIMARY KEY (id),
     CONSTRAINT UQ_tune_songs_tune_id UNIQUE (tune_id),
-    CONSTRAINT FK_tune_songs_tunes FOREIGN KEY (tune_id) REFERENCES folk_tune.tunes (id) ON DELETE CASCADE
+    CONSTRAINT FK_tune_songs_tunes FOREIGN KEY (tune_id) REFERENCES folk_tune.tunes (id) ON DELETE CASCADE,
+    CONSTRAINT CK_tune_songs_modified_no_earlier_than_created CHECK (modified >= created)
 ) WITH (fillfactor = 90)
 ;
 
@@ -429,7 +468,9 @@ CREATE TABLE folk_tune.song_genres
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
     CONSTRAINT PK_song_genres PRIMARY KEY (id),
-    CONSTRAINT FK_song_genres FOREIGN KEY (parent_id) REFERENCES folk_tune.song_genres (id) ON DELETE SET NULL
+    CONSTRAINT FK_song_genres FOREIGN KEY (parent_id) REFERENCES folk_tune.song_genres (id) ON DELETE SET NULL,
+    CONSTRAINT CK_song_genres_id_not_equal_parent_id CHECK (id <> parent_id),
+    CONSTRAINT CK_song_genres_modified_no_earlier_than_created CHECK (modified >= created)
 )
 ;
 
@@ -454,7 +495,9 @@ CREATE TABLE folk_tune.tune_genres
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
     CONSTRAINT PK_tune_genres PRIMARY KEY (id),
-    CONSTRAINT FK_tune_genres FOREIGN KEY (parent_id) REFERENCES folk_tune.tune_genres (id) ON DELETE SET NULL
+    CONSTRAINT FK_tune_genres FOREIGN KEY (parent_id) REFERENCES folk_tune.tune_genres (id) ON DELETE SET NULL,
+    CONSTRAINT CK_tune_genres_id_not_equal_parent_id CHECK (id <> parent_id),
+    CONSTRAINT CK_tune_genres_modified_no_earlier_than_created CHECK (modified >= created)
 )
 ;
 
@@ -477,7 +520,8 @@ CREATE TABLE folk_tune.tune_songs_song_genres
     CONSTRAINT PK_tune_songs_song_genres PRIMARY KEY (id),
     CONSTRAINT UQ_tssg_tune_song_id_song_genre_id UNIQUE (tune_song_id, song_genre_id),
     CONSTRAINT FK_tssg_tune_songs FOREIGN KEY (tune_song_id) REFERENCES folk_tune.tune_songs (id) ON DELETE CASCADE,
-    CONSTRAINT FK_tssg_song_genres FOREIGN KEY (song_genre_id) REFERENCES folk_tune.song_genres (id)
+    CONSTRAINT FK_tssg_song_genres FOREIGN KEY (song_genre_id) REFERENCES folk_tune.song_genres (id),
+    CONSTRAINT CK_tssg_modified_no_earlier_than_created CHECK (modified >= created)
 )
 ;
 
@@ -494,7 +538,8 @@ CREATE TABLE folk_tune.tune_songs_tune_genres
     CONSTRAINT PK_tune_songs_tune_genres PRIMARY KEY (id),
     CONSTRAINT UQ_tstg_tune_song_id_tune_genre_id UNIQUE (tune_song_id, tune_genre_id),
     CONSTRAINT FK_tstg_tune_songs FOREIGN KEY (tune_song_id) REFERENCES folk_tune.tune_songs (id) ON DELETE CASCADE,
-    CONSTRAINT FK_tstg_tune_genres FOREIGN KEY (tune_genre_id) REFERENCES folk_tune.tune_genres (id)
+    CONSTRAINT FK_tstg_tune_genres FOREIGN KEY (tune_genre_id) REFERENCES folk_tune.tune_genres (id),
+    CONSTRAINT CK_tstg_modified_no_earlier_than_created CHECK (modified >= created)
 )
 ;
 
@@ -513,7 +558,9 @@ CREATE TABLE folk_tune.song_topics
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
     CONSTRAINT PK_song_topics PRIMARY KEY (id),
-    CONSTRAINT FK_song_topics FOREIGN KEY (parent_id) REFERENCES folk_tune.song_topics (id) ON DELETE SET NULL
+    CONSTRAINT FK_song_topics FOREIGN KEY (parent_id) REFERENCES folk_tune.song_topics (id) ON DELETE SET NULL,
+    CONSTRAINT CK_song_topics_id_not_equal_parent_id CHECK (id <> parent_id),
+    CONSTRAINT CK_song_topics_modified_no_earlier_than_created CHECK (modified >= created)
 )
 ;
 
@@ -536,7 +583,8 @@ CREATE TABLE folk_tune.tune_songs_song_topics
     CONSTRAINT PK_tune_songs_song_topics PRIMARY KEY (id),
     CONSTRAINT UQ_tsst_tune_song_id_song_topic_id UNIQUE (tune_song_id, song_topic_id),
     CONSTRAINT FK_tsst_tune_songs FOREIGN KEY (tune_song_id) REFERENCES folk_tune.tune_songs (id) ON DELETE CASCADE,
-    CONSTRAINT FK_tsst_song_topics FOREIGN KEY (song_topic_id) REFERENCES folk_tune.song_topics (id)
+    CONSTRAINT FK_tsst_song_topics FOREIGN KEY (song_topic_id) REFERENCES folk_tune.song_topics (id),
+    CONSTRAINT CK_tsst_modified_no_earlier_than_created CHECK (modified >= created)
 )
 ;
 
@@ -551,7 +599,8 @@ CREATE TABLE folk_tune.verse_forms
     is_active boolean NOT NULL DEFAULT TRUE,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
-    CONSTRAINT PK_verse_forms PRIMARY KEY (id)
+    CONSTRAINT PK_verse_forms PRIMARY KEY (id),
+    CONSTRAINT CK_verse_forms_modified_no_earlier_than_created CHECK (modified >= created)
 )
 ;
 
@@ -568,7 +617,8 @@ CREATE TABLE folk_tune.tune_songs_verse_forms
     CONSTRAINT PK_tune_songs_verse_forms PRIMARY KEY (id),
     CONSTRAINT UQ_tsvf_tune_song_id_verse_form_id UNIQUE (tune_song_id, verse_form_id),
     CONSTRAINT FK_tsvf_tune_songs FOREIGN KEY (tune_song_id) REFERENCES folk_tune.tune_songs (id) ON DELETE CASCADE,
-    CONSTRAINT FK_tsvf_verse_forms FOREIGN KEY (verse_form_id) REFERENCES folk_tune.verse_forms (id)
+    CONSTRAINT FK_tsvf_verse_forms FOREIGN KEY (verse_form_id) REFERENCES folk_tune.verse_forms (id),
+    CONSTRAINT CK_tsvf_modified_no_earlier_than_created CHECK (modified >= created)
 )
 ;
 
@@ -583,7 +633,8 @@ CREATE TABLE folk_tune.sound_ranges
     is_active boolean NOT NULL DEFAULT TRUE,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
-    CONSTRAINT PK_sound_ranges PRIMARY KEY (id)
+    CONSTRAINT PK_sound_ranges PRIMARY KEY (id),
+    CONSTRAINT CK_sound_ranges_modified_no_earlier_than_created CHECK (modified >= created)
 )
 ;
 
@@ -604,7 +655,8 @@ CREATE TABLE folk_tune.musical_characteristics
     CONSTRAINT PK_musical_characteristics PRIMARY KEY (id),
     CONSTRAINT UQ_musical_characteristics_tune_id UNIQUE (tune_id),
     CONSTRAINT FK_musical_characteristics_tunes FOREIGN KEY (tune_id) REFERENCES folk_tune.tunes (id) ON DELETE CASCADE,
-    CONSTRAINT FK_musical_characteristics_sound_ranges FOREIGN KEY (sound_range_id) REFERENCES folk_tune.sound_ranges (id)
+    CONSTRAINT FK_musical_characteristics_sound_ranges FOREIGN KEY (sound_range_id) REFERENCES folk_tune.sound_ranges (id),
+    CONSTRAINT CK_musical_characteristics_modified_no_earlier_than_created CHECK (modified >= created)
 ) WITH (fillfactor = 90)
 ;
 
@@ -619,7 +671,8 @@ CREATE TABLE folk_tune.rhythm_types
     is_active boolean NOT NULL DEFAULT TRUE,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
-    CONSTRAINT PK_rhythm_types PRIMARY KEY (id)
+    CONSTRAINT PK_rhythm_types PRIMARY KEY (id),
+    CONSTRAINT CK_rhythm_types_modified_no_earlier_than_created CHECK (modified >= created)
 )
 ;
 
@@ -637,7 +690,8 @@ CREATE TABLE folk_tune.musical_characteristics_rhythm_types
     CONSTRAINT UQ_mcrt_musical_characteristic_id_rhythm_type_id UNIQUE (musical_characteristic_id, rhythm_type_id),
     CONSTRAINT FK_mcrt_musical_characteristics FOREIGN KEY (musical_characteristic_id)
         REFERENCES folk_tune.musical_characteristics (id) ON DELETE CASCADE,
-    CONSTRAINT FK_mcrt_rhythm_types FOREIGN KEY (rhythm_type_id) REFERENCES folk_tune.rhythm_types (id)
+    CONSTRAINT FK_mcrt_rhythm_types FOREIGN KEY (rhythm_type_id) REFERENCES folk_tune.rhythm_types (id),
+    CONSTRAINT CK_mcrt_modified_no_earlier_than_created CHECK (modified >= created)
 )
 ;
 
@@ -652,7 +706,8 @@ CREATE TABLE folk_tune.tune_forms
     is_active boolean NOT NULL DEFAULT TRUE,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
-    CONSTRAINT PK_tune_forms PRIMARY KEY (id)
+    CONSTRAINT PK_tune_forms PRIMARY KEY (id),
+    CONSTRAINT CK_tune_forms_modified_no_earlier_than_created CHECK (modified >= created)
 )
 ;
 
@@ -670,7 +725,8 @@ CREATE TABLE folk_tune.musical_characteristics_tune_forms
     CONSTRAINT UQ_mctf_musical_characteristic_id_tune_form_id UNIQUE (musical_characteristic_id, tune_form_id),
     CONSTRAINT FK_mctf_musical_characteristics FOREIGN KEY (musical_characteristic_id)
         REFERENCES folk_tune.musical_characteristics (id) ON DELETE CASCADE,
-    CONSTRAINT FK_mctf_tune_forms FOREIGN KEY (tune_form_id) REFERENCES folk_tune.tune_forms (id)
+    CONSTRAINT FK_mctf_tune_forms FOREIGN KEY (tune_form_id) REFERENCES folk_tune.tune_forms (id),
+    CONSTRAINT CK_mctf_modified_no_earlier_than_created CHECK (modified >= created)
 )
 ;
 
@@ -685,7 +741,8 @@ CREATE TABLE folk_tune.text_forms
     is_active boolean NOT NULL DEFAULT TRUE,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
-    CONSTRAINT PK_text_forms PRIMARY KEY (id)
+    CONSTRAINT PK_text_forms PRIMARY KEY (id),
+    CONSTRAINT CK_text_forms_modified_no_earlier_than_created CHECK (modified >= created)
 )
 ;
 
@@ -703,7 +760,8 @@ CREATE TABLE folk_tune.musical_characteristics_text_forms
     CONSTRAINT UQ_mcft_musical_characteristic_id_text_form_id UNIQUE (musical_characteristic_id, text_form_id),
     CONSTRAINT FK_mcft_musical_characteristics FOREIGN KEY (musical_characteristic_id)
         REFERENCES folk_tune.musical_characteristics (id) ON DELETE CASCADE,
-    CONSTRAINT FK_mcft_text_forms FOREIGN KEY (text_form_id) REFERENCES folk_tune.text_forms (id)
+    CONSTRAINT FK_mcft_text_forms FOREIGN KEY (text_form_id) REFERENCES folk_tune.text_forms (id),
+    CONSTRAINT CK_mcft_modified_no_earlier_than_created CHECK (modified >= created)
 )
 ;
 
@@ -718,7 +776,8 @@ CREATE TABLE folk_tune.tune_person_role_types
     is_active boolean NOT NULL DEFAULT TRUE,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
-    CONSTRAINT PK_tune_person_role_types PRIMARY KEY (id)
+    CONSTRAINT PK_tune_person_role_types PRIMARY KEY (id),
+    CONSTRAINT CK_tune_person_role_types_modified_no_earlier_than_created CHECK (modified >= created)
 )
 ;
 
@@ -739,10 +798,14 @@ CREATE TABLE folk_tune.tunes_persons_roles
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
     CONSTRAINT PK_tunes_persons_roles PRIMARY KEY (id),
+    CONSTRAINT UQ_tunes_persons_roles UNIQUE (tune_id, person_id, tune_person_role_type_id),
     CONSTRAINT FK_tunes_persons_roles_tunes FOREIGN KEY (tune_id) REFERENCES folk_tune.tunes (id) ON DELETE CASCADE,
     CONSTRAINT FK_tunes_persons_roles_persons FOREIGN KEY (person_id) REFERENCES folk_tune.persons (id),
     CONSTRAINT FK_tunes_persons_roles_tune_person_role_types FOREIGN KEY (tune_person_role_type_id)
-        REFERENCES folk_tune.tune_person_role_types (id)
+        REFERENCES folk_tune.tune_person_role_types (id),
+    CONSTRAINT CK_tunes_persons_roles_person_age_check CHECK (person_age BETWEEN 1 AND 150),
+    CONSTRAINT CK_tunes_persons_roles_end_year_greater_than_start_year CHECK (action_end_year > action_start_year),
+    CONSTRAINT CK_tunes_persons_roles_modified_no_earlier_than_created CHECK (modified >= created)
 ) WITH (fillfactor = 90)
 ;
 
@@ -760,7 +823,8 @@ CREATE TABLE folk_tune.transcription_sources
     is_active boolean NOT NULL DEFAULT TRUE,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
-    CONSTRAINT PK_transcription_sources PRIMARY KEY (id)
+    CONSTRAINT PK_transcription_sources PRIMARY KEY (id),
+    CONSTRAINT CK_transcription_sources_modified_no_earlier_than_created CHECK (modified >= created)
 )
 ;
 
@@ -779,7 +843,8 @@ CREATE TABLE folk_tune.tune_transcriptions
     CONSTRAINT PK_tune_transcriptions PRIMARY KEY (id),
     CONSTRAINT FK_tune_transcriptions_tunes FOREIGN KEY (tune_id) REFERENCES folk_tune.tunes (id) ON DELETE CASCADE,
     CONSTRAINT FK_tune_transcriptions_transcription_sources FOREIGN KEY (transcription_source_id)
-        REFERENCES folk_tune.transcription_sources (id)
+        REFERENCES folk_tune.transcription_sources (id),
+    CONSTRAINT CK_tune_transcriptions_modified_no_earlier_than_created CHECK (modified >= created)
 )
 ;
 
@@ -794,7 +859,8 @@ CREATE TABLE folk_tune.transcription_person_role_types
     is_active boolean NOT NULL DEFAULT TRUE,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
-    CONSTRAINT PK_transcription_person_role_types PRIMARY KEY (id)
+    CONSTRAINT PK_transcription_person_role_types PRIMARY KEY (id),
+    CONSTRAINT CK_tprt_modified_no_earlier_than_created CHECK (modified >= created)
 )
 ;
 
@@ -821,7 +887,8 @@ CREATE TABLE folk_tune.transcriptions_persons_roles
         -- REFERENCES folk_tune.tune_transcriptions (id) ON DELETE CASCADE,
     CONSTRAINT FK_transcriptions_persons_roles_persons FOREIGN KEY (person_id) REFERENCES folk_tune.persons (id),
     CONSTRAINT FK_transcriptions_persons_roles_transcription_person_role_types FOREIGN KEY (transcription_person_role_type_id)
-        REFERENCES folk_tune.transcription_person_role_types (id)
+        REFERENCES folk_tune.transcription_person_role_types (id),
+    CONSTRAINT CK_tpr_modified_no_earlier_than_created CHECK (modified >= created)
 ) WITH (fillfactor = 90)
 ;
 
@@ -840,7 +907,8 @@ CREATE TABLE folk_tune.key_signatures
     is_active boolean NOT NULL DEFAULT TRUE,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
-    CONSTRAINT PK_key_signatures PRIMARY KEY (id)
+    CONSTRAINT PK_key_signatures PRIMARY KEY (id),
+    CONSTRAINT CK_key_signatures_modified_no_earlier_than_created CHECK (modified >= created)
 )
 ;
 
@@ -855,7 +923,8 @@ CREATE TABLE folk_tune.pitches
     is_active boolean NOT NULL DEFAULT TRUE,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
-    CONSTRAINT PK_pitches PRIMARY KEY (id)
+    CONSTRAINT PK_pitches PRIMARY KEY (id),
+    CONSTRAINT CK_pitches_modified_no_earlier_than_created CHECK (modified >= created)
 )
 ;
 
@@ -868,7 +937,8 @@ CREATE TABLE folk_tune.support_sounds
     is_active boolean NOT NULL DEFAULT TRUE,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
-    CONSTRAINT PK_support_sounds PRIMARY KEY (id)
+    CONSTRAINT PK_support_sounds PRIMARY KEY (id),
+    CONSTRAINT CK_support_sounds_modified_no_earlier_than_created CHECK (modified >= created)
 )
 ;
 
@@ -881,7 +951,8 @@ CREATE TABLE folk_tune.measures
     is_active boolean NOT NULL DEFAULT TRUE,
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
-    CONSTRAINT PK_measures PRIMARY KEY (id)
+    CONSTRAINT PK_measures PRIMARY KEY (id),
+    CONSTRAINT CK_measures_modified_no_earlier_than_created CHECK (modified >= created)
 )
 ;
 
@@ -906,7 +977,8 @@ CREATE TABLE folk_tune.tune_encodings
     CONSTRAINT FK_tune_encodings_key_signatures FOREIGN KEY (key_signature_id) REFERENCES folk_tune.key_signatures (id),
     CONSTRAINT FK_tune_encodings_support_sounds FOREIGN KEY (support_sound_id) REFERENCES folk_tune.support_sounds (id),
     CONSTRAINT FK_tune_encodings_pitches FOREIGN KEY (pitch_id) REFERENCES folk_tune.pitches (id),
-    CONSTRAINT FK_tune_encodings_measures FOREIGN KEY (measure_id) REFERENCES folk_tune.measures (id)
+    CONSTRAINT FK_tune_encodings_measures FOREIGN KEY (measure_id) REFERENCES folk_tune.measures (id),
+    CONSTRAINT CK_tune_encodings_modified_no_earlier_than_created CHECK (modified >= created)
 ) WITH (fillfactor = 90)
 ;
 
