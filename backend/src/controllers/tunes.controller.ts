@@ -19,6 +19,8 @@ import {
   patch,
   del,
   requestBody,
+  getJsonSchemaRef,
+  getJsonSchema,
 } from '@loopback/rest';
 import {
   ExternalReferences,
@@ -49,9 +51,10 @@ import {
   TuneTranscriptionsRepository,
 } from '../repositories';
 import {IAuditMixinOptions, UserId} from '../types';
-import {Getter, inject} from '@loopback/core';
+import {Getter, inject, intercept} from '@loopback/core';
 import {TunesFilter} from '../keys';
 import {AuditBaseController} from './auditbase.controller';
+import Ajv from 'ajv';
 
 const groupAuditOpts: IAuditMixinOptions = {
   actionKey: 'Tunes_Logs',
@@ -219,6 +222,9 @@ export class TunesController extends AuditBaseController<Tunes> {
       err.statusCode = 422;
       throw err;
     }
+    
+    this.validateTune(tunes);
+
     let before = await this.tunesRepository.findById(
       id,
       TunesFilter.ALL_NO_CLASSIFICATORS,
@@ -424,9 +430,31 @@ export class TunesController extends AuditBaseController<Tunes> {
     current: Entity[],
     repo: DefaultCrudRepository<any, number>,
   ) {
-    let toBeDeleted = originals.filter(
-      x => !current?.map(y => y.getId()).includes(x.getId()),
-    );
-    toBeDeleted?.forEach(x => repo.deleteById(x.getId()));
+    try {
+      let toBeDeleted = originals.filter(
+        x => !current?.map(y => y.getId()).includes(x.getId())
+      );
+      toBeDeleted?.forEach(x => repo.deleteById(x.getId()));
+    }
+    catch(ex) {
+      console.error(current);
+      console.log(ex);
+    }
+  }
+
+  private validateTune(tune: Tunes) {
+    const ajv = new Ajv();
+    let schema = getJsonSchema(TunesPersonsRoles);
+    const validate = ajv.compile(schema);
+    tune.tunesPersonsRoles?.forEach(tpr => {
+      
+    
+      const valid = validate(tpr);
+      if (!valid) {
+        console.log(validate.errors);
+        console.log(tpr);
+        return validate.errors;
+      }
+    });
   }
 }

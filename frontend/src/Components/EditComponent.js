@@ -108,9 +108,11 @@ const EditComponent = ({ model, newItem }) => {
                 const value = recursedData[modelElem.field];
                 // If the value is empty and the model type is dropdown then ignore this value
                 if (modelElem.type === 'dropdown') {
-                    if (!value)
-                        delete requestObject[modelElem.field];
-                    continue;
+                    if (!value) {
+                        continue;
+                    } else {
+                        requestObject[modelElem.field] = value;
+                    }
                 }
 
                 // If the value is empty, check if there is a default in the model
@@ -176,6 +178,7 @@ const EditComponent = ({ model, newItem }) => {
             }
             return requestObject;
         }
+        
         //First let's make sure that all the necessary models are using the correct data type
         let objToSend = recurse(currentModel, Object.assign({}, data));
 
@@ -200,10 +203,12 @@ const EditComponent = ({ model, newItem }) => {
                     // console.log(error.response.data.error);
                 });
         } else {
+            let id = objToSend.id;
+            objToSend = removeObjectIds(objToSend, false);
             // DB entry already exists, use patch request
             axios
                 .patch(
-                    config.apiUrl + '/' + currentModel.apiPath + '/' + objToSend.id,
+                    config.apiUrl + '/' + currentModel.apiPath + '/' + id,
                     removeObjectIds(objToSend, false),
                     {
                         headers: {
@@ -260,7 +265,6 @@ const EditComponent = ({ model, newItem }) => {
     return (
         <>
             {!newItem ? <Actions apiPath={model.apiPath} id={id} currentView='edit' justify='flex-end' spacing={2} /> : null}
-
             <form onSubmit={handleSubmit}>
                 <EditDataFragment
                     model={updatedModel}
@@ -304,6 +308,9 @@ const recurseModelValues = (currentModel, options) => {
 
 const removeObjectIds = (obj, removeAll) => {
     for (var key in obj) {
+        if (key.includes('Id') && obj[key] === '') {
+            delete obj[key];
+        }
         if (!obj.hasOwnProperty(key)) continue;
         if (typeof obj[key] == 'object' || Array.isArray(obj[key])) {
             obj[key] = removeObjectIds(obj[key], removeAll);

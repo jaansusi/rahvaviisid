@@ -18,11 +18,11 @@ export class ExternalReferences extends Entity {
 
   @property({
     type: 'number',
-    required: true,
+    required: false,
     scale: 0,
     postgresql: {columnName: 'tune_id', dataType: 'integer', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'NO'},
   })
-  tunesId: number;
+  tunesId?: number;
 
   @property({
     type: 'number',

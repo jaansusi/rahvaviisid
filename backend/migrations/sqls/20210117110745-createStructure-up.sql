@@ -802,10 +802,7 @@ CREATE TABLE folk_tune.tunes_persons_roles
     CONSTRAINT FK_tunes_persons_roles_tunes FOREIGN KEY (tune_id) REFERENCES folk_tune.tunes (id) ON DELETE CASCADE,
     CONSTRAINT FK_tunes_persons_roles_persons FOREIGN KEY (person_id) REFERENCES folk_tune.persons (id),
     CONSTRAINT FK_tunes_persons_roles_tune_person_role_types FOREIGN KEY (tune_person_role_type_id)
-        REFERENCES folk_tune.tune_person_role_types (id),
-    CONSTRAINT CK_tunes_persons_roles_person_age_check CHECK (person_age BETWEEN 1 AND 150),
-    CONSTRAINT CK_tunes_persons_roles_end_year_greater_than_start_year CHECK (action_end_year > action_start_year),
-    CONSTRAINT CK_tunes_persons_roles_modified_no_earlier_than_created CHECK (modified >= created)
+        REFERENCES folk_tune.tune_person_role_types (id)
 ) WITH (fillfactor = 90)
 ;
 
