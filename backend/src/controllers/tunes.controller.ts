@@ -222,8 +222,6 @@ export class TunesController extends AuditBaseController<Tunes> {
       err.statusCode = 422;
       throw err;
     }
-    
-    this.validateTune(tunes);
 
     let before = await this.tunesRepository.findById(
       id,
@@ -432,29 +430,14 @@ export class TunesController extends AuditBaseController<Tunes> {
   ) {
     try {
       let toBeDeleted = originals.filter(
-        x => !current?.map(y => y.getId()).includes(x.getId())
+        x => !current?.map(y => typeof y['getId'] === 'function' ? y.getId() : undefined).includes(x.getId())
       );
       toBeDeleted?.forEach(x => repo.deleteById(x.getId()));
     }
     catch(ex) {
       console.error(current);
-      console.log(ex);
+      console.error(ex);
+      throw ex;
     }
-  }
-
-  private validateTune(tune: Tunes) {
-    const ajv = new Ajv();
-    let schema = getJsonSchema(TunesPersonsRoles);
-    const validate = ajv.compile(schema);
-    tune.tunesPersonsRoles?.forEach(tpr => {
-      
-    
-      const valid = validate(tpr);
-      if (!valid) {
-        console.log(validate.errors);
-        console.log(tpr);
-        return validate.errors;
-      }
-    });
   }
 }
