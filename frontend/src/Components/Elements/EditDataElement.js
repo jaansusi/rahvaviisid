@@ -54,53 +54,48 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                 </Grid>
             );
         case 'dropdown':
-            let handleElementChange = ((event, index) => {
-                const { value } = event.target;
+            let handleElementChange = ((index, newValue) => {
                 handleChange({
                     target: {
                         name: model.field,
-                        value: value
+                        value: newValue?.id
                     }
                 }, index);
             });
             if (model.values === undefined)
-                model.values = [];
+                return null;
             return (
                 <Grid
                     item
                     xs={4}
                     className='form-edit-item'
                 >
-                    <FormControl className='form-input-element' variant='outlined'>
-                        <InputLabel id={model.headerName}>{t(model.headerName)}</InputLabel>
-                        <Select name={model.field} labelId={model.headerName} label={t(model.headerName)} variant="outlined"
-                            style={{ backgroundColor: 'white' }} value={elemValue} onChange={(e) => handleElementChange(e, index)}
-                            required={model.required}>
-                            <MenuItem value=''>{t('common.missing')}</MenuItem>
-                            {
-                                model.values.map(
-                                    (elem, i) =>
-                                        elem === undefined ?
-                                            null :
-                                            <MenuItem
-                                                key={i}
-                                                value={elem.id}>
-                                                {
-                                                    model.title ?
-                                                        Array.isArray(model.title) ?
-                                                            model.title.map(x => elem[x]).join(' ') :
-                                                            elem[model.title] :
-                                                        elem.title
-                                                }
-                                            </MenuItem>
-                                )
-                            }
-                        </Select>
-                    </FormControl>
+                    <Autocomplete
+                        options={model.values}
+                        getOptionLabel={
+                            (option) => model.title ?
+                                Array.isArray(model.title) ?
+                                    model.title.map(x => option[x]).join(' ') :
+                                    option[model.title] :
+                                option.title
+                        }
+                        value={model.values.filter(x => x.id === elemValue)[0]}
+                        getOptionSelected={(option) => elemValue === option.id}
+                        renderInput={(params) => (
+                            <TextField
+                                {...params}
+                                variant="outlined"
+                                label={t(model.headerName)}
+                            />
+                        )}
+                        onChange={(_event, newValue) => handleElementChange(index, newValue)}
+                        style={{ backgroundColor: 'white' }}
+                    />
                 </Grid>
             );
         case 'multiselect':
             let handleMultiChange = ((newValues) => {
+                console.log(newValues);
                 handleChange({
                     target: {
                         name: model.field,
@@ -110,6 +105,7 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
             });
             if (model.values === undefined)
                 model.values = [];
+            console.log(elemValue);
             return (
                 <Grid
                     item
@@ -234,6 +230,15 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                 const { name, value } = event.target;
                 let temp = elemValue;
                 let selector = model.edit.fields.filter(x => x.field === name)[0].selector;
+                console.log(model.edit.fields.filter(x => x.field === name)[0].values);
+                console.log(event.target);
+
+                if (temp[index][name] === undefined) {
+                    if (model.edit.fields.filter(x => x.field === name)[0].array)
+                        temp[index][name] = [];
+                    else
+                        temp[index][name] = {};
+                }
                 if (selector !== undefined) {
                     temp[index][name][selector] = value;
                 } else {
@@ -324,10 +329,8 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                     elemValue = [];
                 let handleArrayChange = (event, i) => {
                     let temp = elemValue;
-                    console.log(temp);
                     if (temp === undefined)
                         temp = [];
-                    console.log(temp);
                     // If event is undefined then remove the element
                     if (event === undefined) {
                         temp.splice(i, 1);
@@ -344,7 +347,6 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
 
                     // Finally, send the "new" modified object up the chain
                     // Note: it has to be a new object, otherwise React doesn't know something changed
-                    console.log(temp);
                     handleChange({
                         target: {
                             name: model.field,
@@ -358,7 +360,6 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                     model.sortBy === undefined
                         ? elemValue
                         : elemValue.sort((a, b) => a[model.sortBy] - b[model.sortBy]);
-                console.log(data);
                 return (
                     <Grid item>
                         <Typography variant='h4'>{model.label !== undefined ? t(model.label) : null}</Typography>
@@ -414,9 +415,9 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                     <FormControl className='form-input-element' variant='outlined'>
                         <TextField
                             name={model.field}
-                            error={ model.type === 'number' ? isNaN(elemValue) : false }
-                            inputProps={ model.type === 'number' ? { inputMode: 'numeric', pattern: '[0-9]*' } : undefined}
-                            helperText={ model.type === 'number' && elemValue.length > 0 && isNaN(elemValue) ? t('validation.mustBeNumber') : undefined }
+                            error={model.type === 'number' ? isNaN(elemValue) : false}
+                            inputProps={model.type === 'number' ? { inputMode: 'numeric', pattern: '[0-9]*' } : undefined}
+                            helperText={model.type === 'number' && elemValue.length > 0 && isNaN(elemValue) ? t('validation.mustBeNumber') : undefined}
                             label={t(model.headerName)}
                             value={model.selector ? elemValue[model.selector] : elemValue}
                             required={model.required}
