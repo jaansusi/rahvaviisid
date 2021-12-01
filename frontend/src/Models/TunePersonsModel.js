@@ -8,6 +8,7 @@ export const TunePersonsModel = ModelService.GenerateDefaults({
             { field: 'persons', nested: PersonModel.edit, headerName: 'person.name', selector: ['givenName', 'surname']},
             { field: 'nameOrigin', headerName: 'tunepersons.nameOrigin'},
             { field: 'tunePersonRoleTypes', headerName: 'tunepersons.tunePersonRoleTypes', selector: 'title'},
+            { field: 'personAge', headerName: 'tunepersons.personAge'},
             { field: 'actionStartYear', headerName: 'tunepersons.actionStartYear'},
             { field: 'actionEndYear', headerName: 'tunepersons.actionEndYear'},
             { field: 'remarks', type: 'textbox', headerName: 'common.remarks'}
@@ -20,6 +21,7 @@ export const TunePersonsModel = ModelService.GenerateDefaults({
             { field: 'personId', type: 'dropdown', apiPath: 'persons', headerName: 'person.person', title: ['id', 'givenName', 'surname'] },
             { field: 'nameOrigin', headerName: 'tunepersons.nameOrigin'},
             { field: 'tunePersonRoleTypeId', type: 'dropdown', apiPath: 'tune-person-role-types', headerName: 'tunepersons.tunePersonRoleTypes', title: 'title'},
+            { field: 'personAge', type: 'number', headerName: 'tunepersons.personAge'},
             { field: 'actionStartYear', type: 'number', headerName: 'tunepersons.actionStartYear'},
             { field: 'actionEndYear', type: 'number', headerName: 'tunepersons.actionEndYear'},
             { field: 'remarks', type: 'textbox', headerName: 'common.remarks'}

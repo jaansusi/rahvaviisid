@@ -25,9 +25,9 @@ export const TuneModel = ModelService.GenerateDefaults({
         fields: [
             { field: 'id', headerName: 'tune.tuneId' },
             { field: 'tuneReference', headerName: 'tune.tuneReference' },
-            { field: 'textReference', headerName: 'tune.textReference' },
             { field: 'soundReference', headerName: 'tune.soundReference' },
             { field: 'videoReference', headerName: 'tune.videoReference' },
+            { field: 'textReference', headerName: 'tune.textReference' },
             { field: 'nations', headerName: 'tune.nation', selector: 'title' },
             { field: 'languages', headerName: 'tune.language', selector: 'title' },
             { field: 'countries', headerName: 'tune.country', selector: 'title' },
@@ -88,15 +88,16 @@ export const TuneModel = ModelService.GenerateDefaults({
         fields: [
             { field: 'id', hidden: true },
             { field: 'tuneStateId', type: 'dropdown', apiPath: 'tune-states', headerName: 'tune.state' },
-            { field: 'textReference', headerName: 'tune.textReference' },
             { field: 'tuneReference', headerName: 'tune.tuneReference' },
             { field: 'soundReference', headerName: 'tune.soundReference' },
             { field: 'videoReference', headerName: 'tune.videoReference' },
+            { field: 'textReference', headerName: 'tune.textReference' },
             { field: 'nationId', type: 'dropdown', apiPath: 'nations', headerName: 'tune.nation' },
             { field: 'languageId', type: 'dropdown', apiPath: 'languages', headerName: 'tune.language' },
             { field: 'countryId', type: 'dropdown', apiPath: 'countries', headerName: 'tune.country' },
             { field: 'remarks', type: 'textbox', headerName: 'tune.remarks' },
             { field: 'verifiedBy', type: 'dropdown', apiPath: 'users', headerName: 'tune.verifiedBy', title: 'email', removeIfEmpty: true },
+            { field: 'verified', type: 'view', timestamp: true, headerName: 'tune.verified' },
             { field: 'created', type: 'view', timestamp: true, headerName: 'date.created' },
             { field: 'modified', type: 'view', timestamp: true, headerName: 'date.modified' },
             {

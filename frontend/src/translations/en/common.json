@@ -166,6 +166,7 @@
     "tunepersons": {
         "tunePersonRoleTypes": "Role",
         "title": "Person involved in notation",
+        "personAge": "Age",
         "actionStartYear": "Year started",
         "actionEndYear": "Year finished",
         "remarks": "Remarks",
@@ -289,6 +290,7 @@
         },
         "mustBeNumber": "Must be a number",
         "tunesPersonsRoles": "Persons involved",
-        "actionStartYear": "Year started"
+        "actionStartYear": "Year started",
+        "notUnique": "Entity not unique"
     }
 }

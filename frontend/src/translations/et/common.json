@@ -344,6 +344,7 @@
     "tunepersons": {
         "tunePersonRoleTypes": "Roll",
         "title": "Viisiga seotud isikud",
+        "personAge": "Vanus",
         "actionStartYear": "Tegevuse algusaasta",
         "actionEndYear": "Tegevuse lõppaasta",
         "remarks": "Märkused",
@@ -361,6 +362,7 @@
         },
         "mustBeNumber": "Peab olema number",
         "tunesPersonsRoles": "Viisiga seotud isikud",
-        "actionStartYear": "Tegevuse algusaasta"
+        "actionStartYear": "Tegevuse algusaasta",
+        "notUnique": "Kirje pole unikaalne"
     }
 }

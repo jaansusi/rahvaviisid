@@ -178,7 +178,7 @@ const EditComponent = ({ model, newItem }) => {
             }
             return requestObject;
         }
-        
+
         //First let's make sure that all the necessary models are using the correct data type
         let objToSend = recurse(currentModel, Object.assign({}, data));
 
@@ -200,7 +200,27 @@ const EditComponent = ({ model, newItem }) => {
                     history.push('./' + resData.data.id + '/vaata');
                 })
                 .catch((error) => {
-                    // console.log(error.response.data.error);
+                    if (error.response.status === 422) {
+                        if (!error.response.data.error.details)
+                            toast.warning(t(error.response.data.error.message), {
+                                closeButton: true,
+                                autoClose: false
+                            })
+                        else
+                            error.response.data.error.details.forEach(x => {
+                                let message = x.message;
+                                message = message.replace('should be', t('notification.shouldBe'));
+                                let path = x.path.split('/');
+                                path.shift();
+                                path = path.map(x => isNaN(x) ? t('validation.' + x) : parseInt(x) + 1).join(' > ');
+                                toast.warning(path + ' ' + message, {
+                                    closeButton: true,
+                                    autoClose: false,
+                                })
+                            });
+                    }
+                    else
+                        toast.error(t('notification.failed'));
                 });
         } else {
             let id = objToSend.id;

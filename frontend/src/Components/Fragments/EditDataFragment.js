@@ -52,6 +52,9 @@ const EditDataFragment = ({
                             let handleNestedChange = (event) => {
                                 const { name, value } = event.target;
                                 let temp = elementData[modelField.field];
+                                if (temp === undefined) {
+                                    temp = [];
+                                }
                                 temp[name] = value;
                                 handleChange({
                                     target: {

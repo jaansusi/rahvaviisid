@@ -38,7 +38,7 @@ export const PersonModel = ModelService.GenerateDefaults({
             { field: 'nickname', headerName: 'person.nickname' },
             { field: 'birthYear', type: 'number', headerName: 'person.birthYear' },
             { field: 'deathYear', type: 'number', headerName: 'person.deathYear' },
-            { field: 'sexId', type: 'dropdown', apiPath: 'sexes', headerName: 'person.sex' },
+            { field: 'sexId', type: 'dropdown', apiPath: 'sexes', headerName: 'person.sex', required: true },
             { field: 'remarks', type: 'textbox', headerName: 'common.remarks' }
         ]
     }

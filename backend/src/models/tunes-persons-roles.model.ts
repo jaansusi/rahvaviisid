@@ -61,9 +61,9 @@ export class TunesPersonsRoles extends Entity {
 
   @property({
     type: 'number',
-    required: true,
     scale: 0,
-    postgresql: {columnName: 'action_start_year', dataType: 'smallint', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'NO'},
+    jsonSchema: {nullable: true},
+    postgresql: {columnName: 'action_start_year', dataType: 'smallint', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'YES'},
   })
   actionStartYear: number;
 

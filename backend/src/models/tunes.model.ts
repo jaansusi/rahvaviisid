@@ -309,8 +309,6 @@ export class Tunes extends Entity {
   @hasMany(() => TuneEncodings, {keyTo: 'tune_id'})
   tuneEncodings?: TuneEncodings[];
 
-  
-  
   //esitaja
   @hasMany(() => TunesPersonsRoles, {keyTo: 'tune_id'})
   tunesPersonsRoles?: TunesPersonsRoles[];

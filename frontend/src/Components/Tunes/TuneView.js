@@ -93,7 +93,7 @@ const TuneView = () => {
                             <Grid item xs={2}>
                                 <Typography variant={headerVariant}>{t('tune.verification')}</Typography>
                             </Grid>
-                            <AssetPropertyElement title={t('tune.verified')} value={assetData.verified} />
+                            <AssetPropertyDateElement title={t('tune.verified')} value={assetData.verified} />
                             <AssetPropertyElement title={t('tune.verifiedBy')} value={assetData.users?.firstName + ' ' + assetData.users?.lastName} />
                             <AssetPropertyDateElement title={t('date.created')} value={assetData.created} />
                             <AssetPropertyDateElement title={t('date.modified')} value={assetData.modified} />

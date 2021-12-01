@@ -18,9 +18,7 @@ import {
   getModelSchemaRef,
   patch,
   del,
-  requestBody,
-  getJsonSchemaRef,
-  getJsonSchema,
+  requestBody
 } from '@loopback/rest';
 import {
   ExternalReferences,
@@ -51,19 +49,14 @@ import {
   TuneTranscriptionsRepository,
 } from '../repositories';
 import {IAuditMixinOptions, UserId} from '../types';
-import {Getter, inject, intercept} from '@loopback/core';
+import {Getter, inject} from '@loopback/core';
 import {TunesFilter} from '../keys';
 import {AuditBaseController} from './auditbase.controller';
-import Ajv from 'ajv';
+import { ValidationError } from '../errors';
 
 const groupAuditOpts: IAuditMixinOptions = {
   actionKey: 'Tunes_Logs',
 };
-
-class ValidationError extends Error {
-  code?: string;
-  statusCode?: number;
-}
 
 export class TunesController extends AuditBaseController<Tunes> {
   constructor(
@@ -227,6 +220,15 @@ export class TunesController extends AuditBaseController<Tunes> {
       id,
       TunesFilter.ALL_NO_CLASSIFICATORS,
     );
+    let dateNow = new Date().toISOString();
+    if (before.verifiedBy != tunes.verifiedBy) {
+      if (before.verified === undefined) {
+        before.verified = '';
+      }
+      if (tunes.verifiedBy !== undefined && tunes.verifiedBy !== '') {
+        tunes.verified = dateNow;
+      }
+    }
     await this.insertTune(tunes, before);
     let after = await this.tunesRepository.findById(
       id,
@@ -435,8 +437,6 @@ export class TunesController extends AuditBaseController<Tunes> {
       toBeDeleted?.forEach(x => repo.deleteById(x.getId()));
     }
     catch(ex) {
-      console.error(current);
-      console.error(ex);
       throw ex;
     }
   }

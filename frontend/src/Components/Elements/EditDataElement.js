@@ -74,7 +74,8 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                     <FormControl className='form-input-element' variant='outlined'>
                         <InputLabel id={model.headerName}>{t(model.headerName)}</InputLabel>
                         <Select name={model.field} labelId={model.headerName} label={t(model.headerName)} variant="outlined"
-                            style={{ backgroundColor: 'white' }} value={elemValue} onChange={(e) => handleElementChange(e, index)}>
+                            style={{ backgroundColor: 'white' }} value={elemValue} onChange={(e) => handleElementChange(e, index)}
+                            required={model.required}>
                             <MenuItem value=''>{t('common.missing')}</MenuItem>
                             {
                                 model.values.map(
@@ -251,7 +252,7 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                     item
                     xs={12}
                 >
-                    <Typography variant='h3'>{t(model.nested.label)}</Typography>
+                    <Typography variant='h5'>{t(model.nested.label)}</Typography>
                     <Button onClick={addEntryToTable} variant='outlined' color='primary'>{t('action.create')}</Button>
                     <TableContainer component={Paper}>
                         <Table>
@@ -319,9 +320,14 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
             );
         case 'model':
             if (model.array) {
+                if (elemValue === undefined)
+                    elemValue = [];
                 let handleArrayChange = (event, i) => {
                     let temp = elemValue;
-
+                    console.log(temp);
+                    if (temp === undefined)
+                        temp = [];
+                    console.log(temp);
                     // If event is undefined then remove the element
                     if (event === undefined) {
                         temp.splice(i, 1);
@@ -338,6 +344,7 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
 
                     // Finally, send the "new" modified object up the chain
                     // Note: it has to be a new object, otherwise React doesn't know something changed
+                    console.log(temp);
                     handleChange({
                         target: {
                             name: model.field,
@@ -351,6 +358,7 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                     model.sortBy === undefined
                         ? elemValue
                         : elemValue.sort((a, b) => a[model.sortBy] - b[model.sortBy]);
+                console.log(data);
                 return (
                     <Grid item>
                         <Typography variant='h4'>{model.label !== undefined ? t(model.label) : null}</Typography>
