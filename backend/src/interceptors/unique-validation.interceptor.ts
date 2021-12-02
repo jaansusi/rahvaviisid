@@ -47,12 +47,14 @@ export class UniqueValidationInterceptor implements Provider<Interceptor> {
       return result;
     } catch (ex) {
       // Add error handling logic here
-      console.log(ex.code);
-      let err: ValidationError = new ValidationError(
-        'validation.notUnique',
-      );
-      err.statusCode = 422;
-      throw err;
+      if (ex.code === '23505') {
+        let err: ValidationError = new ValidationError(
+          'validation.notUnique',
+        );
+        err.statusCode = 422;
+        throw err;
+      }
+      throw ex;
     }
   }
 }
