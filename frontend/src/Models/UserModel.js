@@ -41,7 +41,7 @@ export const UserModel = ModelService.GenerateDefaults({
             { field: 'lastName', headerName: 'user.lastName' },
             { field: 'isActive', type: 'boolean', headerName: 'common.active'},
             {
-                field: 'roles', type: 'multiselect', headerName: 'user.role', values: [
+                field: 'roles', type: 'staticMultiselect', headerName: 'user.role', values: [
                     { title: 'Kasutaja', value: 'user' },
                     { title: 'Toimetaja', value: 'editor' },
                     { title: 'Administraator', value: 'admin' }
