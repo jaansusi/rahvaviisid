@@ -339,7 +339,8 @@
         "duplicate": "Kopeeri",
         "coding": "Kodeering",
         "variant": "Variant",
-        "encodings": "Kodeeringud"
+        "encodings": "Kodeeringud",
+        "additionalReferences": "Lisaviited"
     },
     "tunepersons": {
         "tunePersonRoleTypes": "Roll",

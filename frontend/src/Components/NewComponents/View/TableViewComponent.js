@@ -52,15 +52,18 @@ export const TableViewComponent = ({ value, model }) => {
                                                                     }
                                                                 </a>
                                                                 :
-                                                                <span title={field.alt ? row[field.field][field.alt] : undefined}>
-                                                                    {
-                                                                        field.selector ?
-                                                                            Array.isArray(field.selector) ?
-                                                                                field.selector.map(x => row[field.field][x]).join(' ') :
-                                                                                row[field.field][field.selector] :
-                                                                            row[field.field]
-                                                                    }
-                                                                </span>
+                                                                field.type === 'boolean' ?
+                                                                    <>{row[field.field] ? t('model.true') : t('model.false')}</>
+                                                                    :
+                                                                    <span title={field.alt ? row[field.field][field.alt] : undefined}>
+                                                                        {
+                                                                            field.selector ?
+                                                                                Array.isArray(field.selector) ?
+                                                                                    field.selector.map(x => row[field.field][x]).join(' ') :
+                                                                                    row[field.field][field.selector] :
+                                                                                row[field.field]
+                                                                        }
+                                                                    </span>
                                                     }
                                                 </TableCell>
                                             );

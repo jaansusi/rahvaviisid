@@ -150,6 +150,10 @@ export const TuneModel = ModelService.GenerateDefaults({
                 nested: TunePerformancesModel.table,
                 edit: TunePerformancesModel.edit
             },
+            {
+                type: 'label',
+                value: 'tune.additionalReferences'
+            },
             { field: 'catalogue', headerName: 'tune.catalogue' },
             { field: 'publications', headerName: 'tune.publications' },
         ]

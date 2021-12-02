@@ -82,7 +82,8 @@
         "verification": "Verification",
         "archive": "Archive ID",
         "rhythmType": "Rhytm type",
-        "location": "Location"
+        "location": "Location",
+        "additionalReferences": "Additional references"
     },
     "user": {
         "role": "Role",

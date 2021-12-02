@@ -5,7 +5,7 @@ import { DataService, TuneService } from '../../Services';
 import EditDataFragment from '../Fragments/EditDataFragment';
 import { PlayerViewComponent } from '../NewComponents';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import './Css/EditFormElement.css';
+import './EditFormElement.css';
 
 const EditDataElement = (({ model, elemValue, handleChange, index }) => {
     const { t } = useTranslation('common');
@@ -230,8 +230,6 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                 const { name, value } = event.target;
                 let temp = elemValue;
                 let selector = model.edit.fields.filter(x => x.field === name)[0].selector;
-                console.log(model.edit.fields.filter(x => x.field === name)[0].values);
-                console.log(event.target);
 
                 if (temp[index][name] === undefined) {
                     if (model.edit.fields.filter(x => x.field === name)[0].array)
@@ -294,6 +292,9 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                                                                 {
                                                                     row[field.field] !== undefined ?
                                                                         (
+                                                                            field.type === 'boolean' ? 
+                                                                            <>{row[field.field] ? t('model.true') : t('model.false')}</>
+                                                                            :
                                                                             field.selector ?
                                                                                 (
                                                                                     Array.isArray(field.selector) ?
@@ -344,7 +345,9 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                             temp[i][name] = value;
                         }
                     }
-
+                    console.log(elemValue);
+                    console.log(temp);
+                    console.log(i);
                     // Finally, send the "new" modified object up the chain
                     // Note: it has to be a new object, otherwise React doesn't know something changed
                     handleChange({
@@ -403,6 +406,12 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                         </Grid>
                     </Grid>
                     <PlayerViewComponent elementData={elemValue} index={index} edit={true} />
+                </Grid>
+            );
+        case 'label':
+            return (
+                <Grid item xs={12}>
+                    <Typography variant='h5'>{t(model.value)}</Typography>
                 </Grid>
             );
         default:
