@@ -22,6 +22,10 @@ import {
 import {Parishes} from '../../models';
 import {ParishesRepository} from '../../repositories';
 
+import { UniqueValidationInterceptor } from '../../interceptors';
+import { intercept } from '@loopback/core';
+
+@intercept(UniqueValidationInterceptor.BINDING_KEY)
 export class ParishesController {
   constructor(
     @repository(ParishesRepository)

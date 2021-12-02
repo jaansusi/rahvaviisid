@@ -22,6 +22,10 @@ import {
 import {Languages} from '../../models';
 import {LanguagesRepository} from '../../repositories';
 
+import { UniqueValidationInterceptor } from '../../interceptors';
+import { intercept } from '@loopback/core';
+
+@intercept(UniqueValidationInterceptor.BINDING_KEY)
 export class LanguagesController {
   constructor(
     @repository(LanguagesRepository)

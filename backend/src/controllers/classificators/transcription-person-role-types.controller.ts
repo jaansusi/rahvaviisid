@@ -22,6 +22,10 @@ import {
 import {TranscriptionPersonRoleTypes} from '../../models';
 import {TranscriptionPersonRoleTypesRepository} from '../../repositories';
 
+import { UniqueValidationInterceptor } from '../../interceptors';
+import { intercept } from '@loopback/core';
+
+@intercept(UniqueValidationInterceptor.BINDING_KEY)
 export class TranscriptionPersonRoleTypesController {
   constructor(
     @repository(TranscriptionPersonRoleTypesRepository)

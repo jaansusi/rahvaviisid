@@ -22,6 +22,10 @@ import {
 import {TraditionalPerformanceTypes} from '../../models';
 import {TraditionalPerformanceTypesRepository} from '../../repositories';
 
+import { UniqueValidationInterceptor } from '../../interceptors';
+import { intercept } from '@loopback/core';
+
+@intercept(UniqueValidationInterceptor.BINDING_KEY)
 export class TraditionalPerformanceTypesController {
   constructor(
     @repository(TraditionalPerformanceTypesRepository)

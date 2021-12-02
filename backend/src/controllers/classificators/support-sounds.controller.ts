@@ -22,6 +22,10 @@ import {
 import {SupportSounds} from '../../models';
 import {SupportSoundsRepository} from '../../repositories';
 
+import { UniqueValidationInterceptor } from '../../interceptors';
+import { intercept } from '@loopback/core';
+
+@intercept(UniqueValidationInterceptor.BINDING_KEY)
 export class SupportSoundsController {
   constructor(
     @repository(SupportSoundsRepository)

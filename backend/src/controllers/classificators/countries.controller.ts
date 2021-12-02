@@ -22,6 +22,10 @@ import {
 import {Countries} from '../../models';
 import {CountriesRepository} from '../../repositories';
 
+import { UniqueValidationInterceptor } from '../../interceptors';
+import { intercept } from '@loopback/core';
+
+@intercept(UniqueValidationInterceptor.BINDING_KEY)
 export class CountriesController {
   constructor(
     @repository(CountriesRepository)

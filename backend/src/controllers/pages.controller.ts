@@ -23,6 +23,10 @@ import {
 import {Pages} from '../models';
 import {PagesRepository} from '../repositories';
 
+import { UniqueValidationInterceptor } from '../interceptors';
+import { intercept } from '@loopback/core';
+
+@intercept(UniqueValidationInterceptor.BINDING_KEY)
 export class PagesController {
   constructor(
     @repository(PagesRepository)

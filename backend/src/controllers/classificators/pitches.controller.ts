@@ -22,6 +22,10 @@ import {
 import {Pitches} from '../../models';
 import {PitchesRepository} from '../../repositories';
 
+import { UniqueValidationInterceptor } from '../../interceptors';
+import { intercept } from '@loopback/core';
+
+@intercept(UniqueValidationInterceptor.BINDING_KEY)
 export class PitchesController {
   constructor(
     @repository(PitchesRepository)

@@ -22,6 +22,10 @@ import {
 import {UserRoleTypes} from '../models';
 import {UserRoleTypesRepository} from '../repositories';
 
+import { UniqueValidationInterceptor } from '../interceptors';
+import { intercept } from '@loopback/core';
+
+@intercept(UniqueValidationInterceptor.BINDING_KEY)
 export class UserRoleTypesController {
   constructor(
     @repository(UserRoleTypesRepository)

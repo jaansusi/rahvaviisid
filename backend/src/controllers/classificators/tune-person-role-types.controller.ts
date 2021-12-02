@@ -22,6 +22,10 @@ import {
 import {TunePersonRoleTypes} from '../../models';
 import {TunePersonRoleTypesRepository} from '../../repositories';
 
+import { UniqueValidationInterceptor } from '../../interceptors';
+import { intercept } from '@loopback/core';
+
+@intercept(UniqueValidationInterceptor.BINDING_KEY)
 export class TunePersonRoleTypesController {
   constructor(
     @repository(TunePersonRoleTypesRepository)

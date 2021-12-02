@@ -22,6 +22,10 @@ import {
 import {Municipalities} from '../../models';
 import {MunicipalitiesRepository} from '../../repositories';
 
+import { UniqueValidationInterceptor } from '../../interceptors';
+import { intercept } from '@loopback/core';
+
+@intercept(UniqueValidationInterceptor.BINDING_KEY)
 export class MunicipalitiesController {
   constructor(
     @repository(MunicipalitiesRepository)

@@ -22,6 +22,10 @@ import {
 import {ActualActionTypes} from '../../models';
 import {ActualActionTypesRepository} from '../../repositories';
 
+import { UniqueValidationInterceptor } from '../../interceptors';
+import { intercept } from '@loopback/core';
+
+@intercept(UniqueValidationInterceptor.BINDING_KEY)
 export class ActualActionTypesController {
   constructor(
     @repository(ActualActionTypesRepository)

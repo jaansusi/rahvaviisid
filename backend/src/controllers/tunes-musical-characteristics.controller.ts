@@ -24,6 +24,10 @@ import {
 } from '../models';
 import {TunesRepository} from '../repositories';
 
+import { UniqueValidationInterceptor } from '../interceptors';
+import { intercept } from '@loopback/core';
+
+@intercept(UniqueValidationInterceptor.BINDING_KEY)
 export class TunesMusicalCharacteristicsController {
   constructor(
     @repository(TunesRepository) protected tunesRepository: TunesRepository,

@@ -15,6 +15,10 @@ import tmp from 'tmp';
 import fs from 'fs';
 import { inject } from '@loopback/context';
 
+import { UniqueValidationInterceptor } from '../interceptors';
+import { intercept } from '@loopback/core';
+
+@intercept(UniqueValidationInterceptor.BINDING_KEY)
 export class ConvertController {
   constructor(
     @repository(TuneMelodiesRepository)

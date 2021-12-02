@@ -22,6 +22,10 @@ import {
 import {Measures} from '../../models';
 import {MeasuresRepository} from '../../repositories';
 
+import { UniqueValidationInterceptor } from '../../interceptors';
+import { intercept } from '@loopback/core';
+
+@intercept(UniqueValidationInterceptor.BINDING_KEY)
 export class MeasuresController {
   constructor(
     @repository(MeasuresRepository)

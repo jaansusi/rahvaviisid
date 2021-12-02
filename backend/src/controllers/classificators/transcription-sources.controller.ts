@@ -22,6 +22,10 @@ import {
 import {TranscriptionSources} from '../../models';
 import {TranscriptionSourcesRepository} from '../../repositories';
 
+import { UniqueValidationInterceptor } from '../../interceptors';
+import { intercept } from '@loopback/core';
+
+@intercept(UniqueValidationInterceptor.BINDING_KEY)
 export class TranscriptionSourcesController {
   constructor(
     @repository(TranscriptionSourcesRepository)

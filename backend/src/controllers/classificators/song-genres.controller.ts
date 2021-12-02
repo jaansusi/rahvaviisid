@@ -22,6 +22,10 @@ import {
 import {SongGenres} from '../../models';
 import {SongGenresRepository} from '../../repositories';
 
+import { UniqueValidationInterceptor } from '../../interceptors';
+import { intercept } from '@loopback/core';
+
+@intercept(UniqueValidationInterceptor.BINDING_KEY)
 export class SongGenresController {
   constructor(
     @repository(SongGenresRepository)

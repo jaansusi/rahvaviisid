@@ -58,6 +58,10 @@ const groupAuditOpts: IAuditMixinOptions = {
   actionKey: 'Tunes_Logs',
 };
 
+import { UniqueValidationInterceptor } from '../interceptors';
+import { intercept } from '@loopback/core';
+
+@intercept(UniqueValidationInterceptor.BINDING_KEY)
 export class TunesController extends AuditBaseController<Tunes> {
   constructor(
     @inject.getter(AuthenticationBindings.CURRENT_USER)

@@ -22,6 +22,10 @@ import {
 import {SoundRanges} from '../../models';
 import {SoundRangesRepository} from '../../repositories';
 
+import { UniqueValidationInterceptor } from '../../interceptors';
+import { intercept } from '@loopback/core';
+
+@intercept(UniqueValidationInterceptor.BINDING_KEY)
 export class SoundRangesController {
   constructor(
     @repository(SoundRangesRepository)

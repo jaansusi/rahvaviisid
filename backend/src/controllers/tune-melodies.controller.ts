@@ -23,6 +23,10 @@ import {
 import {TuneMelodies} from '../models';
 import {TuneMelodiesRepository} from '../repositories';
 
+import { UniqueValidationInterceptor } from '../interceptors';
+import { intercept } from '@loopback/core';
+
+@intercept(UniqueValidationInterceptor.BINDING_KEY)
 export class TuneMelodiesController {
   constructor(
     @repository(TuneMelodiesRepository)

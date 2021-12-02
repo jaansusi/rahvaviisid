@@ -22,6 +22,10 @@ import {
 import {TuneGenres} from '../../models';
 import {TuneGenresRepository} from '../../repositories';
 
+import { UniqueValidationInterceptor } from '../../interceptors';
+import { intercept } from '@loopback/core';
+
+@intercept(UniqueValidationInterceptor.BINDING_KEY)
 export class TuneGenresController {
   constructor(
     @repository(TuneGenresRepository)

@@ -38,6 +38,8 @@ import {SecurityBindings, securityId, UserProfile} from '@loopback/security';
 import {genSalt, hash} from 'bcryptjs';
 import _ from 'lodash';
 import {authorize} from '@loopback/authorization';
+import { UniqueValidationInterceptor } from '../interceptors';
+import { intercept } from '@loopback/core';
 
 @model()
 export class NewUserRequest extends Users {
@@ -79,6 +81,8 @@ export const CredentialsRequestBody = {
   allowedRoles: ['admin'],
   voters: [basicAuthorization],
 })
+
+@intercept(UniqueValidationInterceptor.BINDING_KEY)
 export class UsersController {
   constructor(
     @inject(TokenServiceBindings.TOKEN_SERVICE)

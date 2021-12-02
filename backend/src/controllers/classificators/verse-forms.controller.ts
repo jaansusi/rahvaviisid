@@ -22,6 +22,10 @@ import {
 import {VerseForms} from '../../models';
 import {VerseFormsRepository} from '../../repositories';
 
+import { UniqueValidationInterceptor } from '../../interceptors';
+import { intercept } from '@loopback/core';
+
+@intercept(UniqueValidationInterceptor.BINDING_KEY)
 export class VerseFormsController {
   constructor(
     @repository(VerseFormsRepository)

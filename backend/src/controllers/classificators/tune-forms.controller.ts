@@ -22,6 +22,10 @@ import {
 import {TuneForms} from '../../models';
 import {TuneFormsRepository} from '../../repositories';
 
+import { UniqueValidationInterceptor } from '../../interceptors';
+import { intercept } from '@loopback/core';
+
+@intercept(UniqueValidationInterceptor.BINDING_KEY)
 export class TuneFormsController {
   constructor(
     @repository(TuneFormsRepository)

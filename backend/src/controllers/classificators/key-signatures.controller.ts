@@ -22,6 +22,10 @@ import {
 import {KeySignatures} from '../../models';
 import {KeySignaturesRepository} from '../../repositories';
 
+import { UniqueValidationInterceptor } from '../../interceptors';
+import { intercept } from '@loopback/core';
+
+@intercept(UniqueValidationInterceptor.BINDING_KEY)
 export class KeySignaturesController {
   constructor(
     @repository(KeySignaturesRepository)
