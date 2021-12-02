@@ -64,6 +64,21 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
             });
             if (model.values === undefined)
                 return null;
+            let fieldToCompare = (value) => model.title ?
+                Array.isArray(model.title) ?
+                    model.title.map(x => value[x]).join(' ') :
+                    value[model.title] :
+                value.title;
+            model.values.sort(function (option1, option2) {
+                let field1 = fieldToCompare(option1).toUpperCase();
+                let field2 = fieldToCompare(option2).toUpperCase();
+                
+                if (field1 < field2)
+                    return -1;
+                if (field1 > field2)
+                    return 1;
+                return 0;
+            });
             return (
                 <Grid
                     item
@@ -292,18 +307,18 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                                                                 {
                                                                     row[field.field] !== undefined ?
                                                                         (
-                                                                            field.type === 'boolean' ? 
-                                                                            <>{row[field.field] ? t('model.true') : t('model.false')}</>
-                                                                            :
-                                                                            field.selector ?
-                                                                                (
-                                                                                    Array.isArray(field.selector) ?
-                                                                                        field.selector.map(x => row[field.field][x]).join(' ')
-                                                                                        :
-                                                                                        row[field.field][field.selector]
-                                                                                )
+                                                                            field.type === 'boolean' ?
+                                                                                <>{row[field.field] ? t('model.true') : t('model.false')}</>
                                                                                 :
-                                                                                row[field.field]
+                                                                                field.selector ?
+                                                                                    (
+                                                                                        Array.isArray(field.selector) ?
+                                                                                            field.selector.map(x => row[field.field][x]).join(' ')
+                                                                                            :
+                                                                                            row[field.field][field.selector]
+                                                                                    )
+                                                                                    :
+                                                                                    row[field.field]
                                                                         )
                                                                         :
                                                                         ''
