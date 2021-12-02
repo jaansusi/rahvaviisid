@@ -150,7 +150,7 @@ export const TuneModel = ModelService.GenerateDefaults({
                 nested: TunePerformancesModel.table,
                 edit: TunePerformancesModel.edit
             },
-            { field: 'catalogue', headerName: 'tune.catalogue', required: true },
+            { field: 'catalogue', headerName: 'tune.catalogue' },
             { field: 'publications', headerName: 'tune.publications' },
         ]
     }
