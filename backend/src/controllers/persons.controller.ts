@@ -21,8 +21,10 @@ import {
 } from '@loopback/rest';
 import {Persons} from '../models';
 import {PersonsRepository, SexesRepository} from '../repositories';
+import { UniqueValidationInterceptor } from '../interceptors';
+import { intercept } from '@loopback/core';
 
-
+@intercept(UniqueValidationInterceptor.BINDING_KEY)
 export class PersonsController {
   constructor(
     @repository(PersonsRepository)
