@@ -345,9 +345,6 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                             temp[i][name] = value;
                         }
                     }
-                    console.log(elemValue);
-                    console.log(temp);
-                    console.log(i);
                     // Finally, send the "new" modified object up the chain
                     // Note: it has to be a new object, otherwise React doesn't know something changed
                     handleChange({
@@ -377,6 +374,7 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                                         model={model.nested}
                                         elementData={elemValue}
                                         handleChange={(e) => handleArrayChange(e, i)}
+                                        index={i}
                                     />
                                 </Grid>
                             )
