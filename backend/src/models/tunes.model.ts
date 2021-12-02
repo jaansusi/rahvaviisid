@@ -218,7 +218,8 @@ export class Tunes extends Entity {
   verifiedBy?: string;
 
   @property({
-    type: 'date',
+    type: 'string',
+    required: false,
     jsonSchema: {nullable: true},
     postgresql: {
       columnName: 'verified',
