@@ -24,7 +24,7 @@ export const TableViewComponent = ({ value, model }) => {
                                     {
                                         model.fields.map((field, j) => {
                                             if (row[field.field] === undefined) {
-                                                return (<TableCell key={j}> </TableCell>);
+                                                return (<TableCell key={j}>{field.field}</TableCell>);
                                             }
                                             return (
                                                 <TableCell align={j === 0 ? 'left' : 'right'} key={j}>
@@ -52,10 +52,11 @@ export const TableViewComponent = ({ value, model }) => {
                                                                     }
                                                                 </a>
                                                                 :
-                                                                field.type === 'boolean' ?
-                                                                    <>{row[field.field] ? t('model.true') : t('model.false')}</>
-                                                                    :
-                                                                    <span title={field.alt ? row[field.field][field.alt] : undefined}>
+                                                                field.type === 'dropdown' ?
+                                                                    <a
+                                                                        href={field.reference + '/' + row[field.field].id + '/vaata'}
+                                                                        title={field.alt ? row[field.field][field.alt] : undefined}
+                                                                    >
                                                                         {
                                                                             field.selector ?
                                                                                 Array.isArray(field.selector) ?
@@ -63,7 +64,20 @@ export const TableViewComponent = ({ value, model }) => {
                                                                                     row[field.field][field.selector] :
                                                                                 row[field.field]
                                                                         }
-                                                                    </span>
+                                                                    </a>
+                                                                    :
+                                                                    field.type === 'boolean' ?
+                                                                        <>{row[field.field] ? t('model.true') : t('model.false')}</>
+                                                                        :
+                                                                        <span title={field.alt ? row[field.field][field.alt] : undefined}>
+                                                                            {
+                                                                                field.selector ?
+                                                                                    Array.isArray(field.selector) ?
+                                                                                        field.selector.map(x => row[field.field][x]).join(' ') :
+                                                                                        row[field.field][field.selector] :
+                                                                                    row[field.field]
+                                                                            }
+                                                                        </span>
                                                     }
                                                 </TableCell>
                                             );

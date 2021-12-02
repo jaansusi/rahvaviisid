@@ -226,6 +226,7 @@ export class TunesController extends AuditBaseController<Tunes> {
     );
     let dateNow = new Date().toISOString();
     tunes.verifiedBy = before.verifiedBy;
+    tunes.verified = before.verified;
     if (before.verifiedBy != tunes.verifiedBy) {
       if (before.verified === undefined) {
         before.verified = '';
