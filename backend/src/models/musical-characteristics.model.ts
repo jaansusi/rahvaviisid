@@ -1,7 +1,12 @@
 import {Entity, model, property, hasMany, hasOne} from '@loopback/repository';
 import {RhythmTypes} from './rhythm-types.model';
 import {MusicalCharacteristicsRhythmTypes} from './musical-characteristics-rhythm-types.model';
+import {TextForms} from './text-forms.model';
+import {MusicalCharacteristicsTextForms} from './musical-characteristics-text-forms.model';
+import {TuneForms} from './tune-forms.model';
+import {MusicalCharacteristicsTuneForms} from './musical-characteristics-tune-forms.model';
 import {SoundRanges} from './sound-ranges.model';
+
 
 @model({
   settings: {
@@ -82,6 +87,19 @@ export class MusicalCharacteristics extends Entity {
 
   @hasMany(() => RhythmTypes, {through: {model: () => MusicalCharacteristicsRhythmTypes}})
   rhythmTypes?: RhythmTypes[];
+
+  @hasMany(() => TextForms, {through: {model: () => MusicalCharacteristicsTextForms,
+    keyFrom: 'musicalCharacteristicId',
+    keyTo: 'textFormId'
+  }})
+  textForms?: TextForms[];
+  
+  @hasMany(() => TuneForms, {through: {
+    model: () => MusicalCharacteristicsTuneForms,
+    keyFrom: 'musicalCharacteristicId',
+    keyTo: 'tuneFormId'
+  }})
+  tuneForms?: TuneForms[];
 
   @hasOne(() => SoundRanges, {keyFrom: 'soundRangeId', keyTo: 'id'})
   soundRanges?: SoundRanges;
