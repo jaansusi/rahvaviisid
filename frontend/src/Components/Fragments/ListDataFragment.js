@@ -15,6 +15,12 @@ const ListDataFragment = (({ model, data, rowCount, updateTable, currentView, ad
 
     let columns = model.fields.map((x) => {
         x.headerName = t(x.headerName);
+        x.sortable = false;
+        if (x.type === 'number') {
+            x.valueFormatter = (params) => {
+                return params.value.toString()
+            }
+        }
         return x;
     });
     let canAccess = AuthService.CanAccess(['editor', 'admin']);
@@ -64,8 +70,19 @@ const ListDataFragment = (({ model, data, rowCount, updateTable, currentView, ad
                     rows={tableData}
                     columns={columns}
                     pageSize={10}
+                    rowsPerPageOptions = {[10, 25, 50, 100]}
+                    sortingOrder={[]}
                     onPageChange={(x) => updateTable((x.page) * x.pageSize)}
                     localeText={GetDataGridLocale(t)}
+                    componentsProps={{
+                        pagination: {
+                            labelRowsPerPage: t('datagrid.labelRowsPerPage'),
+                            labelDisplayedRows:
+                                ({ from, to, count }) => {
+                                    return '' + from + '-' + to + t('datagrid.of') + count
+                                }
+                        }
+                    }}
                 />
             </div>
         </Grid>

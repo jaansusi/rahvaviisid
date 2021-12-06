@@ -101,7 +101,7 @@ export const DataService = {
                 }
                 // If the field should be an array, let's make it into one
                 if (elem.array)
-                    value = [value]
+                    value = []
                 return value;
             })(),
         ]);

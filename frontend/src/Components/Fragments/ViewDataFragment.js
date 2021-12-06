@@ -37,8 +37,8 @@ const ViewDataFragment = (({ model, elementData }) => {
                                 {
                                     <ViewDataElement
                                         model={modelField}
-                                        value={elementData[modelField.field]
-                                        } />
+                                        value={elementData[modelField.field]}
+                                    />
 
                                 }
                             </Grid>

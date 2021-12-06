@@ -121,7 +121,9 @@
         "footerTotalRows": "Ridu kokku:",
         "checkboxSelection": "Märkekasti valik",
         "trueLabel": "Õige",
-        "falseLabel": "Vale"
+        "falseLabel": "Vale",
+        "labelRowsPerPage": "Kirjeid lehe kohta:",
+        "of": ", kokku "
     },
     "date": {
         "created": "Loodud",
@@ -257,7 +259,7 @@
         "role": "Isiku roll"
     },
     "place": {
-        "place": "Koha andmed",
+        "place": "Koht",
         "type": "Koha liik",
         "parish": "Kihelkond",
         "municipality": "Vald",

@@ -283,7 +283,9 @@
         "footerTotalRows": "Ridu kokku:",
         "checkboxSelection": "Märkekasti valik",
         "trueLabel": "Õige",
-        "falseLabel": "Vale"
+        "falseLabel": "Vale",
+        "labelRowsPerPage": "Rows per page: ",
+        "of": " of "
     },
     "validation": {
         "tunes": {

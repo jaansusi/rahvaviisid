@@ -17,10 +17,10 @@ const SearchResults = ({ showAll, assets }) => {
     return x;
   });
   let editAccess = AuthService.CanAccess(['editor', 'admin']);
-  let actionsWidth = editAccess ? 3 * 125 : 150; 
+  let actionsWidth = editAccess ? 3 * 125 : 150;
   columns.push({
-    field: '', headerName: t('action.actions'), sortable: false, width: actionsWidth, 
-    renderCell: (params) => <Actions apiPath={'tunes'} id={params.row.id} auth={editAccess} pathOverride='viisid' /> 
+    field: '', headerName: t('action.actions'), sortable: false, width: actionsWidth,
+    renderCell: (params) => <Actions apiPath={'tunes'} id={params.row.id} auth={editAccess} pathOverride='viisid' />
   });
 
   return (
@@ -47,7 +47,17 @@ const SearchResults = ({ showAll, assets }) => {
                 columns={columns}
                 autoHeight
                 pageSize={25}
+                rowsPerPageOptions = {[10, 25, 50, 100]}
                 onSelectionModelChange={(selectedRows) => setSelection(selectedRows.selectionModel)}
+                componentsProps={{
+                  pagination: {
+                    labelRowsPerPage: t('datagrid.labelRowsPerPage'),
+                    labelDisplayedRows:
+                      ({ from, to, count }) => {
+                        return '' + from + '-' + to + t('datagrid.of') + count
+                      }
+                  }
+                }}
               />
             </div>
         }

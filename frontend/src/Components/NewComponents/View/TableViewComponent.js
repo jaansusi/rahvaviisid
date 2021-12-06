@@ -24,7 +24,7 @@ export const TableViewComponent = ({ value, model }) => {
                                     {
                                         model.fields.map((field, j) => {
                                             if (row[field.field] === undefined) {
-                                                return (<TableCell key={j}>{field.field}</TableCell>);
+                                                return (<TableCell key={j}></TableCell>);
                                             }
                                             return (
                                                 <TableCell align={j === 0 ? 'left' : 'right'} key={j}>

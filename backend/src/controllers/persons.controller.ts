@@ -94,6 +94,8 @@ export class PersonsController {
   async find(
     @param.filter(Persons) filter?: Filter<Persons>,
   ): Promise<Persons[]> {
+    if (filter !== undefined)
+      filter.order = ['surname ASC', 'givenName ASC', 'nickname ASC'];
     return this.personsRepository.find(filter);
   }
 

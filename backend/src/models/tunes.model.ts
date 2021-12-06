@@ -233,7 +233,7 @@ export class Tunes extends Entity {
   verified?: string;
 
   @property({
-    type: 'date',
+    type: 'string',
     required: false,
     postgresql: {
       columnName: 'created',
@@ -247,7 +247,7 @@ export class Tunes extends Entity {
   created: string;
 
   @property({
-    type: 'date',
+    type: 'string',
     required: false,
     postgresql: {
       columnName: 'modified',

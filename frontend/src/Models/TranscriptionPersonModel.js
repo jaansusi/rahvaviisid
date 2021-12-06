@@ -1,7 +1,7 @@
 import { ModelService } from '../Services';
 
 
-export const PersonModel = ModelService.GenerateDefaults({
+export const TranscriptionPersonModel = ModelService.GenerateDefaults({
     apiPath: 'persons',
     list: {
         fields: [
@@ -11,7 +11,6 @@ export const PersonModel = ModelService.GenerateDefaults({
             { field: 'nickname', headerName: 'person.nickname', width: 140 },
             { field: 'birthYear', type: 'number', headerName: 'person.birthYear', width: 150 },
             { field: 'deathYear', type: 'number', headerName: 'person.deathYear', width: 150 },
-            // { field: 'sex', headerName: 'person.sex', width: 120 },
             { field: 'sexes', headerName: 'person.sex', selector: 'title'},
         ]
     },
@@ -27,7 +26,6 @@ export const PersonModel = ModelService.GenerateDefaults({
             { field: 'remarks', type: 'textbox', headerName: 'common.remarks' },
             { field: 'created', headerName: 'date.created' },
             { field: 'modified', headerName: 'date.modified' },
-
         ]
     },
     edit: {

@@ -115,6 +115,10 @@ const EditComponent = ({ model, newItem }) => {
                     }
                 }
 
+                // If the model entry is a label, ignore it
+                if (modelElem.type === 'label')
+                    continue;
+
                 // If the value is empty, check if there is a default in the model
                 if (value === '' && modelElem.default) {
                     requestObject[modelElem.field] = modelElem.default;
@@ -182,7 +186,6 @@ const EditComponent = ({ model, newItem }) => {
         //First let's make sure that all the necessary models are using the correct data type
         let objToSend = recurse(currentModel, Object.assign({}, data));
 
-
         if (newItem) {
             // No DB entry exists, use post request
             axios
@@ -201,23 +204,21 @@ const EditComponent = ({ model, newItem }) => {
                 })
                 .catch((error) => {
                     if (error.response.status === 422) {
-                        if (!error.response.data.error.details)
+                        let errors = error.response.data.error.details;
+                        if (!errors)
                             toast.warning(t(error.response.data.error.message), {
                                 closeButton: true,
                                 autoClose: false
                             })
-                        else
-                            error.response.data.error.details.forEach(x => {
-                                let message = x.message;
-                                message = message.replace('should be', t('notification.shouldBe'));
-                                let path = x.path.split('/');
-                                path.shift();
-                                path = path.map(x => isNaN(x) ? t('validation.' + x) : parseInt(x) + 1).join(' > ');
-                                toast.warning(path + ' ' + message, {
-                                    closeButton: true,
-                                    autoClose: false,
-                                })
-                            });
+                        else {
+                            if (Array.isArray(errors))
+                                error.response.data.error.details.forEach(x => {
+                                    handleErrors(t, x);
+                                });
+                            else
+                                handleErrors(t, errors);
+                        }
+
                     }
                     else
                         toast.error(t('notification.failed'));
@@ -248,17 +249,7 @@ const EditComponent = ({ model, newItem }) => {
                                 autoClose: false
                             })
                         else
-                            error.response.data.error.details.forEach(x => {
-                                let message = x.message;
-                                message = message.replace('should be', t('notification.shouldBe'));
-                                let path = x.path.split('/');
-                                path.shift();
-                                path = path.map(x => isNaN(x) ? t('validation.' + x) : parseInt(x) + 1).join(' > ');
-                                toast.warning(path + ' ' + message, {
-                                    closeButton: true,
-                                    autoClose: false,
-                                })
-                            });
+                            error.response.data.error.details.forEach(x => handleErrors(t, x));
                     }
                     else
                         toast.error(t('notification.failed'));
@@ -341,5 +332,17 @@ const removeObjectIds = (obj, removeAll) => {
     }
     return obj;
 }
+
+const handleErrors = ((t, x) => {
+    let message = x.message;
+    message = message.replace('should be', t('notification.shouldBe'));
+    let path = x.path.split('/');
+    path.shift();
+    path = path.map(x => isNaN(x) ? t('validation.' + x) : parseInt(x) + 1).join(' > ');
+    toast.warning(path + ' ' + message, {
+        closeButton: true,
+        autoClose: false,
+    })
+})
 
 export default EditComponent;

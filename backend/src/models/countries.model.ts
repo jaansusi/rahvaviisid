@@ -36,14 +36,14 @@ export class Countries extends Entity {
   isActive: boolean;
 
   @property({
-    type: 'date',
+    type: 'string',
     required: false,
     postgresql: {columnName: 'created', dataType: 'timestamp without time zone', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'NO'},
   })
   created: string;
 
   @property({
-    type: 'date',
+    type: 'string',
     required: false,
     postgresql: {columnName: 'modified', dataType: 'timestamp without time zone', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'NO'},
   })

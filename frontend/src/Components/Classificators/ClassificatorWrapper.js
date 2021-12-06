@@ -11,7 +11,7 @@ import { Grid } from '@material-ui/core';
 const ClassificatorWrapper = () => {
 
   return (
-    <Grid item lg={9} md={11}>
+    <Grid item xs={12}>
       <Route exact path={'/:asset'}>
         <Classificators />
       </Route>

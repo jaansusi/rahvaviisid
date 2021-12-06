@@ -2,12 +2,13 @@ import React, { useEffect, useReducer, useState } from 'react';
 import { Button, Divider, Grid, Typography } from '@material-ui/core';
 import { useParams } from 'react-router';
 import { AuthService, DataService } from '../../Services';
-import { ExternalReferenceModel, TuneModel, TunePerformancesModel, TunePersonsModel, TunePlaceModel, TuneSongsModel } from '../../Models';
+import { ExternalReferenceModel, TuneModel, TunePerformancesModel, TunePersonsModel, TunePlaceModel, TuneSongsModel, TuneTranscriptionModel } from '../../Models';
 import { useTranslation } from 'react-i18next';
 import { PlayerViewComponent, TableViewComponent } from '../NewComponents';
 import Actions from '../Buttons/Actions';
 import { MusicalCharacteristicsModel } from '../../Models/MusicalCharacteristicsModel';
 import BarLoader from 'react-spinners/BarLoader';
+import { TranscriptionPersonModel } from '../../Models/TranscriptionPersonModel';
 
 const headerVariant = 'h5';
 
@@ -94,7 +95,7 @@ const TuneView = () => {
                                 <Typography variant={headerVariant}>{t('tune.verification')}</Typography>
                             </Grid>
                             <AssetPropertyDateElement title={t('tune.verified')} value={assetData.verified} />
-                            <AssetPropertyElement title={t('tune.verifiedBy')} value={assetData.users?.firstName + ' ' + assetData.users?.lastName} />
+                            <AssetPropertyElement title={t('tune.verifiedBy')} value={assetData.users !== undefined ? assetData.users.firstName + ' ' + assetData.users.lastName : ''} />
                             <AssetPropertyDateElement title={t('date.created')} value={assetData.created} />
                             <AssetPropertyDateElement title={t('date.modified')} value={assetData.modified} />
                         </Grid>
@@ -200,15 +201,16 @@ const TuneView = () => {
                                             <Grid item container direction='column' spacing={2}>
                                                 {
                                                     <AssetPropertyTableElement label={t('transcription.transcriptionPersons')} model={
-                                                        {
-                                                            fields: [
-                                                                { field: 'name', headerName: t('person.name') },
-                                                                { field: 'actionYear', headerName: t('transcription.actionYear') },
-                                                                { field: 'roleType', headerName: t('transcription.personRole') },
-                                                                { field: 'remarks', type: 'textbox', headerName: t('common.remarks') },
+                                                        TranscriptionPersonModel.list
+                                                        // {
+                                                        //     fields: [
+                                                        //         { field: 'name', headerName: t('person.name') },
+                                                        //         { field: 'actionYear', headerName: t('transcription.actionYear') },
+                                                        //         { field: 'roleType', headerName: t('transcription.personRole') },
+                                                        //         { field: 'remarks', type: 'textbox', headerName: t('common.remarks') },
 
-                                                            ]
-                                                        }
+                                                        //     ]
+                                                        // }
                                                     } data={
                                                         transcription.transcriptionsPersonsRoles?.map((personRoles, j) => {
                                                             return {
