@@ -12,7 +12,7 @@ import {TuneEncodings} from './tune-encodings.model';
 import {ExternalReferences} from './external-references.model';
 import {MusicalCharacteristics} from './musical-characteristics.model';
 import {Users} from './users.model';
-
+import {TuneStates} from './tune-states.model';
 
 @model({
   settings: {
@@ -274,6 +274,9 @@ export class Tunes extends Entity {
     },
   })
   rhythmTypeId?: number;
+
+  @hasOne(() => TuneStates, {keyFrom: 'tuneStateId', keyTo: 'id'})
+  tuneStates: TuneStates;
 
   @hasMany(() => TuneTranscriptions, {keyTo: 'tune_id'})
   tuneTranscriptions?: TuneTranscriptions[];

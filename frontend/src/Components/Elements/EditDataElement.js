@@ -72,7 +72,7 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
             model.values.sort(function (option1, option2) {
                 let field1 = fieldToCompare(option1).toUpperCase();
                 let field2 = fieldToCompare(option2).toUpperCase();
-                
+
                 if (field1 < field2)
                     return -1;
                 if (field1 > field2)
@@ -224,8 +224,23 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                     className='form-edit-item'
                 >
                     <FormControl className='form-input-element' variant='outlined'>
-                        <TextField disabled name={model.field} label={t(model.headerName)} value={elemValue} onChange={(e) => handleChange(e, index)}
-                            style={{ backgroundColor: 'white' }} variant='outlined' />
+                        <TextField
+                            disabled
+                            name={model.field}
+                            label={t(model.headerName)}
+                            value={model.selector ?
+                                (
+                                    Array.isArray(model.selector) ?
+                                        model.selector.map(x => elemValue[x]).join(' ')
+                                        :
+                                        elemValue[model.selector]
+                                )
+                                :
+                                elemValue}
+                            onChange={(e) => handleChange(e, index)}
+                            style={{ backgroundColor: 'white' }}
+                            variant='outlined'
+                        />
                     </FormControl>
                 </Grid>
             );

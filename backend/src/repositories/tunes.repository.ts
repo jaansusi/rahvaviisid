@@ -17,8 +17,7 @@ import {
   TuneSongs,
   TuneEncodings,
   MusicalCharacteristics,
-  Users,
-} from '../models';
+  Users, TuneStates} from '../models';
 import {DbDataSource} from '../datasources';
 import {inject, Getter} from '@loopback/core';
 import {TuneTranscriptionsRepository} from './tune-transcriptions.repository';
@@ -37,6 +36,7 @@ import {AuditLogRepository} from './audit-log.repository';
 import {MusicalCharacteristicsRepository} from './musical-characteristics.repository';
 import {AuthenticationBindings} from '@loopback/authentication';
 import { UsersRepository } from './users.repository';
+import {TuneStatesRepository} from './tune-states.repository';
 
 export class TunesRepository extends DefaultCrudRepository<
   Tunes,
@@ -93,6 +93,8 @@ export class TunesRepository extends DefaultCrudRepository<
     typeof Tunes.prototype.id
   >;
 
+  public readonly tuneStates: HasOneRepositoryFactory<TuneStates, typeof Tunes.prototype.id>;
+
   constructor(
     @inject('datasources.db') dataSource: DbDataSource,
     @inject.getter(AuthenticationBindings.CURRENT_USER)
@@ -122,9 +124,11 @@ export class TunesRepository extends DefaultCrudRepository<
     @repository.getter('ExternalReferencesRepository')
     protected externalReferencesRepositoryGetter: Getter<ExternalReferencesRepository>,
     @repository.getter('MusicalCharacteristicsRepository')
-    protected musicalCharacteristicsRepositoryGetter: Getter<MusicalCharacteristicsRepository>,
+    protected musicalCharacteristicsRepositoryGetter: Getter<MusicalCharacteristicsRepository>, @repository.getter('TuneStatesRepository') protected tuneStatesRepositoryGetter: Getter<TuneStatesRepository>,
   ) {
     super(Tunes, dataSource);
+    this.tuneStates = this.createHasOneRepositoryFactoryFor('tuneStates', tuneStatesRepositoryGetter);
+    this.registerInclusionResolver('tuneStates', this.tuneStates.inclusionResolver);
     this.musicalCharacteristics = this.createHasManyRepositoryFactoryFor(
       'musicalCharacteristics',
       musicalCharacteristicsRepositoryGetter,

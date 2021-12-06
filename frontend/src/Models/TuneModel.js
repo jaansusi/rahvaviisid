@@ -87,7 +87,6 @@ export const TuneModel = ModelService.GenerateDefaults({
     edit: {
         fields: [
             { field: 'id', hidden: true },
-            { field: 'tuneStates', apiPath: 'tune-states', headerName: 'tune.state', selector: 'title' },
             { field: 'tuneReference', headerName: 'tune.tuneReference' },
             { field: 'soundReference', headerName: 'tune.soundReference' },
             { field: 'videoReference', headerName: 'tune.videoReference' },
@@ -98,6 +97,7 @@ export const TuneModel = ModelService.GenerateDefaults({
             { field: 'remarks', type: 'textbox', headerName: 'tune.remarks' },
             { field: 'verifiedBy', type: 'dropdown', apiPath: 'users', headerName: 'tune.verifiedBy', title: ['firstName', 'lastName'], removeIfEmpty: true },
             { field: 'verified', type: 'view', timestamp: true, headerName: 'tune.verified' },
+            { field: 'tuneStates', type: 'view', apiPath: 'tune-states', headerName: 'tune.state', selector: 'title' },
             { field: 'created', type: 'view', timestamp: true, headerName: 'date.created' },
             { field: 'modified', type: 'view', timestamp: true, headerName: 'date.modified' },
             {
