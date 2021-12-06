@@ -87,7 +87,7 @@ export const TuneModel = ModelService.GenerateDefaults({
     edit: {
         fields: [
             { field: 'id', hidden: true },
-            { field: 'tuneStateId', type: 'dropdown', apiPath: 'tune-states', headerName: 'tune.state' },
+            { field: 'tuneStates', apiPath: 'tune-states', headerName: 'tune.state', selector: 'title' },
             { field: 'tuneReference', headerName: 'tune.tuneReference' },
             { field: 'soundReference', headerName: 'tune.soundReference' },
             { field: 'videoReference', headerName: 'tune.videoReference' },

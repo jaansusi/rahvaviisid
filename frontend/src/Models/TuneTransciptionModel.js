@@ -26,6 +26,7 @@ export const TuneTranscriptionModel = ModelService.GenerateDefaults({
             { field: 'id', hidden: true },
             { field: 'transcriptionSourceId', type: 'dropdown', apiPath: 'transcription-sources', headerName: 'transcription.source' },
             { field: 'fileReference', headerName: 'transcription.fileReference' },
+            { field: 'remarks', type: 'textbox', headerName: 'transcription.remarks' },
             { field: 'created', type: 'view', timestamp: true, headerName: 'date.created' },
             { field: 'modified', type: 'view', timestamp: true, headerName: 'date.modified' },
             {
@@ -36,6 +37,9 @@ export const TuneTranscriptionModel = ModelService.GenerateDefaults({
                     label: 'transcription.transcriptionPersons',
                     fields: [
                         { field: 'persons', headerName: 'person.name', selector: ['givenName', 'surname'] },
+                        { field: 'nameOrigin', headerName: 'transcription.nameOrigin' },
+                        { field: 'actionYear', headerName: 'transcription.actionYear' },
+                        { field: 'actionStartYear', headerName: 'transcription.actionStartYear' },
                         { field: 'actionYear', headerName: 'transcription.actionYear' },
                         { field: 'transcriptionPersonRoleTypes', headerName: 'transcription.personRole', selector: 'title' },
                         { field: 'remarks', type: 'textbox', headerName: 'common.remarks' },
@@ -45,7 +49,10 @@ export const TuneTranscriptionModel = ModelService.GenerateDefaults({
                     label: '',
                     fields: [
                         { field: 'personId', type: 'dropdown', apiPath: 'persons', headerName: 'person.person', title: ['id', 'givenName', 'surname'] },
+                        { field: 'nameOrigin', headerName: 'transcription.nameOrigin' },
                         { field: 'actionYear', type: 'number', headerName: 'transcription.actionYear' },
+                        { field: 'actionStartYear', type: 'number', headerName: 'transcription.actionStartYear' },
+                        { field: 'actionEndYear', type: 'number', headerName: 'transcription.actionEndYear' },
                         { field: 'transcriptionPersonRoleTypeId', type: 'dropdown', apiPath: 'transcription-person-role-types', headerName: 'transcription.personRole' },
                         { field: 'remarks', type: 'textbox', headerName: 'common.remarks' },
                     ]

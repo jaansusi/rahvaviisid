@@ -136,7 +136,11 @@
     "transcription": {
         "transcription": "Transcription",
         "source": "Source",
-        "personRole": "Role"
+        "personRole": "Role",
+        "remarks": "Remarks",
+        "nameOrigin": "Original title",
+        "actionStartYear": "Year started",
+        "actionEndYear": "Year finished"
     },
     "encoding": {
         "encoding": "Musical features",

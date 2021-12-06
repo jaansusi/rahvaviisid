@@ -297,7 +297,11 @@
         "personRole": "Tegija roll",
         "fileReference": "Failiviide",
         "actionYear": "Tegevuse aasta",
-        "transcriptionPersons": "Noodistusega seotud isikud"
+        "transcriptionPersons": "Noodistusega seotud isikud",
+        "remarks": "Märkused",
+        "nameOrigin": "Nime originaalkuju",
+        "actionStartYear": "Tegevuse algusaasta",
+        "actionEndYear": "Tegevuse lõppaasta"
     },
     "tune": {
         "tuneId": "Viisi ID",

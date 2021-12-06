@@ -335,6 +335,11 @@ const removeObjectIds = (obj, removeAll) => {
 
 const handleErrors = ((t, x) => {
     let message = x.message;
+    if (message === undefined)
+        toast.error('Something went wrong', {
+            closeButton: true,
+            autoClose: false,
+        })
     message = message.replace('should be', t('notification.shouldBe'));
     let path = x.path.split('/');
     path.shift();

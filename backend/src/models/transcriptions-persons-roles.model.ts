@@ -51,6 +51,28 @@ export class TranscriptionsPersonsRoles extends Entity {
   actionYear?: number;
 
   @property({
+    type: 'number',
+    scale: 0,
+    jsonSchema: {nullable: true},
+    postgresql: {columnName: 'action_start_year', dataType: 'smallint', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'YES'},
+  })
+  actionStartYear?: number;
+
+  @property({
+    type: 'number',
+    scale: 0,
+    jsonSchema: {nullable: true},
+    postgresql: {columnName: 'action_end_year', dataType: 'smallint', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'YES'},
+  })
+  actionEndYear?: number;
+
+  @property({
+    type: 'string',
+    postgresql: {columnName: 'name_origin', dataType: 'text', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'YES'},
+  })
+  nameOrigin?: string;
+
+  @property({
     type: 'string',
     postgresql: {columnName: 'remarks', dataType: 'text', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'YES'},
   })
