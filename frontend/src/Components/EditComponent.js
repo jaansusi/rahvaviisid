@@ -6,7 +6,7 @@ import config from '../config';
 import EditDataFragment from './Fragments/EditDataFragment';
 import axios from 'axios';
 import Actions from './Buttons/Actions';
-import { DataService } from '../Services';
+import { DataService, TuneService } from '../Services';
 import { toast } from 'react-toastify';
 import BarLoader from 'react-spinners/BarLoader';
 import './EditComponent.css';
@@ -116,7 +116,7 @@ const EditComponent = ({ model, newItem }) => {
                 }
 
                 // If the model entry is a label, ignore it
-                if (modelElem.type === 'label')
+                if (modelElem.type === 'label' || modelElem.type === 'view')
                     continue;
 
                 // If the value is empty, check if there is a default in the model
@@ -185,7 +185,8 @@ const EditComponent = ({ model, newItem }) => {
 
         //First let's make sure that all the necessary models are using the correct data type
         let objToSend = recurse(currentModel, Object.assign({}, data));
-
+        if (!TuneService.Validate(objToSend, t))
+            return;
         if (newItem) {
             // No DB entry exists, use post request
             axios
@@ -206,7 +207,7 @@ const EditComponent = ({ model, newItem }) => {
                     if (error.response.status === 422) {
                         let errors = error.response.data.error.details;
                         if (!errors)
-                            toast.warning(t(error.response.data.error.message), {
+                            toast.error(t(error.response.data.error.message), {
                                 closeButton: true,
                                 autoClose: false
                             })
@@ -244,7 +245,7 @@ const EditComponent = ({ model, newItem }) => {
                 .catch((error) => {
                     if (error.response.status === 422) {
                         if (!error.response.data.error.details)
-                            toast.warning(t(error.response.data.error.message), {
+                            toast.error(t(error.response.data.error.message), {
                                 closeButton: true,
                                 autoClose: false
                             })
@@ -335,11 +336,14 @@ const removeObjectIds = (obj, removeAll) => {
 
 const handleErrors = ((t, x) => {
     let message = x.message;
-    if (message === undefined)
+    if (message === undefined) {
         toast.error('Something went wrong', {
             closeButton: true,
             autoClose: false,
-        })
+        });
+        return;
+    }
+    console.log(message);
     message = message.replace('should be', t('notification.shouldBe'));
     let path = x.path.split('/');
     path.shift();

@@ -18,6 +18,8 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import LocationHeader from './Components/Layout/LocationHeader';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import DateAdapter from '@mui/lab/AdapterDateFns';
 
 function App() {
   const [authentication, setAuthentication] = UseLocalStorageState('user');
@@ -31,53 +33,55 @@ function App() {
       </Helmet>
       <Router>
         <ThemeProvider theme={createMuiTheme({ typography: { fontSize: 15, }, })}>
-          <Grid container direction='column'>
-            <Grid item>
-              <Header authentication={authentication} setAuthentication={setAuthentication} />
-            </Grid>
-            <Grid
-              id='content-container'
-              item
-              xs={12}
-              container
-              direction='column'
-              alignItems='center'
-              className='body-container'
-            >
-              <ToastContainer
-                position="top-right"
-                autoClose={5000}
-                hideProgressBar
-                closeOnClick
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-              />
-              <LocationHeader />
-              <Grid container item xs={11} justify='center'>
-              <Switch>
-                <Route exact path="/">
-                  <PageComponent name='home' />
-                </Route>
-                <Route exact path="/otsing">
-                  <SearchComponent />
-                </Route>
-                <Route exact path="/otsinguabi">
-                  <SearchComponent />
-                </Route>
-                <Route exact path="/login">
-                  <Login setAuthentication={setAuthentication} />
-                </Route>
-                <Route path="/:asset">
-                  <AssetRouter />
-                </Route>
-              </Switch>
+          <LocalizationProvider dateAdapter={DateAdapter}>
+            <Grid container direction='column'>
+              <Grid item>
+                <Header authentication={authentication} setAuthentication={setAuthentication} />
+              </Grid>
+              <Grid
+                id='content-container'
+                item
+                xs={12}
+                container
+                direction='column'
+                alignItems='center'
+                className='body-container'
+              >
+                <ToastContainer
+                  position="top-right"
+                  autoClose={5000}
+                  hideProgressBar
+                  closeOnClick
+                  pauseOnFocusLoss
+                  draggable
+                  pauseOnHover
+                />
+                <LocationHeader />
+                <Grid container item xs={11} justify='center'>
+                  <Switch>
+                    <Route exact path="/">
+                      <PageComponent name='home' />
+                    </Route>
+                    <Route exact path="/otsing">
+                      <SearchComponent />
+                    </Route>
+                    <Route exact path="/otsinguabi">
+                      <SearchComponent />
+                    </Route>
+                    <Route exact path="/login">
+                      <Login setAuthentication={setAuthentication} />
+                    </Route>
+                    <Route path="/:asset">
+                      <AssetRouter />
+                    </Route>
+                  </Switch>
+                </Grid>
+              </Grid>
+              <Grid item>
+                <Footer />
               </Grid>
             </Grid>
-            <Grid item>
-              <Footer />
-            </Grid>
-          </Grid>
+          </LocalizationProvider>
         </ThemeProvider>
       </Router>
     </>

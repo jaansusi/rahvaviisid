@@ -39,7 +39,7 @@ export class Tunes extends Entity {
 
   @property({
     type: 'number',
-    required: true,
+    required: false,
     scale: 0,
     postgresql: {
       columnName: 'tune_state_id',

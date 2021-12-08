@@ -1,4 +1,6 @@
-export const TuneService =  {
+import { toast } from "react-toastify";
+
+export const TuneService = {
     CombineData(elementData) {
         if (!elementData)
             return '';
@@ -23,4 +25,23 @@ export const TuneService =  {
             .filter((elem) => elem !== '')
             .join('\n');
     },
+
+    Validate(tune, translator) {
+        let requiredFields = [
+            'nationId',
+            'languageId',
+            'countryId'
+        ];
+
+        let missingFields = requiredFields.filter(x => tune[x] === undefined);
+        if (missingFields.length > 0) {
+            missingFields.forEach(x =>
+                toast.error(translator('validation.' + x) + translator('validation.isMissing'), {
+                    closeButton: true,
+                    autoClose: false,
+                }));
+            return false;
+        }
+        return true;
+    }
 }

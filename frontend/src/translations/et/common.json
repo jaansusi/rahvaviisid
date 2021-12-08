@@ -370,6 +370,11 @@
         "mustBeNumber": "Peab olema number",
         "tunesPersonsRoles": "Viisiga seotud isikud",
         "actionStartYear": "Tegevuse algusaasta",
-        "notUnique": "Kirje pole unikaalne"
+        "notUnique": "Kirje pole unikaalne",
+        "isMissing": " on puudu",
+        "tuneStateId": "Seisund",
+        "nationId": "Rahvus",
+        "languageId": "Keel",
+        "countryId": "Riik"
     }
 }

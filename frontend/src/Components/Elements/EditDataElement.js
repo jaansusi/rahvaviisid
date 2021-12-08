@@ -1,10 +1,11 @@
-import { Button, Checkbox, Collapse, FormControl, FormControlLabel, Grid, InputLabel, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from '@material-ui/core';
+import { Button, Checkbox, Collapse, FormControl, FormControlLabel, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { DataService, TuneService } from '../../Services';
 import EditDataFragment from '../Fragments/EditDataFragment';
 import { PlayerViewComponent } from '../NewComponents';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import { DesktopDatePicker } from '@mui/lab';
 import './EditFormElement.css';
 
 const EditDataElement = (({ model, elemValue, handleChange, index }) => {
@@ -441,6 +442,39 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                 <Grid item xs={12}>
                     <Typography variant='h5'>{t(model.value)}</Typography>
                 </Grid>
+            );
+        case 'date':
+            let handleDateChange = (x) => {
+                console.log(x);
+                handleChange({
+                    target: {
+                        name: model.field,
+                        value: x
+                    }
+                });
+            }
+            return (
+                <Grid
+                    item
+                    xs={4}
+                    className='form-edit-item'
+                >
+                    <FormControl className='form-input-element' variant='outlined'>
+                        <DesktopDatePicker
+                            label={t(model.headerName)}
+                            value={elemValue === '' ? null : elemValue}
+                            required={false}
+                            onChange={handleDateChange}
+                            inputFormat="dd/MM/yyyy"
+                            renderInput={(params) =>
+                                <TextField
+                                    style={{ backgroundColor: 'white' }}
+                                    variant='outlined'
+                                    {...params} />
+                            }
+                        />
+                    </FormControl>
+                </Grid >
             );
         default:
             return (

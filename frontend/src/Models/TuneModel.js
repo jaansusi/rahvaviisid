@@ -97,7 +97,7 @@ export const TuneModel = ModelService.GenerateDefaults({
             { field: 'remarks', type: 'textbox', headerName: 'tune.remarks' },
             { field: 'verifiedBy', type: 'dropdown', apiPath: 'users', headerName: 'tune.verifiedBy', title: ['firstName', 'lastName'], removeIfEmpty: true },
             { field: 'tuneStates', type: 'view', apiPath: 'tune-states', headerName: 'tune.state', selector: 'title' },
-            { field: 'verified', type: 'view', timestamp: true, headerName: 'tune.verified' },
+            { field: 'verified', type: 'date', headerName: 'tune.verified' },
             { field: 'created', type: 'view', timestamp: true, headerName: 'date.created' },
             { field: 'modified', type: 'view', timestamp: true, headerName: 'date.modified' },
             {

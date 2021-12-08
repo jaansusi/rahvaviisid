@@ -212,29 +212,11 @@ export class TunesController extends AuditBaseController<Tunes> {
     })
     tunes: Tunes,
   ): Promise<void> {
-    if (!(tunes.tuneReference || tunes.soundReference || tunes.videoReference)) {
-      let err: ValidationError = new ValidationError(
-        'validation.tunes.invalidReferences',
-      );
-      err.statusCode = 422;
-      throw err;
-    }
-
     let before = await this.tunesRepository.findById(
       id,
       TunesFilter.ALL_NO_CLASSIFICATORS,
     );
-    let dateNow = new Date().toISOString();
-    tunes.verifiedBy = before.verifiedBy;
-    tunes.verified = before.verified;
-    if (before.verifiedBy != tunes.verifiedBy) {
-      if (before.verified === undefined) {
-        before.verified = '';
-      }
-      if (tunes.verifiedBy !== undefined && tunes.verifiedBy !== '') {
-        tunes.verified = dateNow;
-      }
-    }
+    
     await this.insertTune(tunes, before);
     let after = await this.tunesRepository.findById(
       id,
@@ -268,6 +250,14 @@ export class TunesController extends AuditBaseController<Tunes> {
     tune: Tunes | Omit<Tunes, 'id'>,
     original?: Tunes,
   ): Promise<Tunes> {
+    if (!(tune.tuneReference || tune.soundReference || tune.videoReference)) {
+      let err: ValidationError = new ValidationError(
+        'validation.tunes.invalidReferences',
+      );
+      err.statusCode = 422;
+      throw err;
+    }
+
     //We need the tune created first, but for that, it can't have any nested "navigational" objects in it
     //so let's just assign them to variables for later use
     let externalReferences = tune.externalReferences;
@@ -286,6 +276,8 @@ export class TunesController extends AuditBaseController<Tunes> {
     delete tune.tunePlaces;
     let tunePerformances = tune.tunePerformances;
     delete tune.tunePerformances;
+
+    delete tune.tuneStates;
 
     //First we need the actual tune so we can link through it's ID
     let createdTune = await this.insertNestedAsset(tune, this.tunesRepository);
