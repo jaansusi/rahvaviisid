@@ -71,11 +71,20 @@ export const TableViewComponent = ({ value, model }) => {
                                                                         :
                                                                         <span title={field.alt ? row[field.field][field.alt] : undefined}>
                                                                             {
-                                                                                field.selector ?
-                                                                                    Array.isArray(field.selector) ?
-                                                                                        field.selector.map(x => row[field.field][x]).join(' ') :
-                                                                                        row[field.field][field.selector] :
-                                                                                    row[field.field]
+                                                                                Array.isArray(row[field.field]) ?
+                                                                                    row[field.field].map(el =>
+                                                                                        field.selector ?
+                                                                                            Array.isArray(field.selector) ?
+                                                                                                field.selector.map(x => el[x]).join(' ') :
+                                                                                                el[field.selector] :
+                                                                                            el)
+                                                                                            .join(', ')
+                                                                                    :
+                                                                                    field.selector ?
+                                                                                        Array.isArray(field.selector) ?
+                                                                                            field.selector.map(x => row[field.field][x]).join(' ') :
+                                                                                            row[field.field][field.selector] :
+                                                                                        row[field.field]
                                                                             }
                                                                         </span>
                                                     }
