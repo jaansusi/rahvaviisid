@@ -91,9 +91,12 @@ export const DataService = {
                 // If the model field has a type defined, assign it here.
                 switch (elem.type) {
                     case 'boolean':
-                        value = true;
+                        value = false;
                         break;
                     case 'table':
+                        value = [];
+                        break;
+                    case 'multiselect':
                         value = [];
                         break;
                     default:

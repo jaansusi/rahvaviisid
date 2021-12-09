@@ -111,7 +111,6 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
             );
         case 'multiselect':
             let handleMultiChange = ((newValues) => {
-                console.log(newValues);
                 handleChange({
                     target: {
                         name: model.field,
@@ -121,7 +120,6 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
             });
             if (model.values === undefined)
                 model.values = [];
-            console.log(elemValue);
             return (
                 <Grid
                     item
@@ -149,7 +147,7 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                                 []
                         }
                         getOptionSelected={
-                            (option) => elemValue.map(x => x.id).includes(option.id)
+                            (option) => elemValue.map(x => model.selector ? x[model.selector] : x.id).includes(option.id)
                         }
                         filterSelectedOptions
                         renderInput={(params) => (

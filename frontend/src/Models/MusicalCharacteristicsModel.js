@@ -5,9 +5,10 @@ export const MusicalCharacteristicsModel = ModelService.GenerateDefaults({
     table: {
         label: 'musical.label',
         fields: [
-            { field: 'soundRanges', headerName: 'musical.soundRange', width: 140 , selector: 'title'},
-            { field: null, headerName: 'musical.tuneForm', width: 140 },
-            { field: null, headerName: 'musical.textForm', width: 140 },
+            { field: 'soundRanges', headerName: 'musical.soundRange', width: 140, selector: 'title'},
+            { field: 'tuneForms', headerName: 'musical.tuneForm', width: 140, selector: 'title', alt: 'description' },
+            { field: 'textForms', headerName: 'musical.textForm', width: 140, selector: 'title' },
+            { field: 'rhythmTypes', headerName: 'musical.rhythmTypes', width: 140, selector: 'title' },
             { field: 'melostropheNumScore', headerName: 'musical.score', width: 140 },
             { field: 'melostropheNumAudio', headerName: 'musical.audio', width: 150 },
             { field: 'isVariable', type: 'boolean', headerName: 'musical.isVariable', width: 150 },
@@ -27,8 +28,9 @@ export const MusicalCharacteristicsModel = ModelService.GenerateDefaults({
         fields: [
             { field: 'id', hidden: true },
             { field: 'soundRangeId', type: 'dropdown', apiPath: 'sound-ranges', headerName: 'musical.soundRange' },
-            { field: null, headerName: 'musical.tuneForm' },
-            { field: null, headerName: 'musical.textForm' },
+            { field: 'tuneForms', type: 'multiselect', apiPath: 'tune-forms', selector: 'id', headerName: 'musical.tuneForm' },
+            { field: 'textForms', type: 'multiselect', apiPath: 'text-forms', selector: 'id', headerName: 'musical.textForm' },
+            { field: 'rhythmTypes', type: 'multiselect', apiPath: 'rhythm-types', selector: 'id', headerName: 'musical.rhythmTypes' },
             { field: 'melostropheNumScore', headerName: 'musical.score' },
             { field: 'melostropheNumAudio', headerName: 'musical.audio' },
             { field: 'isVariable', type: 'boolean', headerName: 'musical.isVariable' },

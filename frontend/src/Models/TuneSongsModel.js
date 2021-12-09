@@ -13,7 +13,6 @@ export const TuneSongsModel = ModelService.GenerateDefaults({
             { field: 'verseForm', headerName: 'song.verseForm'},
             { field: 'refrain', headerName: 'song.refrain'},
             { field: 'remarks', type: 'textbox', headerName: 'common.remarks'},
-            
         ]
     },
     edit: {
@@ -29,7 +28,6 @@ export const TuneSongsModel = ModelService.GenerateDefaults({
             { field: 'verseForms', type: 'dropdown', headerName: 'song.verseForm', 'apiPath': 'verse-forms'},
             { field: 'refrain', type: 'textbox', headerName: 'song.refrain'},
             { field: 'remarks', type: 'textbox', headerName: 'common.remarks'}
-
         ]
     }
 });

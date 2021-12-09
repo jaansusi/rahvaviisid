@@ -26,10 +26,10 @@ export class MusicalCharacteristicsRepository extends DefaultCrudRepository<
         typeof MusicalCharacteristics.prototype.id
       >;
 
-  // public readonly tuneForms: HasManyThroughRepositoryFactory<TuneForms, typeof TuneForms.prototype.id,
-  //     MusicalCharacteristicsTuneForms,
-  //     typeof MusicalCharacteristics.prototype.id
-  //   >;
+  public readonly tuneForms: HasManyThroughRepositoryFactory<TuneForms, typeof TuneForms.prototype.id,
+      MusicalCharacteristicsTuneForms,
+      typeof MusicalCharacteristics.prototype.id
+    >;
 
   public readonly soundRanges: HasOneRepositoryFactory<SoundRanges, typeof MusicalCharacteristics.prototype.id>;
 
@@ -43,9 +43,9 @@ export class MusicalCharacteristicsRepository extends DefaultCrudRepository<
     protected musicalCharacteristicsTextFormsRepositoryGetter: Getter<MusicalCharacteristicsTextFormsRepository>, 
     @repository.getter('TextFormsRepository') protected textFormsRepositoryGetter: Getter<TextFormsRepository>, 
     
-    // @repository.getter('MusicalCharacteristicsTuneFormsRepository') 
-    // protected musicalCharacteristicsTuneFormsRepositoryGetter: Getter<MusicalCharacteristicsTuneFormsRepository>, 
-    // @repository.getter('TuneFormsRepository') protected tuneFormsRepositoryGetter: Getter<TuneFormsRepository>, 
+    @repository.getter('MusicalCharacteristicsTuneFormsRepository') 
+    protected musicalCharacteristicsTuneFormsRepositoryGetter: Getter<MusicalCharacteristicsTuneFormsRepository>, 
+    @repository.getter('TuneFormsRepository') protected tuneFormsRepositoryGetter: Getter<TuneFormsRepository>, 
 
     @repository.getter('SoundRangesRepository') protected soundRangesRepositoryGetter: Getter<SoundRangesRepository>,
   ) {
@@ -59,7 +59,7 @@ export class MusicalCharacteristicsRepository extends DefaultCrudRepository<
     this.textForms = this.createHasManyThroughRepositoryFactoryFor('textForms', textFormsRepositoryGetter, musicalCharacteristicsTextFormsRepositoryGetter,);
     this.registerInclusionResolver('textForms', this.textForms.inclusionResolver);
 
-    // this.tuneForms = this.createHasManyThroughRepositoryFactoryFor('tuneForms', tuneFormsRepositoryGetter, musicalCharacteristicsTuneFormsRepositoryGetter,);
-    // this.registerInclusionResolver('tuneForms', this.tuneForms.inclusionResolver);
+    this.tuneForms = this.createHasManyThroughRepositoryFactoryFor('tuneForms', tuneFormsRepositoryGetter, musicalCharacteristicsTuneFormsRepositoryGetter,);
+    this.registerInclusionResolver('tuneForms', this.tuneForms.inclusionResolver);
   }
 }
