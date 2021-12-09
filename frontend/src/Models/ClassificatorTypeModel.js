@@ -62,12 +62,32 @@ export const ClassificatorsModel =
                 {
                     name: 'tune.language',
                     url: 'keel',
-                    apiPath: 'languages'
+                    apiPath: 'languages',
+                    view: {
+                        fields: [
+                            { field: 'title', headerName: 'common.title' },
+                            { field: 'description', headerName: 'common.description' },
+                            { field: 'isActive', type: 'boolean', headerName: 'common.active' },
+                            { field: 'created', headerName: 'date.created' },
+                            { field: 'modified', headerName: 'date.modified' },
+                            { field: 'tunes', type: 'associatedAssets', associatedModel: TuneModel.list, headerName: 'common.tunes' }
+                        ]
+                    },
                 },
                 {
                     name: 'tune.country',
                     url: 'riik',
-                    apiPath: 'countries'
+                    apiPath: 'countries',
+                    view: {
+                        fields: [
+                            { field: 'title', headerName: 'common.title' },
+                            { field: 'description', headerName: 'common.description' },
+                            { field: 'isActive', type: 'boolean', headerName: 'common.active' },
+                            { field: 'created', headerName: 'date.created' },
+                            { field: 'modified', headerName: 'date.modified' },
+                            { field: 'tunes', type: 'associatedAssets', associatedModel: TuneModel.list, headerName: 'common.tunes' }
+                        ]
+                    },
                 },
                 {
                     name: 'tune.state',
