@@ -7,7 +7,7 @@ import { AuthService } from '../../Services';
 import { GetDataGridLocale } from '../../translations/DataGridLocale';
 import { Grid } from '@material-ui/core';
 
-const ListDataFragment = (({ model, data, rowCount, updateTable, currentView, additionalButtons }) => {
+const ListDataFragment = (({ model, data, rowCount, updateTable, currentView, additionalButtons, viewOnly, actionUrlOverride }) => {
     const { t } = useTranslation('common');
 
     if (!additionalButtons)
@@ -24,11 +24,19 @@ const ListDataFragment = (({ model, data, rowCount, updateTable, currentView, ad
         return x;
     });
     let canAccess = AuthService.CanAccess(['editor', 'admin']);
-    let actionButtonCount = canAccess ? (currentView !== undefined ? 2 : 3) : 1 + additionalButtons.length;
+    let actionButtonCount = canAccess && !viewOnly ? (currentView !== undefined ? 2 : 3) : 1 + additionalButtons.length;
     let actionsWidth = actionButtonCount === 1 ? 150 : actionButtonCount * 130;
     columns.push({
         field: '', headerName: t('action.actions'), sortable: false, width: actionsWidth,
-        renderCell: (params) => <Actions auth={canAccess} apiPath={model.apiPath} id={params.row.id} currentView={currentView} additionalButtons={additionalButtons} />
+        renderCell: (params) =>
+            <Actions
+                auth={canAccess && !viewOnly}
+                apiPath={model.apiPath}
+                id={params.row.id}
+                currentView={currentView}
+                additionalButtons={additionalButtons}
+                pathOverride={actionUrlOverride}
+            />
     });
 
     let tableData = [];
@@ -59,18 +67,19 @@ const ListDataFragment = (({ model, data, rowCount, updateTable, currentView, ad
         >
             {
                 canAccess &&
+                !viewOnly &&
                 <Grid item>
                     <CreateButton />
                 </Grid>
             }
             <div style={{ width: tableWidth, height: '80vh' }}>
                 <DataGrid
-                    paginationMode='server'
+                    paginationMode={viewOnly ? 'client' : 'server'}
                     rowCount={rowCount}
                     rows={tableData}
                     columns={columns}
                     pageSize={10}
-                    rowsPerPageOptions = {[10, 25, 50, 100]}
+                    rowsPerPageOptions={[10, 25, 50, 100]}
                     sortingOrder={[]}
                     onPageChange={(x) => updateTable((x.page) * x.pageSize)}
                     localeText={GetDataGridLocale(t)}

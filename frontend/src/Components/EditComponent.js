@@ -11,7 +11,7 @@ import { toast } from 'react-toastify';
 import BarLoader from 'react-spinners/BarLoader';
 import './EditComponent.css';
 
-const EditComponent = ({ model, newItem }) => {
+const EditComponent = ({ model, newItem, validate }) => {
     newItem = newItem === undefined ? false : newItem;
     const { t } = useTranslation('common');
     const history = useHistory();
@@ -124,6 +124,13 @@ const EditComponent = ({ model, newItem }) => {
                     requestObject[modelElem.field] = modelElem.default;
                     continue;
                 }
+
+                // If the value is nullable and an empty string, send null
+                if (value === '' && modelElem.nullable) {
+                    requestObject[modelElem.field] = null;
+                    continue;
+                }
+
                 // If there is a MODEL defined for this field..
                 if (modelElem?.edit !== undefined) {
                     // If DATA object is an array
@@ -185,7 +192,7 @@ const EditComponent = ({ model, newItem }) => {
 
         //First let's make sure that all the necessary models are using the correct data type
         let objToSend = recurse(currentModel, Object.assign({}, data));
-        if (!TuneService.Validate(objToSend, t))
+        if (validate !== undefined ? validate(objToSend, t) : false)
             return;
         if (newItem) {
             // No DB entry exists, use post request
@@ -260,6 +267,9 @@ const EditComponent = ({ model, newItem }) => {
 
     const handleChange = (event) => {
         const { name, value, type } = event.target;
+        console.log('component');
+        console.log(name);
+        console.log(value);
         setAssetData({
             name: name,
             // Numbers need to be sent as actual numeric values, not strings

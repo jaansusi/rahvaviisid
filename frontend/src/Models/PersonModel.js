@@ -25,14 +25,13 @@ export const PersonModel = ModelService.GenerateDefaults({
             { field: 'sexes', headerName: 'person.sex', selector: 'title'},
             { field: 'remarks', type: 'textbox', headerName: 'common.remarks' },
             { field: 'created', headerName: 'date.created' },
-            { field: 'modified', headerName: 'date.modified' },
-
+            { field: 'modified', headerName: 'date.modified' }
         ]
     },
     edit: {
         fields: [
             { field: 'id', hidden: true },
-            { field: 'pid', headerName: 'person.pid' },
+            { field: 'pid', headerName: 'person.pid', nullable: true },
             { field: 'givenName', headerName: 'person.givenName' },
             { field: 'surname', headerName: 'person.surname' },
             { field: 'nickname', headerName: 'person.nickname' },

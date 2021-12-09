@@ -17,8 +17,9 @@ export class Persons extends Entity {
   @property({
     type: 'string',
     jsonSchema: {
-      minLength: 1,
-      maxLength: 40
+      minLength: 0,
+      maxLength: 40,
+      nullable: true,
     },
     postgresql: {columnName: 'pid', dataType: 'character varying', dataLength: 40, dataPrecision: null, dataScale: null, nullable: 'YES'},
   })

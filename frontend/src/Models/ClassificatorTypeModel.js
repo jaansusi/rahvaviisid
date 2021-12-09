@@ -47,7 +47,7 @@ export const ClassificatorsModel =
                             { field: 'title', headerName: 'common.title' },
                             { field: 'description', headerName: 'common.description' },
                             { field: 'isActive', headerName: 'common.active' },
-                            { field: 'id', type: 'associatedAssetsTable', associatedModel: TuneModel.view, filterableProperty: ['nationId'] }
+                            { field: 'tunes', type: 'associatedAssets', associatedModel: TuneModel.list, headerName: 'common.tunes' }
                         ]
                     },
                     edit: {

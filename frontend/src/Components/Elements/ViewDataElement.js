@@ -3,6 +3,8 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { DataService } from '../../Services';
 import ViewDataFragment from '../Fragments/ViewDataFragment';
+import ListComponent from '../ListComponent';
+import { TuneModel } from '../../Models';
 
 const ViewDataElement = (({ model, value }) => {
     const { t } = useTranslation('common');
@@ -81,12 +83,21 @@ const ViewDataElement = (({ model, value }) => {
                     <Grid item><Typography>{DataService.ParseDate(value)}</Typography></Grid>
                 </Grid>
             );
-        case 'associatedAssetsTable':
-            let tunes = DataService.RequestAssociatedAssets(model.associatedModel, model.filterableProperty, value);
+        case 'associatedAssets':
+            console.log(value);
             return (
-                <>
-                    {JSON.stringify(tunes)}
-                </>
+                <Grid item xs={12} container direction='column' spacing={2}>
+                    <Grid item><Typography variant='h5'>{t(model.headerName)}</Typography></Grid>
+                    <Grid item>
+                        <ListComponent
+                            model={TuneModel.list}
+                            values={value}
+                            viewOnly
+                            actionUrlOverride='/viisid'
+                        />
+
+                    </Grid>
+                </Grid>
             );
         default:
             return (

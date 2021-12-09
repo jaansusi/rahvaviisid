@@ -102,6 +102,7 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                                 {...params}
                                 variant="outlined"
                                 label={t(model.headerName)}
+                                required={model.required}
                             />
                         )}
                         onChange={(_event, newValue) => handleElementChange(index, newValue)}

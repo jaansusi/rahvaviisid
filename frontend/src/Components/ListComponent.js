@@ -4,11 +4,15 @@ import ListDataFragment from './Fragments/ListDataFragment';
 import axios from 'axios';
 import { Grid } from '@material-ui/core';
 
-const ListComponent = (({ model, filter, currentView, additionalButtons, actionsWidth }) => {
+const ListComponent = (({ model, filter, currentView, additionalButtons, actionsWidth, values, viewOnly, actionUrlOverride }) => {
     let [data, setData] = useState([]);
     let [rowCount, setRowCount] = useState(0);
 
     const updateTable = ((offset) => {
+        if (values) {
+            setData(values);
+            return;
+        }
         let filterObj = {
             offset: offset,
             limit: 10
@@ -42,7 +46,9 @@ const ListComponent = (({ model, filter, currentView, additionalButtons, actions
                 updateTable={updateTable}
                 currentView={currentView}
                 additionalButtons={additionalButtons}
-                actionsWidth={actionsWidth} />
+                actionsWidth={actionsWidth}
+                viewOnly={viewOnly}
+                actionUrlOverride={actionUrlOverride} />
         </Grid>
     );
 });

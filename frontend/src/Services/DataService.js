@@ -54,7 +54,12 @@ export const DataService = {
 
     CreateIncludeFilter(model) {
         let recursiveFun = (currentModel) => {
-            let nestedFields = currentModel.fields.filter(x => x.nested || (x.selector && x.type !== 'dropdown') || (x.type === 'multiselect' && x.apiPath));
+            let nestedFields = currentModel.fields.filter(x =>
+                x.nested ||
+                (x.selector && x.type !== 'dropdown') ||
+                (x.type === 'multiselect' && x.apiPath) ||
+                x.associatedModel
+            );
             if (nestedFields.length === 0)
                 return {}
             return {
@@ -64,6 +69,8 @@ export const DataService = {
                     };
                     if (x.nested)
                         obj.scope = recursiveFun(x.nested);
+                    if (x.associatedModel)
+                        obj.scope = recursiveFun(x.associatedModel);
                     return obj;
                 })
             }
@@ -123,15 +130,5 @@ export const DataService = {
         if (!date)
             return '';
         return new Intl.DateTimeFormat('et-EE', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }).format(Date.parse(date));
-    },
-    
-    RequestAssociatedAssets(model, selectors, value) {
-        return axios
-            .post(config.apiUrl + '/' + model.apiPath + '/filter',
-            {
-                selectors: selectors,
-                value: value
-            })
-            .then((result) => result.data.map(x => this.MapResponseToModel(x, model)));
     },
 }
