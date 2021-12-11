@@ -75,7 +75,7 @@ const EditDataFragment = ({
                                 />
                             );
                         }
-                        let handleNestedChange = (event) => {
+                        let handleElementChange = (event) => {
                             const { name, value } = event.target;
                             let type = undefined;
                             let temp = value;
@@ -98,7 +98,7 @@ const EditDataFragment = ({
                                 key={i}
                                 model={modelField}
                                 elemValue={elementData[modelField.field]}
-                                handleChange={handleNestedChange}
+                                handleChange={handleElementChange}
                                 index={index}
                             />
                         );
