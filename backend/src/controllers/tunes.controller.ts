@@ -46,6 +46,10 @@ import {
   TunePerformancesRepository,
   TunePlacesRepository,
   TuneSongsRepository,
+  TuneSongsSongGenresRepository,
+  TuneSongsSongTopicsRepository,
+  TuneSongsTuneGenresRepository,
+  TuneSongsVerseFormsRepository,
   TunesPersonsRolesRepository,
   TunesRepository,
   TuneTranscriptionsRepository,
@@ -80,6 +84,14 @@ export class TunesController extends AuditBaseController<Tunes> {
     public tuneEncodingsRepository: TuneEncodingsRepository,
     @repository(TuneSongsRepository)
     public tuneSongsRepository: TuneSongsRepository,
+    @repository(TuneSongsSongGenresRepository)
+    public tuneSongsSongGenresRepository: TuneSongsSongGenresRepository,
+    @repository(TuneSongsTuneGenresRepository)
+    public tuneSongsTuneGenresRepository: TuneSongsTuneGenresRepository,
+    @repository(TuneSongsSongTopicsRepository)
+    public tuneSongsSongTopicsRepository: TuneSongsSongTopicsRepository,
+    @repository(TuneSongsVerseFormsRepository)
+    public tuneSongsVerseFormsRepository: TuneSongsVerseFormsRepository,
     @repository(TunePerformancesRepository)
     public tunePerformancesRepository: TunePerformancesRepository,
     @repository(TunePlacesRepository)
@@ -393,11 +405,48 @@ export class TunesController extends AuditBaseController<Tunes> {
 
     if (tuneSongs !== undefined) {
       tuneSongs.forEach((tuneSong: TuneSongs) => {
+        let tuneGenres = tuneSong.tuneGenres;
+        delete tuneSong.tuneGenres;
+        let songGenres = tuneSong.songGenres;
+        delete tuneSong.songGenres;
+        let songTopics = tuneSong.songTopics;
+        delete tuneSong.songTopics;
+        let verseForms = tuneSong.verseForms;
+        delete tuneSong.verseForms;
         this.insertNestedAsset(
           tuneSong,
           this.tuneSongsRepository,
           createdTune.id,
-        );
+        ).then((insertedAsset) => {
+          this.createM2mRelations(
+            tuneGenres,
+            insertedAsset.id,
+            'tuneSongId',
+            'tuneGenreId',
+            this.tuneSongsTuneGenresRepository,
+          );
+          this.createM2mRelations(
+            songGenres,
+            insertedAsset.id,
+            'tuneSongId',
+            'songGenreId',
+            this.tuneSongsSongGenresRepository,
+          );
+          this.createM2mRelations(
+            songTopics,
+            insertedAsset.id,
+            'tuneSongId',
+            'songTopicId',
+            this.tuneSongsSongTopicsRepository,
+          );
+          this.createM2mRelations(
+            verseForms,
+            insertedAsset.id,
+            'tuneSongId',
+            'verseFormId',
+            this.tuneSongsVerseFormsRepository,
+          );
+        });
       });
     }
 

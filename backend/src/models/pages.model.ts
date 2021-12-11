@@ -15,12 +15,14 @@ export class Pages extends Entity {
 
   @property({
     type: 'string',
+    jsonSchema: {nullable: true},
     postgresql: {columnName: 'name', dataType: 'text', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'YES'},
   })
   name?: string;
 
   @property({
     type: 'string',
+    jsonSchema: {nullable: true},
     postgresql: {columnName: 'content', dataType: 'text', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'YES'},
   })
   content?: string;

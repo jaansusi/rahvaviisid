@@ -37,6 +37,7 @@ export class TuneTranscriptions extends Entity {
 
   @property({
     type: 'string',
+    jsonSchema: {nullable: true},
     postgresql: {columnName: 'file_reference', dataType: 'text', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'YES'},
   })
   fileReference?: string;

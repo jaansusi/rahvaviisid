@@ -34,6 +34,7 @@ export class ExternalReferences extends Entity {
 
   @property({
     type: 'string',
+    jsonSchema: {nullable: true},
     postgresql: {columnName: 'description', dataType: 'text', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'YES'},
   })
   description?: string;
@@ -41,7 +42,8 @@ export class ExternalReferences extends Entity {
   @property({
     type: 'string',
     jsonSchema: {
-      maxLength: 1000
+      maxLength: 1000,
+      nullable: true
     },
     postgresql: {columnName: 'value', dataType: 'character varying', dataLength: 255, dataPrecision: null, dataScale: null, nullable: 'YES'},
   })

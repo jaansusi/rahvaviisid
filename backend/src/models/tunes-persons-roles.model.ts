@@ -37,7 +37,8 @@ export class TunesPersonsRoles extends Entity {
   @property({
     type: 'string',
     jsonSchema: {
-      maxLength: 1000
+      maxLength: 1000,
+      nullable: true
     },
     postgresql: {columnName: 'name_origin', dataType: 'character varying', dataLength: 1000, dataPrecision: null, dataScale: null, nullable: 'YES'},
   })
@@ -77,6 +78,7 @@ export class TunesPersonsRoles extends Entity {
 
   @property({
     type: 'string',
+    jsonSchema: {nullable: true},
     postgresql: {columnName: 'remarks', dataType: 'text', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'YES'},
   })
   remarks?: string;

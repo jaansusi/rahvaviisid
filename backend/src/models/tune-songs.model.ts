@@ -35,7 +35,8 @@ export class TuneSongs extends Entity {
   @property({
     type: 'string',
     jsonSchema: {
-      maxLength: 1000
+      maxLength: 1000,
+      nullable: true
     },
     postgresql: {columnName: 'song_type', dataType: 'character varying', dataLength: 255, dataPrecision: null, dataScale: null, nullable: 'YES'},
   })
@@ -44,7 +45,8 @@ export class TuneSongs extends Entity {
   @property({
     type: 'string',
     jsonSchema: {
-      maxLength: 1000
+      maxLength: 1000,
+      nullable: true
     },
     postgresql: {columnName: 'song_title', dataType: 'character varying', dataLength: 255, dataPrecision: null, dataScale: null, nullable: 'YES'},
   })
@@ -53,7 +55,8 @@ export class TuneSongs extends Entity {
   @property({
     type: 'string',
     jsonSchema: {
-      maxLength: 1000
+      maxLength: 1000,
+      nullable: true
     },
     postgresql: {columnName: 'first_verse', dataType: 'character varying', dataLength: 255, dataPrecision: null, dataScale: null, nullable: 'YES'},
   })
@@ -62,7 +65,8 @@ export class TuneSongs extends Entity {
   @property({
     type: 'string',
     jsonSchema: {
-      maxLength: 1000
+      maxLength: 1000,
+      nullable: true
     },
     postgresql: {columnName: 'refrain', dataType: 'character varying', dataLength: 255, dataPrecision: null, dataScale: null, nullable: 'YES'},
   })
@@ -70,6 +74,7 @@ export class TuneSongs extends Entity {
 
   @property({
     type: 'string',
+    jsonSchema: {nullable: true},
     postgresql: {columnName: 'remarks', dataType: 'text', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'YES'},
   })
   remarks?: string;

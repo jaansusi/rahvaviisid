@@ -43,7 +43,8 @@ export class MusicalCharacteristics extends Entity {
   @property({
     type: 'string',
     jsonSchema: {
-      maxLength: 40
+      maxLength: 40,
+      nullable: true
     },
     postgresql: {columnName: 'melostrophe_num_score', dataType: 'character varying', dataLength: 40, dataPrecision: null, dataScale: null, nullable: 'YES'},
   })
@@ -52,7 +53,8 @@ export class MusicalCharacteristics extends Entity {
   @property({
     type: 'string',
     jsonSchema: {
-      maxLength: 40
+      maxLength: 40,
+      nullable: true
     },
     postgresql: {columnName: 'melostrophe_num_audio', dataType: 'character varying', dataLength: 40, dataPrecision: null, dataScale: null, nullable: 'YES'},
   })
@@ -67,6 +69,7 @@ export class MusicalCharacteristics extends Entity {
 
   @property({
     type: 'string',
+    jsonSchema: {nullable: true},
     postgresql: {columnName: 'remarks', dataType: 'text', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'YES'},
   })
   remarks?: string;
