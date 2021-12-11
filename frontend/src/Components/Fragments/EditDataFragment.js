@@ -75,14 +75,25 @@ const EditDataFragment = ({
                                 />
                             );
                         }
-
+                        let handleNestedChange = (event) => {
+                            const { name, value } = event.target;
+                            let temp = elementData;
+                            temp[name] = value;
+                            handleChange({
+                                target: {
+                                    name: modelField.field,
+                                    value: temp,
+                                    type: 'object',
+                                },
+                            });
+                        };
                         // If the field does not have any children, return the form element for it.
                         return (
                             <EditDataElement
                                 key={i}
                                 model={modelField}
                                 elemValue={elementData[modelField.field]}
-                                handleChange={handleChange}
+                                handleChange={handleNestedChange}
                                 index={index}
                             />
                         );

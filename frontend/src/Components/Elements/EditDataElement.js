@@ -268,7 +268,8 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                         temp[index][name] = {};
                 }
                 if (selector !== undefined) {
-                    temp[index][name][selector] = value;
+                    if (!Array.isArray(temp[index][name]))
+                        temp[index][name][selector] = value;
                 } else {
                     temp[index][name] = value;
                 }
@@ -319,21 +320,14 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                                                     model.nested.fields.map((field, j) => {
                                                         return (
                                                             <TableCell align={j === 0 ? 'left' : 'right'} key={j}>
+                                                                
                                                                 {
                                                                     row[field.field] !== undefined ?
                                                                         (
                                                                             field.type === 'boolean' ?
                                                                                 <>{row[field.field] ? t('model.true') : t('model.false')}</>
                                                                                 :
-                                                                                field.selector ?
-                                                                                    (
-                                                                                        Array.isArray(field.selector) ?
-                                                                                            field.selector.map(x => row[field.field][x]).join(' ')
-                                                                                            :
-                                                                                            row[field.field][field.selector]
-                                                                                    )
-                                                                                    :
-                                                                                    row[field.field]
+                                                                                DataService.GetValueWithSelector(field, row)
                                                                         )
                                                                         :
                                                                         ''

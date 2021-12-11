@@ -192,8 +192,8 @@ const EditComponent = ({ model, newItem, validate }) => {
 
         //First let's make sure that all the necessary models are using the correct data type
         let objToSend = recurse(currentModel, Object.assign({}, data));
-        if (validate !== undefined ? validate(objToSend, t) : false)
-            return;
+        // if (validate !== undefined ? validate(objToSend, t) : false)
+        //     return;
         if (newItem) {
             // No DB entry exists, use post request
             axios
@@ -267,9 +267,6 @@ const EditComponent = ({ model, newItem, validate }) => {
 
     const handleChange = (event) => {
         const { name, value, type } = event.target;
-        console.log('component');
-        console.log(name);
-        console.log(value);
         setAssetData({
             name: name,
             // Numbers need to be sent as actual numeric values, not strings

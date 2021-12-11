@@ -23,6 +23,9 @@ export class RhythmTypes extends Entity {
 
   @property({
     type: 'string',
+    jsonSchema: {
+      nullable: true,
+    },
     postgresql: {columnName: 'description', dataType: 'text', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'YES'},
   })
   description?: string;
@@ -50,18 +53,27 @@ export class RhythmTypes extends Entity {
 
   @property({
     type: 'string',
+    jsonSchema: {
+      nullable: true,
+    },
     postgresql: {columnName: 'rhythm', dataType: 'ARRAY', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'YES'},
   })
   rhythm?: string;
 
   @property({
     type: 'boolean',
+    jsonSchema: {
+      nullable: true,
+    },
     postgresql: {columnName: 'is_public', dataType: 'boolean', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'YES'},
   })
   isPublic?: boolean;
 
   @property({
     type: 'string',
+    jsonSchema: {
+      nullable: true,
+    },
     postgresql: {columnName: 'public_identifier', dataType: 'text', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'YES'},
   })
   publicIdentifier?: string;

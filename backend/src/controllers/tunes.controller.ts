@@ -9,7 +9,7 @@ import {
   Filter,
   FilterExcludingWhere,
   repository,
-  Where
+  Where,
 } from '@loopback/repository';
 import {
   post,
@@ -18,7 +18,7 @@ import {
   getModelSchemaRef,
   patch,
   del,
-  requestBody
+  requestBody,
 } from '@loopback/rest';
 import {
   ExternalReferences,
@@ -37,6 +37,8 @@ import {
   ExternalReferencesRepository,
   MusicalCharacteristicsRepository,
   MusicalCharacteristicsRhythmTypesRepository,
+  MusicalCharacteristicsTextFormsRepository,
+  MusicalCharacteristicsTuneFormsRepository,
   RhythmTypesRepository,
   SoundRangesRepository,
   TuneEncodingsRepository,
@@ -52,14 +54,14 @@ import {IAuditMixinOptions, UserId} from '../types';
 import {Getter, inject} from '@loopback/core';
 import {TunesFilter} from '../keys';
 import {AuditBaseController} from './auditbase.controller';
-import { ValidationError } from '../errors';
+import {ValidationError} from '../errors';
 
 const groupAuditOpts: IAuditMixinOptions = {
   actionKey: 'Tunes_Logs',
 };
 
-import { UniqueValidationInterceptor } from '../interceptors';
-import { intercept } from '@loopback/core';
+import {UniqueValidationInterceptor} from '../interceptors';
+import {intercept} from '@loopback/core';
 
 @intercept(UniqueValidationInterceptor.BINDING_KEY)
 export class TunesController extends AuditBaseController<Tunes> {
@@ -94,6 +96,10 @@ export class TunesController extends AuditBaseController<Tunes> {
     public rhythmTypesRepository: RhythmTypesRepository,
     @repository(MusicalCharacteristicsRhythmTypesRepository)
     public musicalCharacteristicsRhythmTypesRepository: MusicalCharacteristicsRhythmTypesRepository,
+    @repository(MusicalCharacteristicsTextFormsRepository)
+    public musicalCharacteristicsTextFormsRepository: MusicalCharacteristicsTextFormsRepository,
+    @repository(MusicalCharacteristicsTuneFormsRepository)
+    public musicalCharacteristicsTuneFormsRepository: MusicalCharacteristicsTuneFormsRepository,
     @repository(SoundRangesRepository)
     public soundRangesRepository: SoundRangesRepository,
     @repository(ExternalReferencesRepository)
@@ -216,7 +222,7 @@ export class TunesController extends AuditBaseController<Tunes> {
       id,
       TunesFilter.ALL_NO_CLASSIFICATORS,
     );
-    
+
     await this.insertTune(tunes, before);
     let after = await this.tunesRepository.findById(
       id,
@@ -302,16 +308,38 @@ export class TunesController extends AuditBaseController<Tunes> {
       musicalCharacteristics.forEach(
         (musicalCharacteristic: MusicalCharacteristics) => {
           delete musicalCharacteristic.soundRanges;
+          let textForms = musicalCharacteristic.textForms;
+          delete musicalCharacteristic.textForms;
+          let tuneForms = musicalCharacteristic.tuneForms;
+          delete musicalCharacteristic.tuneForms;
+          let rhythmTypes = musicalCharacteristic.rhythmTypes;
+          delete musicalCharacteristic.rhythmTypes;
           this.insertNestedAsset(
             musicalCharacteristic,
             this.musicalCharacteristicsRepository,
             createdTune.id,
-          ).then(newMusicalCharacteristic => {
-            musicalCharacteristic.rhythmTypes?.forEach(rhythmType => {
-              this.musicalCharacteristicsRepository
-                .rhythmTypes(newMusicalCharacteristic.id)
-                .create(rhythmType);
-            });
+          ).then((tempMusicCharac) => {
+            this.createM2mRelations(
+              textForms,
+              tempMusicCharac.id,
+              'musicalCharacteristicId',
+              'textFormId',
+              this.musicalCharacteristicsTextFormsRepository,
+            );
+            this.createM2mRelations(
+              tuneForms,
+              tempMusicCharac.id,
+              'musicalCharacteristicId',
+              'tuneFormId',
+              this.musicalCharacteristicsTuneFormsRepository,
+            );
+            this.createM2mRelations(
+              rhythmTypes,
+              tempMusicCharac.id,
+              'musicalCharacteristicsId',
+              'rhythmTypesId',
+              this.musicalCharacteristicsRhythmTypesRepository,
+            );
           });
         },
       );
@@ -422,20 +450,45 @@ export class TunesController extends AuditBaseController<Tunes> {
     //And create a new entry into the db
     return await repository.create(asset);
   }
+  
+  private async createM2mRelations(
+    assets: any[] | undefined,
+    firstId: number,
+    firstIdProperty: string,
+    secondIdProperty: string,
+    relationAssetRepository: DefaultCrudRepository<any, number, object>,
+  ): Promise<any> {
+    //to-do: delete should be selective, compare with originals and choose assets for deletion
+    await relationAssetRepository.deleteAll({
+      [firstIdProperty]: firstId
+    });
+    assets?.forEach(asset => {
+      let relationAsset = {
+        [firstIdProperty]: firstId,
+        [secondIdProperty]: asset.id,
+      }
+      let filter = {
+        where: relationAsset,
+      };
+      relationAssetRepository.findOne(filter).then(existing => {
+        if (existing === null)
+          relationAssetRepository.create(relationAsset);
+      });
+    });
+  }
 
   private async deleteNestedAssets(
     originals: Entity[],
     current: Entity[],
     repo: DefaultCrudRepository<any, number>,
   ) {
-    try {
-      let toBeDeleted = originals.filter(
-        x => !current?.map(y => typeof y['getId'] === 'function' ? y.getId() : undefined).includes(x.getId())
-      );
-      toBeDeleted?.forEach(x => repo.deleteById(x.getId()));
-    }
-    catch(ex) {
-      throw ex;
-    }
+    let toBeDeleted = originals.filter(
+      x =>
+        !current
+          //The typeof here is necessary, sometimes getId is not defined as a function..
+          ?.map(y => (typeof y['getId'] === 'function' ? y.getId() : undefined))
+          .includes(x.getId()),
+    );
+    toBeDeleted?.forEach(x => repo.deleteById(x.getId()));
   }
 }

@@ -131,4 +131,23 @@ export const DataService = {
             return '';
         return new Intl.DateTimeFormat('et-EE', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }).format(Date.parse(date));
     },
+
+    GetValueWithSelector(model, element) {
+        return (
+            Array.isArray(element[model.field]) ?
+                element[model.field].map(el =>
+                    model.selector ?
+                        Array.isArray(model.selector) ?
+                            model.selector.map(x => el[x]).join(' ') :
+                            el[model.selector] :
+                        el)
+                    .join(', ')
+                :
+                model.selector ?
+                    Array.isArray(model.selector) ?
+                        model.selector.map(x => element[model.field][x]).join(' ') :
+                        element[model.field][model.selector] :
+                    element[model.field]
+        );
+    }
 }

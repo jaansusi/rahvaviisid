@@ -1,6 +1,7 @@
 import React from 'react';
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@material-ui/core";
 import { useTranslation } from 'react-i18next';
+import { DataService } from '../../../Services';
 
 export const TableViewComponent = ({ value, model }) => {
     const { t } = useTranslation('common');
@@ -58,11 +59,7 @@ export const TableViewComponent = ({ value, model }) => {
                                                                         title={field.alt ? row[field.field][field.alt] : undefined}
                                                                     >
                                                                         {
-                                                                            field.selector ?
-                                                                                Array.isArray(field.selector) ?
-                                                                                    field.selector.map(x => row[field.field][x]).join(' ') :
-                                                                                    row[field.field][field.selector] :
-                                                                                row[field.field]
+                                                                            DataService.GetValueWithSelector(field, row)
                                                                         }
                                                                     </a>
                                                                     :
@@ -71,20 +68,7 @@ export const TableViewComponent = ({ value, model }) => {
                                                                         :
                                                                         <span title={field.alt ? row[field.field][field.alt] : undefined}>
                                                                             {
-                                                                                Array.isArray(row[field.field]) ?
-                                                                                    row[field.field].map(el =>
-                                                                                        field.selector ?
-                                                                                            Array.isArray(field.selector) ?
-                                                                                                field.selector.map(x => el[x]).join(' ') :
-                                                                                                el[field.selector] :
-                                                                                            el)
-                                                                                            .join(', ')
-                                                                                    :
-                                                                                    field.selector ?
-                                                                                        Array.isArray(field.selector) ?
-                                                                                            field.selector.map(x => row[field.field][x]).join(' ') :
-                                                                                            row[field.field][field.selector] :
-                                                                                        row[field.field]
+                                                                                DataService.GetValueWithSelector(field, row)
                                                                             }
                                                                         </span>
                                                     }
