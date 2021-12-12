@@ -89,7 +89,8 @@
         "role": "Role",
         "email": "E-mail address",
         "firstName": "Given Name",
-        "lastName": "Surname"
+        "lastName": "Surname",
+        "password": "Password"
     },
     "place": {
         "place": "Place",
@@ -293,11 +294,18 @@
     },
     "validation": {
         "tunes": {
-            "invalidReferences": "Populate at least one: text-, tune-, videoreference"
+            "invalidReferences": "Populate at least one: text-, tune-, audio-, videoreference"
         },
         "mustBeNumber": "Must be a number",
         "tunesPersonsRoles": "Persons involved",
         "actionStartYear": "Year started",
-        "notUnique": "Entity not unique"
+        "notUnique": "Entity not unique",
+        "countryId": "Country",
+        "person":{
+            "noNames": "At least one of the names is required"
+        },
+        "user": {
+            "password": "Password is not strong enough"
+        }
     }
 }

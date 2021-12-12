@@ -13,7 +13,7 @@ const LocationHeader = ({ location }) => {
     if (['', 'login', 'otsing'].includes(path[0]))
         return null;
     let translatedString = '';
-    if (path.length > 2) {
+    if (path.length > 2 && path[path.length-1] !== 'uus') {
         path.pop();
         let id = path.pop();
         translatedString = [

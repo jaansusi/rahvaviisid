@@ -141,7 +141,7 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                                     option.title
                         }
                         value={
-                            elemValue ?
+                            Array.isArray(elemValue) ?
                                 elemValue.map(elem =>
                                     model.values.find(x => (model.selector ? x[model.selector] : x.id) === elem.id)
                                 ) :
@@ -192,7 +192,7 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                                 option.title
                         }
                         value={
-                            elemValue ?
+                            elemValue !== null && elemValue !== undefined ?
                                 elemValue.map(elem =>
                                     model.values.find(x => x.value === elem)
                                 ) :
@@ -259,17 +259,16 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
             let handleRowChange = (event, index) => {
                 const { name, value } = event.target;
                 let temp = elemValue;
-                let selector = model.edit.fields.filter(x => x.field === name)[0].selector;
-
+                let currentModel = model.edit.fields.filter(x => x.field === name)[0];
+                let selector = currentModel.selector;
                 if (temp[index][name] === undefined) {
-                    if (model.edit.fields.filter(x => x.field === name)[0].array)
+                    if (currentModel.array || currentModel.type === 'multiselect' || currentModel.type === 'staticMultiselect')
                         temp[index][name] = [];
                     else
                         temp[index][name] = {};
                 }
-                if (selector !== undefined) {
-                    if (!Array.isArray(temp[index][name]))
-                        temp[index][name][selector] = value;
+                if (selector !== undefined && !Array.isArray(temp[index][name])) {
+                    temp[index][name][selector] = value;
                 } else {
                     temp[index][name] = value;
                 }
@@ -320,7 +319,7 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                                                     model.nested.fields.map((field, j) => {
                                                         return (
                                                             <TableCell align={j === 0 ? 'left' : 'right'} key={j}>
-                                                                
+
                                                                 {
                                                                     row[field.field] !== undefined ?
                                                                         (
@@ -470,6 +469,12 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                 </Grid >
             );
         default:
+            let handleDefaultChange = (e, i) => {
+                const { name, value } = e.target;
+                console.log(name);
+                console.log(value);
+                handleChange(e, i);
+            }
             return (
                 <Grid
                     item
@@ -480,12 +485,26 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                         <TextField
                             name={model.field}
                             error={model.type === 'number' ? isNaN(elemValue) : false}
-                            inputProps={model.type === 'number' ? { inputMode: 'numeric', pattern: '[0-9]*' } : undefined}
-                            helperText={model.type === 'number' && elemValue.length > 0 && isNaN(elemValue) ? t('validation.mustBeNumber') : undefined}
+                            inputProps={
+                                model.type === 'number' ?
+                                    { inputMode: 'numeric', pattern: '[0-9]*' } :
+                                    (
+                                        model.pattern !== undefined ?
+                                            { inputMode: 'text', pattern: '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{14,})' } :
+                                            undefined
+                                    )
+                            }
+                            helperText={
+                                model.type === 'number' && elemValue.length > 0 && isNaN(elemValue) ?
+                                    t('validation.mustBeNumber') :
+                                    model.pattern !== undefined && elemValue !== '' && !elemValue.match(model.pattern) ?
+                                        t('validation.' + model.headerName) :
+                                        undefined
+                            }
                             label={t(model.headerName)}
                             value={model.selector ? elemValue[model.selector] : elemValue}
                             required={model.required}
-                            onChange={(e) => handleChange(e, index)}
+                            onChange={(e) => handleDefaultChange(e, index)}
                             style={{ backgroundColor: 'white' }}
                             variant='outlined' />
                     </FormControl>

@@ -361,11 +361,12 @@
         "role": "Kasutaja roll",
         "email": "E-mail",
         "firstName": "Eesnimi",
-        "lastName": "Perenimi"
+        "lastName": "Perenimi",
+        "password":"Parool"
     },
     "validation": {
         "tunes": {
-            "invalidReferences": "Üks kolmest on kohustuslik: viisiviide, heliviide, videoviide"
+            "invalidReferences": "Üks neist on kohustuslik: viisiviide, heliviide, videoviide, tekstiviide"
         },
         "mustBeNumber": "Peab olema number",
         "tunesPersonsRoles": "Viisiga seotud isikud",
@@ -375,6 +376,12 @@
         "tuneStateId": "Seisund",
         "nationId": "Rahvus",
         "languageId": "Keel",
-        "countryId": "Riik"
+        "countryId": "Riik",
+        "person":{
+            "noNames": "Üks nimedest peab olema täidetud"
+        },
+        "user": {
+            "password": "Parool ei ole piisavalt tugev"
+        }
     }
 }

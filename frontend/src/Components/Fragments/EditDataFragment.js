@@ -79,10 +79,10 @@ const EditDataFragment = ({
                             const { name, value } = event.target;
                             let type = undefined;
                             let temp = value;
-                            if (typeof value === 'object') {
+                            if (typeof value === 'object' && !Array.isArray(value)) {
+                                type = 'object';
                                 temp = elementData;
                                 temp[name] = value;
-                                type = 'object';
                             }
                             handleChange({
                                 target: {

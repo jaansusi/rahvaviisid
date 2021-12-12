@@ -30,7 +30,7 @@ export const TuneService = {
         let requiredFields = [
             'nationId',
             'languageId',
-            'countryId'
+            'countryId',
         ];
 
         let missingFields = requiredFields.filter(x => tune[x] === undefined);

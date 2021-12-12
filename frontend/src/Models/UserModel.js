@@ -19,7 +19,7 @@ export const UserModel = ModelService.GenerateDefaults({
     edit: {
         fields: [
             { field: 'id', hidden: true },
-            { field: 'email', headerName: 'user.email' },
+            { field: 'email', headerName: 'user.email', required: true },
             { field: 'firstName', headerName: 'user.firstName' },
             { field: 'lastName', headerName: 'user.lastName' },
             { field: 'isActive', type: 'boolean', headerName: 'common.active'},
@@ -35,8 +35,8 @@ export const UserModel = ModelService.GenerateDefaults({
     create: {
         apiPath: 'users',
         fields: [
-            { field: 'email', headerName: 'user.email' },
-            { field: 'password', headerName: 'user.password' },
+            { field: 'email', headerName: 'user.email', required: true },
+            { field: 'password', headerName: 'user.password', required: true, pattern: "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{14,})" },
             { field: 'firstName', headerName: 'user.firstName' },
             { field: 'lastName', headerName: 'user.lastName' },
             { field: 'isActive', type: 'boolean', headerName: 'common.active'},

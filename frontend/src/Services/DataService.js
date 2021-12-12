@@ -106,6 +106,9 @@ export const DataService = {
                     case 'multiselect':
                         value = [];
                         break;
+                    case 'staticMultiselect':
+                        value = [];
+                        break;
                     default:
                         value = value === undefined ? '' : value;
                 }

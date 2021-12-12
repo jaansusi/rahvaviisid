@@ -23,6 +23,8 @@ import {Persons} from '../models';
 import {PersonsRepository, SexesRepository} from '../repositories';
 import { UniqueValidationInterceptor } from '../interceptors';
 import { intercept } from '@loopback/core';
+import {ValidationError} from '../errors';
+
 
 @intercept(UniqueValidationInterceptor.BINDING_KEY)
 export class PersonsController {
@@ -59,6 +61,13 @@ export class PersonsController {
     })
     persons: Omit<Persons, 'id'>,
   ): Promise<Persons> {
+    if (persons.givenName === '' && persons.surname === '' && persons.nickname === '') {
+      let err: ValidationError = new ValidationError(
+        'validation.person.noNames',
+      );
+      err.statusCode = 422;
+      throw err;
+    }
     return this.personsRepository.create(persons);
   }
 
@@ -168,6 +177,13 @@ export class PersonsController {
     })
     persons: Persons,
   ): Promise<void> {
+    if (persons.givenName === '' && persons.surname === '' && persons.nickname === '') {
+      let err: ValidationError = new ValidationError(
+        'validation.person.noNames',
+      );
+      err.statusCode = 422;
+      throw err;
+    }
     await this.personsRepository.updateById(id, persons);
   }
 

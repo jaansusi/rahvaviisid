@@ -11,7 +11,7 @@ import { toast } from 'react-toastify';
 import BarLoader from 'react-spinners/BarLoader';
 import './EditComponent.css';
 
-const EditComponent = ({ model, newItem, validate }) => {
+const EditComponent = ({ model, newItem, validateTune }) => {
     newItem = newItem === undefined ? false : newItem;
     const { t } = useTranslation('common');
     const history = useHistory();
@@ -192,8 +192,8 @@ const EditComponent = ({ model, newItem, validate }) => {
 
         //First let's make sure that all the necessary models are using the correct data type
         let objToSend = recurse(currentModel, Object.assign({}, data));
-        // if (validate !== undefined ? validate(objToSend, t) : false)
-        //     return;
+        if (validateTune && !TuneService.Validate(objToSend, t))
+            return;
         if (newItem) {
             // No DB entry exists, use post request
             axios

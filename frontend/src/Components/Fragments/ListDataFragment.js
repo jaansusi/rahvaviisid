@@ -18,6 +18,8 @@ const ListDataFragment = (({ model, data, rowCount, updateTable, currentView, ad
         x.sortable = false;
         if (x.type === 'number') {
             x.valueFormatter = (params) => {
+                if (params.value === null)
+                    return '';
                 return params.value.toString()
             }
         }

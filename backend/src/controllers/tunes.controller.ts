@@ -268,7 +268,7 @@ export class TunesController extends AuditBaseController<Tunes> {
     tune: Tunes | Omit<Tunes, 'id'>,
     original?: Tunes,
   ): Promise<Tunes> {
-    if (!(tune.tuneReference || tune.soundReference || tune.videoReference)) {
+    if (!(tune.tuneReference || tune.soundReference || tune.videoReference || tune.textReference)) {
       let err: ValidationError = new ValidationError(
         'validation.tunes.invalidReferences',
       );

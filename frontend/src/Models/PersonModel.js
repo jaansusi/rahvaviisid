@@ -5,7 +5,7 @@ export const PersonModel = ModelService.GenerateDefaults({
     apiPath: 'persons',
     list: {
         fields: [
-            { field: 'id', headerName: 'person.pid', width: 110 },
+            { field: 'pid', headerName: 'person.pid', width: 110 },
             { field: 'surname', headerName: 'person.surname', width: 180 },
             { field: 'givenName', headerName: 'person.givenName', width: 140 },
             { field: 'nickname', headerName: 'person.nickname', width: 160 },

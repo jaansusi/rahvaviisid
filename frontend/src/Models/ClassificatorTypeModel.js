@@ -21,7 +21,7 @@ export const ClassificatorsModel =
         edit: {
             fields: [
                 { field: 'id', hidden: true },
-                { field: 'title', headerName: 'common.title' },
+                { field: 'title', headerName: 'common.title', required: true },
                 { field: 'description', type: 'textbox', headerName: 'common.description' },
                 { field: 'isActive', type: 'boolean', headerName: 'common.active' }
             ]
@@ -53,7 +53,7 @@ export const ClassificatorsModel =
                     edit: {
                         fields: [
                             { field: 'id', hidden: true },
-                            { field: 'title', headerName: 'common.title' },
+                            { field: 'title', headerName: 'common.title', required: true },
                             { field: 'description', type: 'textbox', headerName: 'common.description' },
                             { field: 'isActive', type: 'boolean', headerName: 'common.active' }
                         ]
