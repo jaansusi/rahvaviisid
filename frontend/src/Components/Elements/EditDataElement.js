@@ -470,9 +470,6 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
             );
         default:
             let handleDefaultChange = (e, i) => {
-                const { name, value } = e.target;
-                console.log(name);
-                console.log(value);
                 handleChange(e, i);
             }
             return (
@@ -484,15 +481,19 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                     <FormControl className='form-input-element' variant='outlined'>
                         <TextField
                             name={model.field}
-                            error={model.type === 'number' ? isNaN(elemValue) : false}
+                            error={
+                                model.type === 'number' ?
+                                    isNaN(elemValue) :
+                                    (
+                                        model.pattern !== undefined ?
+                                            !elemValue.match(model.pattern) :
+                                            false
+                                    )
+                            }
                             inputProps={
                                 model.type === 'number' ?
                                     { inputMode: 'numeric', pattern: '[0-9]*' } :
-                                    (
-                                        model.pattern !== undefined ?
-                                            { inputMode: 'text', pattern: '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{14,})' } :
-                                            undefined
-                                    )
+                                    undefined
                             }
                             helperText={
                                 model.type === 'number' && elemValue.length > 0 && isNaN(elemValue) ?

@@ -47,7 +47,7 @@ const SearchResults = ({ showAll, assets }) => {
                 columns={columns}
                 autoHeight
                 pageSize={25}
-                rowsPerPageOptions = {[10, 25, 50, 100]}
+                rowsPerPageOptions = {[]}
                 onSelectionModelChange={(selectedRows) => setSelection(selectedRows.selectionModel)}
                 componentsProps={{
                   pagination: {
