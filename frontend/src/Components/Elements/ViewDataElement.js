@@ -84,7 +84,7 @@ const ViewDataElement = (({ model, value }) => {
                 </Grid>
             );
         case 'associatedAssets':
-            console.log(value);
+        case 'customAssociatedAssets':
             return (
                 <Grid item xs={12} container direction='column' spacing={2}>
                     <Grid item><Typography variant='h5'>{t(model.headerName)}</Typography></Grid>

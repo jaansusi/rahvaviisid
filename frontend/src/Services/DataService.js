@@ -58,7 +58,7 @@ export const DataService = {
                 x.nested ||
                 (x.selector && x.type !== 'dropdown') ||
                 (x.type === 'multiselect' && x.apiPath) ||
-                x.associatedModel
+                x.type === 'associatedAssets'
             );
             if (nestedFields.length === 0)
                 return {}
