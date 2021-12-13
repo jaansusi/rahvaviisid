@@ -44,6 +44,13 @@ export class TuneTranscriptions extends Entity {
 
   @property({
     type: 'string',
+    jsonSchema: {nullable: true},
+    postgresql: {columnName: 'remarks', dataType: 'text', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'YES'},
+  })
+  remarks?: string;
+
+  @property({
+    type: 'string',
     required: false,
     postgresql: {columnName: 'created', dataType: 'timestamp without time zone', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'NO'},
   })

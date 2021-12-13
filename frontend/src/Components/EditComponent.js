@@ -115,8 +115,8 @@ const EditComponent = ({ model, newItem, validateTune }) => {
                     }
                 }
 
-                // If the model entry is a label, ignore it
-                if (modelElem.type === 'label' || modelElem.type === 'view')
+                // Ignore values we don't need to send
+                if (modelElem.type === 'label' || modelElem.type === 'view' || modelElem.type === 'player')
                     continue;
 
                 // If the value is empty, check if there is a default in the model

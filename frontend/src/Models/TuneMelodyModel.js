@@ -19,7 +19,7 @@ export const TuneMelodyModel = ModelService.GenerateDefaults({
         label: 'tune.variant',
         fields: [
             { field: 'id', hidden: true },
-            { field: 'variationIndex', hidden: true },
+            { field: 'variationIndex', type: 'number', hidden: true },
             { field: 'alter', headerName: 'tune.alter' },
             { field: 'tempo', headerName: 'tune.tempo' },
             { field: 'noteLength', headerName: 'tune.noteLength' },
