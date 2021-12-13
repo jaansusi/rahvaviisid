@@ -188,6 +188,15 @@ CREATE INDEX IX_tunes_countries ON folk_tune.tunes (country_id)
 CREATE INDEX IX_tunes_users ON folk_tune.tunes (verified_by)
 ;
 
+CREATE UNIQUE INDEX IX_tunes_references ON folk_tune.tunes 
+(
+    COALESCE(tune_reference, 'NULL'),
+    COALESCE(text_reference, 'NULL'),
+    COALESCE(sound_reference, 'NULL'),
+    COALESCE(video_reference, 'NULL')
+)
+;
+
 CREATE TABLE folk_tune.tune_place_types
 (
     id smallserial NOT NULL,

@@ -268,7 +268,14 @@ export class TunesController extends AuditBaseController<Tunes> {
     tune: Tunes | Omit<Tunes, 'id'>,
     original?: Tunes,
   ): Promise<Tunes> {
-    if (!(tune.tuneReference || tune.soundReference || tune.videoReference || tune.textReference)) {
+    if (
+      !(
+        tune.tuneReference ||
+        tune.soundReference ||
+        tune.videoReference ||
+        tune.textReference
+      )
+    ) {
       let err: ValidationError = new ValidationError(
         'validation.tunes.invalidReferences',
       );
@@ -315,6 +322,12 @@ export class TunesController extends AuditBaseController<Tunes> {
       );
     });
 
+    if (original?.musicalCharacteristics)
+      this.deleteNestedAssets(
+        original.musicalCharacteristics,
+        musicalCharacteristics,
+        this.musicalCharacteristicsRepository,
+      );
     if (musicalCharacteristics !== undefined) {
       //Create musical characteristics, we will need the ids
       musicalCharacteristics.forEach(
@@ -330,7 +343,7 @@ export class TunesController extends AuditBaseController<Tunes> {
             musicalCharacteristic,
             this.musicalCharacteristicsRepository,
             createdTune.id,
-          ).then((tempMusicCharac) => {
+          ).then(tempMusicCharac => {
             this.createM2mRelations(
               textForms,
               tempMusicCharac.id,
@@ -357,6 +370,12 @@ export class TunesController extends AuditBaseController<Tunes> {
       );
     }
 
+    if (original?.tuneTranscriptions)
+      this.deleteNestedAssets(
+        original.tuneTranscriptions,
+        tuneTranscriptions,
+        this.tuneTranscriptionsRepository,
+      );
     if (tuneTranscriptions !== undefined) {
       tuneTranscriptions.map((tuneTranscription: TuneTranscriptions) => {
         return this.insertNestedAsset(
@@ -367,6 +386,12 @@ export class TunesController extends AuditBaseController<Tunes> {
       });
     }
 
+    if (original?.tuneEncodings)
+      this.deleteNestedAssets(
+        original.tuneEncodings,
+        tuneEncodings,
+        this.tuneEncodingsRepository,
+      );
     if (tuneEncodings !== undefined) {
       tuneEncodings.forEach((tuneEncoding: TuneEncodings) => {
         delete tuneEncoding.keySignatures;
@@ -391,6 +416,12 @@ export class TunesController extends AuditBaseController<Tunes> {
       });
     }
 
+    if (original?.tunesPersonsRoles)
+      this.deleteNestedAssets(
+        original.tunesPersonsRoles,
+        tunesPersonsRoles,
+        this.tunesPersonsRolesRepository,
+      );
     if (tunesPersonsRoles !== undefined) {
       tunesPersonsRoles.forEach((tunesPersonsRole: TunesPersonsRoles) => {
         delete tunesPersonsRole.persons;
@@ -403,6 +434,12 @@ export class TunesController extends AuditBaseController<Tunes> {
       });
     }
 
+    if (original?.tuneSongs)
+      this.deleteNestedAssets(
+        original.tuneSongs,
+        tuneSongs,
+        this.tuneSongsRepository,
+      );
     if (tuneSongs !== undefined) {
       tuneSongs.forEach((tuneSong: TuneSongs) => {
         let tuneGenres = tuneSong.tuneGenres;
@@ -417,7 +454,7 @@ export class TunesController extends AuditBaseController<Tunes> {
           tuneSong,
           this.tuneSongsRepository,
           createdTune.id,
-        ).then((insertedAsset) => {
+        ).then(insertedAsset => {
           this.createM2mRelations(
             tuneGenres,
             insertedAsset.id,
@@ -450,6 +487,12 @@ export class TunesController extends AuditBaseController<Tunes> {
       });
     }
 
+    if (original?.tunePlaces)
+      this.deleteNestedAssets(
+        original.tunePlaces,
+        tunePlaces,
+        this.tunePlacesRepository,
+      );
     if (tunePlaces !== undefined) {
       tunePlaces.forEach((tunePlace: TunePlaces) => {
         delete tunePlace.persons;
@@ -465,6 +508,12 @@ export class TunesController extends AuditBaseController<Tunes> {
       });
     }
 
+    if (original?.tunePerformances)
+      this.deleteNestedAssets(
+        original.tunePerformances,
+        tunePerformances,
+        this.tunePerformancesRepository,
+      );
     if (tunePerformances !== undefined) {
       tunePerformances.forEach((tunePerformance: TunePerformances) => {
         delete tunePerformance.actualPerformanceTypes;
@@ -499,7 +548,7 @@ export class TunesController extends AuditBaseController<Tunes> {
     //And create a new entry into the db
     return await repository.create(asset);
   }
-  
+
   private async createM2mRelations(
     assets: any[] | undefined,
     firstId: number,
@@ -509,19 +558,18 @@ export class TunesController extends AuditBaseController<Tunes> {
   ): Promise<any> {
     //to-do: delete should be selective, compare with originals and choose assets for deletion
     await relationAssetRepository.deleteAll({
-      [firstIdProperty]: firstId
+      [firstIdProperty]: firstId,
     });
     assets?.forEach(asset => {
       let relationAsset = {
         [firstIdProperty]: firstId,
         [secondIdProperty]: asset.id,
-      }
+      };
       let filter = {
         where: relationAsset,
       };
       relationAssetRepository.findOne(filter).then(existing => {
-        if (existing === null)
-          relationAssetRepository.create(relationAsset);
+        if (existing === null) relationAssetRepository.create(relationAsset);
       });
     });
   }
