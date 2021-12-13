@@ -44,6 +44,7 @@ import {
   TuneEncodingsRepository,
   TuneMelodiesRepository,
   TunePerformancesRepository,
+  TunePerformancesTraditionalActionsTypesRepository,
   TunePlacesRepository,
   TuneSongsRepository,
   TuneSongsSongGenresRepository,
@@ -94,6 +95,8 @@ export class TunesController extends AuditBaseController<Tunes> {
     public tuneSongsVerseFormsRepository: TuneSongsVerseFormsRepository,
     @repository(TunePerformancesRepository)
     public tunePerformancesRepository: TunePerformancesRepository,
+    @repository(TunePerformancesTraditionalActionsTypesRepository)
+    public tunePerformancesTraditionalActionsTypesRepository: TunePerformancesTraditionalActionsTypesRepository,
     @repository(TunePlacesRepository)
     public tunePlacesRepository: TunePlacesRepository,
     @repository(TuneTranscriptionsRepository)
@@ -371,7 +374,7 @@ export class TunesController extends AuditBaseController<Tunes> {
     }
 
     if (original?.tuneTranscriptions)
-      this.deleteNestedAssets(
+      await this.deleteNestedAssets(
         original.tuneTranscriptions,
         tuneTranscriptions,
         this.tuneTranscriptionsRepository,
@@ -387,7 +390,7 @@ export class TunesController extends AuditBaseController<Tunes> {
     }
 
     if (original?.tuneEncodings)
-      this.deleteNestedAssets(
+      await this.deleteNestedAssets(
         original.tuneEncodings,
         tuneEncodings,
         this.tuneEncodingsRepository,
@@ -417,7 +420,7 @@ export class TunesController extends AuditBaseController<Tunes> {
     }
 
     if (original?.tunesPersonsRoles)
-      this.deleteNestedAssets(
+      await this.deleteNestedAssets(
         original.tunesPersonsRoles,
         tunesPersonsRoles,
         this.tunesPersonsRolesRepository,
@@ -435,7 +438,7 @@ export class TunesController extends AuditBaseController<Tunes> {
     }
 
     if (original?.tuneSongs)
-      this.deleteNestedAssets(
+      await this.deleteNestedAssets(
         original.tuneSongs,
         tuneSongs,
         this.tuneSongsRepository,
@@ -488,7 +491,7 @@ export class TunesController extends AuditBaseController<Tunes> {
     }
 
     if (original?.tunePlaces)
-      this.deleteNestedAssets(
+      await this.deleteNestedAssets(
         original.tunePlaces,
         tunePlaces,
         this.tunePlacesRepository,
@@ -509,21 +512,32 @@ export class TunesController extends AuditBaseController<Tunes> {
     }
 
     if (original?.tunePerformances)
-      this.deleteNestedAssets(
+      await this.deleteNestedAssets(
         original.tunePerformances,
         tunePerformances,
         this.tunePerformancesRepository,
       );
     if (tunePerformances !== undefined) {
       tunePerformances.forEach((tunePerformance: TunePerformances) => {
+        console.log(tunePerformance.id);
         delete tunePerformance.actualPerformanceTypes;
         delete tunePerformance.traditionalPerformanceTypes;
         delete tunePerformance.actualActionTypes;
+        let traditionalActionTypes = tunePerformance.traditionalPerformanceTypes;
+        delete tunePerformance.traditionalActionTypes;
         this.insertNestedAsset(
           tunePerformance,
           this.tunePerformancesRepository,
           createdTune.id,
-        );
+        ).then(insertedAsset => {
+          this.createM2mRelations(
+            traditionalActionTypes,
+            insertedAsset.id,
+            'tunePerformanceId',
+            'traditionalActionTypeId',
+            this.tunePerformancesTraditionalActionsTypesRepository,
+          );
+        });
       });
     }
 
@@ -586,6 +600,11 @@ export class TunesController extends AuditBaseController<Tunes> {
           ?.map(y => (typeof y['getId'] === 'function' ? y.getId() : undefined))
           .includes(x.getId()),
     );
-    toBeDeleted?.forEach(x => repo.deleteById(x.getId()));
+    console.log('Originals: ' + JSON.stringify(originals));
+    console.log('Deleting: ' + JSON.stringify(toBeDeleted));
+    for (let key in toBeDeleted) {
+      await repo.deleteById(toBeDeleted[key].getId())
+      
+    }
   }
 }

@@ -95,7 +95,7 @@ export class TunePerformances extends Entity {
   traditionalPerformanceTypes?: TraditionalPerformanceTypes;
 
   @hasMany(() => TraditionalActionTypes, {through: {model: () => TunePerformancesTraditionalActionsTypes, keyFrom: 'tunePerformanceId', keyTo: 'traditionalActionTypeId'}})
-  traditionalActionTypes: TraditionalActionTypes[];
+  traditionalActionTypes?: TraditionalActionTypes[];
  
 
   // Define well-known properties here

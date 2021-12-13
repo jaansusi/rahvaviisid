@@ -366,7 +366,14 @@
     },
     "validation": {
         "tunes": {
-            "invalidReferences": "Üks neist on kohustuslik: viisiviide, heliviide, videoviide, tekstiviide"
+            "invalidReferences": "Üks neist on kohustuslik: viisiviide, heliviide, videoviide, tekstiviide",
+            "places": {
+                "missingParish": "Kohal puudub kihelkond: ",
+                "missingPlaceType": "Kohal puudub koha liik: "
+            },
+            "performances": {
+                "missingActualPerformanceType": "Esitusel puudub tegeliku esituse tüüp: "
+            }
         },
         "mustBeNumber": "Peab olema number",
         "tunesPersonsRoles": "Viisiga seotud isikud",

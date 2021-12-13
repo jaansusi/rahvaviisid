@@ -33,15 +33,35 @@ export const TuneService = {
             'countryId',
         ];
 
+        let errors = [];
+
         let missingFields = requiredFields.filter(x => tune[x] === undefined);
         if (missingFields.length > 0) {
             missingFields.forEach(x =>
-                toast.error(translator('validation.' + x) + translator('validation.isMissing'), {
-                    closeButton: true,
-                    autoClose: false,
-                }));
-            return false;
+                errors.push(translator('validation.' + x) + translator('validation.isMissing'))
+            )
         }
-        return true;
+
+        if (tune.tunePlaces.length > 0) {
+            tune.tunePlaces.forEach((x, i) => {
+                if (x.parishId === undefined)
+                    errors.push(translator('validation.tunes.places.missingParish') + (i + 1))
+                if (x.tunePlaceTypeId === undefined)
+                    errors.push(translator('validation.tunes.places.missingPlaceType') + (i + 1))
+            })
+        }
+
+        if (tune.tunePerformances.length > 0) {
+            tune.tunePerformances.forEach((x, i) => {
+                if (x.actualPerformanceTypeId === undefined)
+                    errors.push(translator('validation.tunes.performances.missingActualPerformanceType') + (i + 1))
+            })
+        }
+
+        errors.forEach(x => toast.error(x, {
+            closeButton: true,
+            autoClose: false,
+        }))
+        return errors.length === 0;
     }
 }
