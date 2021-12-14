@@ -373,6 +373,15 @@
             },
             "performances": {
                 "missingActualPerformanceType": "Esitusel puudub tegeliku esituse tüüp: "
+            },
+            "personsRoles": {
+                "missingRoleTypeId": "Viisiga seotud isikul puudub roll: "
+            },
+            "melodies": {
+                "missingMelody": "Kodeeringu variandil puudub meelodia: "
+            },
+            "musicalCharacteristics": {
+                "missingSoundRange": "Muusikalistel tunnustel puudub heliulatus: "
             }
         },
         "mustBeNumber": "Peab olema number",

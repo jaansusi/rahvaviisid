@@ -326,7 +326,7 @@ export class TunesController extends AuditBaseController<Tunes> {
     });
 
     if (original?.musicalCharacteristics)
-      this.deleteNestedAssets(
+      await this.deleteNestedAssets(
         original.musicalCharacteristics,
         musicalCharacteristics,
         this.musicalCharacteristicsRepository,
@@ -380,12 +380,18 @@ export class TunesController extends AuditBaseController<Tunes> {
         this.tuneTranscriptionsRepository,
       );
     if (tuneTranscriptions !== undefined) {
-      tuneTranscriptions.map((tuneTranscription: TuneTranscriptions) => {
+      tuneTranscriptions.forEach((tuneTranscription: TuneTranscriptions) => {
+        let tuneTranscriptionsPersonsRoles = tuneTranscription.transcriptionsPersonsRoles;
+        delete tuneTranscription.transcriptionsPersonsRoles;
         return this.insertNestedAsset(
           tuneTranscription,
           this.tuneTranscriptionsRepository,
           createdTune.id,
-        );
+        ).then(insertedAsset => {
+          tuneTranscriptionsPersonsRoles?.forEach((personRole) => {
+            console.log(personRole);
+          })
+        });
       });
     }
 
@@ -408,11 +414,13 @@ export class TunesController extends AuditBaseController<Tunes> {
           this.tuneEncodingsRepository,
           createdTune.id,
         ).then(createdEncoding => {
-          tuneMelodies?.forEach(tuneMelody => {
+          tuneMelodies?.forEach((tuneMelody, i) => {
+            tuneMelody.variationIndex = i;
             this.insertNestedAsset(
               tuneMelody,
               this.tuneMelodiesRepository,
               createdEncoding.id,
+              'tuneEncodingsId'
             );
           });
         });

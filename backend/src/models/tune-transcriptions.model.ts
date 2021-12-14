@@ -65,10 +65,10 @@ export class TuneTranscriptions extends Entity {
 
   
   @hasOne(() => TranscriptionSources, {keyFrom: 'transcriptionSourceId', keyTo: 'id'})
-  transcriptionSources: TranscriptionSources;
+  transcriptionSources?: TranscriptionSources;
 
   @hasMany(() => TranscriptionsPersonsRoles, {keyTo: 'tune_transcription_id'})
-  transcriptionsPersonsRoles: TranscriptionsPersonsRoles[];
+  transcriptionsPersonsRoles?: TranscriptionsPersonsRoles[];
   // Define well-known properties here
 
   // Indexer property to allow additional data
