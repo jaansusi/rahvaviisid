@@ -91,7 +91,7 @@ const ViewDataElement = (({ model, value }) => {
                     <Grid item>
                         <ListComponent
                             model={TuneModel.list}
-                            values={value}
+                            values={value !== undefined ? value : []}
                             viewOnly
                             actionUrlOverride='/viisid'
                         />

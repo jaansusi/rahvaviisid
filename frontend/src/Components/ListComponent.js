@@ -29,12 +29,15 @@ const ListComponent = (({ model, filter, currentView, additionalButtons, actions
     });
 
     useEffect(() => {
-        axios.get(config.apiUrl + '/' + model.apiPath + '/count')
-            .then(
-                (result) => {
-                    setRowCount(result.data.count);
-                }
-            );
+        if (values !== undefined)
+            setRowCount(values.length);
+        else
+            axios.get(config.apiUrl + '/' + model.apiPath + '/count')
+                .then(
+                    (result) => {
+                        setRowCount(result.data.count);
+                    }
+                );
     }, [filter, model.apiPath, rowCount]);
     return (
         <Grid container alignItems='center'>

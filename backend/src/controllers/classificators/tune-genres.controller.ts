@@ -149,10 +149,14 @@ export class TuneGenresController {
     let b = await this.tuneSongsTuneGenresRepository.find({
       where: {tuneGenreId: id}
     });
+    if (b.length === 0)
+      return a;
     let c = await this.tuneSongsRepository.find({
       fields: ['tunesId'],
       where: {or:b.map(x=>{return {id: x.tuneSongId}})}
     });
+    if (c.length === 0)
+      return a;
     let d = await this.tunesRepository.find({
       where: {or:c.map(x=>{return {id: x.tunesId}})}
     })
