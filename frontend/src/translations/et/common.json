@@ -385,6 +385,7 @@
             },
             "transcriptions": {
                 "missingSource": "Noodistusel puudub noodistuse alus: ",
+                "missingFileReference": "Noodistusel puudub failiviide: ",
                 "persons": {
                     "missingPerson": "Noodistusega seotud isikul puudub isik: ",
                     "missingRoleType": "Noodistusega seotud isikul puudub tegija roll: "

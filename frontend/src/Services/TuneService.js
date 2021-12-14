@@ -46,19 +46,21 @@ export const TuneService = {
                 errors.push(translator('validation.tunes.musicalCharacteristics.missingSoundRange') + (i + 1));
         });
 
-        tune.tuneEncodings.forEach((x, i) => {
-            x.tuneMelodies.forEach((y, j) => {
+        tune.tuneEncodings?.forEach((x, i) => {
+            x.tuneMelodies?.forEach((y, j) => {
                 if (y.melody === '')
                     errors.push(translator('validation.tunes.melodies.missingMelody') + (i + 1) + ' -> ' + (j + 1));
             });
         });
 
-        tune.tuneTranscriptions.forEach((x, i) => {
+        tune.tuneTranscriptions?.forEach((x, i) => {
             if (x.transcriptionSourceId === undefined)
                 errors.push(translator('validation.tunes.transcriptions.missingSource') + (i + 1));
-            x.transcriptionsPersonsRoles.forEach((y, j) => {
-                if (y.personId === undefined)
-                    errors.push(translator('validation.tunes.transcriptions.persons.missingPerson') + (i + 1) + ' -> ' + (j + 1));
+            if (x.fileReference === '')
+                errors.push(translator('validation.tunes.transcriptions.missingFileReference') + (i + 1));
+            x.transcriptionsPersonsRoles?.forEach((y, j) => {
+                // if (y.personId === undefined)
+                //     errors.push(translator('validation.tunes.transcriptions.persons.missingPerson') + (i + 1) + ' -> ' + (j + 1));
                 if (y.transcriptionPersonRoleTypeId === undefined)
                     errors.push(translator('validation.tunes.transcriptions.persons.missingRoleType') + (i + 1) + ' -> ' + (j + 1));
             })

@@ -28,11 +28,11 @@ export class TranscriptionsPersonsRoles extends Entity {
 
   @property({
     type: 'number',
-    required: true,
+    required: false,
     scale: 0,
-    postgresql: {columnName: 'person_id', dataType: 'integer', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'NO'},
+    postgresql: {columnName: 'person_id', dataType: 'integer', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'YES'},
   })
-  personId: number;
+  personId?: number;
   
   @property({
     type: 'number',
