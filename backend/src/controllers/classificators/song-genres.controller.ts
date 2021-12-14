@@ -147,12 +147,16 @@ export class SongGenresController {
   ): Promise<SongGenres> {
     let a = await this.songGenresRepository.findById(id, filter);
     let b = await this.tuneSongsSongGenresRepository.find({
-      where: {tuneGenreId: id}
+      where: {songGenreId: id}
     });
+    if (b.length === 0)
+    return a;
     let c = await this.tuneSongsRepository.find({
       fields: ['tunesId'],
       where: {or:b.map(x=>{return {id: x.tuneSongId}})}
     });
+    if (c.length === 0)
+    return a;
     let d = await this.tunesRepository.find({
       where: {or:c.map(x=>{return {id: x.tunesId}})}
     })

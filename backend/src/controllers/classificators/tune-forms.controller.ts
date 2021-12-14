@@ -20,7 +20,7 @@ import {
   requestBody,
 } from '@loopback/rest';
 import {TuneForms} from '../../models';
-import {TuneFormsRepository} from '../../repositories';
+import {TuneFormsRepository, MusicalCharacteristicsTuneFormsRepository, MusicalCharacteristicsRepository, TunesRepository} from '../../repositories';
 
 import { UniqueValidationInterceptor } from '../../interceptors';
 import { intercept } from '@loopback/core';
@@ -30,6 +30,12 @@ export class TuneFormsController {
   constructor(
     @repository(TuneFormsRepository)
     public tuneFormsRepository : TuneFormsRepository,
+    @repository(MusicalCharacteristicsTuneFormsRepository)
+    public musicalCharacteristicsTuneFormsRepository : MusicalCharacteristicsTuneFormsRepository,
+    @repository(MusicalCharacteristicsRepository)
+    public musicalCharacteristicsRepository : MusicalCharacteristicsRepository,
+    @repository(TunesRepository)
+    public tunesRepository : TunesRepository,
   ) {}
 
   @post('/tune-forms', {
@@ -139,7 +145,24 @@ export class TuneFormsController {
     @param.path.number('id') id: number,
     @param.filter(TuneForms, {exclude: 'where'}) filter?: FilterExcludingWhere<TuneForms>
   ): Promise<TuneForms> {
-    return this.tuneFormsRepository.findById(id, filter);
+    let a = await this.tuneFormsRepository.findById(id, filter);
+    let b = await this.musicalCharacteristicsTuneFormsRepository.find({
+      where: {tuneFormId: id}
+    });
+    if (b.length === 0)
+     return a;
+    let c = await this.musicalCharacteristicsRepository.find({
+      fields: ['tunesId'],
+      where: {or:b.map(x=>{return {id: x.musicalCharacteristicId}})}
+    });
+    if (c.length === 0)
+      return a;
+    let d = await this.tunesRepository.find({
+      where: {or:c.map(x=>{return {id: x.tunesId}})}
+    })
+    a.tunes = d;
+    return a;
+
   }
 
   @patch('/tune-forms/{id}', {

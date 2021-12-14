@@ -1,4 +1,5 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, hasMany} from '@loopback/repository';
+import {Tunes} from '.';
 
 @model({
   settings: {idInjection: false, postgresql: {schema: 'folk_tune', table: 'text_forms'}}
@@ -49,6 +50,8 @@ export class TextForms extends Entity {
   })
   modified: string;
 
+  @hasMany(() => Tunes)
+  tunes?: Tunes[];
   // Define well-known properties here
 
   // Indexer property to allow additional data
