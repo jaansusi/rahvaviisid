@@ -44,7 +44,30 @@ export const TuneService = {
         tune.musicalCharacteristics.forEach((x, i) => {
             if (x.soundRangeId === undefined)
                 errors.push(translator('validation.tunes.musicalCharacteristics.missingSoundRange') + (i + 1));
-        })
+        });
+
+        tune.tuneEncodings.forEach((x, i) => {
+            x.tuneMelodies.forEach((y, j) => {
+                if (y.melody === '')
+                    errors.push(translator('validation.tunes.melodies.missingMelody') + (i + 1) + ' -> ' + (j + 1));
+            });
+        });
+
+        tune.tuneTranscriptions.forEach((x, i) => {
+            if (x.transcriptionSourceId === undefined)
+                errors.push(translator('validation.tunes.transcriptions.missingSource') + (i + 1));
+            x.transcriptionsPersonsRoles.forEach((y, j) => {
+                if (y.personId === undefined)
+                    errors.push(translator('validation.tunes.transcriptions.persons.missingPerson') + (i + 1) + ' -> ' + (j + 1));
+                if (y.transcriptionPersonRoleTypeId === undefined)
+                    errors.push(translator('validation.tunes.transcriptions.persons.missingRoleType') + (i + 1) + ' -> ' + (j + 1));
+            })
+        });
+
+        tune.tunesPersonsRoles.forEach((x, i) => {
+            if (x.tunePersonRoleTypeId === undefined)
+                errors.push(translator('validation.tunes.personsRoles.missingRoleTypeId') + (i + 1));
+        });
 
         tune.tunePlaces.forEach((x, i) => {
             if (x.parishId === undefined)
@@ -56,18 +79,6 @@ export const TuneService = {
         tune.tunePerformances.forEach((x, i) => {
             if (x.actualPerformanceTypeId === undefined)
                 errors.push(translator('validation.tunes.performances.missingActualPerformanceType') + (i + 1));
-        });
-
-        tune.tunesPersonsRoles.forEach((x, i) => {
-            if (x.tunePersonRoleTypeId === undefined)
-                errors.push(translator('validation.tunes.personsRoles.missingRoleTypeId') + (i + 1));
-        });
-
-        tune.tuneEncodings.forEach((x, i) => {
-            x.tuneMelodies.forEach((y, j) => {
-                if (y.melody === '')
-                    errors.push(translator('validation.tunes.melodies.missingMelody') + (i + 1) + ' -> ' + (j + 1));
-            });
         });
 
         errors.forEach(x => toast.error(x, {

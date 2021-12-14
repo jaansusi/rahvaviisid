@@ -41,6 +41,7 @@ import {
   MusicalCharacteristicsTuneFormsRepository,
   RhythmTypesRepository,
   SoundRangesRepository,
+  TranscriptionsPersonsRolesRepository,
   TuneEncodingsRepository,
   TuneMelodiesRepository,
   TunePerformancesRepository,
@@ -101,6 +102,8 @@ export class TunesController extends AuditBaseController<Tunes> {
     public tunePlacesRepository: TunePlacesRepository,
     @repository(TuneTranscriptionsRepository)
     public tuneTranscriptionsRepository: TuneTranscriptionsRepository,
+    @repository(TranscriptionsPersonsRolesRepository)
+    public transcriptionsPersonsRolesRepository: TranscriptionsPersonsRolesRepository,
     @repository(TunesPersonsRolesRepository)
     public tunesPersonsRolesRepository: TunesPersonsRolesRepository,
     @repository(ActualPerformanceTypesRepository)
@@ -386,10 +389,15 @@ export class TunesController extends AuditBaseController<Tunes> {
         return this.insertNestedAsset(
           tuneTranscription,
           this.tuneTranscriptionsRepository,
-          createdTune.id,
+          createdTune.id
         ).then(insertedAsset => {
           tuneTranscriptionsPersonsRoles?.forEach((personRole) => {
-            console.log(personRole);
+            this.insertNestedAsset(
+              personRole,
+              this.transcriptionsPersonsRolesRepository,
+              insertedAsset.id,
+              'tuneTranscriptionsId'
+            )
           })
         });
       });

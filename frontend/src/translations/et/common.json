@@ -382,6 +382,13 @@
             },
             "musicalCharacteristics": {
                 "missingSoundRange": "Muusikalistel tunnustel puudub heliulatus: "
+            },
+            "transcriptions": {
+                "missingSource": "Noodistusel puudub noodistuse alus: ",
+                "persons": {
+                    "missingPerson": "Noodistusega seotud isikul puudub isik: ",
+                    "missingRoleType": "Noodistusega seotud isikul puudub tegija roll: "
+                }
             }
         },
         "mustBeNumber": "Peab olema number",
