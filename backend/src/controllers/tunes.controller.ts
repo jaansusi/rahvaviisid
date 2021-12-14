@@ -519,7 +519,6 @@ export class TunesController extends AuditBaseController<Tunes> {
       );
     if (tunePerformances !== undefined) {
       tunePerformances.forEach((tunePerformance: TunePerformances) => {
-        console.log(tunePerformance.id);
         delete tunePerformance.actualPerformanceTypes;
         delete tunePerformance.traditionalPerformanceTypes;
         delete tunePerformance.actualActionTypes;
@@ -589,19 +588,16 @@ export class TunesController extends AuditBaseController<Tunes> {
   }
 
   private async deleteNestedAssets(
-    originals: Entity[],
-    current: Entity[],
+    originals: any[],
+    current: any[],
     repo: DefaultCrudRepository<any, number>,
   ) {
     let toBeDeleted = originals.filter(
       x =>
         !current
-          //The typeof here is necessary, sometimes getId is not defined as a function..
-          ?.map(y => (typeof y['getId'] === 'function' ? y.getId() : undefined))
-          .includes(x.getId()),
+          ?.map(y => y.id)
+          .includes(x.id),
     );
-    console.log('Originals: ' + JSON.stringify(originals));
-    console.log('Deleting: ' + JSON.stringify(toBeDeleted));
     for (let key in toBeDeleted) {
       await repo.deleteById(toBeDeleted[key].getId())
       
