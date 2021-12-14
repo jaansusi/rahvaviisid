@@ -122,17 +122,47 @@ export const ClassificatorsModel =
                 {
                     name: 'place.parish',
                     url: 'kihelkond',
-                    apiPath: 'parishes'
+                    apiPath: 'parishes',
+                    view: {
+                        fields: [
+                            { field: 'title', headerName: 'common.title' },
+                            { field: 'description', headerName: 'common.description' },
+                            { field: 'isActive', type: 'boolean', headerName: 'common.active' },
+                            { field: 'created', headerName: 'date.created' },
+                            { field: 'modified', headerName: 'date.modified' },
+                            { field: 'tunes', type: 'customAssociatedAssets', associatedModel: TuneModel.list, headerName: 'common.tunes' }
+                        ]
+                    },
                 },
                 {
                     name: 'place.municipality',
                     url: 'vald',
-                    apiPath: 'municipalities'
+                    apiPath: 'municipalities',
+                    view: {
+                        fields: [
+                            { field: 'title', headerName: 'common.title' },
+                            { field: 'description', headerName: 'common.description' },
+                            { field: 'isActive', type: 'boolean', headerName: 'common.active' },
+                            { field: 'created', headerName: 'date.created' },
+                            { field: 'modified', headerName: 'date.modified' },
+                            { field: 'tunes', type: 'customAssociatedAssets', associatedModel: TuneModel.list, headerName: 'common.tunes' }
+                        ]
+                    },
                 },
                 {
                     name: 'place.village',
                     url: 'kyla',
-                    apiPath: 'villages'
+                    apiPath: 'villages',
+                    view: {
+                        fields: [
+                            { field: 'title', headerName: 'common.title' },
+                            { field: 'description', headerName: 'common.description' },
+                            { field: 'isActive', type: 'boolean', headerName: 'common.active' },
+                            { field: 'created', headerName: 'date.created' },
+                            { field: 'modified', headerName: 'date.modified' },
+                            { field: 'tunes', type: 'customAssociatedAssets', associatedModel: TuneModel.list, headerName: 'common.tunes' }
+                        ]
+                    },
                 }
             ]
         },
@@ -167,7 +197,17 @@ export const ClassificatorsModel =
                 {
                     name: 'song.genre',
                     url: 'laulu-liik',
-                    apiPath: 'song-genres'
+                    apiPath: 'song-genres',
+                    view: {
+                        fields: [
+                            { field: 'title', headerName: 'common.title' },
+                            { field: 'description', headerName: 'common.description' },
+                            { field: 'isActive', type: 'boolean', headerName: 'common.active' },
+                            { field: 'created', headerName: 'date.created' },
+                            { field: 'modified', headerName: 'date.modified' },
+                            { field: 'tunes', type: 'customAssociatedAssets', associatedModel: TuneModel.list, headerName: 'common.tunes' }
+                        ]
+                    },
                 },
                 {
                     name: 'tune.genre',
@@ -187,12 +227,32 @@ export const ClassificatorsModel =
                 {
                     name: 'song.topic',
                     url: 'laulu-teema',
-                    apiPath: 'song-topics'
+                    apiPath: 'song-topics',
+                    view: {
+                        fields: [
+                            { field: 'title', headerName: 'common.title' },
+                            { field: 'description', headerName: 'common.description' },
+                            { field: 'isActive', type: 'boolean', headerName: 'common.active' },
+                            { field: 'created', headerName: 'date.created' },
+                            { field: 'modified', headerName: 'date.modified' },
+                            { field: 'tunes', type: 'customAssociatedAssets', associatedModel: TuneModel.list, headerName: 'common.tunes' }
+                        ]
+                    },
                 },
                 {
                     name: 'song.verse',
                     url: 'varsivorm',
-                    apiPath: 'verse-forms'
+                    apiPath: 'verse-forms',
+                    view: {
+                        fields: [
+                            { field: 'title', headerName: 'common.title' },
+                            { field: 'description', headerName: 'common.description' },
+                            { field: 'isActive', type: 'boolean', headerName: 'common.active' },
+                            { field: 'created', headerName: 'date.created' },
+                            { field: 'modified', headerName: 'date.modified' },
+                            { field: 'tunes', type: 'customAssociatedAssets', associatedModel: TuneModel.list, headerName: 'common.tunes' }
+                        ]
+                    },
                 }
             ]
         },

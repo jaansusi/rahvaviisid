@@ -20,7 +20,7 @@ import {
   requestBody,
 } from '@loopback/rest';
 import {VerseForms} from '../../models';
-import {VerseFormsRepository} from '../../repositories';
+import {VerseFormsRepository, TuneSongsRepository, TuneSongsVerseFormsRepository, TunesRepository} from '../../repositories';
 
 import { UniqueValidationInterceptor } from '../../interceptors';
 import { intercept } from '@loopback/core';
@@ -30,6 +30,13 @@ export class VerseFormsController {
   constructor(
     @repository(VerseFormsRepository)
     public verseFormsRepository : VerseFormsRepository,
+    @repository(TuneSongsVerseFormsRepository)
+    public tuneSongsVerseFormsRepository : TuneSongsVerseFormsRepository,
+    @repository(TuneSongsRepository)
+    public tuneSongsRepository : TuneSongsRepository,
+    @repository(TunesRepository)
+    public tunesRepository : TunesRepository,
+
   ) {}
 
   @post('/verse-forms', {
@@ -139,7 +146,19 @@ export class VerseFormsController {
     @param.path.number('id') id: number,
     @param.filter(VerseForms, {exclude: 'where'}) filter?: FilterExcludingWhere<VerseForms>
   ): Promise<VerseForms> {
-    return this.verseFormsRepository.findById(id, filter);
+    let a = await this.verseFormsRepository.findById(id, filter);
+    let b = await this.tuneSongsVerseFormsRepository.find({
+      where: {tuneGenreId: id}
+    });
+    let c = await this.tuneSongsRepository.find({
+      fields: ['tunesId'],
+      where: {or:b.map(x=>{return {id: x.tuneSongId}})}
+    });
+    let d = await this.tunesRepository.find({
+      where: {or:c.map(x=>{return {id: x.tunesId}})}
+    })
+    a.tunes = d;
+    return a;
   }
 
   @patch('/verse-forms/{id}', {

@@ -1,4 +1,5 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, hasMany} from '@loopback/repository';
+import { Tunes } from '.';
 
 @model({
   settings: {idInjection: false, postgresql: {schema: 'folk_tune', table: 'song_topics'}}
@@ -72,6 +73,9 @@ export class SongTopics extends Entity {
     postgresql: {columnName: 'modified', dataType: 'timestamp without time zone', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'NO'},
   })
   modified: string;
+
+  @hasMany(() => Tunes)
+  tunes?: Tunes[];
 
   // Define well-known properties here
 
