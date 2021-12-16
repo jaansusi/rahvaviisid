@@ -25,7 +25,7 @@ const SearchComponent = (props) => {
 
     const updateInput = async (input, isReferenceSearch) => {
         const filtered = searchResultsDefault.filter(result => {
-            let lowInput = input.toLowerCase();
+            let lowInput = input.toLowerCase().trim();
             if (isReferenceSearch)
                 return result.tuneReference?.toLowerCase().includes(lowInput) ||
                     result.textReference?.toLowerCase().includes(lowInput) ||
