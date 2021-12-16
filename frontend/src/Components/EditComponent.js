@@ -11,8 +11,9 @@ import { toast } from 'react-toastify';
 import BarLoader from 'react-spinners/BarLoader';
 import './EditComponent.css';
 
-const EditComponent = ({ model, newItem, validateTune }) => {
+const EditComponent = ({ model, newItem, copyItem, validateTune }) => {
     newItem = newItem === undefined ? false : newItem;
+    copyItem = copyItem === undefined ? false : copyItem;
     const { t } = useTranslation('common');
     const history = useHistory();
     const formReducer = (state, event) => {
@@ -57,7 +58,7 @@ const EditComponent = ({ model, newItem, validateTune }) => {
         Promise.all(modelPromises).then((options) => {
             options = options.filter((x) => x !== undefined);
             setUpdatedModel(recurseModelValues(model, options));
-            if (newItem) {
+            if (newItem || copyItem) {
                 let assetPromise = id ?
                     DataService.RequestAsset(model, id) :
                     DataService.CreateEmptyDataObject(model.fields);
@@ -85,7 +86,7 @@ const EditComponent = ({ model, newItem, validateTune }) => {
                     .then(() => { setIsLoading(false) });
             }
         });
-    }, [id, model, newItem]);
+    }, [id, model, newItem, copyItem]);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -194,7 +195,7 @@ const EditComponent = ({ model, newItem, validateTune }) => {
         let objToSend = recurse(currentModel, Object.assign({}, data));
         if (validateTune && !TuneService.Validate(objToSend, t))
             return;
-        if (newItem) {
+        if (newItem || copyItem) {
             let createAsset = Object.assign({}, objToSend);
             delete createAsset.id;
             Object.keys(createAsset).forEach((key) => {
@@ -227,7 +228,10 @@ const EditComponent = ({ model, newItem, validateTune }) => {
                         )
                         .then(() => {
                             toast.success(t('notification.saved'));
-                            history.push('./' + resData.data.id + '/vaata');
+                            if (copyItem)
+                                history.push('../' + resData.data.id + '/vaata');
+                            if (newItem)
+                                history.push('./' + resData.data.id + '/vaata');
                         })
                         .catch((error) => {
                             if (error.response.status === 422) {
@@ -392,6 +396,6 @@ const handleErrors = ((t, x) => {
         closeButton: true,
         autoClose: false,
     })
-})
+});
 
 export default EditComponent;

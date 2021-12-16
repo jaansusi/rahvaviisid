@@ -18,7 +18,7 @@ const TuneWrapper = () => {
                 <TuneEdit newItem={true} />
             </Route>
             <Route exact path={`/:asset/:id/kopeeri`}>
-                <TuneEdit newItem={true} />
+                <TuneEdit copyItem={true} />
             </Route>
             <Route exact path={`/:asset/:id/vaata`}>
                 <TuneView />
