@@ -107,7 +107,6 @@ const ViewDataElement = (({ model, value }) => {
                 </Grid>
             );
     }
-
 });
 
 export default ViewDataElement;

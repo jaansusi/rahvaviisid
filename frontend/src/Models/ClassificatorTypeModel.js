@@ -130,7 +130,7 @@ export const ClassificatorsModel =
                             { field: 'isActive', type: 'boolean', headerName: 'common.active' },
                             { field: 'created', type: 'timestamp', headerName: 'date.created' },
                             { field: 'modified', type: 'timestamp', headerName: 'date.modified' },
-                            { field: 'tunes', type: 'customAssociatedAssets', associatedModel: TuneModel.list, headerName: 'common.tunes' }
+                            { field: 'tunes', type: 'associatedAssets', associatedModel: TuneModel.list, headerName: 'common.tunes' }
                         ]
                     },
                 },
@@ -145,7 +145,7 @@ export const ClassificatorsModel =
                             { field: 'isActive', type: 'boolean', headerName: 'common.active' },
                             { field: 'created', type: 'timestamp', headerName: 'date.created' },
                             { field: 'modified', type: 'timestamp', headerName: 'date.modified' },
-                            { field: 'tunes', type: 'customAssociatedAssets', associatedModel: TuneModel.list, headerName: 'common.tunes' }
+                            { field: 'tunes', type: 'associatedAssets', associatedModel: TuneModel.list, headerName: 'common.tunes' }
                         ]
                     },
                 },
@@ -160,7 +160,7 @@ export const ClassificatorsModel =
                             { field: 'isActive', type: 'boolean', headerName: 'common.active' },
                             { field: 'created', type: 'timestamp', headerName: 'date.created' },
                             { field: 'modified', type: 'timestamp', headerName: 'date.modified' },
-                            { field: 'tunes', type: 'customAssociatedAssets', associatedModel: TuneModel.list, headerName: 'common.tunes' }
+                            { field: 'tunes', type: 'associatedAssets', associatedModel: TuneModel.list, headerName: 'common.tunes' }
                         ]
                     },
                 }
