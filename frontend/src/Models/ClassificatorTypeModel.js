@@ -248,6 +248,13 @@ export const ClassificatorsModel =
                     name: 'song.genre',
                     url: 'laulu-liik',
                     apiPath: 'song-genres',
+                    list: {
+                        fields: [
+                            { field: 'songGenres', selector: 'title', headerName: 'classificators.songGenreParent', width: 140 },
+                            { field: 'title', headerName: 'common.title', width: 170 },
+                            { field: 'isActive', type: 'boolean', headerName: 'common.active', width: 170 }
+                        ]
+                    },
                     view: {
                         fields: [
                             { field: 'title', headerName: 'common.title' },

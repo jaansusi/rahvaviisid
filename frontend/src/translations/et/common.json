@@ -28,6 +28,9 @@
         "userInactive": "Kasutaja ei ole aktiivne",
         "invalidCredentials": "Vigane e-mail / parool"
     },
+    "classificators": {
+        "songGenreParent": "Liik"
+    },
     "coding": {
         "coding": "Kodeering",
         "keySignature": "Võtmemärk",
