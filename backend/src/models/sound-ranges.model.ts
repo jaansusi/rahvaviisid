@@ -1,4 +1,6 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, hasMany} from '@loopback/repository';
+import {Tunes } from '.';
+import {MusicalCharacteristics} from './musical-characteristics.model';
 
 @model({
   settings: {idInjection: false, postgresql: {schema: 'folk_tune', table: 'sound_ranges'}}
@@ -48,6 +50,13 @@ export class SoundRanges extends Entity {
     postgresql: {columnName: 'modified', dataType: 'timestamp without time zone', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'NO'},
   })
   modified: string;
+  
+  @hasMany(() => Tunes, {through: {
+    model: () => MusicalCharacteristics,
+    keyFrom: 'soundRangeId',
+    keyTo: 'tunesId'
+  }})
+  tunes?: Tunes[];
   // Define well-known properties here
 
   // Indexer property to allow additional data

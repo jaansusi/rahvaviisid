@@ -262,22 +262,62 @@ export const ClassificatorsModel =
                 {
                     name: 'attribute.textForm',
                     url: 'teksti-vorm',
-                    apiPath: 'text-forms'
+                    apiPath: 'text-forms',
+                    view: {
+                        fields: [
+                            { field: 'title', headerName: 'common.title' },
+                            { field: 'description', headerName: 'common.description' },
+                            { field: 'isActive', type: 'boolean', headerName: 'common.active' },
+                            { field: 'created', headerName: 'date.created' },
+                            { field: 'modified', headerName: 'date.modified' },
+                            { field: 'tunes', type: 'customAssociatedAssets', associatedModel: TuneModel.list, headerName: 'common.tunes' }
+                        ]
+                    },
                 },
                 {
                     name: 'attribute.tuneForm',
                     url: 'viisi-vorm',
-                    apiPath: 'tune-forms'
+                    apiPath: 'tune-forms',
+                    view: {
+                        fields: [
+                            { field: 'title', headerName: 'common.title' },
+                            { field: 'description', headerName: 'common.description' },
+                            { field: 'isActive', type: 'boolean', headerName: 'common.active' },
+                            { field: 'created', headerName: 'date.created' },
+                            { field: 'modified', headerName: 'date.modified' },
+                            { field: 'tunes', type: 'customAssociatedAssets', associatedModel: TuneModel.list, headerName: 'common.tunes' }
+                        ]
+                    },
                 },
                 {
                     name: 'attribute.soundRange',
                     url: 'heliulatus',
-                    apiPath: 'sound-ranges'
+                    apiPath: 'sound-ranges',
+                    view: {
+                        fields: [
+                            { field: 'title', headerName: 'common.title' },
+                            { field: 'description', headerName: 'common.description' },
+                            { field: 'isActive', type: 'boolean', headerName: 'common.active' },
+                            { field: 'created', headerName: 'date.created' },
+                            { field: 'modified', headerName: 'date.modified' },
+                            { field: 'tunes', type: 'associatedAssets', associatedModel: TuneModel.list, headerName: 'common.tunes' }
+                        ]
+                    },
                 },
                 {
                     name: 'attribute.rhythmType',
                     url: 'rytmityyp',
-                    apiPath: 'rhythm-types'
+                    apiPath: 'rhythm-types',
+                    view: {
+                        fields: [
+                            { field: 'title', headerName: 'common.title' },
+                            { field: 'description', headerName: 'common.description' },
+                            { field: 'isActive', type: 'boolean', headerName: 'common.active' },
+                            { field: 'created', headerName: 'date.created' },
+                            { field: 'modified', headerName: 'date.modified' },
+                            { field: 'tunes', type: 'customAssociatedAssets', associatedModel: TuneModel.list, headerName: 'common.tunes' }
+                        ]
+                    },
                 }
             ]
         },
@@ -302,22 +342,62 @@ export const ClassificatorsModel =
                 {
                     name: 'coding.keySignature',
                     url: 'votmemark',
-                    apiPath: 'key-signatures'
+                    apiPath: 'key-signatures',
+                    view: {
+                        fields: [
+                            { field: 'title', headerName: 'common.title' },
+                            { field: 'description', headerName: 'common.description' },
+                            { field: 'isActive', type: 'boolean', headerName: 'common.active' },
+                            { field: 'created', headerName: 'date.created' },
+                            { field: 'modified', headerName: 'date.modified' },
+                            { field: 'tunes', type: 'associatedAssets', associatedModel: TuneModel.list, headerName: 'common.tunes' }
+                        ]
+                    },
                 },
                 {
                     name: 'coding.supportSound',
                     url: 'tugiheli',
-                    apiPath: 'support-sounds'
+                    apiPath: 'support-sounds',
+                    view: {
+                        fields: [
+                            { field: 'title', headerName: 'common.title' },
+                            { field: 'description', headerName: 'common.description' },
+                            { field: 'isActive', type: 'boolean', headerName: 'common.active' },
+                            { field: 'created', headerName: 'date.created' },
+                            { field: 'modified', headerName: 'date.modified' },
+                            { field: 'tunes', type: 'associatedAssets', associatedModel: TuneModel.list, headerName: 'common.tunes' }
+                        ]
+                    },
                 },
                 {
                     name: 'coding.pitch',
                     url: 'korgus',
-                    apiPath: 'pitches'
+                    apiPath: 'pitches',
+                    view: {
+                        fields: [
+                            { field: 'title', headerName: 'common.title' },
+                            { field: 'description', headerName: 'common.description' },
+                            { field: 'isActive', type: 'boolean', headerName: 'common.active' },
+                            { field: 'created', headerName: 'date.created' },
+                            { field: 'modified', headerName: 'date.modified' },
+                            { field: 'tunes', type: 'associatedAssets', associatedModel: TuneModel.list, headerName: 'common.tunes' }
+                        ]
+                    },
                 },
                 {
                     name: 'coding.measure',
                     url: 'taktimoot',
-                    apiPath: 'measures'
+                    apiPath: 'measures',
+                    view: {
+                        fields: [
+                            { field: 'title', headerName: 'common.title' },
+                            { field: 'description', headerName: 'common.description' },
+                            { field: 'isActive', type: 'boolean', headerName: 'common.active' },
+                            { field: 'created', headerName: 'date.created' },
+                            { field: 'modified', headerName: 'date.modified' },
+                            { field: 'tunes', type: 'associatedAssets', associatedModel: TuneModel.list, headerName: 'common.tunes' }
+                        ]
+                    },
                 }
             ]
         }

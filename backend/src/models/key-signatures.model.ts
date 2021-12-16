@@ -1,4 +1,6 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, hasMany} from '@loopback/repository';
+import { TuneEncodings } from './tune-encodings.model';
+import {Tunes} from './tunes.model';
 
 @model({
   settings: {idInjection: false, postgresql: {schema: 'folk_tune', table: 'key_signatures'}}
@@ -48,6 +50,12 @@ export class KeySignatures extends Entity {
     postgresql: {columnName: 'modified', dataType: 'timestamp without time zone', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'NO'},
   })
   modified: string;
+
+  @hasMany(() => Tunes, {through: {model: () => TuneEncodings,
+    keyFrom: 'keySignatureId',
+    keyTo: 'tunesId'
+  }})
+  tunes?: Tunes[];
 
   // Define well-known properties here
 
