@@ -78,9 +78,9 @@ const ViewDataElement = (({ model, value }) => {
                 />
         case 'timestamp':
             return (
-                <Grid item xs={2} container direction='column'>
-                    <Grid item><Typography>{t(model.headerName)}</Typography></Grid>
-                    <Grid item><Typography>{DataService.ParseDate(value)}</Typography></Grid>
+                <Grid item xs={12} container direction='row'>
+                    <Grid item xs={6}><Typography>{t(model.headerName)}</Typography></Grid>
+                    <Grid item xs={6}><Typography>{DataService.ParseDate(value)}</Typography></Grid>
                 </Grid>
             );
         case 'associatedAssets':
@@ -107,7 +107,6 @@ const ViewDataElement = (({ model, value }) => {
                 </Grid>
             );
     }
-
 });
 
 export default ViewDataElement;

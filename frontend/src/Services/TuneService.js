@@ -15,11 +15,11 @@ export const TuneService = {
             );
         });
         return [
-            elementData.reference === '' ? '' : 'X: ' + elementData.reference,
-            elementData.customInput === '' ? '' : elementData.customInput,
-            elementData.alter === '' ? '' : 'K: ' + elementData.alter,
-            elementData.tempo === '' ? '' : 'Q: ' + elementData.tempo,
-            elementData.noteLength === '' ? '' : 'L: ' + elementData.noteLength
+            elementData.reference === '' || elementData.reference === null ? '' : 'X: ' + elementData.reference,
+            elementData.customInput === '' || elementData.customInput === null ? '' : elementData.customInput,
+            elementData.alter === '' || elementData.alter === null ? '' : 'K: ' + elementData.alter,
+            elementData.tempo === '' || elementData.tempo === null ? '' : 'Q: ' + elementData.tempo,
+            elementData.noteLength === '' || elementData.noteLength === null ? '' : 'L: ' + elementData.noteLength
         ]
             .concat(melodyAndWords)
             .filter((elem) => elem !== '')

@@ -14,8 +14,8 @@ export const ClassificatorsModel =
                 { field: 'title', headerName: 'common.title' },
                 { field: 'description', headerName: 'common.description' },
                 { field: 'isActive', type: 'boolean', headerName: 'common.active' },
-                { field: 'created', headerName: 'date.created' },
-                { field: 'modified', headerName: 'date.modified' }
+                { field: 'created', type: 'timestamp', headerName: 'date.created' },
+                { field: 'modified', type: 'timestamp', headerName: 'date.modified' }
             ]
         },
         edit: {
@@ -68,8 +68,8 @@ export const ClassificatorsModel =
                             { field: 'title', headerName: 'common.title' },
                             { field: 'description', headerName: 'common.description' },
                             { field: 'isActive', type: 'boolean', headerName: 'common.active' },
-                            { field: 'created', headerName: 'date.created' },
-                            { field: 'modified', headerName: 'date.modified' },
+                            { field: 'created', type: 'timestamp', headerName: 'date.created' },
+                            { field: 'modified', type: 'timestamp', headerName: 'date.modified' },
                             { field: 'tunes', type: 'associatedAssets', associatedModel: TuneModel.list, headerName: 'common.tunes' }
                         ]
                     },
@@ -83,8 +83,8 @@ export const ClassificatorsModel =
                             { field: 'title', headerName: 'common.title' },
                             { field: 'description', headerName: 'common.description' },
                             { field: 'isActive', type: 'boolean', headerName: 'common.active' },
-                            { field: 'created', headerName: 'date.created' },
-                            { field: 'modified', headerName: 'date.modified' },
+                            { field: 'created', type: 'timestamp', headerName: 'date.created' },
+                            { field: 'modified', type: 'timestamp', headerName: 'date.modified' },
                             { field: 'tunes', type: 'associatedAssets', associatedModel: TuneModel.list, headerName: 'common.tunes' }
                         ]
                     },
@@ -128,8 +128,8 @@ export const ClassificatorsModel =
                             { field: 'title', headerName: 'common.title' },
                             { field: 'description', headerName: 'common.description' },
                             { field: 'isActive', type: 'boolean', headerName: 'common.active' },
-                            { field: 'created', headerName: 'date.created' },
-                            { field: 'modified', headerName: 'date.modified' },
+                            { field: 'created', type: 'timestamp', headerName: 'date.created' },
+                            { field: 'modified', type: 'timestamp', headerName: 'date.modified' },
                             { field: 'tunes', type: 'associatedAssets', associatedModel: TuneModel.list, headerName: 'common.tunes' }
                         ]
                     },
@@ -143,8 +143,8 @@ export const ClassificatorsModel =
                             { field: 'title', headerName: 'common.title' },
                             { field: 'description', headerName: 'common.description' },
                             { field: 'isActive', type: 'boolean', headerName: 'common.active' },
-                            { field: 'created', headerName: 'date.created' },
-                            { field: 'modified', headerName: 'date.modified' },
+                            { field: 'created', type: 'timestamp', headerName: 'date.created' },
+                            { field: 'modified', type: 'timestamp', headerName: 'date.modified' },
                             { field: 'tunes', type: 'associatedAssets', associatedModel: TuneModel.list, headerName: 'common.tunes' }
                         ]
                     },
@@ -158,8 +158,8 @@ export const ClassificatorsModel =
                             { field: 'title', headerName: 'common.title' },
                             { field: 'description', headerName: 'common.description' },
                             { field: 'isActive', type: 'boolean', headerName: 'common.active' },
-                            { field: 'created', headerName: 'date.created' },
-                            { field: 'modified', headerName: 'date.modified' },
+                            { field: 'created', type: 'timestamp', headerName: 'date.created' },
+                            { field: 'modified', type: 'timestamp', headerName: 'date.modified' },
                             { field: 'tunes', type: 'associatedAssets', associatedModel: TuneModel.list, headerName: 'common.tunes' }
                         ]
                     },
@@ -203,8 +203,8 @@ export const ClassificatorsModel =
                             { field: 'title', headerName: 'common.title' },
                             { field: 'description', headerName: 'common.description' },
                             { field: 'isActive', type: 'boolean', headerName: 'common.active' },
-                            { field: 'created', headerName: 'date.created' },
-                            { field: 'modified', headerName: 'date.modified' },
+                            { field: 'created', type: 'timestamp', headerName: 'date.created' },
+                            { field: 'modified', type: 'timestamp', headerName: 'date.modified' },
                             { field: 'tunes', type: 'customAssociatedAssets', associatedModel: TuneModel.list, headerName: 'common.tunes' }
                         ]
                     },
@@ -218,8 +218,8 @@ export const ClassificatorsModel =
                             { field: 'title', headerName: 'common.title' },
                             { field: 'description', headerName: 'common.description' },
                             { field: 'isActive', type: 'boolean', headerName: 'common.active' },
-                            { field: 'created', headerName: 'date.created' },
-                            { field: 'modified', headerName: 'date.modified' },
+                            { field: 'created', type: 'timestamp', headerName: 'date.created' },
+                            { field: 'modified', type: 'timestamp', headerName: 'date.modified' },
                             { field: 'tunes', type: 'customAssociatedAssets', associatedModel: TuneModel.list, headerName: 'common.tunes' }
                         ]
                     },
@@ -233,8 +233,8 @@ export const ClassificatorsModel =
                             { field: 'title', headerName: 'common.title' },
                             { field: 'description', headerName: 'common.description' },
                             { field: 'isActive', type: 'boolean', headerName: 'common.active' },
-                            { field: 'created', headerName: 'date.created' },
-                            { field: 'modified', headerName: 'date.modified' },
+                            { field: 'created', type: 'timestamp', headerName: 'date.created' },
+                            { field: 'modified', type: 'timestamp', headerName: 'date.modified' },
                             { field: 'tunes', type: 'customAssociatedAssets', associatedModel: TuneModel.list, headerName: 'common.tunes' }
                         ]
                     },
@@ -248,8 +248,8 @@ export const ClassificatorsModel =
                             { field: 'title', headerName: 'common.title' },
                             { field: 'description', headerName: 'common.description' },
                             { field: 'isActive', type: 'boolean', headerName: 'common.active' },
-                            { field: 'created', headerName: 'date.created' },
-                            { field: 'modified', headerName: 'date.modified' },
+                            { field: 'created', type: 'timestamp', headerName: 'date.created' },
+                            { field: 'modified', type: 'timestamp', headerName: 'date.modified' },
                             { field: 'tunes', type: 'customAssociatedAssets', associatedModel: TuneModel.list, headerName: 'common.tunes' }
                         ]
                     },
@@ -268,8 +268,8 @@ export const ClassificatorsModel =
                             { field: 'title', headerName: 'common.title' },
                             { field: 'description', headerName: 'common.description' },
                             { field: 'isActive', type: 'boolean', headerName: 'common.active' },
-                            { field: 'created', headerName: 'date.created' },
-                            { field: 'modified', headerName: 'date.modified' },
+                            { field: 'created', type: 'timestamp', headerName: 'date.created' },
+                            { field: 'modified', type: 'timestamp', headerName: 'date.modified' },
                             { field: 'tunes', type: 'customAssociatedAssets', associatedModel: TuneModel.list, headerName: 'common.tunes' }
                         ]
                     },
@@ -283,8 +283,8 @@ export const ClassificatorsModel =
                             { field: 'title', headerName: 'common.title' },
                             { field: 'description', headerName: 'common.description' },
                             { field: 'isActive', type: 'boolean', headerName: 'common.active' },
-                            { field: 'created', headerName: 'date.created' },
-                            { field: 'modified', headerName: 'date.modified' },
+                            { field: 'created', type: 'timestamp', headerName: 'date.created' },
+                            { field: 'modified', type: 'timestamp', headerName: 'date.modified' },
                             { field: 'tunes', type: 'customAssociatedAssets', associatedModel: TuneModel.list, headerName: 'common.tunes' }
                         ]
                     },
@@ -298,8 +298,8 @@ export const ClassificatorsModel =
                             { field: 'title', headerName: 'common.title' },
                             { field: 'description', headerName: 'common.description' },
                             { field: 'isActive', type: 'boolean', headerName: 'common.active' },
-                            { field: 'created', headerName: 'date.created' },
-                            { field: 'modified', headerName: 'date.modified' },
+                            { field: 'created', type: 'timestamp', headerName: 'date.created' },
+                            { field: 'modified', type: 'timestamp', headerName: 'date.modified' },
                             { field: 'tunes', type: 'associatedAssets', associatedModel: TuneModel.list, headerName: 'common.tunes' }
                         ]
                     },
@@ -313,8 +313,8 @@ export const ClassificatorsModel =
                             { field: 'title', headerName: 'common.title' },
                             { field: 'description', headerName: 'common.description' },
                             { field: 'isActive', type: 'boolean', headerName: 'common.active' },
-                            { field: 'created', headerName: 'date.created' },
-                            { field: 'modified', headerName: 'date.modified' },
+                            { field: 'created', type: 'timestamp', headerName: 'date.created' },
+                            { field: 'modified', type: 'timestamp', headerName: 'date.modified' },
                             { field: 'tunes', type: 'customAssociatedAssets', associatedModel: TuneModel.list, headerName: 'common.tunes' }
                         ]
                     },
@@ -348,8 +348,8 @@ export const ClassificatorsModel =
                             { field: 'title', headerName: 'common.title' },
                             { field: 'description', headerName: 'common.description' },
                             { field: 'isActive', type: 'boolean', headerName: 'common.active' },
-                            { field: 'created', headerName: 'date.created' },
-                            { field: 'modified', headerName: 'date.modified' },
+                            { field: 'created', type: 'timestamp', headerName: 'date.created' },
+                            { field: 'modified', type: 'timestamp', headerName: 'date.modified' },
                             { field: 'tunes', type: 'associatedAssets', associatedModel: TuneModel.list, headerName: 'common.tunes' }
                         ]
                     },
@@ -363,8 +363,8 @@ export const ClassificatorsModel =
                             { field: 'title', headerName: 'common.title' },
                             { field: 'description', headerName: 'common.description' },
                             { field: 'isActive', type: 'boolean', headerName: 'common.active' },
-                            { field: 'created', headerName: 'date.created' },
-                            { field: 'modified', headerName: 'date.modified' },
+                            { field: 'created', type: 'timestamp', headerName: 'date.created' },
+                            { field: 'modified', type: 'timestamp', headerName: 'date.modified' },
                             { field: 'tunes', type: 'associatedAssets', associatedModel: TuneModel.list, headerName: 'common.tunes' }
                         ]
                     },
@@ -378,8 +378,8 @@ export const ClassificatorsModel =
                             { field: 'title', headerName: 'common.title' },
                             { field: 'description', headerName: 'common.description' },
                             { field: 'isActive', type: 'boolean', headerName: 'common.active' },
-                            { field: 'created', headerName: 'date.created' },
-                            { field: 'modified', headerName: 'date.modified' },
+                            { field: 'created', type: 'timestamp', headerName: 'date.created' },
+                            { field: 'modified', type: 'timestamp', headerName: 'date.modified' },
                             { field: 'tunes', type: 'associatedAssets', associatedModel: TuneModel.list, headerName: 'common.tunes' }
                         ]
                     },
@@ -393,8 +393,8 @@ export const ClassificatorsModel =
                             { field: 'title', headerName: 'common.title' },
                             { field: 'description', headerName: 'common.description' },
                             { field: 'isActive', type: 'boolean', headerName: 'common.active' },
-                            { field: 'created', headerName: 'date.created' },
-                            { field: 'modified', headerName: 'date.modified' },
+                            { field: 'created', type: 'timestamp', headerName: 'date.created' },
+                            { field: 'modified', type: 'timestamp', headerName: 'date.modified' },
                             { field: 'tunes', type: 'associatedAssets', associatedModel: TuneModel.list, headerName: 'common.tunes' }
                         ]
                     },
