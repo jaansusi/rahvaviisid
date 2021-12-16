@@ -195,11 +195,17 @@ const EditComponent = ({ model, newItem, validateTune }) => {
         if (validateTune && !TuneService.Validate(objToSend, t))
             return;
         if (newItem) {
+            let createAsset = Object.assign({}, objToSend);
+            delete createAsset.id;
+            Object.keys(createAsset).forEach((key) => {
+                if (typeof createAsset[key] === 'object' || Array.isArray(createAsset[key]))
+                    delete createAsset[key];
+            });
             // No DB entry exists, use post request
             axios
                 .post(
                     config.apiUrl + '/' + currentModel.apiPath,
-                    removeObjectIds(objToSend, true),
+                    createAsset,
                     {
                         headers: {
                             'Content-Type': 'application/json',
@@ -207,8 +213,35 @@ const EditComponent = ({ model, newItem, validateTune }) => {
                     }
                 )
                 .then((resData) => {
-                    toast.success(t('notification.saved'));
-                    history.push('./' + resData.data.id + '/vaata');
+                    //Hacky way to get around LBs "no ids in create function" problem
+                    objToSend.id = resData.data.id;
+                    axios
+                        .patch(
+                            config.apiUrl + '/' + currentModel.apiPath + '/' + objToSend.id,
+                            removeObjectIds(objToSend, false),
+                            {
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                }
+                            }
+                        )
+                        .then(() => {
+                            toast.success(t('notification.saved'));
+                            history.push('./' + resData.data.id + '/vaata');
+                        })
+                        .catch((error) => {
+                            if (error.response.status === 422) {
+                                if (!error.response.data.error.details)
+                                    toast.error(t(error.response.data.error.message), {
+                                        closeButton: true,
+                                        autoClose: false
+                                    });
+                                else
+                                    error.response.data.error.details.forEach(x => handleErrors(t, x));
+                            }
+                            else
+                                toast.error(t('notification.failed'));
+                        });
                 })
                 .catch((error) => {
                     if (error.response.status === 422) {
