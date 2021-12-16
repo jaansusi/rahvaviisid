@@ -54,6 +54,8 @@ export class Sexes extends Entity {
   
   @hasOne(() => Persons, {keyTo: 'sexId'})
   persons: Persons;
+
+  
   // Define well-known properties here
 
   // Indexer property to allow additional data

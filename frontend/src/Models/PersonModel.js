@@ -1,6 +1,7 @@
 import { ModelService } from '../Services';
 
 
+
 export const PersonModel = ModelService.GenerateDefaults({
     apiPath: 'persons',
     list: {
@@ -26,6 +27,8 @@ export const PersonModel = ModelService.GenerateDefaults({
             { field: 'remarks', type: 'textbox', headerName: 'common.remarks' },
             { field: 'created', headerName: 'date.created' },
             { field: 'modified', headerName: 'date.modified' }
+           // { field: 'tunes', type: 'associatedAssets', associatedModel: TuneModel.list, headerName: 'common.tunes' }
+            
         ]
     },
     edit: {
@@ -39,6 +42,7 @@ export const PersonModel = ModelService.GenerateDefaults({
             { field: 'deathYear', type: 'number', headerName: 'person.deathYear' },
             { field: 'sexId', type: 'dropdown', apiPath: 'sexes', headerName: 'person.sex', required: true },
             { field: 'remarks', type: 'textbox', headerName: 'common.remarks' }
+            //{ field: 'tunes', type: 'associatedAssets', associatedModel: TuneModel.list, headerName: 'common.tunes' }
         ]
     }
 });

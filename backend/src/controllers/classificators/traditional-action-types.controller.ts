@@ -20,7 +20,7 @@ import {
   requestBody,
 } from '@loopback/rest';
 import {TraditionalActionTypes} from '../../models';
-import {TraditionalActionTypesRepository} from '../../repositories';
+import {TraditionalActionTypesRepository, TunesRepository, TunePerformancesTraditionalActionsTypesRepository, TunePerformancesRepository} from '../../repositories';
 
 import { UniqueValidationInterceptor } from '../../interceptors';
 import { intercept } from '@loopback/core';
@@ -30,6 +30,12 @@ export class TraditionalActionTypesController {
   constructor(
     @repository(TraditionalActionTypesRepository)
     public traditionalActionTypesRepository : TraditionalActionTypesRepository,
+    @repository(TunePerformancesTraditionalActionsTypesRepository)
+    public tunePerformancesTraditionalActionsTypesRepository : TunePerformancesTraditionalActionsTypesRepository,
+    @repository(TunePerformancesRepository)
+    public tunePerformancesRepository : TunePerformancesRepository,
+    @repository(TunesRepository)
+    public tunesRepository : TunesRepository,
   ) {}
 
   @post('/traditional-action-types', {
@@ -139,7 +145,24 @@ export class TraditionalActionTypesController {
     @param.path.number('id') id: number,
     @param.filter(TraditionalActionTypes, {exclude: 'where'}) filter?: FilterExcludingWhere<TraditionalActionTypes>
   ): Promise<TraditionalActionTypes> {
-    return this.traditionalActionTypesRepository.findById(id, filter);
+    let a = await this.traditionalActionTypesRepository.findById(id, filter);
+    let b = await this.tunePerformancesTraditionalActionsTypesRepository.find({
+      where: {traditionalActionTypeId: id}
+    });
+    if (b.length === 0)
+      return a;
+    let c = await this.tunePerformancesRepository.find({
+      fields: ['tunesId'],
+      where: {or:b.map(x=>{return {id: x.tuneSongId}})}
+    });
+    if (c.length === 0)
+      return a;
+    let d = await this.tunesRepository.find({
+      where: {or:c.map(x=>{return {id: x.tunesId}})}
+    })
+    a.tunes = d;
+    return a;
+
   }
 
   @patch('/traditional-action-types/{id}', {

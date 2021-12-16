@@ -92,7 +92,17 @@ export const ClassificatorsModel =
                 {
                     name: 'tune.state',
                     url: 'viisi-seisund',
-                    apiPath: 'tune-states'
+                    apiPath: 'tune-states',
+                    view: {
+                        fields: [
+                            { field: 'title', headerName: 'common.title' },
+                            { field: 'description', headerName: 'common.description' },
+                            { field: 'isActive', type: 'boolean', headerName: 'common.active' },
+                            { field: 'created', type: 'timestamp', headerName: 'date.created' },
+                            { field: 'modified', type: 'timestamp', headerName: 'date.modified' },
+                            { field: 'tunes', type: 'associatedAssets', associatedModel: TuneModel.list, headerName: 'common.tunes' }
+                        ]
+                    },
                 }
             ]
         },
@@ -172,22 +182,62 @@ export const ClassificatorsModel =
                 {
                     name: 'performance.actual.type',
                     url: 'tegeliku-esituse-liik',
-                    apiPath: 'actual-performance-types'
+                    apiPath: 'actual-performance-types',
+                    view: {
+                        fields: [
+                            { field: 'title', headerName: 'common.title' },
+                            { field: 'description', headerName: 'common.description' },
+                            { field: 'isActive', type: 'boolean', headerName: 'common.active' },
+                            { field: 'created', type: 'timestamp', headerName: 'date.created' },
+                            { field: 'modified', type: 'timestamp', headerName: 'date.modified' },
+                            { field: 'tunes', type: 'associatedAssets', associatedModel: TuneModel.list, headerName: 'common.tunes' }
+                        ]
+                    },
                 },
                 {
                     name: 'performance.traditional.type',
                     url: 'traditsioonilise-esituse-liik',
-                    apiPath: 'traditional-performance-types'
+                    apiPath: 'traditional-performance-types',
+                    view: {
+                        fields: [
+                            { field: 'title', headerName: 'common.title' },
+                            { field: 'description', headerName: 'common.description' },
+                            { field: 'isActive', type: 'boolean', headerName: 'common.active' },
+                            { field: 'created', type: 'timestamp', headerName: 'date.created' },
+                            { field: 'modified', type: 'timestamp', headerName: 'date.modified' },
+                            { field: 'tunes', type: 'associatedAssets', associatedModel: TuneModel.list, headerName: 'common.tunes' }
+                        ]
+                    },
                 },
                 {
                     name: 'performance.actual.action',
                     url: 'tegeliku-tegevuse-liik',
-                    apiPath: 'actual-action-types'
+                    apiPath: 'actual-action-types',
+                    view: {
+                        fields: [
+                            { field: 'title', headerName: 'common.title' },
+                            { field: 'description', headerName: 'common.description' },
+                            { field: 'isActive', type: 'boolean', headerName: 'common.active' },
+                            { field: 'created', type: 'timestamp', headerName: 'date.created' },
+                            { field: 'modified', type: 'timestamp', headerName: 'date.modified' },
+                            { field: 'tunes', type: 'associatedAssets', associatedModel: TuneModel.list, headerName: 'common.tunes' }
+                        ]
+                    },
                 },
                 {
                     name: 'performance.traditional.action',
                     url: 'traditsioonilise-tegevuse-liik',
-                    apiPath: 'traditional-action-types'
+                    apiPath: 'traditional-action-types',
+                    view: {
+                        fields: [
+                            { field: 'title', headerName: 'common.title' },
+                            { field: 'description', headerName: 'common.description' },
+                            { field: 'isActive', type: 'boolean', headerName: 'common.active' },
+                            { field: 'created', type: 'timestamp', headerName: 'date.created' },
+                            { field: 'modified', type: 'timestamp', headerName: 'date.modified' },
+                            { field: 'tunes', type: 'customAssociatedAssets', associatedModel: TuneModel.list, headerName: 'common.tunes' }
+                        ]
+                    },
                 }
             ]
         },
