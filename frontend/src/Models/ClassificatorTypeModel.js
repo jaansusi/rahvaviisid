@@ -280,8 +280,16 @@ export const ClassificatorsModel =
                     name: 'tune.genre',
                     url: 'viisi-liik',
                     apiPath: 'tune-genres',
+                    list: {
+                        fields: [
+                            { field: 'tuneGenres', type: 'parentHref', selector: 'title', headerName: 'classificators.tuneGenreParent', width: 140 },
+                            { field: 'title', headerName: 'common.title', width: 170 },
+                            { field: 'isActive', type: 'boolean', headerName: 'common.active', width: 170 }
+                        ]
+                    },
                     view: {
                         fields: [
+                            { field: 'tuneGenres', parent: 'tuneGenres', selector: 'title', headerName: 'classificators.tuneGenreParent', width: 140 },
                             { field: 'title', headerName: 'common.title' },
                             { field: 'description', headerName: 'common.description' },
                             { field: 'isActive', type: 'boolean', headerName: 'common.active' },
@@ -290,13 +298,30 @@ export const ClassificatorsModel =
                             { field: 'tunes', type: 'customAssociatedAssets', associatedModel: TuneModel.list, headerName: 'common.tunes' }
                         ]
                     },
+                    edit: {
+                        fields: [
+                            { field: 'id', hidden: true },
+                            { field: 'parentId', type: 'dropdown', apiPath: 'song-genres', headerName: 'classificators.songGenreParent' },
+                            { field: 'title', headerName: 'common.title', required: true },
+                            { field: 'description', type: 'textbox', headerName: 'common.description' },
+                            { field: 'isActive', type: 'boolean', headerName: 'common.active' }
+                        ]
+                    }
                 },
                 {
                     name: 'song.topic',
                     url: 'laulu-teema',
                     apiPath: 'song-topics',
+                    list: {
+                        fields: [
+                            { field: 'songTopics', type: 'parentHref', selector: 'title', headerName: 'classificators.songTopicParent', width: 140 },
+                            { field: 'title', headerName: 'common.title', width: 170 },
+                            { field: 'isActive', type: 'boolean', headerName: 'common.active', width: 170 }
+                        ]
+                    },
                     view: {
                         fields: [
+                            { field: 'songTopics', parent: 'songTopics', selector: 'title', headerName: 'classificators.songTopicParent', width: 140 },
                             { field: 'title', headerName: 'common.title' },
                             { field: 'description', headerName: 'common.description' },
                             { field: 'isActive', type: 'boolean', headerName: 'common.active' },
@@ -305,6 +330,15 @@ export const ClassificatorsModel =
                             { field: 'tunes', type: 'customAssociatedAssets', associatedModel: TuneModel.list, headerName: 'common.tunes' }
                         ]
                     },
+                    edit: {
+                        fields: [
+                            { field: 'id', hidden: true },
+                            { field: 'parentId', type: 'dropdown', apiPath: 'song-topics', headerName: 'classificators.songTopicParent' },
+                            { field: 'title', headerName: 'common.title', required: true },
+                            { field: 'description', type: 'textbox', headerName: 'common.description' },
+                            { field: 'isActive', type: 'boolean', headerName: 'common.active' }
+                        ]
+                    }
                 },
                 {
                     name: 'song.verse',

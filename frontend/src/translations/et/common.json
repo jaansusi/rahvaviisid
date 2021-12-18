@@ -29,7 +29,9 @@
         "invalidCredentials": "Vigane e-mail / parool"
     },
     "classificators": {
-        "songGenreParent": "Liik"
+        "songGenreParent": "Liik",
+        "tuneGenreParent": "Liik",
+        "songTopicParent": "Teema"
     },
     "coding": {
         "coding": "Kodeering",

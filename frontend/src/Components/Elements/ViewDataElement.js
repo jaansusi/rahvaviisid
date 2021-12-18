@@ -103,7 +103,15 @@ const ViewDataElement = (({ model, value }) => {
             return (
                 <Grid item xs={12} container direction='row'>
                     <Grid item xs={6}><Typography>{t(model.headerName)}</Typography></Grid>
-                    <Grid item xs={6}><Typography>{model.selector ? value[model.selector] : value}</Typography></Grid>
+                    <Grid item xs={6}>
+                        <Typography>
+                            {
+                                value !== undefined ?
+                                    (model.selector ? value[model.selector] : value)
+                                    : ''
+                            }
+                        </Typography>
+                    </Grid>
                 </Grid>
             );
     }
