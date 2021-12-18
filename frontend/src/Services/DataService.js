@@ -52,14 +52,17 @@ export const DataService = {
         return setData(data, model, false);
     },
 
+    // Used to generate the "include" filter for deep inclusion in loopback
     CreateIncludeFilter(model) {
         let recursiveFun = (currentModel) => {
+            // These types of model entries will be added to the include filter
             let nestedFields = currentModel.fields.filter(x =>
                 x.nested ||
                 (x.selector && x.type !== 'dropdown') ||
                 (x.type === 'multiselect' && x.apiPath) ||
                 x.type === 'associatedAssets' ||
-                x.type === 'parentHref'
+                x.type === 'parentHref' ||
+                x.parent
             );
             if (nestedFields.length === 0)
                 return {}
@@ -76,9 +79,10 @@ export const DataService = {
                 })
             }
         };
-        console.log(recursiveFun(model));
         return recursiveFun(model);
     },
+
+    // Create an empty object based on the model
     CreateEmptyDataObject(currentModel) {
         return new Promise(resolve => resolve(this.SyncCreateEmptyDataObject(currentModel)));
     },
@@ -123,6 +127,7 @@ export const DataService = {
         let model = new Map(arr);
         return Object.fromEntries(model);
     },
+
     GetMelody(id) {
         return axios
             .get(config.apiUrl + '/tune-melodies/' + id)
@@ -137,8 +142,10 @@ export const DataService = {
         return new Intl.DateTimeFormat('et-EE', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }).format(Date.parse(date));
     },
 
+    // Helper function to get a value from the element depending on the selector 
     GetValueWithSelector(model, element) {
-        console.log(element);
+        if (element === undefined) 
+            return '';
         return (
             Array.isArray(element[model.field]) ?
                 element[model.field].map(el =>

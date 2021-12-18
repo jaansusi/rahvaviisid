@@ -257,6 +257,7 @@ export const ClassificatorsModel =
                     },
                     view: {
                         fields: [
+                            { field: 'songGenres', parent: 'songGenres', selector: 'title', headerName: 'classificators.songGenreParent', width: 140 },
                             { field: 'title', headerName: 'common.title' },
                             { field: 'description', headerName: 'common.description' },
                             { field: 'isActive', type: 'boolean', headerName: 'common.active' },
