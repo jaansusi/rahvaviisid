@@ -266,6 +266,15 @@ export const ClassificatorsModel =
                             { field: 'tunes', type: 'customAssociatedAssets', associatedModel: TuneModel.list, headerName: 'common.tunes' }
                         ]
                     },
+                    edit: {
+                        fields: [
+                            { field: 'id', hidden: true },
+                            { field: 'parentId', type: 'dropdown', apiPath: 'song-genres', headerName: 'classificators.songGenreParent' },
+                            { field: 'title', headerName: 'common.title', required: true },
+                            { field: 'description', type: 'textbox', headerName: 'common.description' },
+                            { field: 'isActive', type: 'boolean', headerName: 'common.active' }
+                        ]
+                    }
                 },
                 {
                     name: 'tune.genre',
