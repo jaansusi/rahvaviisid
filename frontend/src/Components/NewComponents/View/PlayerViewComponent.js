@@ -1,11 +1,11 @@
 import abcjs from 'abcjs';
 import React, { useEffect } from 'react';
-import { Button, Grid } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import { TuneService } from '../../../Services';
-import { useTranslation } from 'react-i18next';
+// import { useTranslation } from 'react-i18next';
 
 export const PlayerViewComponent = ({ elementData, index, edit }) => {
-	const { t } = useTranslation('common');
+	// const { t } = useTranslation('common');
 	
 	useEffect(() => {
 		let visualObj = abcjs.renderAbc('player' + index, TuneService.CombineData(elementData))[0];

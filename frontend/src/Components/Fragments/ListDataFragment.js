@@ -3,25 +3,49 @@ import { useTranslation } from "react-i18next";
 import { DataGrid } from '@material-ui/data-grid';
 import Actions from '../Buttons/Actions';
 import CreateButton from '../Buttons/CreateButton';
-import { AuthService } from '../../Services';
+import { AuthService, DataService } from '../../Services';
 import { GetDataGridLocale } from '../../translations/DataGridLocale';
 import { Grid } from '@material-ui/core';
+import { useLocation } from 'react-router-dom';
 
 const ListDataFragment = (({ model, data, rowCount, updateTable, currentView, additionalButtons, viewOnly, actionUrlOverride }) => {
     const { t } = useTranslation('common');
+    let { pathname } = useLocation();
 
     if (!additionalButtons)
         additionalButtons = [];
-
-    let columns = model.fields.map((x) => {
-        x.headerName = t(x.headerName);
+    let columns = model.fields.map((modelField) => {
+        let x = {};
+        x.headerName = t(modelField.headerName);
         x.sortable = false;
-        if (x.type === 'number') {
-            x.valueFormatter = (params) => {
-                if (params.value === null)
-                    return '';
-                return params.value.toString()
-            }
+        x.field = modelField.field;
+        x.width = modelField.width;
+        switch (modelField.type) {
+            case 'number':
+                x.valueFormatter = (params) => {
+                    if (params.value === null)
+                        return '';
+                    return params.value.toString()
+                };
+                break;
+            case 'parentHref':
+                x.valueGetter = (params) => params.row;
+                x.renderCell = (params) => {
+                    console.log(params.row[modelField.field]);
+                    if (params.row[modelField.field] !== undefined)
+                        return (
+                            <a href={pathname + '/' + params.row[modelField.field].id + '/vaata'}>
+                                {DataService.GetValueWithSelector(modelField, params.row)}
+                            </a>
+                        );
+                    return <></>;
+                };
+                break;
+            case 'boolean':
+                x.valueGetter = (params) => params.row[x.field] ? t('model.true') : t('model.false');
+                break;
+            default:
+                break;
         }
         return x;
     });
@@ -40,22 +64,6 @@ const ListDataFragment = (({ model, data, rowCount, updateTable, currentView, ad
                 pathOverride={actionUrlOverride}
             />
     });
-
-    let tableData = [];
-    if (data !== undefined)
-        tableData = data.map((row) => {
-            for (let field in row) {
-                let modelField = model.fields.find((x) => field === x.field);
-                if (modelField === undefined)
-                    continue;
-                // I don't know why this undefined check is necessary
-                // but for some reason, the data.map is triggered twice and it would end up undefined otherwise
-                if (modelField.selector && row[field][modelField.selector] !== undefined) {
-                    row[field] = row[field][modelField.selector];
-                }
-            }
-            return row;
-        });
 
     useEffect(() => { updateTable(0) }, []);
 
@@ -78,7 +86,7 @@ const ListDataFragment = (({ model, data, rowCount, updateTable, currentView, ad
                 <DataGrid
                     paginationMode={viewOnly ? 'client' : 'server'}
                     rowCount={rowCount}
-                    rows={tableData}
+                    rows={data}
                     columns={columns}
                     pageSize={10}
                     rowsPerPageOptions={[]}

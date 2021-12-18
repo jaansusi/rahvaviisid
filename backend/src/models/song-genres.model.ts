@@ -77,7 +77,7 @@ export class SongGenres extends Entity {
   @hasMany(() => Tunes)
   tunes?: Tunes[];
 
-  @hasOne(() => SongGenres, {keyTo: 'parentId'})
+  @hasOne(() => SongGenres, {keyFrom: 'parentId', keyTo: 'id'})
   songGenres: SongGenres;
   // Define well-known properties here
 

@@ -58,7 +58,8 @@ export const DataService = {
                 x.nested ||
                 (x.selector && x.type !== 'dropdown') ||
                 (x.type === 'multiselect' && x.apiPath) ||
-                x.type === 'associatedAssets'
+                x.type === 'associatedAssets' ||
+                x.type === 'parentHref'
             );
             if (nestedFields.length === 0)
                 return {}
@@ -75,6 +76,7 @@ export const DataService = {
                 })
             }
         };
+        console.log(recursiveFun(model));
         return recursiveFun(model);
     },
     CreateEmptyDataObject(currentModel) {
@@ -136,6 +138,7 @@ export const DataService = {
     },
 
     GetValueWithSelector(model, element) {
+        console.log(element);
         return (
             Array.isArray(element[model.field]) ?
                 element[model.field].map(el =>
