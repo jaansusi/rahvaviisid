@@ -73,12 +73,13 @@ export class SongTopics extends Entity {
     postgresql: {columnName: 'modified', dataType: 'timestamp without time zone', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'NO'},
   })
   modified: string;
+  
+  @hasOne(() => SongTopics, {keyFrom: 'parentId', keyTo: 'id'})
+  songTopics: SongTopics;
 
   @hasMany(() => Tunes)
   tunes?: Tunes[];
 
-  @hasOne(() => SongTopics, {keyFrom: 'parentId', keyTo: 'id'})
-  songTopics: SongTopics;
   // Define well-known properties here
 
   // Indexer property to allow additional data
