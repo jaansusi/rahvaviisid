@@ -40,7 +40,6 @@ export class Languages extends Entity {
     type: 'string',
     required: false,
     postgresql: {columnName: 'created', dataType: 'timestamp without time zone', dataLength: null, dataPrecision: null, dataScale: null, nullable: 'NO'},
-    default: () => new Date(),
   })
   created: string;
 
