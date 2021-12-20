@@ -26,8 +26,8 @@ export const PersonModel = ModelService.GenerateDefaults({
             { field: 'sexes', headerName: 'person.sex', selector: 'title'},
             { field: 'remarks', type: 'textbox', headerName: 'common.remarks' },
             { field: 'created', headerName: 'date.created' },
-            { field: 'modified', headerName: 'date.modified' }
-           // { field: 'tunes', type: 'associatedAssets', associatedModel: TuneModel.list, headerName: 'common.tunes' }
+            { field: 'modified', headerName: 'date.modified' }           
+            //{ field: 'tunes', type: 'associatedAssets', associatedModel: tune_list, headerName: 'common.tunes' }
             
         ]
     },

@@ -260,21 +260,6 @@ export class Tunes extends Entity {
   })
   modified: string;
 
-  @property({
-    type: 'number',
-    scale: 0,
-    jsonSchema: {nullable: true},
-    postgresql: {
-      columnName: 'rhythm_type_id',
-      dataType: 'integer',
-      dataLength: null,
-      dataPrecision: null,
-      dataScale: 0,
-      nullable: 'YES',
-    },
-  })
-  rhythmTypeId?: number;
-
   @hasOne(() => TuneStates, {keyFrom: 'tuneStateId', keyTo: 'id'})
   tuneStates: TuneStates;
 

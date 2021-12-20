@@ -1,5 +1,6 @@
-import {Entity, model, property, hasOne} from '@loopback/repository';
+import {Entity, model, property, hasOne, hasMany} from '@loopback/repository';
 import {Persons} from './persons.model';
+import {Tunes} from './tunes.model';
 
 @model({
   settings: {idInjection: false, postgresql: {schema: 'folk_tune', table: 'sexes'}}
@@ -55,6 +56,8 @@ export class Sexes extends Entity {
   @hasOne(() => Persons, {keyTo: 'sexId'})
   persons: Persons;
 
+  @hasMany(() => Tunes)
+  tunes?: Tunes[];
   
   // Define well-known properties here
 

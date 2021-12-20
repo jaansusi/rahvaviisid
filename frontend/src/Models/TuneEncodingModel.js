@@ -21,6 +21,7 @@ export const TuneEncodingModel = ModelService.GenerateDefaults({
             { field: 'supportSounds', headerName: 'encoding.supportSound', selector: 'title'},
             { field: 'pitches', headerName: 'encoding.pitch', selector: 'title'},
             { field: 'measures', headerName: 'encoding.measure', selector: 'title'},
+            { field: 'rhythmTypes', headerName: 'musical.rhythmType', selector: 'title' },
             {
                 field: 'tuneMelodies',
                 type: 'model',
@@ -38,6 +39,7 @@ export const TuneEncodingModel = ModelService.GenerateDefaults({
             { field: 'pitchId', type: 'dropdown', apiPath: 'pitches', headerName: 'encoding.pitch', title: 'title'},
             { field: 'measureId', type: 'dropdown', apiPath: 'measures', headerName: 'encoding.measure', title: 'title'},
             { field: 'tempo', headerName: 'tune.tempo' },
+            { field: 'rhythmTypeId', type: 'dropdown', apiPath: 'rhythm-types', headerName: 'musical.rhythmType' , title: 'title'},
             { field: 'remarks', type: 'textbox', headerName: 'tune.remarks' },
             {
                 field: 'tuneMelodies',

@@ -35,8 +35,8 @@ const EditComponent = ({ model, newItem, copyItem, validateTune }) => {
         let getDropdowns = (currentModel) => {
             return currentModel.fields
                 .map((field) => {
-                    if (field.apiPath && (field.type === 'dropdown' || field.type === 'multiselect') && !retrievedValues.includes(field.apiPath)) {
-                        retrievedValues.push(field.apiPath);
+                    if (field.apiPath && (field.type === 'dropdown' || field.type === 'multiselect') && !retrievedValues.includes(field.field)) {
+                        retrievedValues.push(field.field);
                         return axios
                             .get(config.apiUrl + '/' + field.apiPath)
                             .then((result) => {
@@ -351,7 +351,7 @@ const recurseModelValues = (currentModel, options) => {
 
             if (field.edit)
                 field.edit = recurseModelValues(field.edit, options);
-
+console.log(options)
             if (field.type === 'dropdown' || field.type === 'multiselect') {
                 if (field.apiPath)
                     field.values = options.filter((y) => y.name === field.field)[0].data;

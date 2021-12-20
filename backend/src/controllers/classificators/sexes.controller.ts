@@ -20,7 +20,7 @@ import {
   requestBody,
 } from '@loopback/rest';
 import {Sexes} from '../../models';
-import {SexesRepository} from '../../repositories';
+import {SexesRepository, PersonsRepository, TunesPersonsRolesRepository, TunesRepository} from '../../repositories';
 
 import { UniqueValidationInterceptor } from '../../interceptors';
 import { intercept } from '@loopback/core';
@@ -30,6 +30,12 @@ export class SexesController {
   constructor(
     @repository(SexesRepository)
     public sexesRepository : SexesRepository,
+    @repository(PersonsRepository)
+    public personsRepository : PersonsRepository,
+    @repository(TunesPersonsRolesRepository)
+    public tunesPersonsRolesRepository : TunesPersonsRolesRepository,
+    @repository(TunesRepository)
+    public tunesRepository : TunesRepository,    
   ) {}
 
   @post('/sexes', {
@@ -139,7 +145,31 @@ export class SexesController {
     @param.path.number('id') id: number,
     @param.filter(Sexes, {exclude: 'where'}) filter?: FilterExcludingWhere<Sexes>
   ): Promise<Sexes> {
-    return this.sexesRepository.findById(id, filter);
+ // return this.sexesRepository.findById(id, filter);
+//  @repository(PersonsRepository)
+//  public personsRepository : PersonsRepository,
+//  @repository(TunesPersonsRolesRepository)
+//  public tunesPersonsRolesRepository : TunesPersonsRolesRepository,
+//  @repository(TunesRepository)
+//  public tunesRepository : TunesRepository,   
+    let a = await this.sexesRepository.findById(id, filter);
+    let b = await this.personsRepository.find({
+      where: {sexId: id}
+    });
+    if (b.length === 0)
+    return a;
+    let c = await this.tunesPersonsRolesRepository.find({
+      fields: ['tunesId'],
+      where: {or:b.map(x=>{return {personId: x.id}})}
+    });
+    if (c.length === 0)
+    return a;
+    let d = await this.tunesRepository.find({
+      where: {or:c.map(x=>{return {id: x.tunesId}})}
+    })
+    a.tunes = d;
+    return a;
+    
   }
 
   @patch('/sexes/{id}', {

@@ -4,6 +4,7 @@ import {SupportSounds} from './support-sounds.model';
 import {Measures} from './measures.model';
 import {Pitches} from './pitches.model';
 import { TuneMelodies } from './tune-melodies.model';
+import { RhythmTypes } from './rhythm-types.model';
 
 @model({
   settings: {idInjection: false, postgresql: {schema: 'folk_tune', table: 'tune_encodings'}}
@@ -69,14 +70,12 @@ export class TuneEncodings extends Entity {
   tempo?: string;
 
   @property({
-    type: 'string',
-    jsonSchema: {
-      maxLength: 40,
-      nullable: true
-    },
-    postgresql: {columnName: 'rhythm_type', dataType: 'character varying', dataLength: 40, dataPrecision: null, dataScale: null, nullable: 'YES'},
+    type: 'number',
+    scale: 0,
+    jsonSchema: {nullable: true},
+    postgresql: {columnName: 'rhythm_type_id', dataType: 'smallint', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'YES'},
   })
-  rhythmType?: string;
+  rhythmTypeId?: number;
 
   @property({
     type: 'string',
@@ -108,6 +107,9 @@ export class TuneEncodings extends Entity {
   @hasOne(() => Pitches, {keyFrom: 'pitchId', keyTo: 'id'})
   pitches?: Pitches;
   
+  @hasOne(() => RhythmTypes, {keyFrom: 'rhythmTypeId', keyTo: 'id'})
+  rhythmTypes?: RhythmTypes;
+
   @hasOne(() => Measures, {keyFrom: 'measureId', keyTo: 'id'})
   measures?: Measures;
 

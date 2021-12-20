@@ -1,5 +1,5 @@
 import {DefaultCrudRepository, repository, HasOneRepositoryFactory,HasManyRepositoryFactory} from '@loopback/repository';
-import {TuneEncodings, TuneEncodingsRelations, KeySignatures, TuneMelodies, SupportSounds, Measures, Pitches} from '../models';
+import {TuneEncodings, TuneEncodingsRelations, KeySignatures, TuneMelodies, SupportSounds, Measures, Pitches, RhythmTypes} from '../models';
 import {DbDataSource} from '../datasources';
 import {inject, Getter} from '@loopback/core';
 import {KeySignaturesRepository} from './key-signatures.repository';
@@ -7,6 +7,7 @@ import {SupportSoundsRepository} from './support-sounds.repository';
 import {MeasuresRepository} from './measures.repository';
 import {PitchesRepository} from './pitches.repository';
 import {TuneMelodiesRepository} from './tune-melodies.repository';
+import {RhythmTypesRepository} from './rhythm-types.repository';
 
 export class TuneEncodingsRepository extends DefaultCrudRepository<
   TuneEncodings,
@@ -21,12 +22,21 @@ export class TuneEncodingsRepository extends DefaultCrudRepository<
   public readonly measures: HasOneRepositoryFactory<Measures, typeof TuneEncodings.prototype.id>;
 
   public readonly pitches: HasOneRepositoryFactory<Pitches, typeof TuneEncodings.prototype.id>;
+  public readonly rhythmTypes: HasOneRepositoryFactory<RhythmTypes, typeof TuneEncodings.prototype.id>;
   public readonly tuneMelodies: HasManyRepositoryFactory<TuneMelodies, typeof TuneEncodings.prototype.id>;
 
   constructor(
-    @inject('datasources.db') dataSource: DbDataSource, @repository.getter('TuneMelodiesRepository') protected tuneMelodiesRepositoryGetter: Getter<TuneMelodiesRepository>, @repository.getter('KeySignaturesRepository') protected keySignaturesRepositoryGetter: Getter<KeySignaturesRepository>, @repository.getter('SupportSoundsRepository') protected supportSoundsRepositoryGetter: Getter<SupportSoundsRepository>, @repository.getter('MeasuresRepository') protected measuresRepositoryGetter: Getter<MeasuresRepository>, @repository.getter('PitchesRepository') protected pitchesRepositoryGetter: Getter<PitchesRepository>,
+    @inject('datasources.db') dataSource: DbDataSource, 
+    @repository.getter('TuneMelodiesRepository') protected tuneMelodiesRepositoryGetter: Getter<TuneMelodiesRepository>, 
+    @repository.getter('KeySignaturesRepository') protected keySignaturesRepositoryGetter: Getter<KeySignaturesRepository>, 
+    @repository.getter('SupportSoundsRepository') protected supportSoundsRepositoryGetter: Getter<SupportSoundsRepository>, 
+    @repository.getter('MeasuresRepository') protected measuresRepositoryGetter: Getter<MeasuresRepository>, 
+    @repository.getter('PitchesRepository') protected pitchesRepositoryGetter: Getter<PitchesRepository>,
+    @repository.getter('RhythmTypesRepository') protected rhythmTypesRepositoryGetter: Getter<RhythmTypesRepository>,
   ) {
     super(TuneEncodings, dataSource);
+    this.rhythmTypes = this.createHasOneRepositoryFactoryFor('rhythmTypes', rhythmTypesRepositoryGetter);
+    this.registerInclusionResolver('rhythmTypes', this.rhythmTypes.inclusionResolver);
     this.pitches = this.createHasOneRepositoryFactoryFor('pitches', pitchesRepositoryGetter);
     this.registerInclusionResolver('pitches', this.pitches.inclusionResolver);
     this.measures = this.createHasOneRepositoryFactoryFor('measures', measuresRepositoryGetter);

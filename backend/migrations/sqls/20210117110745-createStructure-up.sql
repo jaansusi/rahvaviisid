@@ -905,7 +905,7 @@ CREATE TABLE folk_tune.tune_encodings
     support_sound_id smallint,
     pitch_id smallint,
     measure_id smallint,
-    rhythm_type text,
+    rhythm_type_id smallint,
     tempo text,
     remarks text,
     created folk_tune.D_timestamp,
