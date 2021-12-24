@@ -20,6 +20,11 @@ const ListDataFragment = (({ model, data, rowCount, updateTable, currentView, ad
         x.sortable = false;
         x.field = modelField.field;
         x.width = modelField.width;
+        x.valueGetter = (params) => {
+            return modelField.selector ?
+                params.value[modelField.selector] :
+                params.value;
+        };
         switch (modelField.type) {
             case 'number':
                 x.valueFormatter = (params) => {
@@ -31,7 +36,6 @@ const ListDataFragment = (({ model, data, rowCount, updateTable, currentView, ad
             case 'parentHref':
                 x.valueGetter = (params) => params.row;
                 x.renderCell = (params) => {
-                    console.log(params.row[modelField.field]);
                     if (params.row[modelField.field] !== undefined)
                         return (
                             <a href={pathname + '/' + params.row[modelField.field].id + '/vaata'}>

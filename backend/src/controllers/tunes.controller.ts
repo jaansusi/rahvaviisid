@@ -266,6 +266,11 @@ export class TunesController extends AuditBaseController<Tunes> {
       id,
       TunesFilter.ALL_NO_CLASSIFICATORS,
     );
+    if (before.externalReferences !== undefined)
+      for (let key in before.externalReferences) {
+        let a = before.externalReferences[key];
+        await this.externalReferencesRepository.deleteById(a.id);
+      }
     await this.tunesRepository.deleteById(id);
     super.auditDelete(before);
   }
@@ -309,6 +314,10 @@ export class TunesController extends AuditBaseController<Tunes> {
     delete tune.tunePerformances;
 
     delete tune.tuneStates;
+
+    if (tune.verifiedBy === undefined) {
+      tune.verifiedBy = null;
+    }
 
     //First we need the actual tune so we can link through it's ID
     let createdTune = await this.insertNestedAsset(tune, this.tunesRepository);
@@ -376,29 +385,31 @@ export class TunesController extends AuditBaseController<Tunes> {
       );
     }
 
-    if (original?.tuneTranscriptions)
+    if (original?.tuneTranscriptions) {
       await this.deleteNestedAssets(
         original.tuneTranscriptions,
         tuneTranscriptions,
         this.tuneTranscriptionsRepository,
       );
+    }
     if (tuneTranscriptions !== undefined) {
       tuneTranscriptions.forEach((tuneTranscription: TuneTranscriptions) => {
-        let tuneTranscriptionsPersonsRoles = tuneTranscription.transcriptionsPersonsRoles;
+        let tuneTranscriptionsPersonsRoles =
+          tuneTranscription.transcriptionsPersonsRoles;
         delete tuneTranscription.transcriptionsPersonsRoles;
         return this.insertNestedAsset(
           tuneTranscription,
           this.tuneTranscriptionsRepository,
-          createdTune.id
+          createdTune.id,
         ).then(insertedAsset => {
-          tuneTranscriptionsPersonsRoles?.forEach((personRole) => {
+          tuneTranscriptionsPersonsRoles?.forEach(personRole => {
             this.insertNestedAsset(
               personRole,
               this.transcriptionsPersonsRolesRepository,
               insertedAsset.id,
-              'tuneTranscriptionsId'
-            )
-          })
+              'tuneTranscriptionsId',
+            );
+          });
         });
       });
     }
@@ -428,7 +439,7 @@ export class TunesController extends AuditBaseController<Tunes> {
               tuneMelody,
               this.tuneMelodiesRepository,
               createdEncoding.id,
-              'tuneEncodingsId'
+              'tuneEncodingsId',
             );
           });
         });
@@ -538,7 +549,8 @@ export class TunesController extends AuditBaseController<Tunes> {
         delete tunePerformance.actualPerformanceTypes;
         delete tunePerformance.traditionalPerformanceTypes;
         delete tunePerformance.actualActionTypes;
-        let traditionalActionTypes = tunePerformance.traditionalPerformanceTypes;
+        let traditionalActionTypes =
+          tunePerformance.traditionalActionTypes;
         delete tunePerformance.traditionalActionTypes;
         this.insertNestedAsset(
           tunePerformance,
@@ -575,7 +587,12 @@ export class TunesController extends AuditBaseController<Tunes> {
     if (externalId) asset[externalIdName] = externalId;
 
     //And create a new entry into the db
-    return await repository.create(asset);
+    try {
+      let a = await repository.create(asset);
+      return a;
+    } catch (ex) {
+      console.log(ex);
+    }
   }
 
   private async createM2mRelations(
@@ -609,14 +626,10 @@ export class TunesController extends AuditBaseController<Tunes> {
     repo: DefaultCrudRepository<any, number>,
   ) {
     let toBeDeleted = originals.filter(
-      x =>
-        !current
-          ?.map(y => y.id)
-          .includes(x.id),
+      x => !current?.map(y => y.id).includes(x.id),
     );
     for (let key in toBeDeleted) {
-      await repo.deleteById(toBeDeleted[key].getId())
-      
+      await repo.deleteById(toBeDeleted[key].getId());
     }
   }
 }

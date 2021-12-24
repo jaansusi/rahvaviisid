@@ -1,24 +1,13 @@
 import axios from 'axios';
 import { AuthService } from '../Services';
 
-// axios.interceptors.response.use((response) => {
-//     let replaceNulls = ((tempObj) => {
-//         for (let field in tempObj) {
-//             let value = tempObj[field];
-//             if (value === null) {
-//                 tempObj[field] = '';
-//                 continue;
-//             }
-//             if (typeof value === 'object' && value !== null) {
-//                 tempObj[field] = replaceNulls(tempObj[field]);
-//                 continue;
-//             }
-//         }
-//         return tempObj;
-//     });
-//     response.data = replaceNulls(response.data);
-//     return response;
-// });
+axios.interceptors.response.use(
+    (response) => response,
+    (error) => {
+        if (error.response.status === 401)
+            window.location.replace("/login");
+
+    });
 
 axios.interceptors.request.use((config) => {
     let userData = AuthService.GetUserData();

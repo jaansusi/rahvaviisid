@@ -27,8 +27,6 @@ export const TuneTranscriptionModel = ModelService.GenerateDefaults({
             { field: 'transcriptionSourceId', type: 'dropdown', apiPath: 'transcription-sources', headerName: 'transcription.source' },
             { field: 'fileReference', headerName: 'transcription.fileReference' },
             { field: 'remarks', type: 'textbox', headerName: 'transcription.remarks' },
-            { field: 'created', type: 'view', timestamp: true, headerName: 'date.created' },
-            { field: 'modified', type: 'view', timestamp: true, headerName: 'date.modified' },
             {
                 field: 'transcriptionsPersonsRoles',
                 headerName: 'transcription.source',
@@ -36,6 +34,7 @@ export const TuneTranscriptionModel = ModelService.GenerateDefaults({
                 nested: {
                     label: 'transcription.transcriptionPersons',
                     fields: [
+                        { field: 'id', hidden: true },
                         { field: 'persons', headerName: 'person.name', selector: ['givenName', 'surname'] },
                         { field: 'nameOrigin', headerName: 'transcription.nameOrigin' },
                         { field: 'actionYear', headerName: 'transcription.actionYear' },
@@ -48,6 +47,7 @@ export const TuneTranscriptionModel = ModelService.GenerateDefaults({
                 edit: {
                     label: '',
                     fields: [
+                        { field: 'id', hidden: true },
                         { field: 'personId', type: 'dropdown', apiPath: 'persons', headerName: 'person.person', title: ['id', 'givenName', 'surname'] },
                         { field: 'nameOrigin', headerName: 'transcription.nameOrigin' },
                         { field: 'actionYear', type: 'number', headerName: 'transcription.actionYear' },

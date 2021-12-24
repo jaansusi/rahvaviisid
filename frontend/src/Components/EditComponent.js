@@ -190,9 +190,10 @@ const EditComponent = ({ model, newItem, copyItem, validateTune }) => {
             }
             return requestObject;
         }
-
+        console.log(currentModel);
         //First let's make sure that all the necessary models are using the correct data type
         let objToSend = recurse(currentModel, Object.assign({}, data));
+        
         if (validateTune && !TuneService.Validate(objToSend, t))
             return;
         if (newItem || copyItem) {
@@ -214,6 +215,8 @@ const EditComponent = ({ model, newItem, copyItem, validateTune }) => {
                     }
                 )
                 .then((resData) => {
+                    if (copyItem)
+                        objToSend = removeObjectIds(objToSend, true);
                     //Hacky way to get around LBs "no ids in create function" problem
                     objToSend.id = resData.data.id;
                     axios
@@ -269,13 +272,14 @@ const EditComponent = ({ model, newItem, copyItem, validateTune }) => {
                         toast.error(t('notification.failed'));
                 });
         } else {
+            console.log(objToSend);
             let id = objToSend.id;
             objToSend = removeObjectIds(objToSend, false);
             // DB entry already exists, use patch request
             axios
                 .patch(
                     config.apiUrl + '/' + currentModel.apiPath + '/' + id,
-                    removeObjectIds(objToSend, false),
+                    objToSend,
                     {
                         headers: {
                             'Content-Type': 'application/json',
@@ -351,7 +355,6 @@ const recurseModelValues = (currentModel, options) => {
 
             if (field.edit)
                 field.edit = recurseModelValues(field.edit, options);
-console.log(options)
             if (field.type === 'dropdown' || field.type === 'multiselect') {
                 if (field.apiPath)
                     field.values = options.filter((y) => y.name === field.field)[0].data;

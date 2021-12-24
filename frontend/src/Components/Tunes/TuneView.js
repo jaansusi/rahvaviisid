@@ -2,7 +2,7 @@ import React, { useEffect, useReducer, useState } from 'react';
 import { Button, Divider, Grid, Typography } from '@material-ui/core';
 import { useParams } from 'react-router';
 import { AuthService, DataService } from '../../Services';
-import { ExternalReferenceModel, TuneModel, TunePerformancesModel, TunePersonsModel, TunePlaceModel, TuneSongsModel } from '../../Models';
+import { ExternalReferenceModel, TuneModel, TunePerformancesModel, TunePersonsModel, TunePlaceModel, TuneSongsModel, TuneTranscriptionModel } from '../../Models';
 import { useTranslation } from 'react-i18next';
 import { PlayerViewComponent, TableViewComponent } from '../NewComponents';
 import Actions from '../Buttons/Actions';
@@ -200,22 +200,24 @@ const TuneView = () => {
 
                                             <Grid item container direction='column' spacing={2}>
                                                 {
-                                                    <AssetPropertyTableElement label={t('transcription.transcriptionPersons')} model={
-                                                        TranscriptionPersonModel.list
-                                                        // {
-                                                        //     fields: [
-                                                        //         { field: 'name', headerName: t('person.name') },
-                                                        //         { field: 'actionYear', headerName: t('transcription.actionYear') },
-                                                        //         { field: 'roleType', headerName: t('transcription.personRole') },
-                                                        //         { field: 'remarks', type: 'textbox', headerName: t('common.remarks') },
-
-                                                        //     ]
-                                                        // }
-                                                    } data={
+                                                    <AssetPropertyTableElement label={t('transcription.transcriptionPersons')} model={{
+                                                        fields: [
+                                                            { field: 'name', headerName: 'person.person' },
+                                                            { field: 'nameOrigin', headerName: 'transcription.nameOrigin' },
+                                                            { field: 'actionYear', type: 'number', headerName: 'transcription.actionYear' },
+                                                            { field: 'actionStartYear', type: 'number', headerName: 'transcription.actionStartYear' },
+                                                            { field: 'actionEndYear', type: 'number', headerName: 'transcription.actionEndYear' },
+                                                            { field: 'roleType', headerName: 'transcription.personRole' },
+                                                            { field: 'remarks', type: 'textbox', headerName: 'common.remarks' }
+                                                        ]
+                                                    }} data={
                                                         transcription.transcriptionsPersonsRoles?.map((personRoles, j) => {
                                                             return {
                                                                 name: personRoles.persons?.givenName + " " + personRoles.persons?.surname,
+                                                                nameOrigin: personRoles.nameOrigin,
                                                                 actionYear: personRoles.actionYear,
+                                                                actionStartYear: personRoles.actionStartYear,
+                                                                actionEndYear: personRoles.actionEndYear,
                                                                 roleType: personRoles.transcriptionPersonRoleTypes?.title,
                                                                 remarks: personRoles.remarks
                                                             }

@@ -32,6 +32,7 @@ export const TuneEncodingModel = ModelService.GenerateDefaults({
         ]
     },
     edit: {
+        label: 'encoding.encoding',
         fields: [
             { field: 'id', hidden: true },
             { field: 'keySignatureId', type: 'dropdown', apiPath: 'key-signatures', headerName: 'encoding.keySignature', title: 'title'},
@@ -42,6 +43,7 @@ export const TuneEncodingModel = ModelService.GenerateDefaults({
             { field: 'rhythmTypeId', type: 'dropdown', apiPath: 'rhythm-types', headerName: 'musical.rhythmType' , title: 'title'},
             { field: 'remarks', type: 'textbox', headerName: 'tune.remarks' },
             {
+                label: 'tune.melodies',
                 field: 'tuneMelodies',
                 type: 'model',
                 array: true,

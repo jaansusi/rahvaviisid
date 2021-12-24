@@ -8,8 +8,7 @@ CREATE TABLE folk_tune.external_references
     created folk_tune.D_timestamp,
     modified folk_tune.D_timestamp,
     CONSTRAINT PK_externalreference PRIMARY KEY (id),
-    CONSTRAINT FK_externalreferences_tunes FOREIGN KEY (tune_id) REFERENCES folk_tune.tunes (id),
-    UNIQUE (tune_id, type_id, value)
+    CONSTRAINT FK_externalreferences_tunes FOREIGN KEY (tune_id) REFERENCES folk_tune.tunes (id)
 );
 
 CREATE INDEX IX_external_references_tune_id ON folk_tune.external_references (tune_id);

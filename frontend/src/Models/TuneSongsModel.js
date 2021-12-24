@@ -3,6 +3,7 @@ import { ModelService } from '../Services';
 export const TuneSongsModel = ModelService.GenerateDefaults({
     table: {
         label: 'song.song',
+        singleAsset: true,
         fields: [
             { field: 'songType', headerName: 'song.songType' },
             { field: 'songTitle', headerName: 'song.songTitle' },

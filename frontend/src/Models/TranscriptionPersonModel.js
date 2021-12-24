@@ -10,8 +10,7 @@ export const TranscriptionPersonModel = ModelService.GenerateDefaults({
             { field: 'givenName', headerName: 'person.givenName', width: 140 },
             { field: 'nickname', headerName: 'person.nickname', width: 140 },
             { field: 'birthYear', type: 'number', headerName: 'person.birthYear', width: 150 },
-            { field: 'deathYear', type: 'number', headerName: 'person.deathYear', width: 150 },
-            { field: 'sexes', headerName: 'person.sex', selector: 'title'},
+            { field: 'deathYear', type: 'number', headerName: 'person.deathYear', width: 150 }
         ]
     },
     view: {

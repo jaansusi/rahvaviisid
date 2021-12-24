@@ -826,8 +826,8 @@ CREATE TABLE folk_tune.transcriptions_persons_roles
     modified folk_tune.D_timestamp,
     CONSTRAINT PK_transcriptions_persons_roles PRIMARY KEY (id),
     CONSTRAINT UQ_transcriptions_persons_roles UNIQUE (tune_transcription_id, person_id, transcription_person_role_type_id),
-    -- CONSTRAINT FK_transcriptions_persons_roles_tune_transcriptions FOREIGN KEY (tune_transcription_id)
-        -- REFERENCES folk_tune.tune_transcriptions (id) ON DELETE CASCADE,
+    CONSTRAINT FK_transcriptions_persons_roles_tune_transcriptions FOREIGN KEY (tune_transcription_id)
+        REFERENCES folk_tune.tune_transcriptions (id) ON DELETE CASCADE,
     CONSTRAINT FK_transcriptions_persons_roles_persons FOREIGN KEY (person_id) REFERENCES folk_tune.persons (id),
     CONSTRAINT FK_transcriptions_persons_roles_transcription_person_role_types FOREIGN KEY (transcription_person_role_type_id)
         REFERENCES folk_tune.transcription_person_role_types (id)

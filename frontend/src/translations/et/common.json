@@ -7,7 +7,9 @@
         "create": "Loo uus",
         "close": "Sulge",
         "kivike": "Ava Kivikeses",
-        "save": "Salvesta"
+        "save": "Salvesta",
+        "deleted": "Kustutatud",
+        "confirmDeletion": "Kinnita objekti kustutamine"
     },
     "attribute": {
         "attribute": "Tunnus",
@@ -351,7 +353,9 @@
         "coding": "Kodeering",
         "variant": "Variant",
         "encodings": "Kodeeringud",
-        "additionalReferences": "Lisaviited"
+        "additionalReferences": "Lisaviited",
+        "musicalCharacteristics": "Muusikalised tunnused",
+        "melodies": "Meloodiad"
     },
     "tunepersons": {
         "tunePersonRoleTypes": "Roll",

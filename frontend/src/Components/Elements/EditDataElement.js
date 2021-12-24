@@ -246,8 +246,9 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
             );
         case 'table':
             let addEntryToTable = () => {
-                setExpanded(elemValue.length);
                 elemValue.push(DataService.SyncCreateEmptyDataObject(model.edit.fields));
+                handleChange({target: {name: '', value: ''}}, 0);
+                setExpanded(elemValue.length-1);
             };
             let deleteEntryFromTable = (i) => {
                 if (expanded === i)
@@ -286,7 +287,10 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                     xs={12}
                 >
                     <Typography variant='h5'>{t(model.nested.label)}</Typography>
-                    <Button onClick={addEntryToTable} variant='outlined' color='primary'>{t('action.create')}</Button>
+                    {
+                        (!model.nested.singleAsset || elemValue.length === 0) &&
+                        <Button onClick={addEntryToTable} variant='outlined' color='primary'>{t('action.create')}</Button>
+                    }
                     <TableContainer component={Paper}>
                         <Table>
                             <TableHead>
@@ -360,8 +364,9 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                         temp.splice(i, 1);
                     } else {
                         // If the element in array doesn't exist, create one
-                        if (temp[i] === undefined)
+                        if (temp[i] === undefined) {
                             temp[i] = DataService.SyncCreateEmptyDataObject(model.nested.fields);
+                        }
                         // Otherwise modify the value based on the event
                         else {
                             const { name, value } = event.target;
@@ -384,7 +389,7 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                         ? elemValue
                         : elemValue.sort((a, b) => a[model.sortBy] - b[model.sortBy]);
                 return (
-                    <Grid item>
+                    <Grid item xs={12}>
                         <Typography variant='h4'>{model.label !== undefined ? t(model.label) : null}</Typography>
                         <Button onClick={() => handleArrayChange({}, elemValue.length)} variant='outlined' color='primary'>{t('action.create')}</Button>
 
@@ -437,11 +442,12 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
             );
         case 'date':
             let handleDateChange = (x) => {
-                console.log(x);
+                var userTimezoneOffset = x.getTimezoneOffset() * 60000;
+                let date = new Date(x.getTime() - userTimezoneOffset);
                 handleChange({
                     target: {
                         name: model.field,
-                        value: x
+                        value: date.toISOString()
                     }
                 });
             }

@@ -3,6 +3,7 @@ import { ModelService } from '../Services';
 export const TunePerformancesModel = ModelService.GenerateDefaults({
     table: {
         label: 'performance.performance',
+        singleAsset: true,
         fields: [
             { field: 'actualPerformanceTypes', headerName: 'performance.actual.type', selector: 'title', alt: 'description', type: 'reference', reference: '/klassifikaatorid/tegeliku-esituse-liik' },
             { field: 'traditionalPerformanceTypes', headerName: 'performance.traditional.type', selector: 'title', alt: 'description', type: 'reference', reference: '/klassifikaatorid/traditsioonilise-esituse-liik' },
