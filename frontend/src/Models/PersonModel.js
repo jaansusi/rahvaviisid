@@ -1,4 +1,5 @@
 import { ModelService } from '../Services';
+import { TuneModel } from './TuneModel';
 
 
 
@@ -12,7 +13,7 @@ export const PersonModel = ModelService.GenerateDefaults({
             { field: 'nickname', headerName: 'person.nickname', width: 160 },
             { field: 'birthYear', type: 'number', headerName: 'person.birthYear', width: 200 },
             { field: 'deathYear', type: 'number', headerName: 'person.deathYear', width: 200 },
-            { field: 'sexes', headerName: 'person.sex', selector: 'title', width: 150},
+            { field: 'sexes', headerName: 'person.sex', selector: 'title', width: 150 },
         ]
     },
     view: {
@@ -23,12 +24,21 @@ export const PersonModel = ModelService.GenerateDefaults({
             { field: 'nickname', headerName: 'person.nickname' },
             { field: 'birthYear', type: 'number', headerName: 'person.birthYear' },
             { field: 'deathYear', type: 'number', headerName: 'person.deathYear' },
-            { field: 'sexes', headerName: 'person.sex', selector: 'title'},
+            { field: 'sexes', headerName: 'person.sex', selector: 'title' },
             { field: 'remarks', type: 'textbox', headerName: 'common.remarks' },
             { field: 'created', headerName: 'date.created' },
-            { field: 'modified', headerName: 'date.modified' }           
-            //{ field: 'tunes', type: 'associatedAssets', associatedModel: tune_list, headerName: 'common.tunes' }
-            
+            { field: 'modified', headerName: 'date.modified' },
+            {
+                field: 'tunes', type: 'associatedAssets', associatedModel: {
+                    fields: [
+                        { field: 'id', headerName: 'tune.tuneId', width: 110 },
+                        { field: 'tuneReference', headerName: 'tune.tuneReference', width: 170 },
+                        { field: 'textReference', headerName: 'tune.textReference', width: 170 },
+                        { field: 'soundReference', headerName: 'tune.soundReference', width: 170 },
+                        { field: 'videoReference', headerName: 'tune.videoReference', width: 170 },
+                    ]
+                }, headerName: 'common.tunes'
+            }
         ]
     },
     edit: {
