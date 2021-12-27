@@ -386,6 +386,17 @@ export class TunesController extends AuditBaseController<Tunes> {
     }
 
     if (original?.tuneTranscriptions) {
+      for (let i = 0; i < original.tuneTranscriptions.length; i++) {
+        let roles = original.tuneTranscriptions[i].transcriptionsPersonsRoles;
+        //to-do: would be better if there would be an id check against "new" assets
+        if (roles !== undefined) {
+          await this.deleteNestedAssets(
+            roles,
+            [],
+            this.transcriptionsPersonsRolesRepository
+          )
+        }
+      }
       await this.deleteNestedAssets(
         original.tuneTranscriptions,
         tuneTranscriptions,
