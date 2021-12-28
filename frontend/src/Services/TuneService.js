@@ -34,15 +34,14 @@ export const TuneService = {
         ];
 
         let errors = [];
-
-        let missingFields = requiredFields.filter(x => tune[x] === undefined);
+        let missingFields = requiredFields.filter(x => tune[x] === undefined || tune[x] === null);
 
         missingFields.forEach(x =>
             errors.push(translator('validation.' + x) + translator('validation.isMissing'))
         );
 
         tune.musicalCharacteristics.forEach((x, i) => {
-            if (x.soundRangeId === undefined)
+            if (x.soundRangeId === undefined || x.soundRangeId === null)
                 errors.push(translator('validation.tunes.musicalCharacteristics.missingSoundRange') + (i + 1));
         });
 
@@ -54,32 +53,30 @@ export const TuneService = {
         });
 
         tune.tuneTranscriptions?.forEach((x, i) => {
-            if (x.transcriptionSourceId === undefined)
+            if (x.transcriptionSourceId === undefined || x.transcriptionSourceId === null)
                 errors.push(translator('validation.tunes.transcriptions.missingSource') + (i + 1));
             if (x.fileReference === '')
                 errors.push(translator('validation.tunes.transcriptions.missingFileReference') + (i + 1));
             x.transcriptionsPersonsRoles?.forEach((y, j) => {
-                // if (y.personId === undefined)
-                //     errors.push(translator('validation.tunes.transcriptions.persons.missingPerson') + (i + 1) + ' -> ' + (j + 1));
-                if (y.transcriptionPersonRoleTypeId === undefined)
+                if (y.transcriptionPersonRoleTypeId === undefined || y.transcriptionPersonRoleTypeId === null)
                     errors.push(translator('validation.tunes.transcriptions.persons.missingRoleType') + (i + 1) + ' -> ' + (j + 1));
             })
         });
 
         tune.tunesPersonsRoles.forEach((x, i) => {
-            if (x.tunePersonRoleTypeId === undefined)
+            if (x.tunePersonRoleTypeId === undefined || x.tunePersonRoleTypeId === null)
                 errors.push(translator('validation.tunes.personsRoles.missingRoleTypeId') + (i + 1));
         });
 
         tune.tunePlaces.forEach((x, i) => {
-            if (x.parishId === undefined)
+            if (x.parishId === undefined || x.parishId === null)
                 errors.push(translator('validation.tunes.places.missingParish') + (i + 1));
-            if (x.tunePlaceTypeId === undefined)
+            if (x.tunePlaceTypeId === undefined || x.tunePlaceTypeId === null)
                 errors.push(translator('validation.tunes.places.missingPlaceType') + (i + 1));
         })
 
         tune.tunePerformances.forEach((x, i) => {
-            if (x.actualPerformanceTypeId === undefined)
+            if (x.actualPerformanceTypeId === undefined || x.actualPerformanceTypeId === null)
                 errors.push(translator('validation.tunes.performances.missingActualPerformanceType') + (i + 1));
         });
 

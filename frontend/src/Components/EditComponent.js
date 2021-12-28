@@ -11,7 +11,7 @@ import { toast } from 'react-toastify';
 import BarLoader from 'react-spinners/BarLoader';
 import './EditComponent.css';
 
-const EditComponent = ({ model, newItem, copyItem, validateTune }) => {
+const EditComponent = ({ model, newItem, copyItem, validateTune, noDelete }) => {
     newItem = newItem === undefined ? false : newItem;
     copyItem = copyItem === undefined ? false : copyItem;
     const { t } = useTranslation('common');
@@ -110,6 +110,7 @@ const EditComponent = ({ model, newItem, copyItem, validateTune }) => {
                 // If the value is empty and the model type is dropdown then ignore this value
                 if (modelElem.type === 'dropdown') {
                     if (!value) {
+                        requestObject[modelElem.field] = null;
                         continue;
                     } else {
                         requestObject[modelElem.field] = value;
@@ -190,10 +191,8 @@ const EditComponent = ({ model, newItem, copyItem, validateTune }) => {
             }
             return requestObject;
         }
-        console.log(currentModel);
         //First let's make sure that all the necessary models are using the correct data type
         let objToSend = recurse(currentModel, Object.assign({}, data));
-        
         if (validateTune && !TuneService.Validate(objToSend, t))
             return;
         if (newItem || copyItem) {
@@ -272,7 +271,6 @@ const EditComponent = ({ model, newItem, copyItem, validateTune }) => {
                         toast.error(t('notification.failed'));
                 });
         } else {
-            console.log(objToSend);
             let id = objToSend.id;
             objToSend = removeObjectIds(objToSend, false);
             // DB entry already exists, use patch request
@@ -286,7 +284,7 @@ const EditComponent = ({ model, newItem, copyItem, validateTune }) => {
                         }
                     }
                 )
-                .then(() => {
+                .then((x) => {
                     toast.success(t('notification.saved'));
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 })
@@ -324,7 +322,7 @@ const EditComponent = ({ model, newItem, copyItem, validateTune }) => {
 
     return (
         <>
-            {!newItem ? <Actions apiPath={model.apiPath} id={id} currentView='edit' justify='flex-end' spacing={2} /> : null}
+            {!newItem ? <Actions apiPath={model.apiPath} id={id} currentView='edit' justify='flex-end' spacing={2} noDelete={noDelete} /> : null}
             <form onSubmit={handleSubmit}>
                 <EditDataFragment
                     model={updatedModel}
@@ -390,7 +388,6 @@ const handleErrors = ((t, x) => {
         });
         return;
     }
-    console.log(message);
     message = message.replace('should be', t('notification.shouldBe'));
     let path = x.path.split('/');
     path.shift();

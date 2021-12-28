@@ -13,7 +13,6 @@ export const AuthService = {
             .then(
                 (response) => {
                     if (response.data.token) {
-                        // console.log(response.data);
                         setAuthentication(response.data);
                     }
                     return response.data;

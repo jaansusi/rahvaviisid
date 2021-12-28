@@ -106,7 +106,9 @@ const ViewDataElement = (({ model, value }) => {
                     <Grid item xs={6}>
                         <Typography>
                             {
-                                value !== undefined ?
+                                model.type === 'boolean' ?
+                                (value ? t('model.true') : t('model.false'))
+                                : value !== undefined ?
                                     (model.selector ? value[model.selector] : value)
                                     : ''
                             }

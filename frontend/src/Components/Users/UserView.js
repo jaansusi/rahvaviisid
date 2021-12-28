@@ -4,7 +4,7 @@ import { UserModel } from '../../Models';
 
 const UserView = () => {
     return (
-        <ViewComponent model={UserModel.view} />
+        <ViewComponent model={UserModel.view} noDelete={true} />
     );
 };
 

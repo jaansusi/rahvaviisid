@@ -6,11 +6,12 @@ import {
 import UserView from './UserView';
 import UserEdit from './UserEdit';
 import UserCreate from './UserCreate';
+import { Grid } from '@material-ui/core';
 
 const UserWrapper = () => {
 
   return (
-    <>
+    <Grid item xs={12}>
       <Route exact path={'/:asset'}>
         <UsersList />
       </Route>
@@ -23,7 +24,7 @@ const UserWrapper = () => {
       <Route exact path={`/:asset/:id/muuda`}>
         <UserEdit />
       </Route>
-    </>
+    </Grid>
   );
 }
 

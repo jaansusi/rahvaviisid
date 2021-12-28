@@ -7,6 +7,7 @@ const UserEdit = () => {
     return (
         <EditComponent
             model={UserModel.edit}
+            noDelete={true}
         />
     );
 };

@@ -6,7 +6,7 @@ axios.interceptors.response.use(
     (error) => {
         if (error.response.status === 401)
             window.location.replace("/login");
-
+        throw error;
     });
 
 axios.interceptors.request.use((config) => {

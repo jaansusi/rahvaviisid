@@ -206,6 +206,7 @@ export class Tunes extends Entity {
   @property({
     type: 'string',
     required: false,
+    jsonSchema: {nullable: true},
     postgresql: {
       columnName: 'verified_by',
       dataType: 'uuid',

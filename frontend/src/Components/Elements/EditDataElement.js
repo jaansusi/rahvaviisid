@@ -502,12 +502,13 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                                     undefined
                             }
                             helperText={
-                                model.type === 'number' && elemValue.length > 0 && isNaN(elemValue) ?
+                                model.type === 'number' && elemValue?.length > 0 && isNaN(elemValue) ?
                                     t('validation.mustBeNumber') :
-                                    model.pattern !== undefined && elemValue !== '' && !elemValue.match(model.pattern) ?
+                                    model.pattern !== undefined && elemValue !== '' && !elemValue?.match(model.pattern) ?
                                         t('validation.' + model.headerName) :
                                         undefined
                             }
+                            type={model.type === 'password' ? 'password' : undefined}
                             label={t(model.headerName)}
                             value={model.selector ? elemValue[model.selector] : elemValue}
                             required={model.required}

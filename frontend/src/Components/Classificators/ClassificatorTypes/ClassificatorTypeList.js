@@ -13,6 +13,7 @@ const ClassificatorTypeList = () => {
         <ListComponent
             model={model}
             filter={DataService.CreateIncludeFilter(model)}
+            currentView='delete'
         />
     );
 };

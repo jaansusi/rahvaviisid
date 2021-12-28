@@ -46,7 +46,7 @@ export const ClassificatorsModel =
                         fields: [
                             { field: 'title', headerName: 'common.title' },
                             { field: 'description', headerName: 'common.description' },
-                            { field: 'isActive', headerName: 'common.active' },
+                            { field: 'isActive', type: 'boolean', headerName: 'common.active' },
                             { field: 'tunes', type: 'associatedAssets', associatedModel: TuneModel.list, headerName: 'common.tunes' }
                         ]
                     },

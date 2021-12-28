@@ -414,6 +414,7 @@ export class TunesController extends AuditBaseController<Tunes> {
           createdTune.id,
         ).then(insertedAsset => {
           tuneTranscriptionsPersonsRoles?.forEach(personRole => {
+            delete personRole.id;
             this.insertNestedAsset(
               personRole,
               this.transcriptionsPersonsRolesRepository,

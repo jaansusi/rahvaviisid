@@ -11,7 +11,8 @@ const ClassificatorTypeEdit = ({newItem}) => {
     return (
         <EditComponent 
             model = {getClassificatorModel(classificator, 'edit')}
-            newItem = {newItem} />
+            newItem = {newItem}
+            noDelete = {true} />
     );
 };
 

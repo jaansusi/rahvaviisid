@@ -8,7 +8,7 @@ import Actions from './Buttons/Actions';
 import { DataService } from '../Services';
 import BarLoader from 'react-spinners/BarLoader';
 
-const ViewComponent = ({ model }) => {
+const ViewComponent = ({ model, noDelete }) => {
     let { id } = useParams();
     const formReducer = (state, event) => {
         return {
@@ -39,7 +39,7 @@ const ViewComponent = ({ model }) => {
                 <BarLoader css='display: block; margin: 50px auto;' />
             </Grid> :
             <>
-                <Actions apiPath={model.apiPath} id={id} currentView='view' />
+                <Actions apiPath={model.apiPath} id={id} currentView='view' noDelete={noDelete} />
                 <Grid item>
                     <ViewDataFragment model={model} elementData={assetData} />
                 </Grid>

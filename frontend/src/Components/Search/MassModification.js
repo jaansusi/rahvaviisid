@@ -51,7 +51,6 @@ const MassModification = ({ assets }) => {
           }
         )
         .then((resData) => {
-          // console.log(resData);
         });
     });
 

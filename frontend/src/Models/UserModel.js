@@ -36,7 +36,7 @@ export const UserModel = ModelService.GenerateDefaults({
         apiPath: 'users',
         fields: [
             { field: 'email', headerName: 'user.email', required: true },
-            { field: 'password', headerName: 'user.password', required: true, pattern: "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{14,})" },
+            { field: 'password', type: 'password', headerName: 'user.password', required: true, pattern: "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{14,})" },
             { field: 'firstName', headerName: 'user.firstName' },
             { field: 'lastName', headerName: 'user.lastName' },
             { field: 'isActive', type: 'boolean', headerName: 'common.active'},

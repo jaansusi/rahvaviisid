@@ -9,9 +9,10 @@ const ClassificatorTypeView = () => {
     let { classificator } = useParams();
 
     return (
-        <>
-            <ViewComponent model={getClassificatorModel(classificator, 'view')} />
-        </>
+        <ViewComponent
+            model={getClassificatorModel(classificator, 'view')}
+            noDelete={true}
+        />
     );
 };
 

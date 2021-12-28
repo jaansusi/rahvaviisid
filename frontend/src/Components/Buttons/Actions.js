@@ -6,13 +6,13 @@ import DeleteButton from './DeleteButton';
 import { AuthService } from '../../Services';
 import './ActionButton.css';
 
-const Actions = (({ id, apiPath, auth, pathOverride, currentView, additionalButtons, justify, spacing }) => {
+const Actions = (({ id, apiPath, auth, pathOverride, currentView, additionalButtons, noDelete, justify, spacing }) => {
     const { t } = useTranslation('common');
     let { pathname } = useLocation();
     let beforeInt = true;
 
     let path = pathname.split('/').map(elem => {
-        if (!isNaN(elem) && !isNaN(parseInt(elem)))
+        if ((!isNaN(elem) && !isNaN(parseInt(elem))) || isGuid(elem))
             beforeInt = false;
         if (!beforeInt)
             return undefined;
@@ -42,7 +42,7 @@ const Actions = (({ id, apiPath, auth, pathOverride, currentView, additionalButt
                 {auth &&
                     <>
                         {currentView !== 'edit' && <Grid item><Button className='actionButton' href={`${path}/` + id + '/muuda'} variant="outlined" color="primary">{t('action.edit')}</Button></Grid>}
-                        {currentView !== 'delete' && <Grid item><DeleteButton apiPath={apiPath} id={id} /></Grid>}
+                        {currentView !== 'delete' && !noDelete && <Grid item><DeleteButton apiPath={apiPath} id={id} /></Grid>}
                     </>
                 }
             </Grid>
@@ -50,4 +50,11 @@ const Actions = (({ id, apiPath, auth, pathOverride, currentView, additionalButt
     );
 });
 
+function isGuid(stringToTest) {
+    if (stringToTest[0] === "{") {
+        stringToTest = stringToTest.substring(1, stringToTest.length - 1);
+    }
+    var regexGuid = /^(\{){0,1}[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}(\}){0,1}$/gi;
+    return regexGuid.test(stringToTest);
+}
 export default Actions;
