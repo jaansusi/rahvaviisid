@@ -13,7 +13,7 @@ export class TuneMelodies extends Entity {
     id: 1,
     postgresql: {columnName: 'id', dataType: 'integer', dataLength: null, dataPrecision: null, dataScale: 0, nullable: 'NO'},
   })
-  id: number;
+  id?: number;
 
   @property({
     type: 'string',

@@ -393,8 +393,8 @@ export class TunesController extends AuditBaseController<Tunes> {
           await this.deleteNestedAssets(
             roles,
             [],
-            this.transcriptionsPersonsRolesRepository
-          )
+            this.transcriptionsPersonsRolesRepository,
+          );
         }
       }
       await this.deleteNestedAssets(
@@ -426,12 +426,24 @@ export class TunesController extends AuditBaseController<Tunes> {
       });
     }
 
-    if (original?.tuneEncodings)
+    if (original?.tuneEncodings) {
+      for (let i = 0; i < original.tuneEncodings.length; i++) {
+        let melodies = original.tuneEncodings[i].tuneMelodies;
+        //to-do: would be better if there would be an id check against "new" assets
+        if (melodies !== undefined) {
+          await this.deleteNestedAssets(
+            melodies,
+            [],
+            this.tuneMelodiesRepository,
+          );
+        }
+      }
       await this.deleteNestedAssets(
         original.tuneEncodings,
         tuneEncodings,
         this.tuneEncodingsRepository,
       );
+    }
     if (tuneEncodings !== undefined) {
       tuneEncodings.forEach((tuneEncoding: TuneEncodings) => {
         delete tuneEncoding.keySignatures;
@@ -446,6 +458,7 @@ export class TunesController extends AuditBaseController<Tunes> {
           createdTune.id,
         ).then(createdEncoding => {
           tuneMelodies?.forEach((tuneMelody, i) => {
+            delete tuneMelody.id;
             tuneMelody.variationIndex = i;
             this.insertNestedAsset(
               tuneMelody,
@@ -561,8 +574,7 @@ export class TunesController extends AuditBaseController<Tunes> {
         delete tunePerformance.actualPerformanceTypes;
         delete tunePerformance.traditionalPerformanceTypes;
         delete tunePerformance.actualActionTypes;
-        let traditionalActionTypes =
-          tunePerformance.traditionalActionTypes;
+        let traditionalActionTypes = tunePerformance.traditionalActionTypes;
         delete tunePerformance.traditionalActionTypes;
         this.insertNestedAsset(
           tunePerformance,

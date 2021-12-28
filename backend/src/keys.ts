@@ -146,7 +146,7 @@ export namespace TunesFilter {
             // {relation: 'supportSounds'},
             // {relation: 'pitches'},
             // {relation: 'measures'},
-            // {relation: 'tuneMelodies', scope: {}},
+            {relation: 'tuneMelodies', scope: {}},
           ],
         },
       },
