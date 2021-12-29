@@ -37,8 +37,11 @@ const EditComponent = ({ model, newItem, copyItem, validateTune, noDelete }) => 
                 .map((field) => {
                     if (field.apiPath && (field.type === 'dropdown' || field.type === 'multiselect') && !retrievedValues.includes(field.field)) {
                         retrievedValues.push(field.field);
+                        let filter = {
+                            where: {"isActive": true}
+                        }
                         return axios
-                            .get(config.apiUrl + '/' + field.apiPath)
+                            .get(config.apiUrl + '/' + field.apiPath + '?filter=' + encodeURIComponent(JSON.stringify(filter)))
                             .then((result) => {
                                 // Set the "values" field of the model as the result, this way, the choice input is passed on with the model
                                 return { name: field.field, data: result.data };
