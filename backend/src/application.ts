@@ -21,6 +21,7 @@ import { AuthorizationBindings, AuthorizationComponent, AuthorizationDecision, A
 import { UserManagementService } from './services/user-management.service';
 import { JWTService } from './services/jwt.service';
 import { TokenServiceBindings } from './keys';
+import { MigrationComponent } from './components/migration.component';
 
 export { ApplicationConfig };
 
@@ -60,6 +61,9 @@ export class EkmViisidApiApplication extends BootMixin(
     this.component(JWTAuthenticationComponent);
 
     this.component(AuthorizationComponent);
+
+    // Add migration component for automatic database migrations
+    this.component(MigrationComponent);
 
     this.dataSource(DbDataSource, UserServiceBindings.DATASOURCE_NAME);
 

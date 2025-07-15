@@ -1,3 +1,6 @@
+// Load environment variables from .env file
+import 'dotenv/config';
+
 import {ApplicationConfig, EkmViisidApiApplication} from './application';
 
 export * from './application';

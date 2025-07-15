@@ -20,6 +20,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+export * from './types/migration.types';
+
 import {AuditLogRepository} from './repositories';
 import {Entity, FilterExcludingWhere, Options} from '@loopback/repository';
 import { MixinTarget } from '@loopback/core';

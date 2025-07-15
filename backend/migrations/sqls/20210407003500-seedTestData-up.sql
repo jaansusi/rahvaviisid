@@ -1,4 +1,4 @@
-INSERT INTO tune_places (tune_id,person_id,tune_place_type_id,parish_id,municipality_id,village_id,other_place,remarks) VALUES
+INSERT INTO folk_tune.tune_places (tune_id,person_id,tune_place_type_id,parish_id,municipality_id,village_id,other_place,remarks) VALUES
 	 (3758,NULL,1,27,NULL,NULL,NULL,NULL),
 	 (910,NULL,1,110,NULL,NULL,NULL,NULL),
 	 (2577,NULL,1,15,NULL,NULL,NULL,NULL),
@@ -5954,7 +5954,7 @@ INSERT INTO tune_places (tune_id,person_id,tune_place_type_id,parish_id,municipa
 	 (27,392,3,121,NULL,428,NULL,NULL),
 	 (30,392,3,121,NULL,428,NULL,'Orig. Sohvi Tamming: Nõva-Wia küla, Mäkatsi mõis. Praegu on olemas Nõva küla, Veaküla.');
 
- INSERT INTO tune_songs (tune_id,song_type,song_title,first_verse,refrain,remarks) VALUES
+ INSERT INTO folk_tune.tune_songs (tune_id,song_type,song_title,first_verse,refrain,remarks) VALUES
 	 (1,'Oh mina vaene Karja Tõnu',NULL,'Oh mina vaene Karja Tõnu',NULL,NULL),
 	 (2,'Uni tuleb huigates/ Äiutus',NULL,'Äiu, äiu, äiu ää','*',NULL),
 	 (3,'Sirgu jäljed','Kosjalaul','Siit on läinud sirgu jäljed',NULL,NULL),
@@ -10514,7 +10514,7 @@ Mis ma siit hallile anna, mis ma siit kirjule keera?',NULL,NULL),
 	 (4558,'Tee tinane tilli',NULL,'Ma olen selge sepa meister, tark olen rauda tagumaie',NULL,'Noodi all teine tekst'),
 	 (4559,'Mitu halba ilma peal',NULL,'Nõnda on halba leski naine',NULL,'Ninda on alba leskinaine, kui tuba ilma tuketa');
 
-INSERT INTO tune_songs_song_genres (tune_song_id,song_genre_id) VALUES
+INSERT INTO folk_tune.tune_songs_song_genres (tune_song_id,song_genre_id) VALUES
 	 (1,43),
 	 (2,34),
 	 (3,49),
@@ -15033,7 +15033,7 @@ INSERT INTO tune_songs_song_genres (tune_song_id,song_genre_id) VALUES
 	 (3577,6),
 	 (3963,42);
 
-INSERT INTO tune_songs_tune_genres (tune_song_id,tune_genre_id) VALUES
+INSERT INTO folk_tune.tune_songs_tune_genres (tune_song_id,tune_genre_id) VALUES
 	 (119,57),
 	 (204,57),
 	 (228,57),
@@ -15169,7 +15169,7 @@ INSERT INTO tune_songs_tune_genres (tune_song_id,tune_genre_id) VALUES
 	 (4465,57),
 	 (4466,57);
 
-INSERT INTO tune_songs_song_topics (tune_song_id,song_topic_id) VALUES
+INSERT INTO folk_tune.tune_songs_song_topics (tune_song_id,song_topic_id) VALUES
 	 (12,63),
 	 (24,39),
 	 (119,2),
@@ -15474,7 +15474,7 @@ INSERT INTO tune_songs_song_topics (tune_song_id,song_topic_id) VALUES
 	 (3790,77),
 	 (4404,87);
 
-INSERT INTO tune_songs_verse_forms (tune_song_id,verse_form_id) VALUES
+INSERT INTO folk_tune.tune_songs_verse_forms (tune_song_id,verse_form_id) VALUES
 	 (1,2),
 	 (2,1),
 	 (3,1),
@@ -20076,7 +20076,7 @@ INSERT INTO tune_songs_verse_forms (tune_song_id,verse_form_id) VALUES
 	 (3583,2),
 	 (1857,6);
 
-INSERT INTO musical_characteristics (tune_id,sound_range_id,melostrophe_num_score,melostrophe_num_audio,is_variable,remarks) VALUES
+INSERT INTO folk_tune.musical_characteristics (tune_id,sound_range_id,melostrophe_num_score,melostrophe_num_audio,is_variable,remarks) VALUES
 	 (1,50,NULL,NULL,false,NULL),
 	 (2,50,NULL,NULL,false,NULL),
 	 (3,50,'2',NULL,false,NULL),
@@ -24637,7 +24637,7 @@ INSERT INTO musical_characteristics (tune_id,sound_range_id,melostrophe_num_scor
 	 (4558,44,'1',NULL,true,'"Märgi + kohal igal pool ka 2 moodi lauldud. Lpu noot venitades," Vrdl ka EÜS VI 875 (16).'),
 	 (4559,44,'1',NULL,true,'"Märgi + kohal igal pool ka 2 moodi lauldud. Lpu noot venitades," Vrdl ka EÜS VI 875 (16).');
 
-INSERT INTO musical_characteristics_tune_forms (musical_characteristic_id,tune_form_id) VALUES
+INSERT INTO folk_tune.musical_characteristics_tune_forms (musical_characteristic_id,tune_form_id) VALUES
 	 (1,10),
 	 (2,10),
 	 (3,10),
@@ -29201,7 +29201,7 @@ INSERT INTO musical_characteristics_tune_forms (musical_characteristic_id,tune_f
      ;
 
 
-INSERT INTO tunes_persons_roles (tune_id,person_id,name_origin,person_age,tune_person_role_type_id,action_start_year,action_end_year,remarks) VALUES
+INSERT INTO folk_tune.tunes_persons_roles (tune_id,person_id,name_origin,person_age,tune_person_role_type_id,action_start_year,action_end_year,remarks) VALUES
 	 (2,1496,'Vissel, A.',NULL,3,1996,NULL,NULL),
 	 (2,1496,'Vissel, A.',NULL,2,1996,NULL,NULL),
 	 (2,1616,'I. Rüütel',NULL,2,1996,NULL,NULL),
@@ -42504,7 +42504,7 @@ INSERT INTO tunes_persons_roles (tune_id,person_id,name_origin,person_age,tune_p
 	 (4558,637,NULL,NULL,5,2021,NULL,'Koguja märkus: Viis 17/3 on õieti 16/2 variant. Taive: Noodi all on märgitud teksti algus: "Laksu, laksu, laekene" ja viis nr 36. Viis nr 36 ei alga nende sõnadega. Tekstid algussõnadega "Laksu, laksu laekene" on üles kirjutatud EÜS VI 1197/8 (128) Anna Konsa; EÜS X 2887 (25) Mari Konsa käest; tegin sellest eraldi kirje.'),
 	 (4559,637,NULL,NULL,5,2021,NULL,'Koguja märkus: Viis 17/3 on õieti 16/2 variant.');
 
-INSERT INTO transcriptions_persons_roles (tune_transcription_id,person_id,name_origin,transcription_person_role_type_id,action_start_year,action_end_year,remarks) VALUES
+INSERT INTO folk_tune.transcriptions_persons_roles (tune_transcription_id,person_id,name_origin,transcription_person_role_type_id,action_start_year,action_end_year,remarks) VALUES
 	 (1,1616,NULL,2,2003,NULL,NULL),
 	 (1,1616,NULL,1,2003,NULL,NULL),
 	 (46,1496,NULL,2,1990,NULL,NULL),
@@ -43165,7 +43165,7 @@ INSERT INTO transcriptions_persons_roles (tune_transcription_id,person_id,name_o
 	 (438,1496,NULL,1,1977,NULL,NULL),
 	 (439,1496,NULL,1,1977,NULL,NULL);
 
-INSERT INTO tune_performances (tune_id,actual_performance_type_id,traditional_performance_type_id,actual_action_type_id,accompaniment,remarks) VALUES
+INSERT INTO folk_tune.tune_performances (tune_id,actual_performance_type_id,traditional_performance_type_id,actual_action_type_id,accompaniment,remarks) VALUES
 	 (1,7,NULL,NULL,NULL,NULL),
 	 (2,1,1,1,NULL,'Laulab last süles õõtsutades, laps laliseb kogu aeg kaasa: "Ää-ää ..."'),
 	 (3,8,NULL,NULL,NULL,NULL),
@@ -47726,7 +47726,7 @@ INSERT INTO tune_performances (tune_id,actual_performance_type_id,traditional_pe
 	 (4558,1,NULL,NULL,NULL,'"Sepp kiidab ennast (pulmas)". (lk 928). 5. värsi juures: "Vastu".'),
 	 (4559,1,NULL,NULL,NULL,NULL);
 
-     INSERT INTO tune_performances_traditional_actions (tune_performance_id,traditional_action_type_id) VALUES
+     INSERT INTO folk_tune.tune_performances_traditional_actions (tune_performance_id,traditional_action_type_id) VALUES
 	 (2,1),
 	 (5,1),
 	 (16,15),
@@ -47931,7 +47931,7 @@ INSERT INTO tune_performances (tune_id,actual_performance_type_id,traditional_pe
 
     
 
-     INSERT INTO musical_characteristics_text_forms (musical_characteristic_id,text_form_id) VALUES
+     INSERT INTO folk_tune.musical_characteristics_text_forms (musical_characteristic_id,text_form_id) VALUES
 	 (671,1),
 	 (2025,1),
 	 (1705,1),
@@ -51301,3 +51301,7 @@ INSERT INTO tune_performances (tune_id,actual_performance_type_id,traditional_pe
 	 (1358,32),
 	 (3008,32),
 	 (4075,3);
+
+
+-- Re-enable triggers
+SET session_replication_role = 'origin';

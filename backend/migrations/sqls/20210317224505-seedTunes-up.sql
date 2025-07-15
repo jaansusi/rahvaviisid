@@ -1,4 +1,8 @@
-INSERT INTO tunes (tune_state_id,tune_reference,text_reference,sound_reference,video_reference,catalogue,nation_id,language_id,country_id,publications,remarks,verified_by,verified,tune_id,old_tune_id) VALUES
+-- Disable triggers for the migration
+SET session_replication_role = 'replica';
+
+
+INSERT INTO folk_tune.tunes (tune_state_id,tune_reference,text_reference,sound_reference,video_reference,catalogue,nation_id,language_id,country_id,publications,remarks,verified_by,verified,tune_id,old_tune_id) VALUES
 	 (1,'Veske 2, 324 (viis 2)',NULL,NULL,NULL,'137',1,1,1,NULL,NULL,NULL,NULL,4553,4027),
 	 (2,NULL,NULL,NULL,'DV 1 (12)','Kihnu 1143',1,1,1,'lüürika','<Kontrollitud: H, O.>','31554769-b23b-4e3a-b2be-7320c0b3f523',NULL,2,4524),
 	 (2,'E 17149 (2)','E 17149 (2)',NULL,NULL,'IV 74',1,1,1,NULL,'<Kontrollitud: H, O.>','31554769-b23b-4e3a-b2be-7320c0b3f523',NULL,3,519),

@@ -1,3 +1,6 @@
+-- Disable triggers for the migration
+SET session_replication_role = 'replica';
+
 INSERT INTO folk_tune.sexes (title) 
 VALUES 
     ('mees'),
@@ -1869,7 +1872,7 @@ VALUES
 
 
 
-INSERT INTO persons (pid,given_name,surname,nickname,birth_year,death_year,sex_id,remarks) VALUES
+INSERT INTO folk_tune.persons (pid,given_name,surname,nickname,birth_year,death_year,sex_id,remarks) VALUES
 	 (NULL,'J.','Polakess',NULL,NULL,NULL,3,NULL),
 	 (NULL,'Aino','Strutzkin',NULL,NULL,NULL,3,NULL),
 	 (NULL,'Liisu','Maisa',NULL,NULL,NULL,2,NULL),
@@ -3599,3 +3602,6 @@ INSERT INTO folk_tune.users(id, email, roles, firstname, lastname) VALUES
 INSERT INTO folk_tune.user_credentials(password, userid)
 (SELECT '$2a$10$NkXNEbcUVbW6jopSkoVvIeTgbX8acFD/BRMBUAFS3FP4lxNNaXnxS', 'ad7e1b8a-9af9-4df5-ac80-88f3120b0cfe')
 ;
+
+-- Re-enable triggers
+SET session_replication_role = 'origin';

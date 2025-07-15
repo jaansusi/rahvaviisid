@@ -1,4 +1,4 @@
-INSERT INTO tune_transcriptions (tune_id,transcription_source_id,file_reference,remarks) VALUES
+INSERT INTO folk_tune.tune_transcriptions (tune_id,transcription_source_id,file_reference,remarks) VALUES
 	 (2,3,'Vana Kannel VII',NULL),
 	 (46,2,'EÜS IX 1329 (208)',NULL),
 	 (79,2,'ERA III 2, 15 (5)',NULL),

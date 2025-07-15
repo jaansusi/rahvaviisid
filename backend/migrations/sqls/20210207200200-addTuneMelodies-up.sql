@@ -22,9 +22,6 @@ TABLESPACE pg_default;
 
 CREATE INDEX IX_tune_melody_encodings_id ON folk_tune.tune_melodies (tune_encodings_id);
 
-ALTER TABLE folk_tune.tune_melodies
-    OWNER to local_dev_username;
-
 ALTER TABLE folk_tune.tunes
     ADD COLUMN tune_melody_id integer;
 
