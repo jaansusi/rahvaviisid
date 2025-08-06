@@ -179,6 +179,7 @@
         "nameOrigin": "Original title"
     },
     "search": {
+        "clear": "Clear",
         "reference": "Search by ID"
     },
     "massMod": {

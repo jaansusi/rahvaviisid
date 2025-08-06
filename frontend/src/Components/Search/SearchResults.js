@@ -6,9 +6,11 @@ import { AuthService } from '../../Services';
 import Actions from '../Buttons/Actions';
 import { TuneModel } from '../../Models';
 import MassModification from './MassModification';
+import {Backdrop, CircularProgress} from "@mui/material";
+import {LoadingOverlay} from "../Layout/LoadingOverlay";
 
 
-const SearchResults = ({ showAll, assets }) => {
+const SearchResults = ({ assets, isSearching }) => {
   const { t } = useTranslation('common');
   let [selection, setSelection] = useState([]);
   let [modifying, setModifying] = useState(false);
@@ -40,7 +42,9 @@ const SearchResults = ({ showAll, assets }) => {
         {
           modifying ?
             <MassModification assets={selection.map(x => assets[x - 1])} /> :
-            <div style={{ width: '90vw' }}>
+            <div style={{ width: '90vw', position: "relative" }}>
+              <LoadingOverlay show={isSearching} />
+                
               <DataGrid
                 checkboxSelection
                 rows={assets}

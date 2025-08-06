@@ -68,6 +68,7 @@ const groupAuditOpts: IAuditMixinOptions = {
 
 import {UniqueValidationInterceptor} from '../interceptors';
 import {intercept} from '@loopback/core';
+import {deepObjectIncludes, FullSearchFilter, stripRelations} from "../utils/search-utils";
 
 @intercept(UniqueValidationInterceptor.BINDING_KEY)
 export class TunesController extends AuditBaseController<Tunes> {
@@ -124,6 +125,52 @@ export class TunesController extends AuditBaseController<Tunes> {
     public externalReferencesRepository: ExternalReferencesRepository,
   ) {
     super(groupAuditOpts);
+  }
+
+  @get('/tunes/search', {
+    responses: {
+      '200': {
+        description: 'Search tunes recursively in all fields',
+        content: {
+          'application/json': {
+            schema: {
+              type: 'array',
+              items: getModelSchemaRef(Tunes, {includeRelations: true}),
+            },
+          },
+        },
+      },
+    },
+  })
+  async searchTunes(
+      @param.query.string('q') q?: string,
+      @param.query.string('type') type?: 'reference' | 'full',
+  ): Promise<Partial<Tunes>[]> {
+    
+    const query = q?.trim() ?? "";
+    if (!query) {
+      return this.tunesRepository.find(); 
+    }
+    
+    if (type === 'reference') {
+      return this.tunesRepository.find({
+        where: {
+          or: [
+            {tuneReference: {ilike: `%${query}%`}},
+            {textReference: {ilike: `%${query}%`}},
+            {soundReference: {ilike: `%${query}%`}},
+            {videoReference: {ilike: `%${query}%`}},
+          ],
+        },
+      });
+    }
+
+    const all = await this.tunesRepository.find(FullSearchFilter);
+
+    // using post-filtering for now, unclear if LoopBack fully supports filtering nested fields in Postgres
+    const filtered = all.filter(tune => deepObjectIncludes(tune, query));
+
+    return filtered.map(stripRelations);
   }
 
   @post('/tunes', {
