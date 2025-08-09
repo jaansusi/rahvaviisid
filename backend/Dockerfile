@@ -11,19 +11,21 @@ WORKDIR /app
 # where available (npm@5+)
 COPY package*.json ./
 
-RUN npm installˇ
+RUN npm install
 
 # Bundle app source code
-COPY --chown=node . .
+COPY . .
 
 # Build the application
 RUN npm run build
 
 FROM node:20-alpine AS production
 
+WORKDIR /app
+
+COPY --chown=node --from=build /app /app
+
 USER node
-RUN mkdir -p /app
-COPY --chown=node --from=build /home/node/app /app
 
 # Bind to all network interfaces so that it can be mapped to the host OS
 ENV HOST=0.0.0.0 PORT=3000
