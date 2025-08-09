@@ -1,7 +1,6 @@
-import {Checkbox, FormControlLabel, Grid, TextField, IconButton, InputAdornment} from '@material-ui/core';
-import React, {useEffect, useState} from 'react';
+import {Checkbox, FormControlLabel, Grid, TextField} from '@material-ui/core';
+import {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import ClearIcon from '@material-ui/icons/Clear';
 import ClearSearchButton from "./ClearSearchButton";
 
 const SearchBar = ({keyword, setKeyword}) => {

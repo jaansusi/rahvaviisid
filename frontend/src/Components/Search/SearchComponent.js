@@ -43,7 +43,7 @@ const SearchComponent = () => {
         return () => {
             debouncedFetch.cancel();
         };
-    }, []);
+    }, [debouncedFetch]);
     
     return (
         <Grid item xs={12} container spacing={2} direction='column'>

@@ -281,9 +281,9 @@
     "search": {
         "clear": "Tühjenda",
         "referenceOnly": "Otsi ainult viidete järgi",
-        "general": "Otsingu märksõna",
+        "general": "Sisesta märksõna",
         "help": "Otsingu abi",
-        "closeHelp": "Sulge otsingu abi"
+        "closeHelp": "Sulge abi"
     },
     "song": {
         "song": "Laul",

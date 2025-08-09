@@ -180,7 +180,10 @@
     },
     "search": {
         "clear": "Clear",
-        "reference": "Search by ID"
+        "referenceOnly": "Search only by references",
+        "general": "Insert keyword",
+        "help": "Help",
+        "closeHelp": "Close search help"
     },
     "massMod": {
         "start": "Start mass modifikation ",
