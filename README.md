@@ -76,29 +76,58 @@ The frontend will be available at `http://localhost:3001` and will automatically
 
 ### Option 2: Docker Development
 
-#### Using Docker Compose (Recommended)
+#### Using Docker Compose
 
 The project includes a `compose.yaml` file that sets up all services including PostgreSQL, pgAdmin, backend, and frontend.
 
-1. **Start all services**:
+**Option 1:**
+
+1. **Start all services**
+   ```bash
+   docker-compose --profile all up -d
+   ```
+
+   This will start all required services.
+
+**Option 2:**
+
+1. **Start database**:
    ```bash
    docker-compose up -d
    ```
 
-This will start:
-- PostgreSQL database on port 5432
-- pgAdmin on port 5050 (admin@example.com / admin)
-- Backend API on port 3000
-- Frontend on port 3001
+   This will start:
+   - PostgreSQL database on port 5432
+   - pgAdmin on port 5050 (admin@example.com / admin)
 
-2. **View logs**:
+2. **Start DB + API**
+   ```bash
+   docker-compose --profile backend up -d
+   ````
+
+   This will start:
+   - PostgreSQL database on port 5432
+   - pgAdmin on port 5050 (admin@example.com / admin)
+   - Backend API on port 3000
+
+3. **Start DB + FE**
+   ```
+   docker-compose --profile frontend up -d
+   ```
+
+   This will start:
+   - PostgreSQL database on port 5432
+   - pgAdmin on port 5050 (admin@example.com / admin)
+   - Frontend on port 3001
+
+4. **View logs**:
    ```bash
    docker-compose logs -f
    ```
 
-3. **Stop all services**:
+5. **Stop services**:
    ```bash
-   docker-compose down
+   docker-compose --profile all down
    ```
 
 #### Individual Docker Builds

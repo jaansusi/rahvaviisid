@@ -20,5 +20,29 @@ services:
     depends_on:
       - database
 
+  backend:
+    build: ./backend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - database
+    environment:
+      - DB_HOST=database
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_DATABASE=kivi
+    profiles:
+      - backend
+      - all
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "80:80"
+    profiles:
+      - frontend
+      - all
+
 volumes:
   db_data:
