@@ -1,12 +1,13 @@
 import React from 'react';
 import {
-    withRouter
+    useLocation
 } from 'react-router-dom';
-import { Divider, Grid, Typography } from "@material-ui/core"
+import { Divider, Grid, Typography } from "@mui/material"
 import { useTranslation } from 'react-i18next';
 
-const LocationHeader = ({ location }) => {
+const LocationHeader = () => {
     const { t } = useTranslation('common');
+    const location = useLocation();
     const separator = ' - ';
     const path = location.pathname.slice(1).split('/');
     //Special cases
@@ -35,4 +36,4 @@ const LocationHeader = ({ location }) => {
     );
 }
 
-export default withRouter(LocationHeader);
+export default LocationHeader;

@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from "react-i18next";
-import { DataGrid } from '@material-ui/data-grid';
+import { DataGrid } from '@mui/x-data-grid';
 import Actions from '../Buttons/Actions';
 import CreateButton from '../Buttons/CreateButton';
 import { AuthService, DataService } from '../../Services';
 import { GetDataGridLocale } from '../../translations/DataGridLocale';
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 
 const ListDataFragment = (({ model, data, rowCount, updateTable, currentView, additionalButtons, viewOnly, actionUrlOverride }) => {
@@ -20,17 +20,17 @@ const ListDataFragment = (({ model, data, rowCount, updateTable, currentView, ad
         x.sortable = false;
         x.field = modelField.field;
         x.width = modelField.width;
-        x.valueGetter = (params) => {
+        x.valueGetter = (value, row) => {
             return modelField.selector ?
-                params.value[modelField.selector] :
-                params.value;
+                value[modelField.selector] :
+                value;
         };
         switch (modelField.type) {
             case 'number':
-                x.valueFormatter = (params) => {
-                    if (params.value === null)
+                x.valueFormatter = (value, row) => {
+                    if (value === null)
                         return '';
-                    return params.value.toString()
+                    return value.toString()
                 };
                 break;
             case 'parentHref':

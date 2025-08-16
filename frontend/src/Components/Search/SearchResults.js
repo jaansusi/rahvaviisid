@@ -1,5 +1,5 @@
-import { Button, Grid } from '@material-ui/core';
-import { DataGrid } from '@material-ui/data-grid';
+import { Button, Grid } from '@mui/material';
+import { DataGrid } from '@mui/x-data-grid';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AuthService } from '../../Services';

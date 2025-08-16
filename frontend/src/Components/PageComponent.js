@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Grid } from '@material-ui/core';
+import { Button, Grid } from '@mui/material';
 import axios from 'axios';
 import config from '../config';
 import { AuthService } from '../Services';

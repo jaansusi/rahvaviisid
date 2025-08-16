@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from "react-i18next";
-import { Grid, Divider, Typography } from '@material-ui/core';
+import { Grid, Divider, Typography } from '@mui/material';
 import ViewDataElement from '../Elements/ViewDataElement';
 
 const ViewDataFragment = (({ model, elementData }) => {

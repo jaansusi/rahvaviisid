@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import { makeStyles } from '@mui/styles';
+import Container from '@mui/material/Container';
 import { useTranslation } from 'react-i18next';
 import { AuthService } from '../../Services';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 let Login = ({ setAuthentication }) => {
   const { t } = useTranslation('common');
   const classes = useStyles();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   let [email, setEmail] = useState('');
   let [password, setPassword] = useState('');
@@ -48,7 +48,7 @@ let Login = ({ setAuthentication }) => {
     AuthService.Login(email, password, setAuthentication)
       .then(() => {
         setCredentialsValid(true);
-        history.push('/');
+        navigate('/');
       }
       )
       .catch(err => {

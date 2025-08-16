@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import SearchBar from './SearchBar';
 import SearchResults from './SearchResults';
 import config from '../../config';
-import { Button, Grid } from '@material-ui/core';
+import { Button, Grid } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import PageComponent from '../PageComponent';
 
@@ -49,7 +49,7 @@ const SearchComponent = (props) => {
 
     return (
         <Grid item xs={12} container spacing={2} direction='column'>
-            <Grid item container direction='row' alignItems='center' justify='space-between'>
+            <Grid item container direction='row' alignItems='center' justifyContent='space-between'>
                 <Grid item>
                     <SearchBar
                         keyword={input}

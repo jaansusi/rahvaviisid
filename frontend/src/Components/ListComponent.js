@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import config from '../config';
 import ListDataFragment from './Fragments/ListDataFragment';
 import axios from 'axios';
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 
 const ListComponent = (({ model, filter, currentView, additionalButtons, actionsWidth, values, viewOnly, actionUrlOverride }) => {
     let [data, setData] = useState([]);

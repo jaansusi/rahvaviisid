@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router';
+import { useParams } from 'react-router-dom';
 import { AuditModel } from '../../Models';
 import axios from 'axios';
 import config from '../../config';
-import { DataGrid } from '@material-ui/data-grid';
+import { DataGrid } from '@mui/x-data-grid';
 import { useTranslation } from 'react-i18next';
-import { Grid, Typography } from '@material-ui/core';
+import { Grid, Typography } from '@mui/material';
 
 const TuneAudit = () => {
     const { t } = useTranslation('common');

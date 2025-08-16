@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from "react-i18next";
 import './Header.css';
 import logo from '../../assets/logo.png';
-import { Grid, Button, MenuList, Menu, MenuItem } from '@material-ui/core';
+import { Grid, Button, MenuList, Menu, MenuItem } from '@mui/material';
 import { AuthService } from '../../Services';
 
 const Header = ({ authentication, setAuthentication }) => {
@@ -36,7 +36,7 @@ const Header = ({ authentication, setAuthentication }) => {
         setIsAdmin(AuthService.CanAccess(['admin']));
     }, [authentication]);
     return (
-        <Grid id="header-container" container direction='row' justify='center' alignItems='center'>
+        <Grid id="header-container" container direction='row' justifyContent='center' alignItems='center'>
             <Grid item xs={3} id="logo-container">
                 <a className='logo-image' href='/'><img className='logo-image' src={logo} alt="Logo"></img></a>
             </Grid>

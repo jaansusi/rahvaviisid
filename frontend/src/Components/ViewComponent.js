@@ -3,7 +3,7 @@ import {
     useParams
 } from "react-router-dom";
 import ViewDataFragment from './Fragments/ViewDataFragment';
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 import Actions from './Buttons/Actions';
 import { DataService } from '../Services';
 import BarLoader from 'react-spinners/BarLoader';

@@ -1,6 +1,6 @@
 import React, { useEffect, useReducer, useState } from 'react';
-import { Button, Divider, Grid, Typography } from '@material-ui/core';
-import { useParams } from 'react-router';
+import { Button, Divider, Grid, Typography } from '@mui/material';
+import { useParams } from 'react-router-dom';
 import { AuthService, DataService } from '../../Services';
 import { ExternalReferenceModel, TuneModel, TunePerformancesModel, TunePersonsModel, TunePlaceModel, TuneSongsModel } from '../../Models';
 import { useTranslation } from 'react-i18next';
@@ -55,7 +55,7 @@ const TuneView = () => {
                         ] :
                         undefined
                 }
-                justify='flex-end'
+                justifyContent='flex-end'
             />
             <Grid
                 item
