@@ -34,7 +34,7 @@ const ListDataFragment = (({ model, data, rowCount, updateTable, currentView, ad
                 };
                 break;
             case 'parentHref':
-                x.valueGetter = (params) => params.row;
+                x.valueGetter = (value, row) => row;
                 x.renderCell = (params) => {
                     if (params.row[modelField.field] !== undefined)
                         return (
@@ -46,7 +46,7 @@ const ListDataFragment = (({ model, data, rowCount, updateTable, currentView, ad
                 };
                 break;
             case 'boolean':
-                x.valueGetter = (params) => params.row[x.field] ? t('model.true') : t('model.false');
+                x.valueGetter = (value, row) => row[x.field] ? t('model.true') : t('model.false');
                 break;
             default:
                 break;
