@@ -20,7 +20,7 @@ const SearchResults = ({ showAll, assets }) => {
   let actionsWidth = editAccess ? 3 * 125 : 150;
   columns.push({
     field: '', headerName: t('action.actions'), sortable: false, width: actionsWidth,
-    renderCell: (params) => <Actions apiPath={'tunes'} id={params.row.id} auth={editAccess} pathOverride='viisid' />
+    renderCell: (row, value) => <Actions apiPath={'tunes'} id={row.id} auth={editAccess} pathOverride='viisid' />
   });
 
   return (

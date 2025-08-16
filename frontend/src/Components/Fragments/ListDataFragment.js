@@ -35,11 +35,11 @@ const ListDataFragment = (({ model, data, rowCount, updateTable, currentView, ad
                 break;
             case 'parentHref':
                 x.valueGetter = (value, row) => row;
-                x.renderCell = (params) => {
-                    if (params.row[modelField.field] !== undefined)
+                x.renderCell = (value, row) => {
+                    if (row[modelField.field] !== undefined)
                         return (
-                            <a href={pathname + '/' + params.row[modelField.field].id + '/vaata'}>
-                                {DataService.GetValueWithSelector(modelField, params.row)}
+                            <a href={pathname + '/' + row[modelField.field].id + '/vaata'}>
+                                {DataService.GetValueWithSelector(modelField, row)}
                             </a>
                         );
                     return <></>;
@@ -58,11 +58,11 @@ const ListDataFragment = (({ model, data, rowCount, updateTable, currentView, ad
     let actionsWidth = actionButtonCount === 1 ? 150 : actionButtonCount * 130;
     columns.push({
         field: '', headerName: t('action.actions'), sortable: false, width: actionsWidth,
-        renderCell: (params) =>
+        renderCell: (row, value) =>
             <Actions
                 auth={canAccess && !viewOnly}
                 apiPath={model.apiPath}
-                id={params.row.id}
+                id={row.id}
                 currentView={currentView}
                 additionalButtons={additionalButtons}
                 pathOverride={actionUrlOverride}
