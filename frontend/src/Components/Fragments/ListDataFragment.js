@@ -86,25 +86,23 @@ const ListDataFragment = (({ model, data, rowCount, updateTable, currentView, ad
                     <CreateButton />
                 </Grid>
             }
-            <div style={{ width: tableWidth, height: '80vh' }}>
+            <div style={{ width: tableWidth, minHeight: '80vh' }}>
+                {JSON.stringify(viewOnly)}
                 <DataGrid
                     paginationMode={viewOnly ? 'client' : 'server'}
                     rowCount={rowCount}
                     rows={data}
                     columns={columns}
                     pageSize={10}
-                    rowsPerPageOptions={[]}
+                    pageSizeOptions={[10]}
                     sortingOrder={[]}
-                    onPageChange={(x) => updateTable((x.page) * x.pageSize)}
+                    onPaginationModelChange={(x) => updateTable((x.page) * x.pageSize)}
                     localeText={GetDataGridLocale(t)}
-                    componentsProps={{
-                        pagination: {
-                            labelRowsPerPage: t('datagrid.labelRowsPerPage'),
-                            labelDisplayedRows:
-                                ({ from, to, count }) => {
-                                    return '' + from + '-' + to + t('datagrid.of') + count
-                                }
-                        }
+                    initialState={{
+                        pagination: { 
+                            paginationModel: { pageSize: 10 } ,
+                            
+                        },
                     }}
                 />
             </div>
