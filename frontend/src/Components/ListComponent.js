@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import config from '../config';
 import ListDataFragment from './Fragments/ListDataFragment';
 import axios from 'axios';
@@ -8,7 +8,7 @@ const ListComponent = (({ model, filter, currentView, additionalButtons, actions
     let [data, setData] = useState([]);
     let [rowCount, setRowCount] = useState(0);
 
-    const updateTable = ((offset) => {
+    const updateTable = useCallback((offset) => {
         if (values) {
             setData(values);
             return;
@@ -26,7 +26,7 @@ const ListComponent = (({ model, filter, currentView, additionalButtons, actions
                     setData(result.data);
                 }
             );
-    });
+    }, [values, filter, model.apiPath]);
 
     useEffect(() => {
         if (values !== undefined)
@@ -38,7 +38,7 @@ const ListComponent = (({ model, filter, currentView, additionalButtons, actions
                         setRowCount(result.data.count);
                     }
                 );
-    }, [filter, model.apiPath, rowCount]);
+    }, [filter, model.apiPath, rowCount, values]);
     return (
         <Grid container alignItems='center'>
             <ListDataFragment

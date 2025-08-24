@@ -69,7 +69,7 @@ const ListDataFragment = (({ model, data, rowCount, updateTable, currentView, ad
             />
     });
 
-    useEffect(() => { updateTable(0) }, []);
+    useEffect(() => { updateTable(0) }, [updateTable]);
 
     let tableWidth = columns.map(x => x.width ? x.width : 130).reduce((x, y) => x + y, 0) + 2;
     return (

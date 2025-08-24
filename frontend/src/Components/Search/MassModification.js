@@ -33,7 +33,7 @@ const MassModification = ({ assets }) => {
             headerName: pureFields.filter(field => field.field === x)[0].headerName
           };
         })));
-  }, [selectedFields, pidHeaderName]);
+  }, [selectedFields, pidHeaderName, pureFields]);
 
   const handleSubmit = (event) => {
     event.preventDefault();

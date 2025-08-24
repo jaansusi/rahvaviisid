@@ -10,7 +10,7 @@ const SearchBar = ({ keyword, setKeyword }) => {
 
   useEffect(() => {
     setKeyword(searchTerm, referenceSearch);
-  }, [searchTerm, referenceSearch])
+  }, [searchTerm, referenceSearch, setKeyword])
 
   return (
     <Grid item container direction='row' alignItems='center' spacing={2}>
