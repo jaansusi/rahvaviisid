@@ -4,8 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { DataService, TuneService } from '../../Services';
 import EditDataFragment from '../Fragments/EditDataFragment';
 import { PlayerViewComponent } from '../NewComponents';
-import Autocomplete from '@mui/lab/Autocomplete';
-import { DesktopDatePicker } from '@mui/lab';
+import Autocomplete from '@mui/material/Autocomplete';
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import './EditFormElement.css';
 
 const EditDataElement = (({ model, elemValue, handleChange, index }) => {

@@ -87,7 +87,6 @@ const ListDataFragment = (({ model, data, rowCount, updateTable, currentView, ad
                 </Grid>
             }
             <div style={{ width: tableWidth, minHeight: '80vh' }}>
-                {JSON.stringify(viewOnly)}
                 <DataGrid
                     paginationMode={viewOnly ? 'client' : 'server'}
                     rowCount={rowCount}
