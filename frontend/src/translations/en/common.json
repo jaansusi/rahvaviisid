@@ -179,7 +179,11 @@
         "nameOrigin": "Original title"
     },
     "search": {
-        "reference": "Search by ID"
+        "clear": "Clear",
+        "referenceOnly": "Search only by references",
+        "general": "Insert keyword",
+        "help": "Help",
+        "closeHelp": "Close search help"
     },
     "massMod": {
         "start": "Start mass modifikation ",
