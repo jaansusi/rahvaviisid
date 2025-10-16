@@ -1,7 +1,7 @@
-import { Button, Grid } from '@material-ui/core';
+import { Button, Grid } from '@mui/material';
 import React, { useState, useEffect, useReducer } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import config from '../config';
 import EditDataFragment from './Fragments/EditDataFragment';
 import axios from 'axios';
@@ -15,7 +15,7 @@ const EditComponent = ({ model, newItem, copyItem, validateTune, noDelete }) => 
     newItem = newItem === undefined ? false : newItem;
     copyItem = copyItem === undefined ? false : copyItem;
     const { t } = useTranslation('common');
-    const history = useHistory();
+    const navigate = useNavigate();
     const formReducer = (state, event) => {
         return {
             ...state,
@@ -234,9 +234,9 @@ const EditComponent = ({ model, newItem, copyItem, validateTune, noDelete }) => 
                         .then(() => {
                             toast.success(t('notification.saved'));
                             if (copyItem)
-                                history.push('../' + resData.data.id + '/vaata');
+                                navigate('../' + resData.data.id + '/vaata');
                             if (newItem)
-                                history.push('./' + resData.data.id + '/vaata');
+                                navigate('./' + resData.data.id + '/vaata');
                         })
                         .catch((error) => {
                             if (error.response.status === 422) {

@@ -1,29 +1,24 @@
 import React from 'react';
 import UsersList from './UsersList';
 import {
+  Routes,
   Route
 } from 'react-router-dom';
 import UserView from './UserView';
 import UserEdit from './UserEdit';
 import UserCreate from './UserCreate';
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 
 const UserWrapper = () => {
 
   return (
     <Grid item xs={12}>
-      <Route exact path={'/:asset'}>
-        <UsersList />
-      </Route>
-      <Route exact path={`/:asset/uus`}>
-        <UserCreate />
-      </Route>
-      <Route exact path={`/:asset/:id/vaata`}>
-        <UserView />
-      </Route>
-      <Route exact path={`/:asset/:id/muuda`}>
-        <UserEdit />
-      </Route>
+      <Routes>
+        <Route path="/" element={<UsersList />} />
+        <Route path="/uus" element={<UserCreate />} />
+        <Route path="/:id/vaata" element={<UserView />} />
+        <Route path="/:id/muuda" element={<UserEdit />} />
+      </Routes>
     </Grid>
   );
 }

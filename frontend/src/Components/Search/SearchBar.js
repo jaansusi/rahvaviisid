@@ -1,4 +1,4 @@
-import {Checkbox, FormControlLabel, Grid, TextField} from '@material-ui/core';
+import {Checkbox, FormControlLabel, Grid, TextField} from '@mui/material';
 import {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import ClearSearchButton from "./ClearSearchButton";

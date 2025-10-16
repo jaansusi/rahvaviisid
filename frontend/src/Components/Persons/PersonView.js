@@ -1,7 +1,7 @@
 import React from 'react';
 import ViewComponent from '../ViewComponent';
 import { PersonModel } from '../../Models';
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 
 const PersonView = () => {
     return (

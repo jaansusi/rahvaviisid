@@ -5,8 +5,7 @@ import UserWrapper from './Components/Users/UserWrapper';
 import ClassificatorWrapper from './Components/Classificators/ClassificatorWrapper';
 import './App.css';
 import {
-    Redirect,
-    Switch,
+    Navigate,
     useLocation,
     useParams
 } from 'react-router-dom';
@@ -33,9 +32,7 @@ function AssetRouter() {
     }
     return (
         <>
-            <Switch>
-                <Redirect from="/:url*(/+)" to={pathname.slice(0, -1)} />
-            </Switch>
+            {pathname.endsWith('/') && pathname.length > 1 && <Navigate to={pathname.slice(0, -1)} replace />}
             { wrapper }
         </>
     );

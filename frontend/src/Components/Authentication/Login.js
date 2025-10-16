@@ -1,42 +1,21 @@
 import React, { useState } from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import { Box } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { AuthService } from '../../Services';
-import { useHistory } from 'react-router-dom';
-
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-}));
+import { useNavigate } from 'react-router-dom';
 
 let Login = ({ setAuthentication }) => {
   const { t } = useTranslation('common');
-  const classes = useStyles();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   let [email, setEmail] = useState('');
   let [password, setPassword] = useState('');
@@ -48,7 +27,7 @@ let Login = ({ setAuthentication }) => {
     AuthService.Login(email, password, setAuthentication)
       .then(() => {
         setCredentialsValid(true);
-        history.push('/');
+        navigate('/');
       }
       )
       .catch(err => {
@@ -64,15 +43,33 @@ let Login = ({ setAuthentication }) => {
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
+      <Box
+        sx={{
+          marginTop: 8,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <Avatar
+          sx={{
+            margin: 1,
+            backgroundColor: 'secondary.main',
+          }}
+        >
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
           {t('login.signIn')}
         </Typography>
-        <form
-          onSubmit={(e) => tryLogin(e)}>
+        <Box
+          component="form"
+          onSubmit={(e) => tryLogin(e)}
+          sx={{
+            width: '100%', // Fix IE 11 issue.
+            marginTop: 1,
+          }}
+        >
           <TextField
             variant="outlined"
             margin="normal"
@@ -106,11 +103,13 @@ let Login = ({ setAuthentication }) => {
             type='submit'
             variant='contained'
             color='primary'
-            className={classes.submit}
+            sx={{
+              margin: '24px 0 16px',
+            }}
           >
             {t('login.signIn')}
           </Button>
-        </form>
+        </Box>
         <Grid container>
           <Grid item xs>
             <Link to="#" variant="body2">
@@ -118,7 +117,7 @@ let Login = ({ setAuthentication }) => {
             </Link>
           </Grid>
         </Grid>
-      </div>
+      </Box>
     </Container>
   );
 }

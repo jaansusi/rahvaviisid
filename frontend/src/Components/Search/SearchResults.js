@@ -1,6 +1,6 @@
-import { Button, Grid } from '@material-ui/core';
-import { DataGrid } from '@material-ui/data-grid';
-import { useState } from 'react';
+import { Button, Grid } from '@mui/material';
+import { DataGrid } from '@mui/x-data-grid';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AuthService } from '../../Services';
 import Actions from '../Buttons/Actions';
@@ -21,7 +21,7 @@ const SearchResults = ({ assets, isSearching }) => {
   let actionsWidth = editAccess ? 3 * 125 : 150;
   columns.push({
     field: '', headerName: t('action.actions'), sortable: false, width: actionsWidth,
-    renderCell: (params) => <Actions apiPath={'tunes'} id={params.row.id} auth={editAccess} pathOverride='viisid' />
+    renderCell: (row, value) => <Actions apiPath={'tunes'} id={row.id} auth={editAccess} pathOverride='viisid' />
   });
 
   return (

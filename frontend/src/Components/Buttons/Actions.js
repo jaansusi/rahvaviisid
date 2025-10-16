@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Grid } from '@material-ui/core';
+import { Button, Grid } from '@mui/material';
 import { useTranslation } from "react-i18next";
 import { useLocation } from 'react-router-dom';
 import DeleteButton from './DeleteButton';
@@ -26,9 +26,9 @@ const Actions = (({ id, apiPath, auth, pathOverride, currentView, additionalButt
         justify = 'space-between';
     return (
         <Grid container item xs={12}
-        justify='flex-end'>
+        justifyContent='flex-end'>
             <Grid container item xs={12}
-                justify={justify}
+                justifyContent={justify}
                 spacing={spacing ? spacing : 2}
             >
                 {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 import './Footer.css';
 import ekmLogo from '../../assets/ekm-logo.png';
 import eraLogo from '../../assets/era-logo.jpg';
@@ -11,7 +11,7 @@ const Footer = () => {
             container
             id='footer-container'
             alignItems='center'
-            justify='center'
+            justifyContent='center'
             direction='row'
         >
             <Grid item>

@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from "react-i18next";
-import { DataGrid } from '@material-ui/data-grid';
+import { DataGrid } from '@mui/x-data-grid';
 import Actions from '../Buttons/Actions';
 import CreateButton from '../Buttons/CreateButton';
 import { AuthService, DataService } from '../../Services';
 import { GetDataGridLocale } from '../../translations/DataGridLocale';
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 
 const ListDataFragment = (({ model, data, rowCount, updateTable, currentView, additionalButtons, viewOnly, actionUrlOverride }) => {
@@ -20,33 +20,33 @@ const ListDataFragment = (({ model, data, rowCount, updateTable, currentView, ad
         x.sortable = false;
         x.field = modelField.field;
         x.width = modelField.width;
-        x.valueGetter = (params) => {
+        x.valueGetter = (value, row) => {
             return modelField.selector ?
-                params.value[modelField.selector] :
-                params.value;
+                value[modelField.selector] :
+                value;
         };
         switch (modelField.type) {
             case 'number':
-                x.valueFormatter = (params) => {
-                    if (params.value === null)
+                x.valueFormatter = (value, row) => {
+                    if (value === null)
                         return '';
-                    return params.value.toString()
+                    return value.toString()
                 };
                 break;
             case 'parentHref':
-                x.valueGetter = (params) => params.row;
-                x.renderCell = (params) => {
-                    if (params.row[modelField.field] !== undefined)
+                x.valueGetter = (value, row) => row;
+                x.renderCell = (value, row) => {
+                    if (row[modelField.field] !== undefined)
                         return (
-                            <a href={pathname + '/' + params.row[modelField.field].id + '/vaata'}>
-                                {DataService.GetValueWithSelector(modelField, params.row)}
+                            <a href={pathname + '/' + row[modelField.field].id + '/vaata'}>
+                                {DataService.GetValueWithSelector(modelField, row)}
                             </a>
                         );
                     return <></>;
                 };
                 break;
             case 'boolean':
-                x.valueGetter = (params) => params.row[x.field] ? t('model.true') : t('model.false');
+                x.valueGetter = (value, row) => row[x.field] ? t('model.true') : t('model.false');
                 break;
             default:
                 break;
@@ -58,18 +58,18 @@ const ListDataFragment = (({ model, data, rowCount, updateTable, currentView, ad
     let actionsWidth = actionButtonCount === 1 ? 150 : actionButtonCount * 130;
     columns.push({
         field: '', headerName: t('action.actions'), sortable: false, width: actionsWidth,
-        renderCell: (params) =>
+        renderCell: (row, value) =>
             <Actions
                 auth={canAccess && !viewOnly}
                 apiPath={model.apiPath}
-                id={params.row.id}
+                id={row.id}
                 currentView={currentView}
                 additionalButtons={additionalButtons}
                 pathOverride={actionUrlOverride}
             />
     });
 
-    useEffect(() => { updateTable(0) }, []);
+    useEffect(() => { updateTable(0) }, [updateTable]);
 
     let tableWidth = columns.map(x => x.width ? x.width : 130).reduce((x, y) => x + y, 0) + 2;
     return (
@@ -86,25 +86,22 @@ const ListDataFragment = (({ model, data, rowCount, updateTable, currentView, ad
                     <CreateButton />
                 </Grid>
             }
-            <div style={{ width: tableWidth, height: '80vh' }}>
+            <div style={{ width: tableWidth, minHeight: '80vh' }}>
                 <DataGrid
                     paginationMode={viewOnly ? 'client' : 'server'}
                     rowCount={rowCount}
                     rows={data}
                     columns={columns}
                     pageSize={10}
-                    rowsPerPageOptions={[]}
+                    pageSizeOptions={[10]}
                     sortingOrder={[]}
-                    onPageChange={(x) => updateTable((x.page) * x.pageSize)}
+                    onPaginationModelChange={(x) => updateTable((x.page) * x.pageSize)}
                     localeText={GetDataGridLocale(t)}
-                    componentsProps={{
-                        pagination: {
-                            labelRowsPerPage: t('datagrid.labelRowsPerPage'),
-                            labelDisplayedRows:
-                                ({ from, to, count }) => {
-                                    return '' + from + '-' + to + t('datagrid.of') + count
-                                }
-                        }
+                    initialState={{
+                        pagination: { 
+                            paginationModel: { pageSize: 10 } ,
+                            
+                        },
                     }}
                 />
             </div>

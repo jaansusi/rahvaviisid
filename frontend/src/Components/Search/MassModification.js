@@ -1,5 +1,5 @@
-import { Button, FormControl, Grid, TextField } from '@material-ui/core';
-import { DataGrid } from '@material-ui/data-grid';
+import { Button, FormControl, Grid, TextField } from '@mui/material';
+import { DataGrid } from '@mui/x-data-grid';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -33,7 +33,7 @@ const MassModification = ({ assets }) => {
             headerName: pureFields.filter(field => field.field === x)[0].headerName
           };
         })));
-  }, [selectedFields, pidHeaderName]);
+  }, [selectedFields, pidHeaderName, pureFields]);
 
   const handleSubmit = (event) => {
     event.preventDefault();

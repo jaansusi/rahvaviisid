@@ -1,6 +1,6 @@
 import abcjs from 'abcjs';
 import React, { useEffect } from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 import { TuneService } from '../../../Services';
 // import { useTranslation } from 'react-i18next';
 

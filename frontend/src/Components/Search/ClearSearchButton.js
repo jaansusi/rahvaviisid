@@ -1,7 +1,7 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {IconButton, InputAdornment} from '@material-ui/core';
-import ClearIcon from '@material-ui/icons/Clear';
+import {IconButton, InputAdornment} from '@mui/material';
+import ClearIcon from '@mui/icons-material/Clear';
 
 const ClearSearchButton = ({show, onClick}) => {
 

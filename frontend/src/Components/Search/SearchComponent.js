@@ -3,8 +3,8 @@ import React, {useState, useEffect, useMemo} from 'react';
 import SearchBar from './SearchBar';
 import SearchResults from './SearchResults';
 import config from '../../config';
-import {Button, Grid} from '@material-ui/core';
-import {useTranslation} from 'react-i18next';
+import { Button, Grid } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import PageComponent from '../PageComponent';
 import debounce from 'lodash.debounce';
 
@@ -19,7 +19,7 @@ const SearchComponent = () => {
 
     const fetchData = async (q, isReferenceSearch) => {
 
-        const url = `${config.apiUrl}/tunes/search?q=${q}&type=${isReferenceSearch ? 'reference' : 'full'}`;
+        const url = `${config.apiUrl}/tunes/search/query?q=${q}&type=${isReferenceSearch ? 'reference' : 'full'}`;
 
         setIsSearching(true);
         axios.get(url)
@@ -47,7 +47,7 @@ const SearchComponent = () => {
     
     return (
         <Grid item xs={12} container spacing={2} direction='column'>
-            <Grid item container direction='row' alignItems='center' justify='space-between'>
+            <Grid item container direction='row' alignItems='center' justifyContent='space-between'>
                 <Grid item>
                     <SearchBar
                         keyword={input}

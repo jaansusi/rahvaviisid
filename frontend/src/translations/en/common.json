@@ -42,10 +42,11 @@
         "nickname": "Nickname",
         "birthYear": "Year of birth",
         "deathYear": "Year of death",
-        "sex": "Sex",
+        "sex": "Gender",
         "role": "Role"
     },
     "tune": {
+        "tuneId": "Tune ID",
         "tune": "Tune",
         "references": "References",
         "description": "Description",
@@ -311,5 +312,42 @@
         "user": {
             "password": "Password is not strong enough"
         }
+    },
+    "location": {
+        "uus": "New entry",
+        "otsing": "Search",
+        "viisid": "Tunes",
+        "isikud": "Persons",
+        "klassifikaatorid": "Classificators",
+        "kasutajad": "Users",
+        "rahvus": "Nationality",
+        "keel": "Language",
+        "riik": "Country",
+        "viisi-seisund": "Tune status",
+        "viisi-tegija-roll": "Tune maker role",
+        "kasutaja-roll": "User role",
+        "sugu": "Gender",
+        "koha-liik": "Place type",
+        "kihelkond": "Parish",
+        "vald": "Municipality",
+        "kyla": "Village",
+        "tegeliku-esituse-liik": "Actual performance type",
+        "traditsioonilise-esituse-liik": "Traditional performance type",
+        "tegeliku-tegevuse-liik": "Actual activity type",
+        "traditsioonilise-tegevuse-liik": "Traditional activity type",
+        "laulu-liik": "Song type",
+        "viisi-liik": "Tune type",
+        "laulu-teema": "Song topic",
+        "varsivorm": "Verse form",
+        "teksti-vorm": "Text form",
+        "viisi-vorm": "Tune form",
+        "heliulatus": "Pitch range",
+        "rytmityyp": "Rhythm type",
+        "noodistuse-alus": "Notation basis",
+        "noodistuse-tegija-roll": "Notation maker role",
+        "votmemark": "Key signature",
+        "tugiheli": "Support tone",
+        "korgus": "Height",
+        "taktimoot": "Measure"
     }
 }

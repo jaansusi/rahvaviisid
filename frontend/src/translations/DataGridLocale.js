@@ -1,7 +1,7 @@
 export const GetDataGridLocale = ((translateFunction) => {
 
     let locale = DATA_GRID_LOCALE;
-    
+
     let tempLocale = {};
     Object.keys(locale).map(key =>
         tempLocale[key] = translateFunction(locale[key])
@@ -10,7 +10,12 @@ export const GetDataGridLocale = ((translateFunction) => {
     tempLocale.toolbarFiltersTooltipActive = (count) => count !== 1 ? `${count} ` + translateFunction('datagrid.activeFilter') : `${count} ` + translateFunction('datagrid.activeFilters');
     tempLocale.columnHeaderFiltersTooltipActive = (count) => count !== 1 ? `${count} ` + translateFunction('datagrid.activeFilter') : `${count} ` + translateFunction('datagrid.activeFilters');
     tempLocale.footerRowSelected = (count) => count !== 1 ? `${count.toLocaleString()} ` + translateFunction('datagrid.rowsSelected') : `${count.toLocaleString()} ` + translateFunction('datagrid.rowSelected');
-
+    
+    tempLocale.MuiTablePagination = {
+        labelRowsPerPage: translateFunction('datagrid.labelRowsPerPage'),
+        labelDisplayedRows: ({ from, to, count }) => '' + from + '-' + to + translateFunction('datagrid.of') + count
+    };
+    
     return tempLocale;
 }
 );

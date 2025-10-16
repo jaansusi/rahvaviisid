@@ -3,7 +3,7 @@ import {
     useParams
 } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { Button, Divider, Grid, Typography } from '@material-ui/core';
+import { Button, Divider, Grid, Typography } from '@mui/material';
 import { ClassificatorsModel } from '../../Models';
 
 const Classificators = () => {

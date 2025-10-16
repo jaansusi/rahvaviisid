@@ -1,6 +1,7 @@
 import React from 'react';
 import PersonsList from './PersonsList';
 import {
+  Routes,
   Route
 } from 'react-router-dom';
 import PersonView from './PersonView';
@@ -10,18 +11,12 @@ const PersonWrapper = () => {
 
   return (
     <>
-      <Route exact path={'/:asset'}>
-        <PersonsList />
-      </Route>
-      <Route exact path={`/:asset/uus`}>
-        <PersonEdit newItem={true} />
-      </Route>
-      <Route exact path={`/:asset/:id/vaata`}>
-        <PersonView />
-      </Route>
-      <Route exact path={`/:asset/:id/muuda`}>
-        <PersonEdit />
-      </Route>
+      <Routes>
+        <Route path="/" element={<PersonsList />} />
+        <Route path="/uus" element={<PersonEdit newItem={true} />} />
+        <Route path="/:id/vaata" element={<PersonView />} />
+        <Route path="/:id/muuda" element={<PersonEdit />} />
+      </Routes>
     </>
   );
 }

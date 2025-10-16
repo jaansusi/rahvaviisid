@@ -127,7 +127,7 @@ export class TunesController extends AuditBaseController<Tunes> {
     super(groupAuditOpts);
   }
 
-  @get('/tunes/search', {
+  @get('/tunes/search/query', {
     responses: {
       '200': {
         description: 'Search tunes recursively in all fields',
