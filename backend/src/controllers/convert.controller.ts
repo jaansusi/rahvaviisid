@@ -14,10 +14,12 @@ import {PythonShell} from 'python-shell';
 import tmp from 'tmp';
 import fs from 'fs';
 import { inject } from '@loopback/context';
+import {authenticate} from '@loopback/authentication';
 
 import { UniqueValidationInterceptor } from '../interceptors';
 import { intercept } from '@loopback/core';
 
+@authenticate('jwt')
 @intercept(UniqueValidationInterceptor.BINDING_KEY)
 export class ConvertController {
   constructor(

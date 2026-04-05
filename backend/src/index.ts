@@ -32,6 +32,11 @@ if (require.main === module) {
         // useful when used with OpenAPI-to-GraphQL to locate your application
         setServersFromRequest: true,
       },
+      cors: {
+        origin: process.env.CORS_ORIGIN || 'http://localhost:3001',
+        methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+        credentials: true,
+      },
     },
   };
   main(config).catch(err => {

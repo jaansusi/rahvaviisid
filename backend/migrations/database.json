@@ -1,24 +1,25 @@
 {
     "dev": {
         "driver": "pg",
-        "host": "localhost",
-        "port": 5432,
-        "user": "local_dev_username",
-        "password": "local_dev_password"
+        "host": {"ENV": "DB_HOST"},
+        "port": {"ENV": "DB_PORT"},
+        "user": {"ENV": "DB_USERNAME"},
+        "password": {"ENV": "DB_PASSWORD"}
     },
     "createDB": {
         "driver": "pg",
-        "host": "localhost",
-        "port":  "5432",
-        "user": "postgres",
-        "password": "postgres"
+        "host": {"ENV": "DB_HOST"},
+        "port": {"ENV": "DB_PORT"},
+        "user": {"ENV": "DB_ROOT_USERNAME"},
+        "password": {"ENV": "DB_ROOT_PASSWORD"}
     },
     "migrate": {
         "driver": "pg",
-        "host": "localhost",
-        "port":  "5432",
-        "user": "postgres",
-        "password": "postgres",
-        "database": "kivi"
+        "host": {"ENV": "DB_HOST"},
+        "port": {"ENV": "DB_PORT"},
+        "user": {"ENV": "DB_USERNAME"},
+        "password": {"ENV": "DB_PASSWORD"},
+        "database": {"ENV": "DB_DATABASE"},
+        "schema": "folk_tune"
     }
 }

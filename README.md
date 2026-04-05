@@ -195,6 +195,39 @@ For production deployment, set the following environment variables:
 
 ## Database Management
 
+### Creating the Application Database User
+
+The application uses a dedicated PostgreSQL user (`local_user`) rather than the root `postgres` user. Before creating the database and running migrations, create this user:
+
+1. **Connect to PostgreSQL as the root user**:
+   ```bash
+   psql -U postgres -h localhost
+   ```
+
+2. **Create the application user and grant permissions**:
+   ```sql
+   -- Create the application user
+   CREATE USER local_user WITH PASSWORD 'local_user_password';
+
+   -- Grant connect privilege on the database
+   GRANT CONNECT ON DATABASE kivi TO local_user;
+
+   -- Grant schema usage and table privileges
+   GRANT USAGE ON SCHEMA folk_tune TO local_user;
+   GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA folk_tune TO local_user;
+   GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA folk_tune TO local_user;
+
+   -- Ensure future tables in the schema are also accessible
+   ALTER DEFAULT PRIVILEGES IN SCHEMA folk_tune
+     GRANT ALL PRIVILEGES ON TABLES TO local_user;
+   ALTER DEFAULT PRIVILEGES IN SCHEMA folk_tune
+     GRANT ALL PRIVILEGES ON SEQUENCES TO local_user;
+   ```
+
+   > **Note:** The `folk_tune` schema is created by the first migration (`20210117110438-createSchema`). Run `npm run database:create` and then the schema migration before granting schema-level privileges, or run all the grants after `npm run database:migrate`.
+
+3. **For production**, use strong credentials and set them via environment variables (`DB_USERNAME`, `DB_PASSWORD`) in your `.env` file. See `.env.template` for the full list of required variables.
+
 ### Creating and Managing Database
 
 ```bash

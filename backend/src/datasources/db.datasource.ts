@@ -3,11 +3,11 @@ import { juggler } from '@loopback/repository';
 
 
 // Set datasource based off environment
-const db_host = process.env.DB_HOST || 'localhost';
-const db_port = process.env.DB_PORT || 5432;
-const db_user = process.env.DB_USERNAME || 'local_dev_username';
-const db_pass = process.env.DB_PASSWORD || 'local_dev_password';
-const database = process.env.DB_DATABASE || 'kivi';
+const db_host = process.env.DB_HOST;
+const db_port = process.env.DB_PORT;
+const db_user = process.env.DB_USERNAME;
+const db_pass = process.env.DB_PASSWORD;
+const database = process.env.DB_DATABASE;
 
 const config = {
   name: 'db',
@@ -16,7 +16,8 @@ const config = {
   port: db_port,
   user: db_user,
   password: db_pass,
-  database: database
+  database: database,
+  schema: 'folk_tune'
 };
 
 // Observe application's life cycle to disconnect the datasource when
