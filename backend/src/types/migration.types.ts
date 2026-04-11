@@ -19,7 +19,7 @@ export interface MigrationComponentConfig {
   
   /**
    * Migration environment to use
-   * Default: 'migrate'
+   * Default: 'dev'
    */
   migrationEnvironment?: string;
 }

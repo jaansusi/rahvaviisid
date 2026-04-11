@@ -11,7 +11,7 @@ WORKDIR /app
 # where available (npm@5+)
 COPY package*.json ./
 
-RUN npm install
+RUN npm ci
 
 # Bundle app source code
 COPY . .
@@ -23,7 +23,10 @@ FROM node:20-alpine AS production
 
 WORKDIR /app
 
-COPY --chown=node --from=build /app /app
+COPY --chown=node --from=build /app/dist /app/dist
+COPY --chown=node --from=build /app/node_modules /app/node_modules
+COPY --chown=node --from=build /app/package.json /app/package.json
+COPY --chown=node --from=build /app/migrations /app/migrations
 
 USER node
 

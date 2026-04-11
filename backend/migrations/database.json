@@ -4,20 +4,6 @@
         "host": {"ENV": "DB_HOST"},
         "port": {"ENV": "DB_PORT"},
         "user": {"ENV": "DB_USERNAME"},
-        "password": {"ENV": "DB_PASSWORD"}
-    },
-    "createDB": {
-        "driver": "pg",
-        "host": {"ENV": "DB_HOST"},
-        "port": {"ENV": "DB_PORT"},
-        "user": {"ENV": "DB_ROOT_USERNAME"},
-        "password": {"ENV": "DB_ROOT_PASSWORD"}
-    },
-    "migrate": {
-        "driver": "pg",
-        "host": {"ENV": "DB_HOST"},
-        "port": {"ENV": "DB_PORT"},
-        "user": {"ENV": "DB_USERNAME"},
         "password": {"ENV": "DB_PASSWORD"},
         "database": {"ENV": "DB_DATABASE"},
         "schema": "folk_tune"

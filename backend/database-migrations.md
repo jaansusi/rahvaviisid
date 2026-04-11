@@ -17,7 +17,7 @@ interface MigrationComponentConfig {
   autoMigrate?: boolean;           // Default: true
   failOnMigrationError?: boolean;  // Default: true
   migrationConfigPath?: string;    // Default: './migrations/database.json'
-  migrationEnvironment?: string;   // Default: 'migrate'
+  migrationEnvironment?: string;   // Default: 'dev'
 }
 ```
 
@@ -28,7 +28,7 @@ this.configure('migration').to({
   autoMigrate: true,
   failOnMigrationError: true,
   migrationConfigPath: './migrations/database.json',
-  migrationEnvironment: 'migrate'
+  migrationEnvironment: 'dev'
 });
 ```
 

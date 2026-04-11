@@ -1,79 +1,94 @@
 # ekm-viisid-api
 
-This application is generated using [LoopBack 4 CLI](https://loopback.io/doc/en/lb4/Command-line-interface.html) with the
-[initial project layout](https://loopback.io/doc/en/lb4/Loopback-application-layout.html).
+Backend API for the Estonian Literary Museum folk tunes database, built with [LoopBack 4](https://loopback.io/doc/en/lb4/).
 
-## Install dependencies
+## Quick start with Docker Compose
 
-By default, dependencies were installed when this application was generated.
-Whenever dependencies in `package.json` are changed, run the following command:
+From the project root:
 
 ```sh
-npm install
+docker compose up database        # start PostgreSQL
+docker compose --profile backend up  # start database + API
+docker compose --profile all up      # start everything (database, API, frontend)
 ```
 
-To only install resolved dependencies in `package-lock.json`:
+pgAdmin is available at http://localhost:5050 (admin@example.com / admin).
+
+## Local development
+
+### Install dependencies
 
 ```sh
 npm ci
 ```
 
-## Run the application
+### Configure environment
+
+Copy `.env.template` to `.env` and fill in the values:
+
+```sh
+cp .env.template .env
+```
+
+Required environment variables:
+
+| Variable | Default | Description |
+|---|---|---|
+| `DB_HOST` | `localhost` | Database host |
+| `DB_PORT` | `5432` | Database port |
+| `DB_USERNAME` | `local_user` | Database user |
+| `DB_PASSWORD` | `local_user_password` | Database password |
+| `DB_DATABASE` | `kivi` | Database name |
+| `JWT_SECRET` | — | JWT signing secret (required) |
+| `JWT_REFRESH_SECRET` | — | JWT refresh token secret (required) |
+| `CORS_ORIGIN` | `http://localhost:3001` | Allowed CORS origin |
+
+### Run the application
 
 ```sh
 npm start
 ```
 
-You can also run `node .` to skip the build step.
+Open http://127.0.0.1:3000 in your browser. The API explorer is available at `/explorer`.
 
-Open http://127.0.0.1:3000 in your browser.
+### Database migrations
 
-## Rebuild the project
-
-To incrementally build the project:
-
-```
-npm run build
-```
-
-To force a full build by cleaning up cached artifacts:
-
-```
-npm run clean
-npm run build
-```
-
-## Fix code style and formatting issues
-
-If `eslint` and `prettier` are enabled for this project, you can use the
-following commands to check code style and formatting issues.
+Migrations run automatically on application startup via the `MigrationComponent`. To run them manually:
 
 ```sh
-npm run lint
+npm run database:migrate
 ```
 
-To automatically fix such issues:
+See [database-migrations.md](database-migrations.md) for details.
+
+## Build
 
 ```sh
-npm run lint:fix
+npm run build          # incremental build
+npm run clean && npm run build  # full rebuild
 ```
 
-## Other useful commands
+## Lint
 
-- `npm run migrate`: Migrate database schemas for models
-- `npm run openapi-spec`: Generate OpenAPI spec into a file
-- `npm run docker:build`: Build a Docker image for this application
-- `npm run docker:run`: Run this application inside a Docker container
+```sh
+npm run lint       # check
+npm run lint:fix   # auto-fix
+```
 
 ## Tests
 
 ```sh
-npm test
+npm test              # unit tests
+npm run test:api      # API integration tests (Playwright)
 ```
 
-## What's next
+## Docker
 
-Please check out [LoopBack 4 documentation](https://loopback.io/doc/en/lb4/) to
-understand how you can continue to add features to this application.
+```sh
+npm run docker:build    # build image
+npm run docker:run      # run container on port 3000
+```
 
-[![LoopBack](<https://github.com/strongloop/loopback-next/raw/master/docs/site/imgs/branding/Powered-by-LoopBack-Badge-(blue)-@2x.png>)](http://loopback.io/)
+## Other commands
+
+- `npm run openapi-spec`: Generate OpenAPI spec into a file

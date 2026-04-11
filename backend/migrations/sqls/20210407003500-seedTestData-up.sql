@@ -1,3 +1,18 @@
+-- Disable triggers for the migration
+ALTER TABLE folk_tune.tune_places DISABLE TRIGGER USER;
+ALTER TABLE folk_tune.tune_songs DISABLE TRIGGER USER;
+ALTER TABLE folk_tune.tune_songs_song_genres DISABLE TRIGGER USER;
+ALTER TABLE folk_tune.tune_songs_tune_genres DISABLE TRIGGER USER;
+ALTER TABLE folk_tune.tune_songs_song_topics DISABLE TRIGGER USER;
+ALTER TABLE folk_tune.tune_songs_verse_forms DISABLE TRIGGER USER;
+ALTER TABLE folk_tune.musical_characteristics DISABLE TRIGGER USER;
+ALTER TABLE folk_tune.musical_characteristics_tune_forms DISABLE TRIGGER USER;
+ALTER TABLE folk_tune.tunes_persons_roles DISABLE TRIGGER USER;
+ALTER TABLE folk_tune.transcriptions_persons_roles DISABLE TRIGGER USER;
+ALTER TABLE folk_tune.tune_performances DISABLE TRIGGER USER;
+ALTER TABLE folk_tune.tune_performances_traditional_actions DISABLE TRIGGER USER;
+ALTER TABLE folk_tune.musical_characteristics_text_forms DISABLE TRIGGER USER;
+
 INSERT INTO folk_tune.tune_places (tune_id,person_id,tune_place_type_id,parish_id,municipality_id,village_id,other_place,remarks) VALUES
 	 (3758,NULL,1,27,NULL,NULL,NULL,NULL),
 	 (910,NULL,1,110,NULL,NULL,NULL,NULL),
@@ -51304,4 +51319,16 @@ INSERT INTO folk_tune.tune_performances (tune_id,actual_performance_type_id,trad
 
 
 -- Re-enable triggers
-SET session_replication_role = 'origin';
+ALTER TABLE folk_tune.tune_places ENABLE TRIGGER USER;
+ALTER TABLE folk_tune.tune_songs ENABLE TRIGGER USER;
+ALTER TABLE folk_tune.tune_songs_song_genres ENABLE TRIGGER USER;
+ALTER TABLE folk_tune.tune_songs_tune_genres ENABLE TRIGGER USER;
+ALTER TABLE folk_tune.tune_songs_song_topics ENABLE TRIGGER USER;
+ALTER TABLE folk_tune.tune_songs_verse_forms ENABLE TRIGGER USER;
+ALTER TABLE folk_tune.musical_characteristics ENABLE TRIGGER USER;
+ALTER TABLE folk_tune.musical_characteristics_tune_forms ENABLE TRIGGER USER;
+ALTER TABLE folk_tune.tunes_persons_roles ENABLE TRIGGER USER;
+ALTER TABLE folk_tune.transcriptions_persons_roles ENABLE TRIGGER USER;
+ALTER TABLE folk_tune.tune_performances ENABLE TRIGGER USER;
+ALTER TABLE folk_tune.tune_performances_traditional_actions ENABLE TRIGGER USER;
+ALTER TABLE folk_tune.musical_characteristics_text_forms ENABLE TRIGGER USER;

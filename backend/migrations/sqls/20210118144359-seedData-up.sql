@@ -1,5 +1,32 @@
 -- Disable triggers for the migration
-SET session_replication_role = 'replica';
+ALTER TABLE folk_tune.sexes DISABLE TRIGGER USER;
+ALTER TABLE folk_tune.tune_states DISABLE TRIGGER USER;
+ALTER TABLE folk_tune.nations DISABLE TRIGGER USER;
+ALTER TABLE folk_tune.languages DISABLE TRIGGER USER;
+ALTER TABLE folk_tune.countries DISABLE TRIGGER USER;
+ALTER TABLE folk_tune.tune_person_role_types DISABLE TRIGGER USER;
+ALTER TABLE folk_tune.tune_place_types DISABLE TRIGGER USER;
+ALTER TABLE folk_tune.parishes DISABLE TRIGGER USER;
+ALTER TABLE folk_tune.municipalities DISABLE TRIGGER USER;
+ALTER TABLE folk_tune.villages DISABLE TRIGGER USER;
+ALTER TABLE folk_tune.actual_performance_types DISABLE TRIGGER USER;
+ALTER TABLE folk_tune.traditional_performance_types DISABLE TRIGGER USER;
+ALTER TABLE folk_tune.actual_action_types DISABLE TRIGGER USER;
+ALTER TABLE folk_tune.traditional_action_types DISABLE TRIGGER USER;
+ALTER TABLE folk_tune.song_genres DISABLE TRIGGER USER;
+ALTER TABLE folk_tune.tune_genres DISABLE TRIGGER USER;
+ALTER TABLE folk_tune.song_topics DISABLE TRIGGER USER;
+ALTER TABLE folk_tune.verse_forms DISABLE TRIGGER USER;
+ALTER TABLE folk_tune.sound_ranges DISABLE TRIGGER USER;
+ALTER TABLE folk_tune.tune_forms DISABLE TRIGGER USER;
+ALTER TABLE folk_tune.text_forms DISABLE TRIGGER USER;
+ALTER TABLE folk_tune.rhythm_types DISABLE TRIGGER USER;
+ALTER TABLE folk_tune.transcription_sources DISABLE TRIGGER USER;
+ALTER TABLE folk_tune.transcription_person_role_types DISABLE TRIGGER USER;
+ALTER TABLE folk_tune.key_signatures DISABLE TRIGGER USER;
+ALTER TABLE folk_tune.persons DISABLE TRIGGER USER;
+ALTER TABLE folk_tune.users DISABLE TRIGGER USER;
+ALTER TABLE folk_tune.user_credentials DISABLE TRIGGER USER;
 
 INSERT INTO folk_tune.sexes (title) 
 VALUES 
@@ -3604,4 +3631,31 @@ INSERT INTO folk_tune.user_credentials(password, userid)
 ;
 
 -- Re-enable triggers
-SET session_replication_role = 'origin';
+ALTER TABLE folk_tune.sexes ENABLE TRIGGER USER;
+ALTER TABLE folk_tune.tune_states ENABLE TRIGGER USER;
+ALTER TABLE folk_tune.nations ENABLE TRIGGER USER;
+ALTER TABLE folk_tune.languages ENABLE TRIGGER USER;
+ALTER TABLE folk_tune.countries ENABLE TRIGGER USER;
+ALTER TABLE folk_tune.tune_person_role_types ENABLE TRIGGER USER;
+ALTER TABLE folk_tune.tune_place_types ENABLE TRIGGER USER;
+ALTER TABLE folk_tune.parishes ENABLE TRIGGER USER;
+ALTER TABLE folk_tune.municipalities ENABLE TRIGGER USER;
+ALTER TABLE folk_tune.villages ENABLE TRIGGER USER;
+ALTER TABLE folk_tune.actual_performance_types ENABLE TRIGGER USER;
+ALTER TABLE folk_tune.traditional_performance_types ENABLE TRIGGER USER;
+ALTER TABLE folk_tune.actual_action_types ENABLE TRIGGER USER;
+ALTER TABLE folk_tune.traditional_action_types ENABLE TRIGGER USER;
+ALTER TABLE folk_tune.song_genres ENABLE TRIGGER USER;
+ALTER TABLE folk_tune.tune_genres ENABLE TRIGGER USER;
+ALTER TABLE folk_tune.song_topics ENABLE TRIGGER USER;
+ALTER TABLE folk_tune.verse_forms ENABLE TRIGGER USER;
+ALTER TABLE folk_tune.sound_ranges ENABLE TRIGGER USER;
+ALTER TABLE folk_tune.tune_forms ENABLE TRIGGER USER;
+ALTER TABLE folk_tune.text_forms ENABLE TRIGGER USER;
+ALTER TABLE folk_tune.rhythm_types ENABLE TRIGGER USER;
+ALTER TABLE folk_tune.transcription_sources ENABLE TRIGGER USER;
+ALTER TABLE folk_tune.transcription_person_role_types ENABLE TRIGGER USER;
+ALTER TABLE folk_tune.key_signatures ENABLE TRIGGER USER;
+ALTER TABLE folk_tune.persons ENABLE TRIGGER USER;
+ALTER TABLE folk_tune.users ENABLE TRIGGER USER;
+ALTER TABLE folk_tune.user_credentials ENABLE TRIGGER USER;

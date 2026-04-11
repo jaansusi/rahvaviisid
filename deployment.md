@@ -11,7 +11,7 @@ The recommended deployment option for all of these services is as a Docker conta
 
 The database service needs to contain a database and a user that has rights to manage its structure and data. All database migrations are run by the API automatically so no manual intervention on the database level should be necessary.
 
-API was tested with PostgreSQL versions 10 and 13.
+API was tested with PostgreSQL 13. The Docker Compose setup (`compose.yaml` in the project root) includes PostgreSQL 13 and pgAdmin for local development.
 
 This document does not cover the database deployment as the database service can be in whatever form you choose, as long as it is accessible to the API.
 For Docker deployment, refer to https://hub.docker.com/_/postgres.
@@ -36,9 +36,14 @@ Web service:
 Database connection:
 * DB_HOST - defaults to 'localhost'
 * DB_PORT - defaults to 5432
-* DB_USERNAME - defaults to 'local_dev_username'
-* DB_PASSWORD - defaults to 'local_dev_password'
+* DB_USERNAME - defaults to 'local_user'
+* DB_PASSWORD - defaults to 'local_user_password'
 * DB_DATABASE - defaults to 'kivi'
+
+Security:
+* JWT_SECRET - JWT signing secret (required, no default)
+* JWT_REFRESH_SECRET - JWT refresh token secret (required, no default)
+* CORS_ORIGIN - allowed CORS origin (defaults to 'http://localhost:3001')
 
 ### Updating
 

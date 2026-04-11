@@ -25,7 +25,6 @@ SELECT SETVAL('folk_tune.external_references_id_seq', COALESCE(MAX(id), 1) ) FRO
 SELECT SETVAL('folk_tune.key_signatures_id_seq', COALESCE(MAX(id), 1) ) FROM folk_tune.key_signatures;
 SELECT SETVAL('folk_tune.languages_id_seq', COALESCE(MAX(id), 1) ) FROM folk_tune.languages;
 SELECT SETVAL('folk_tune.measures_id_seq', COALESCE(MAX(id), 1) ) FROM folk_tune.measures;
-SELECT SETVAL('public.migrations_id_seq', COALESCE(MAX(id), 1) ) FROM public.migrations;
 SELECT SETVAL('folk_tune.municipalities_id_seq', COALESCE(MAX(id), 1) ) FROM folk_tune.municipalities;
 SELECT SETVAL('folk_tune.musical_characteristics_id_seq', COALESCE(MAX(id), 1) ) FROM folk_tune.musical_characteristics;
 SELECT SETVAL('folk_tune.musical_characteristics_rhythm_types_id_seq', COALESCE(MAX(id), 1) ) FROM folk_tune.musical_characteristics_rhythm_types;

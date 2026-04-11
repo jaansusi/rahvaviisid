@@ -1,5 +1,5 @@
 -- Disable triggers for the migration
-SET session_replication_role = 'replica';
+ALTER TABLE folk_tune.tunes DISABLE TRIGGER USER;
 
 
 INSERT INTO folk_tune.tunes (tune_state_id,tune_reference,text_reference,sound_reference,video_reference,catalogue,nation_id,language_id,country_id,publications,remarks,verified_by,verified,tune_id,old_tune_id) VALUES
@@ -4564,3 +4564,6 @@ INSERT INTO folk_tune.tunes (tune_state_id,tune_reference,text_reference,sound_r
 	 (2,'ERA III 1, 84 (183)','ERA II 7, 444 (115) / ERA II 7, 79 (3)',NULL,NULL,NULL,1,1,1,NULL,'<Kontrollitud: T. O. 2019/20. Leidsin viisile tekstid Saati tekstikogu viidete põhjal. Vbl on sama viisiga ka ERA II 7, 443 (106), (108), 444 (110), kus on viisi nr puudu? Arvatavasti ekslikult on koguja siinse viisi nr-i märkinud tekstile ERA II 7, 444 (117). See hästi ei sobi ning tolle teksti jaoks on ka eraldi viis ERA III 1, 85 (189) (see pole 2-realine viis, tekst ise on uuem).>','2a70be90-2c43-4d25-8a3f-4a35de35b0de',NULL,277,8029),
 	 (2,'EÜS VI 875 (17)','EÜS VI 928/9 (36)',NULL,NULL,NULL,1,1,1,NULL,'<Kontrollitud: T. O. Accessis oli üks ühine kirje EÜS VI 875 (16, 17), tekst EÜS VI 924 (24). Originaalis on 2 väga sarnast viisi koos viidetega kokku 9 tekstile. Tegin sellepärast 8 kirjet juurde. T. 11.05.2020. Täpsustasin rütmit, oli 2. 10.12.2020.>','2a70be90-2c43-4d25-8a3f-4a35de35b0de',NULL,1747,8111),
 	 (2,'EÜS VI 875 (17)','EÜS VI 1140/2 (20)',NULL,NULL,NULL,1,1,1,NULL,'<Kontrollitud: T. O. Accessis oli üks ühine kirje EÜS VI 875 (16, 17), tekst EÜS VI 924 (24). Originaalis on 2 väga sarnast viisi koos viidetega kokku 9 tekstile. Tegin sellepärast 8 kirjet juurde. T. 11.05.2020. Täpsustasin rütmit, oli 2. 10.12.2020.>','2a70be90-2c43-4d25-8a3f-4a35de35b0de',NULL,1749,8113);
+
+-- Re-enable triggers
+ALTER TABLE folk_tune.tunes ENABLE TRIGGER USER;
