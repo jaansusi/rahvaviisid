@@ -31,9 +31,9 @@ export const TableViewComponent = ({ value, model }) => {
                                                 <TableCell align={j === 0 ? 'left' : 'right'} key={j}>
                                                     {
                                                         field.type === 'url' ?
-                                                            // eslint-disable-next-line react/jsx-no-target-blank
                                                             <a
                                                                 target="_blank"
+                                                                rel="noreferrer noopener"
                                                                 href={field.format.replace('%url%', row[field.field])}
                                                             >
                                                                 {t('action.kivike')}

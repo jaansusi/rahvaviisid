@@ -6,6 +6,7 @@ import { AuthService } from '../Services';
 import { useTranslation } from 'react-i18next';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import DOMPurify from 'dompurify';
 
 
 const PageComponent = ({ name }) => {
@@ -56,7 +57,7 @@ const PageComponent = ({ name }) => {
                         />
                     </Grid>
                     :
-                    <Grid dangerouslySetInnerHTML={{__html: content}}>
+                    <Grid dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(content)}}>
 
                     </Grid>
             }

@@ -4,8 +4,12 @@ import { AuthService } from '../Services';
 axios.interceptors.response.use(
     (response) => response,
     (error) => {
-        if (error.response.status === 401)
-            window.location.replace("/login");
+        if (error.response && error.response.status === 401) {
+            localStorage.removeItem('user');
+            if (window.location.pathname !== "/login") {
+                window.location.replace("/login");
+            }
+        }
         throw error;
     });
 

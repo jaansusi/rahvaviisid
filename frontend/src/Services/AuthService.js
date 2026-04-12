@@ -24,8 +24,12 @@ export const AuthService = {
     },
 
     GetUserData() {
-        let data = localStorage.getItem('user');
-        return JSON.parse(data);
+        try {
+            let data = localStorage.getItem('user');
+            return JSON.parse(data);
+        } catch {
+            return null;
+        }
     },
 
     CanAccess(allowedRoles, authToken) {
