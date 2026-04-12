@@ -25,8 +25,10 @@ const TuneView = () => {
 
 
     useEffect(() => {
+        let cancelled = false;
         DataService.RequestAsset(TuneModel.view, id)
             .then(asset => {
+                if (cancelled) return;
                 for (const key in asset) {
                     setAssetData({
                         'name': key,
@@ -34,7 +36,8 @@ const TuneView = () => {
                     });
                 }
             })
-            .then(() => setIsLoading(false));
+            .then(() => { if (!cancelled) setIsLoading(false) });
+        return () => { cancelled = true; };
     }, [id]);
 
     if (isLoading)

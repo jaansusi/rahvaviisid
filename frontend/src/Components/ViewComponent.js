@@ -22,8 +22,10 @@ const ViewComponent = ({ model, noDelete }) => {
     );
     let [isLoading, setIsLoading] = useState(true);
     useEffect(() => {
+        let cancelled = false;
         DataService.RequestAsset(model, id)
             .then(asset => {
+                if (cancelled) return;
                 for (const key in asset) {
                     setAssetData({
                         'name': key,
@@ -31,7 +33,8 @@ const ViewComponent = ({ model, noDelete }) => {
                     });
                 }
             })
-            .then(() => setIsLoading(false));
+            .then(() => { if (!cancelled) setIsLoading(false) });
+        return () => { cancelled = true; };
     }, [id, model]);
     return (
         isLoading ?

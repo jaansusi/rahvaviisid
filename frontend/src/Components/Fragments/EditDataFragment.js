@@ -31,8 +31,16 @@ const EditDataFragment = ({
                     model.fields.map((modelField, i) => {
                         // There's no need to create an input for a value the user can't interact with
                         if (modelField.hidden) return null;
-                        if (modelField.type && (modelField.type === 'table' || modelField.type.array) && elementData[modelField.field] === undefined)
-                            elementData[modelField.field] = [];
+                        if (modelField.type && (modelField.type === 'table' || modelField.type.array) && elementData[modelField.field] === undefined) {
+                            handleChange({
+                                target: {
+                                    name: modelField.field,
+                                    value: [],
+                                    type: 'object',
+                                },
+                            });
+                            return null;
+                        }
 
                         if (modelField.type === 'player') {
                             return (
@@ -51,10 +59,9 @@ const EditDataFragment = ({
                         if (modelField.nested !== undefined) {
                             let handleNestedChange = (event) => {
                                 const { name, value } = event.target;
-                                let temp = elementData[modelField.field];
-                                if (temp === undefined) {
-                                    temp = [];
-                                }
+                                let temp = elementData[modelField.field] !== undefined
+                                    ? {...elementData[modelField.field]}
+                                    : {};
                                 temp[name] = value;
                                 handleChange({
                                     target: {
@@ -81,8 +88,7 @@ const EditDataFragment = ({
                             let temp = value;
                             if (typeof value === 'object' && !Array.isArray(value)) {
                                 type = 'object';
-                                temp = elementData;
-                                temp[name] = value;
+                                temp = {...elementData, [name]: value};
                             }
                             handleChange({
                                 target: {

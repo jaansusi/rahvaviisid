@@ -29,16 +29,23 @@ const ListComponent = (({ model, filter, currentView, additionalButtons, actions
     }, [values, filter, model.apiPath]);
 
     useEffect(() => {
-        if (values !== undefined)
+        if (values !== undefined) {
             setRowCount(values.length);
-        else
-            axios.get(config.apiUrl + '/' + model.apiPath + '/count')
-                .then(
-                    (result) => {
-                        setRowCount(result.data.count);
-                    }
-                );
-    }, [filter, model.apiPath, rowCount, values]);
+            return;
+        }
+        const abortController = new AbortController();
+        axios.get(config.apiUrl + '/' + model.apiPath + '/count', { signal: abortController.signal })
+            .then(
+                (result) => {
+                    setRowCount(result.data.count);
+                }
+            )
+            .catch((err) => {
+                if (err.name === 'CanceledError' || err.code === 'ERR_CANCELED') return;
+                throw err;
+            });
+        return () => abortController.abort();
+    }, [filter, model.apiPath, values]);
     return (
         <Grid container alignItems='center'>
             <ListDataFragment

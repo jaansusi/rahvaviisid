@@ -18,8 +18,7 @@ const MassModification = ({ assets }) => {
 
   let pureFields = TuneModel.edit.fields
     .filter((x) => x.nested === undefined && !x.hidden);
-  let modifiableFields = pureFields.map((x) => { x.id = x.field; x.headerName = t(x.headerName); return x; });
-  modifiableFields.shift();
+  let modifiableFields = pureFields.map((x) => ({ ...x, id: x.field, headerName: t(x.headerName) })).slice(1);
 
   let fieldColumns = [{ field: 'headerName', headerName: t('massMod.fieldHeader'), width: 300 }];
 
@@ -58,9 +57,7 @@ const MassModification = ({ assets }) => {
   };
   const handleChange = (event) => {
     const { name, value } = event.target;
-    let obj = submitObject;
-    obj[name] = value;
-    setSubmitObject(obj);
+    setSubmitObject({...submitObject, [name]: value});
   };
 
   return (

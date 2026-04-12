@@ -246,20 +246,22 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
             );
         case 'table':
             let addEntryToTable = () => {
-                elemValue.push(DataService.SyncCreateEmptyDataObject(model.edit.fields));
-                handleChange({target: {name: '', value: ''}}, 0);
-                setExpanded(elemValue.length-1);
+                let newValues = [...elemValue, DataService.SyncCreateEmptyDataObject(model.edit.fields)];
+                handleChange({target: {name: model.field, value: newValues}}, 0);
+                setExpanded(newValues.length-1);
             };
             let deleteEntryFromTable = (i) => {
                 if (expanded === i)
                     setExpanded(-1);
                 else
                     setExpanded(i)
-                elemValue.splice(i, 1);
+                let newValues = [...elemValue];
+                newValues.splice(i, 1);
+                handleChange({target: {name: model.field, value: newValues}}, 0);
             };
             let handleRowChange = (event, index) => {
                 const { name, value } = event.target;
-                let temp = elemValue;
+                let temp = elemValue.map((item, idx) => idx === index ? {...item} : item);
                 let currentModel = model.edit.fields.filter(x => x.field === name)[0];
                 let selector = currentModel.selector;
                 if (temp[index][name] === undefined) {
@@ -269,7 +271,7 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                         temp[index][name] = {};
                 }
                 if (selector !== undefined && !Array.isArray(temp[index][name])) {
-                    temp[index][name][selector] = value;
+                    temp[index][name] = {...temp[index][name], [selector]: value};
                 } else {
                     temp[index][name] = value;
                 }
@@ -356,9 +358,7 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                 if (elemValue === undefined)
                     elemValue = [];
                 let handleArrayChange = (event, i) => {
-                    let temp = elemValue;
-                    if (temp === undefined)
-                        temp = [];
+                    let temp = [...(elemValue || [])];
                     // If event is undefined then remove the element
                     if (event === undefined) {
                         temp.splice(i, 1);
@@ -370,7 +370,7 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                         // Otherwise modify the value based on the event
                         else {
                             const { name, value } = event.target;
-                            temp[i][name] = value;
+                            temp[i] = {...temp[i], [name]: value};
                         }
                     }
                     // Finally, send the "new" modified object up the chain

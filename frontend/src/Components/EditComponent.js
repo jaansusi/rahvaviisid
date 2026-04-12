@@ -31,6 +31,8 @@ const EditComponent = ({ model, newItem, copyItem, validateTune, noDelete }) => 
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
+        const abortController = new AbortController();
+        let cancelled = false;
         let retrievedValues = [];
         let getDropdowns = (currentModel) => {
             return currentModel.fields
@@ -41,10 +43,14 @@ const EditComponent = ({ model, newItem, copyItem, validateTune, noDelete }) => 
                             where: {"isActive": true}
                         }
                         return axios
-                            .get(config.apiUrl + '/' + field.apiPath + '?filter=' + encodeURIComponent(JSON.stringify(filter)))
+                            .get(config.apiUrl + '/' + field.apiPath + '?filter=' + encodeURIComponent(JSON.stringify(filter)), { signal: abortController.signal })
                             .then((result) => {
                                 // Set the "values" field of the model as the result, this way, the choice input is passed on with the model
                                 return { name: field.field, data: result.data };
+                            })
+                            .catch((err) => {
+                                if (err.name === 'CanceledError' || err.code === 'ERR_CANCELED') return;
+                                throw err;
                             });
                     }
                     let selection = [];
@@ -59,6 +65,7 @@ const EditComponent = ({ model, newItem, copyItem, validateTune, noDelete }) => 
         }
         let modelPromises = getDropdowns(model).flat(100);
         Promise.all(modelPromises).then((options) => {
+            if (cancelled) return;
             options = options.filter((x) => x !== undefined);
             setUpdatedModel(recurseModelValues(model, options));
             if (newItem || copyItem) {
@@ -67,6 +74,7 @@ const EditComponent = ({ model, newItem, copyItem, validateTune, noDelete }) => 
                     DataService.CreateEmptyDataObject(model.fields);
                 assetPromise
                     .then(asset => {
+                        if (cancelled) return;
                         for (const key in asset) {
                             setAssetData({
                                 'name': key,
@@ -74,11 +82,12 @@ const EditComponent = ({ model, newItem, copyItem, validateTune, noDelete }) => 
                             });
                         }
                     })
-                    .then(() => setIsLoading(false));
+                    .then(() => { if (!cancelled) setIsLoading(false) });
             } else {
                 // Retrieve the data
                 DataService.RequestAsset(model, id)
                     .then(asset => {
+                        if (cancelled) return;
                         for (const key in asset) {
                             setAssetData({
                                 'name': key,
@@ -86,9 +95,13 @@ const EditComponent = ({ model, newItem, copyItem, validateTune, noDelete }) => 
                             });
                         }
                     })
-                    .then(() => { setIsLoading(false) });
+                    .then(() => { if (!cancelled) setIsLoading(false) });
             }
         });
+        return () => {
+            cancelled = true;
+            abortController.abort();
+        };
     }, [id, model, newItem, copyItem]);
 
     const handleSubmit = (event) => {
