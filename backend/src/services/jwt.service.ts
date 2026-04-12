@@ -9,12 +9,26 @@ import {inject} from '@loopback/context';
 import { repository } from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import {securityId, UserProfile} from '@loopback/security';
-import {promisify} from 'util';
+import jwt, {JwtPayload} from 'jsonwebtoken';
 import { UsersRepository } from '../repositories';
 
-const jwt = require('jsonwebtoken');
-const signAsync = promisify(jwt.sign);
-const verifyAsync = promisify(jwt.verify);
+function verifyAsync(token: string, secret: string): Promise<JwtPayload> {
+  return new Promise((resolve, reject) => {
+    jwt.verify(token, secret, (err, decoded) => {
+      if (err) reject(err);
+      else resolve(decoded as JwtPayload);
+    });
+  });
+}
+
+function signAsync(payload: object, secret: string, options: jwt.SignOptions): Promise<string> {
+  return new Promise((resolve, reject) => {
+    jwt.sign(payload, secret, options, (err, token) => {
+      if (err || !token) reject(err);
+      else resolve(token);
+    });
+  });
+}
 
 export class JWTService implements TokenService {
   constructor(

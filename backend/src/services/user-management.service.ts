@@ -9,7 +9,6 @@ import {HttpErrors} from '@loopback/rest';
 import {securityId, UserProfile} from '@loopback/security';
 import {Users, UserWithPassword} from '../models';
 import {Credentials, UsersRepository} from '../repositories';
-import _ from 'lodash';
 import {compare} from 'bcryptjs';
 
 export class UserManagementService implements UserService<Users, Credentials> {

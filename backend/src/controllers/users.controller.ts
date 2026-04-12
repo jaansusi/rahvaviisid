@@ -36,7 +36,6 @@ import {
 
 import {SecurityBindings, securityId, UserProfile} from '@loopback/security';
 import {genSalt, hash} from 'bcryptjs';
-import _ from 'lodash';
 import {authorize} from '@loopback/authorization';
 import { UniqueValidationInterceptor } from '../interceptors';
 import { intercept } from '@loopback/core';
@@ -157,7 +156,7 @@ export class UsersController {
   ): Promise<Users> {
     const password = await hash(newUserRequest.password, await genSalt());
     const savedUser = await this.usersRepository.create(
-      _.omit(newUserRequest, 'password'),
+      (() => { const {password: _pw, ...rest} = newUserRequest; return rest; })(),
     );
     await this.usersRepository.userCredentials(savedUser.id).create({password});
     return savedUser;

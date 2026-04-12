@@ -39,11 +39,13 @@ export class EkmViisidApiApplication extends BootMixin(
     // Set up default home page
     this.static('/', path.join(__dirname, '../public'));
 
-    // Customize @loopback/rest-explorer configuration here
-    this.configure(RestExplorerBindings.COMPONENT).to({
-      path: '/explorer',
-    });
-    this.component(RestExplorerComponent);
+    // Only mount the REST API explorer in non-production environments
+    if (process.env.NODE_ENV !== 'production') {
+      this.configure(RestExplorerBindings.COMPONENT).to({
+        path: '/explorer',
+      });
+      this.component(RestExplorerComponent);
+    }
 
     this.projectRoot = __dirname;
     // Customize @loopback/boot Booter Conventions here

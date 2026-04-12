@@ -1,5 +1,4 @@
 import {Tunes} from "../models";
-import {pick} from 'lodash';
 import {Filter} from "@loopback/repository";
 
 export const FullSearchFilter: Filter<Tunes> = {
@@ -191,12 +190,7 @@ export const deepObjectIncludes = (obj: any, query: string): boolean => {
 }
 
 export const stripRelations = (tune: Tunes): Partial<Tunes> => {
-    return pick(tune.toJSON(), [
-        'id',
-        'tuneStateId',
-        'tuneReference',
-        'textReference',
-        'soundReference',
-        'videoReference',
-    ]);
+    const json = tune.toJSON() as Partial<Tunes>;
+    const {id, tuneStateId, tuneReference, textReference, soundReference, videoReference} = json;
+    return {id, tuneStateId, tuneReference, textReference, soundReference, videoReference};
 };
