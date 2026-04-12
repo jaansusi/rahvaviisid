@@ -310,7 +310,7 @@
             "noNames": "At least one of the names is required"
         },
         "user": {
-            "password": "Password is not strong enough"
+            "password": "Min. 14 characters, with uppercase, lowercase, number, and special character (!@#$%^&*)"
         }
     },
     "location": {

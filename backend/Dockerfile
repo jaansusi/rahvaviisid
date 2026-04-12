@@ -11,7 +11,7 @@ WORKDIR /app
 # where available (npm@5+)
 COPY package*.json ./
 
-RUN npm ci
+RUN npm ci --omit=dev
 
 # Bundle app source code
 COPY . .

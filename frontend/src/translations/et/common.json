@@ -415,7 +415,7 @@
             "noNames": "Üks nimedest peab olema täidetud"
         },
         "user": {
-            "password": "Parool ei ole piisavalt tugev"
+            "password": "Parool peab sisaldama vähemalt 14 tähemärki, sisaldama suurtähte, väiketähte, numbrit ja erimärki (!@#$%^&*)"
         }
     }
 }

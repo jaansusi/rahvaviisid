@@ -56,6 +56,11 @@ export class ConvertController {
     let tempFile = tmp.fileSync();
     return new Promise((resolve, reject) => {
       fs.writeFile(tempFile.name, combinedData, 'utf8', err => {
+        if (err) {
+          tempFile.removeCallback();
+          reject(err);
+          return;
+        }
         let options = {
           pythonOptions: ['-b'],
           args: [tempFile.name],
@@ -65,10 +70,10 @@ export class ConvertController {
           responseContent += e + '\n';
         });
         shell.end(err => {
-          fs.readFileSync(tempFile.name);
-          console.log(err);
-  
           tempFile.removeCallback();
+          if (err) {
+            console.error(err);
+          }
           resolve(responseContent);
         });
       });
