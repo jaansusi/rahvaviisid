@@ -122,7 +122,7 @@ const TuneView = () => {
                                 {
                                     assetData.tuneEncodings?.map((encoding, i) => {
                                         return (
-                                            <Grid key={i} item container direction='column' spacing={2}>
+                                            <Grid key={encoding.id || i} item container direction='column' spacing={2}>
 
                                                 <Divider />
                                                 <Grid item>
@@ -150,7 +150,7 @@ const TuneView = () => {
                                                     {
                                                         encoding.tuneMelodies?.map((melody, j) => {
                                                             return (
-                                                                <Grid key={j} item container direction='column' spacing={2}>
+                                                                <Grid key={melody.id || j} item container direction='column' spacing={2}>
                                                                     <Grid item container direction='row' spacing={5}>
                                                                         <Grid item xs={3}><Typography variant='h6'>{t('tune.variant')} {j + 1}</Typography></Grid>
                                                                         {/* <Grid item xs={3}><Button onClick={() => alert('Varsti tuleb')} variant='outlined'>{t('melody.export')}</Button></Grid> */}
@@ -184,7 +184,7 @@ const TuneView = () => {
                             {
                                 assetData.tuneTranscriptions?.map((transcription, i) => {
                                     return (
-                                        <Grid key={i} item container direction='column' spacing={2}>
+                                        <Grid key={transcription.id || i} item container direction='column' spacing={2}>
                                             <Grid item>
                                                 <Typography variant={headerVariant}>{t('tune.transcription')} {i + 1}</Typography>
                                             </Grid>

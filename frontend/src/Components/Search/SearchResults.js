@@ -49,9 +49,13 @@ const SearchResults = ({ assets, isSearching }) => {
                 rows={assets}
                 columns={columns}
                 autoHeight
-                pageSize={25}
-                rowsPerPageOptions = {[]}
-                onSelectionModelChange={(selectedRows) => setSelection(selectedRows.selectionModel)}
+                pageSizeOptions={[25]}
+                onRowSelectionModelChange={(selectedRows) => setSelection(selectedRows)}
+                initialState={{
+                  pagination: {
+                    paginationModel: { pageSize: 25 },
+                  },
+                }}
                 componentsProps={{
                   pagination: {
                     labelRowsPerPage: t('datagrid.labelRowsPerPage'),

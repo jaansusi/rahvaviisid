@@ -1,5 +1,5 @@
 import { Button, Checkbox, Collapse, FormControl, FormControlLabel, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { DataService, TuneService } from '../../Services';
 import EditDataFragment from '../Fragments/EditDataFragment';
@@ -14,7 +14,22 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
     if (model.timestamp)
         elemValue = DataService.ParseDate(elemValue);
 
-    useEffect(() => { }, [elemValue]);
+    const sortedDropdownValues = useMemo(() => {
+        if ((model.type !== 'dropdown' && model.type !== 'multiselect') || !model.values)
+            return model.values;
+        const fieldToCompare = (value) => model.title ?
+            Array.isArray(model.title) ?
+                model.title.map(x => value[x]).join(' ') :
+                value[model.title] :
+            value.title;
+        return [...model.values].sort((option1, option2) => {
+            let field1 = fieldToCompare(option1).toUpperCase();
+            let field2 = fieldToCompare(option2).toUpperCase();
+            if (field1 < field2) return -1;
+            if (field1 > field2) return 1;
+            return 0;
+        });
+    }, [model.values, model.title, model.type]);
 
     switch (model.type) {
         case 'boolean':
@@ -63,23 +78,8 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                     }
                 }, index);
             });
-            if (model.values === undefined)
+            if (sortedDropdownValues === undefined)
                 return null;
-            let fieldToCompare = (value) => model.title ?
-                Array.isArray(model.title) ?
-                    model.title.map(x => value[x]).join(' ') :
-                    value[model.title] :
-                value.title;
-            model.values.sort(function (option1, option2) {
-                let field1 = fieldToCompare(option1).toUpperCase();
-                let field2 = fieldToCompare(option2).toUpperCase();
-
-                if (field1 < field2)
-                    return -1;
-                if (field1 > field2)
-                    return 1;
-                return 0;
-            });
             return (
                 <Grid
                     item
@@ -87,7 +87,7 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                     className='form-edit-item'
                 >
                     <Autocomplete
-                        options={model.values}
+                        options={sortedDropdownValues}
                         getOptionLabel={
                             (option) => model.title ?
                                 Array.isArray(model.title) ?
@@ -95,8 +95,8 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                                     option[model.title] :
                                 option.title
                         }
-                        value={model.values.filter(x => x.id === elemValue)[0]}
-                        getOptionSelected={(option) => elemValue === option.id}
+                        value={sortedDropdownValues.find(x => x.id === elemValue) || null}
+                        isOptionEqualToValue={(option) => elemValue === option.id}
                         renderInput={(params) => (
                             <TextField
                                 {...params}
@@ -147,7 +147,7 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                                 ) :
                                 []
                         }
-                        getOptionSelected={
+                        isOptionEqualToValue={
                             (option) => elemValue.map(x => model.selector ? x[model.selector] : x.id).includes(option.id)
                         }
                         filterSelectedOptions
@@ -198,7 +198,7 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                                 ) :
                                 []
                         }
-                        getOptionSelected={
+                        isOptionEqualToValue={
                             (option) => elemValue.includes(option.value)
                         }
                         filterSelectedOptions

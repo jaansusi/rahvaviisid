@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useTranslation } from "react-i18next";
 import { DataGrid } from '@mui/x-data-grid';
 import Actions from '../Buttons/Actions';
@@ -14,60 +14,63 @@ const ListDataFragment = (({ model, data, rowCount, updateTable, currentView, ad
 
     if (!additionalButtons)
         additionalButtons = [];
-    let columns = model.fields.map((modelField) => {
-        let x = {};
-        x.headerName = t(modelField.headerName);
-        x.sortable = false;
-        x.field = modelField.field;
-        x.width = modelField.width;
-        x.valueGetter = (value, row) => {
-            return modelField.selector ?
-                value[modelField.selector] :
-                value;
-        };
-        switch (modelField.type) {
-            case 'number':
-                x.valueFormatter = (value, row) => {
-                    if (value === null)
-                        return '';
-                    return value.toString()
-                };
-                break;
-            case 'parentHref':
-                x.valueGetter = (value, row) => row;
-                x.renderCell = (value, row) => {
-                    if (row[modelField.field] !== undefined)
-                        return (
-                            <a href={pathname + '/' + row[modelField.field].id + '/vaata'}>
-                                {DataService.GetValueWithSelector(modelField, row)}
-                            </a>
-                        );
-                    return <></>;
-                };
-                break;
-            case 'boolean':
-                x.valueGetter = (value, row) => row[x.field] ? t('model.true') : t('model.false');
-                break;
-            default:
-                break;
-        }
-        return x;
-    });
     let canAccess = AuthService.CanAccess(['editor', 'admin']);
-    let actionButtonCount = canAccess && !viewOnly ? (currentView !== undefined ? 2 : 3) : 1 + additionalButtons.length;
-    let actionsWidth = actionButtonCount === 1 ? 150 : actionButtonCount * 130;
-    columns.push({
-        field: '', headerName: t('action.actions'), sortable: false, width: actionsWidth,
-        renderCell: (row, value) =>
-            <Actions
-                auth={canAccess && !viewOnly}
-                apiPath={model.apiPath}
-                id={row.id}
-                currentView={currentView}
-                additionalButtons={additionalButtons}
-                pathOverride={actionUrlOverride}
-            />
-    });
+    let columns = useMemo(() => {
+        let cols = model.fields.map((modelField) => {
+            let x = {};
+            x.headerName = t(modelField.headerName);
+            x.sortable = false;
+            x.field = modelField.field;
+            x.width = modelField.width;
+            x.valueGetter = (value, row) => {
+                return modelField.selector ?
+                    value[modelField.selector] :
+                    value;
+            };
+            switch (modelField.type) {
+                case 'number':
+                    x.valueFormatter = (value, row) => {
+                        if (value === null)
+                            return '';
+                        return value.toString()
+                    };
+                    break;
+                case 'parentHref':
+                    x.valueGetter = (value, row) => row;
+                    x.renderCell = (value, row) => {
+                        if (row[modelField.field] !== undefined)
+                            return (
+                                <a href={pathname + '/' + row[modelField.field].id + '/vaata'}>
+                                    {DataService.GetValueWithSelector(modelField, row)}
+                                </a>
+                            );
+                        return <></>;
+                    };
+                    break;
+                case 'boolean':
+                    x.valueGetter = (value, row) => row[x.field] ? t('model.true') : t('model.false');
+                    break;
+                default:
+                    break;
+            }
+            return x;
+        });
+        let actionButtonCount = canAccess && !viewOnly ? (currentView !== undefined ? 2 : 3) : 1 + additionalButtons.length;
+        let actionsWidth = actionButtonCount === 1 ? 150 : actionButtonCount * 130;
+        cols.push({
+            field: '', headerName: t('action.actions'), sortable: false, width: actionsWidth,
+            renderCell: (row, value) =>
+                <Actions
+                    auth={canAccess && !viewOnly}
+                    apiPath={model.apiPath}
+                    id={row.id}
+                    currentView={currentView}
+                    additionalButtons={additionalButtons}
+                    pathOverride={actionUrlOverride}
+                />
+        });
+        return cols;
+    }, [model, t, pathname, canAccess, viewOnly, currentView, additionalButtons, actionUrlOverride]);
 
     useEffect(() => { updateTable(0) }, [updateTable]);
 
@@ -92,7 +95,6 @@ const ListDataFragment = (({ model, data, rowCount, updateTable, currentView, ad
                     rowCount={rowCount}
                     rows={data}
                     columns={columns}
-                    pageSize={10}
                     pageSizeOptions={[10]}
                     sortingOrder={[]}
                     onPaginationModelChange={(x) => updateTable((x.page) * x.pageSize)}

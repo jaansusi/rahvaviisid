@@ -54,9 +54,40 @@ const EditDataFragment = ({
                             );
                         }
 
+                        let handleElementChange = (event) => {
+                            const { name, value } = event.target;
+                            let type = undefined;
+                            let temp = value;
+                            if (typeof value === 'object' && !Array.isArray(value)) {
+                                type = 'object';
+                                temp = {...elementData, [name]: value};
+                            }
+                            handleChange({
+                                target: {
+                                    name: modelField.field,
+                                    value: temp,
+                                    type: type,
+                                },
+                            });
+                        };
                         // If the model field is defined as nested, create another handler function
                         // to-do: introduce recursion to allow for multiple levels of depth for nested models
                         if (modelField.nested !== undefined) {
+                            // Array model fields manage their own state via handleArrayChange
+                            // and send complete arrays — don't wrap in handleNestedChange
+                            // which would spread the array into an object
+                            if (modelField.array) {
+                                return (
+                                    <EditDataElement
+                                        key={i}
+                                        model={modelField}
+                                        elemValue={elementData[modelField.field]}
+                                        handleChange={handleElementChange}
+                                        index={index}
+                                    />
+                                );
+                            }
+
                             let handleNestedChange = (event) => {
                                 const { name, value } = event.target;
                                 let temp = elementData[modelField.field] !== undefined
@@ -82,22 +113,6 @@ const EditDataFragment = ({
                                 />
                             );
                         }
-                        let handleElementChange = (event) => {
-                            const { name, value } = event.target;
-                            let type = undefined;
-                            let temp = value;
-                            if (typeof value === 'object' && !Array.isArray(value)) {
-                                type = 'object';
-                                temp = {...elementData, [name]: value};
-                            }
-                            handleChange({
-                                target: {
-                                    name: modelField.field,
-                                    value: temp,
-                                    type: type,
-                                },
-                            });
-                        };
                         // If the field does not have any children, return the form element for it.
                         return (
                             <EditDataElement
