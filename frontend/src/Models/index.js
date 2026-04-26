@@ -1,4 +1,4 @@
-export * from './ClassificatorTypeModel';
+export * from './ClassifierTypeModel';
 export * from './ExternalReferenceModel';
 export * from './NationModel';
 export * from './PersonModel';

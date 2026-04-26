@@ -89,7 +89,7 @@ const ListDataFragment = (({ model, data, rowCount, updateTable, currentView, ad
                     <CreateButton />
                 </Grid>
             }
-            <div style={{ width: tableWidth, minHeight: '80vh' }}>
+            <div style={{ width: tableWidth, minHeight: '80vh', position: 'relative', left: '50%', transform: 'translateX(-50%)' }}>
                 <DataGrid
                     paginationMode={viewOnly ? 'client' : 'server'}
                     rowCount={rowCount}

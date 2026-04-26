@@ -2,7 +2,7 @@ import React from 'react';
 import PersonWrapper from './Components/Persons/PersonWrapper';
 import TuneWrapper from './Components/Tunes/TuneWrapper';
 import UserWrapper from './Components/Users/UserWrapper';
-import ClassificatorWrapper from './Components/Classificators/ClassificatorWrapper';
+import ClassifierWrapper from './Components/Classifiers/ClassifierWrapper';
 import './App.css';
 import {
     Navigate,
@@ -22,7 +22,7 @@ function AssetRouter() {
             wrapper = <TuneWrapper />;
             break;
         case 'klassifikaatorid':
-            wrapper = <ClassificatorWrapper />;
+            wrapper = <ClassifierWrapper />;
             break;
         case 'kasutajad':
             wrapper = <UserWrapper />;

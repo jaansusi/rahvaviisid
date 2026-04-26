@@ -4,16 +4,16 @@ import {
 } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Button, Divider, Grid, Typography } from '@mui/material';
-import { ClassificatorsModel } from '../../Models';
+import { ClassifiersModel } from '../../Models';
 
-const Classificators = () => {
+const Classifiers = () => {
     let { asset } = useParams();
     const { t } = useTranslation('common');
     return (
         <Grid item xs>
             <Grid container direction='column'>
                 {
-                    ClassificatorsModel.groups.map((group, i) => {
+                    ClassifiersModel.groups.map((group, i) => {
                         return (
                             <Grid item key={i}>
                                 <Typography variant='h5'>{t(group.name)}</Typography>
@@ -22,7 +22,7 @@ const Classificators = () => {
                                         group.models.map((model, j) => {
                                             return (
                                                 <Grid item key={j}>
-                                                    <Button className='classificator-link' href={`${asset}/${model.url}`} variant='outlined'>{t(model.name)}</Button>
+                                                    <Button className='classifier-link' href={`${asset}/${model.url}`} variant='outlined'>{t(model.name)}</Button>
                                                 </Grid>
                                             );
                                         })
@@ -38,4 +38,4 @@ const Classificators = () => {
     );
 };
 
-export default Classificators;
+export default Classifiers;

@@ -41,7 +41,7 @@ const SearchResults = ({ assets, isSearching }) => {
         {
           modifying ?
             <MassModification assets={selection.map(x => assets[x - 1])} /> :
-            <div style={{ width: '90vw', position: "relative" }}>
+            <div style={{ maxWidth: '90vw', position: "relative" }}>
               <LoadingOverlay show={isSearching} />
                 
               <DataGrid

@@ -2,11 +2,11 @@ import {test, expect} from '@playwright/test';
 import {ADMIN_USER, getAuthHeaders} from './helpers/auth';
 
 /**
- * Tests for classificator (lookup table) endpoints.
- * All classificators follow the same CRUD pattern so we test a representative set.
+ * Tests for classifier (lookup table) endpoints.
+ * All classifiers follow the same CRUD pattern so we test a representative set.
  */
 
-const CLASSIFICATOR_ENDPOINTS = [
+const CLASSIFIER_ENDPOINTS = [
   {name: 'nations', path: '/nations'},
   {name: 'languages', path: '/languages'},
   {name: 'countries', path: '/countries'},
@@ -25,8 +25,8 @@ const CLASSIFICATOR_ENDPOINTS = [
   {name: 'support-sounds', path: '/support-sounds'},
 ];
 
-test.describe('Classificator endpoints - GET list', () => {
-  for (const endpoint of CLASSIFICATOR_ENDPOINTS) {
+test.describe('Classifier endpoints - GET list', () => {
+  for (const endpoint of CLASSIFIER_ENDPOINTS) {
     test(`GET ${endpoint.path} - returns array`, async ({request}) => {
       const response = await request.get(endpoint.path);
 
@@ -37,8 +37,8 @@ test.describe('Classificator endpoints - GET list', () => {
   }
 });
 
-test.describe('Classificator endpoints - GET count', () => {
-  for (const endpoint of CLASSIFICATOR_ENDPOINTS) {
+test.describe('Classifier endpoints - GET count', () => {
+  for (const endpoint of CLASSIFIER_ENDPOINTS) {
     test(`GET ${endpoint.path}/count - returns count object`, async ({
       request,
     }) => {
@@ -52,8 +52,8 @@ test.describe('Classificator endpoints - GET count', () => {
   }
 });
 
-test.describe('Classificator endpoints - GET by id', () => {
-  for (const endpoint of CLASSIFICATOR_ENDPOINTS) {
+test.describe('Classifier endpoints - GET by id', () => {
+  for (const endpoint of CLASSIFIER_ENDPOINTS) {
     test(`GET ${endpoint.path}/{id} - retrieves first item`, async ({
       request,
     }) => {
@@ -73,7 +73,7 @@ test.describe('Classificator endpoints - GET by id', () => {
   }
 });
 
-test.describe('Classificator CRUD - nations (representative)', () => {
+test.describe('Classifier CRUD - nations (representative)', () => {
   let adminHeaders: Record<string, string>;
 
   test.beforeAll(async ({request}) => {

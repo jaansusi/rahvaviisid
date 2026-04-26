@@ -66,7 +66,7 @@ const Header = ({ authentication, setAuthentication }) => {
         { to: '/otsing', label: t('header.search') },
         { to: '/viisid', label: t('common.tunes') },
         { to: '/isikud', label: t('common.persons') },
-        { to: '/klassifikaatorid', label: t('common.classificators') },
+        { to: '/klassifikaatorid', label: t('common.classifiers') },
     ];
     if (isAdmin) {
         links.push({ to: '/kasutajad', label: t('header.users') });

@@ -53,19 +53,6 @@ const LocationHeader = () => {
                     ))}
                 </nav>
             )}
-            <h1 style={{
-                fontFamily: "'EB Garamond', Georgia, serif",
-                fontSize: 38,
-                fontWeight: 500,
-                color: C.text,
-                lineHeight: 1.15,
-                letterSpacing: '-0.01em',
-                margin: 0,
-                paddingBottom: 24,
-                borderBottom: `1px solid ${C.border}`,
-            }}>
-                {lastTitle}
-            </h1>
         </div>
     );
 };

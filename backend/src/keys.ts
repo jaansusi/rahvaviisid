@@ -31,7 +31,7 @@ export namespace UserServiceBindings {
 }
 
 export namespace TunesFilter {
-  export const ALL_NO_CLASSIFICATORS = {
+  export const ALL_NO_CLASSIFIERS = {
     include: [
       // {relation: 'nations'},
       // {relation: 'languages'},

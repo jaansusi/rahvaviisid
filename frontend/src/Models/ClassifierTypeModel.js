@@ -1,6 +1,6 @@
 import { TuneModel } from "./TuneModel";
 
-export const ClassificatorsModel =
+export const ClassifiersModel =
 {
     default: {
         list: {
@@ -260,14 +260,14 @@ export const ClassificatorsModel =
                     apiPath: 'song-genres',
                     list: {
                         fields: [
-                            { field: 'songGenres', type: 'parentHref', selector: 'title', headerName: 'classificators.songGenreParent', width: 140 },
+                            { field: 'songGenres', type: 'parentHref', selector: 'title', headerName: 'classifiers.songGenreParent', width: 140 },
                             { field: 'title', headerName: 'common.title', width: 170 },
                             { field: 'isActive', type: 'boolean', headerName: 'common.active', width: 170 }
                         ]
                     },
                     view: {
                         fields: [
-                            { field: 'songGenres', parent: 'songGenres', selector: 'title', headerName: 'classificators.songGenreParent', width: 140 },
+                            { field: 'songGenres', parent: 'songGenres', selector: 'title', headerName: 'classifiers.songGenreParent', width: 140 },
                             { field: 'title', headerName: 'common.title' },
                             { field: 'description', headerName: 'common.description' },
                             { field: 'isActive', type: 'boolean', headerName: 'common.active' },
@@ -279,7 +279,7 @@ export const ClassificatorsModel =
                     edit: {
                         fields: [
                             { field: 'id', hidden: true },
-                            { field: 'parentId', type: 'dropdown', apiPath: 'song-genres', headerName: 'classificators.songGenreParent' },
+                            { field: 'parentId', type: 'dropdown', apiPath: 'song-genres', headerName: 'classifiers.songGenreParent' },
                             { field: 'title', headerName: 'common.title', required: true },
                             { field: 'description', type: 'textbox', headerName: 'common.description' },
                             { field: 'isActive', type: 'boolean', headerName: 'common.active' }
@@ -292,14 +292,14 @@ export const ClassificatorsModel =
                     apiPath: 'tune-genres',
                     list: {
                         fields: [
-                            { field: 'tuneGenres', type: 'parentHref', selector: 'title', headerName: 'classificators.tuneGenreParent', width: 140 },
+                            { field: 'tuneGenres', type: 'parentHref', selector: 'title', headerName: 'classifiers.tuneGenreParent', width: 140 },
                             { field: 'title', headerName: 'common.title', width: 170 },
                             { field: 'isActive', type: 'boolean', headerName: 'common.active', width: 170 }
                         ]
                     },
                     view: {
                         fields: [
-                            { field: 'tuneGenres', parent: 'tuneGenres', selector: 'title', headerName: 'classificators.tuneGenreParent', width: 140 },
+                            { field: 'tuneGenres', parent: 'tuneGenres', selector: 'title', headerName: 'classifiers.tuneGenreParent', width: 140 },
                             { field: 'title', headerName: 'common.title' },
                             { field: 'description', headerName: 'common.description' },
                             { field: 'isActive', type: 'boolean', headerName: 'common.active' },
@@ -311,7 +311,7 @@ export const ClassificatorsModel =
                     edit: {
                         fields: [
                             { field: 'id', hidden: true },
-                            { field: 'parentId', type: 'dropdown', apiPath: 'song-genres', headerName: 'classificators.songGenreParent' },
+                            { field: 'parentId', type: 'dropdown', apiPath: 'song-genres', headerName: 'classifiers.songGenreParent' },
                             { field: 'title', headerName: 'common.title', required: true },
                             { field: 'description', type: 'textbox', headerName: 'common.description' },
                             { field: 'isActive', type: 'boolean', headerName: 'common.active' }
@@ -324,14 +324,14 @@ export const ClassificatorsModel =
                     apiPath: 'song-topics',
                     list: {
                         fields: [
-                            { field: 'songTopics', type: 'parentHref', selector: 'title', headerName: 'classificators.songTopicParent', width: 140 },
+                            { field: 'songTopics', type: 'parentHref', selector: 'title', headerName: 'classifiers.songTopicParent', width: 140 },
                             { field: 'title', headerName: 'common.title', width: 170 },
                             { field: 'isActive', type: 'boolean', headerName: 'common.active', width: 170 }
                         ]
                     },
                     view: {
                         fields: [
-                            { field: 'songTopics', parent: 'songTopics', selector: 'title', headerName: 'classificators.songTopicParent', width: 140 },
+                            { field: 'songTopics', parent: 'songTopics', selector: 'title', headerName: 'classifiers.songTopicParent', width: 140 },
                             { field: 'title', headerName: 'common.title' },
                             { field: 'description', headerName: 'common.description' },
                             { field: 'isActive', type: 'boolean', headerName: 'common.active' },
@@ -343,7 +343,7 @@ export const ClassificatorsModel =
                     edit: {
                         fields: [
                             { field: 'id', hidden: true },
-                            { field: 'parentId', type: 'dropdown', apiPath: 'song-topics', headerName: 'classificators.songTopicParent' },
+                            { field: 'parentId', type: 'dropdown', apiPath: 'song-topics', headerName: 'classifiers.songTopicParent' },
                             { field: 'title', headerName: 'common.title', required: true },
                             { field: 'description', type: 'textbox', headerName: 'common.description' },
                             { field: 'isActive', type: 'boolean', headerName: 'common.active' }

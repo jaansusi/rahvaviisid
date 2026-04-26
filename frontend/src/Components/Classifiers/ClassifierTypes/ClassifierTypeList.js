@@ -4,11 +4,11 @@ import {
 } from 'react-router-dom';
 import { DataService } from '../../../Services';
 import ListComponent from '../../ListComponent';
-import getClassificatorModel from './GetClassificatorModel';
+import getClassifierModel from './GetClassifierModel';
 
-const ClassificatorTypeList = () => {
-    let { classificator } = useParams();
-    let model = getClassificatorModel(classificator, 'list');
+const ClassifierTypeList = () => {
+    let { classifier } = useParams();
+    let model = getClassifierModel(classifier, 'list');
     return (
         <ListComponent
             model={model}
@@ -19,4 +19,4 @@ const ClassificatorTypeList = () => {
 };
 
 
-export default ClassificatorTypeList;
+export default ClassifierTypeList;

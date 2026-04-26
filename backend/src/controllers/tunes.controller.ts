@@ -285,13 +285,13 @@ export class TunesController extends AuditBaseController<Tunes> {
   ): Promise<void> {
     let before = await this.tunesRepository.findById(
       id,
-      TunesFilter.ALL_NO_CLASSIFICATORS,
+      TunesFilter.ALL_NO_CLASSIFIERS,
     );
 
     await this.insertTune(tunes, before);
     let after = await this.tunesRepository.findById(
       id,
-      TunesFilter.ALL_NO_CLASSIFICATORS,
+      TunesFilter.ALL_NO_CLASSIFIERS,
     );
     super.auditUpdate(before, after);
   }
@@ -311,7 +311,7 @@ export class TunesController extends AuditBaseController<Tunes> {
   async deleteById(@param.path.number('id') id: number): Promise<void> {
     let before = await this.tunesRepository.findById(
       id,
-      TunesFilter.ALL_NO_CLASSIFICATORS,
+      TunesFilter.ALL_NO_CLASSIFIERS,
     );
     if (before.externalReferences !== undefined)
       for (let key in before.externalReferences) {

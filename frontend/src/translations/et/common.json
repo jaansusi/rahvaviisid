@@ -30,7 +30,7 @@
         "userInactive": "Kasutaja ei ole aktiivne",
         "invalidCredentials": "Vigane e-mail / parool"
     },
-    "classificators": {
+    "classifiers": {
         "songGenreParent": "Liik",
         "tuneGenreParent": "Liik",
         "songTopicParent": "Teema"
@@ -46,7 +46,7 @@
         "home": "Avaleht",
         "persons": "Isikud",
         "tunes": "Viisid",
-        "classificators": "Klassifikaatorid",
+        "classifiers": "Klassifikaatorid",
         "title": "Nimetus",
         "active": "On aktiivne",
         "description": "Kirjeldus",
