@@ -15,12 +15,26 @@ import AssetRouter from './AssetRouter';
 import Login from './Components/Authentication/Login';
 import useLocalStorageState from './Components/Authentication/useLocalStorageState';
 import SearchComponent from './Components/Search/SearchComponent';
-import PageComponent from './Components/PageComponent';
+import HomePage from './Components/HomePage';
 import ErrorBoundary from './Components/ErrorBoundary';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import LocationHeader from './Components/Layout/LocationHeader';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
+import noraTheme from './theme';
+
+function PageContainer({ children }) {
+  return (
+    <Grid container item xs={12} justifyContent='center' style={{
+      width: '100%',
+      maxWidth: 1160,
+      margin: '0 auto',
+      padding: '24px 32px 64px',
+    }}>
+      {children}
+    </Grid>
+  );
+}
 
 function App() {
   const [authentication, setAuthentication] = useLocalStorageState('user');
@@ -34,7 +48,7 @@ function App() {
       </Helmet>
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <Router>
-          <ThemeProvider theme={createTheme({ typography: { fontSize: 15, }, })}>
+          <ThemeProvider theme={noraTheme}>
             <ErrorBoundary>
             <Grid container direction='column'>
               <Grid item>
@@ -59,13 +73,13 @@ function App() {
                     pauseOnHover
                   />
                   <LocationHeader />
-                  <Grid container item xs={11} justifyContent='center'>
+                  <Grid container item xs={12} justifyContent='center' style={{ width: '100%' }}>
                     <Routes>
-                      <Route path="/" element={<PageComponent name='home' />} />
-                      <Route path="/otsing" element={<SearchComponent />} />
-                      <Route path="/otsinguabi" element={<SearchComponent />} />
+                      <Route path="/" element={<HomePage />} />
+                      <Route path="/otsing" element={<PageContainer><SearchComponent /></PageContainer>} />
+                      <Route path="/otsinguabi" element={<PageContainer><SearchComponent /></PageContainer>} />
                       <Route path="/login" element={<Login setAuthentication={setAuthentication} />} />
-                      <Route path="/:asset/*" element={<AssetRouter />} />
+                      <Route path="/:asset/*" element={<PageContainer><AssetRouter /></PageContainer>} />
                     </Routes>
                   </Grid>
                 </Grid>

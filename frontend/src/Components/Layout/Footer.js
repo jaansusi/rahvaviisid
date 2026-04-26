@@ -1,29 +1,20 @@
 import React from 'react';
-import { Grid } from '@mui/material';
-import './Footer.css';
 import ekmLogo from '../../assets/ekm-logo.png';
-import eraLogo from '../../assets/era-logo.jpg';
+import './Footer.css';
 
 const Footer = () => {
     return (
-        <Grid
-            item
-            container
-            id='footer-container'
-            alignItems='center'
-            justifyContent='center'
-            direction='row'
-        >
-            <Grid item>
-                <img className='footer-image' src={ekmLogo} alt="Logo"></img>
-            </Grid>
-            <Grid item>
-                <img className='footer-image' src={eraLogo} alt="Logo"></img>
-            </Grid>
-        </Grid>
+        <footer className="nora-footer">
+            <div className="nora-footer__inner">
+                <div className="nora-footer__brand">
+                    <img src={ekmLogo} alt="Eesti Kirjandusmuuseum" className="nora-footer__brand-img" />
+                </div>
+                <span className="nora-footer__credit">
+                    Eesti Rahvaviiside Andmebaas NORA · Tartu, 2021
+                </span>
+            </div>
+        </footer>
     );
 };
-
-
 
 export { Footer };

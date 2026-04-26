@@ -1,15 +1,64 @@
-#header-container {
-    min-height: 50px;
-    height: 10vh;
-    background-color: #FFFFFF;
+.nora-nav {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    width: 100%;
 }
 
-.logo-image {
-    margin-left: 20px;
-    min-height: 50px;
-    height: 10vh;
+.nora-nav__inner {
+    max-width: 1160px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    padding: 0 32px;
+    height: 64px;
+    gap: 0;
 }
 
-.menu > a {
-    display: inline-block;
+.nora-nav__logo {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 36px;
+    text-decoration: none;
+}
+
+.nora-nav__logo-img {
+    height: 40px;
+    width: auto;
+    display: block;
+}
+
+.nora-nav__links {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+.nora-nav__links::-webkit-scrollbar { display: none; }
+
+.nora-nav__right {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.nora-nav__lang {
+    font-family: Inter, sans-serif;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: 0.06em;
+    cursor: pointer;
+    padding: 4px 10px;
+    border-radius: 4px;
+    background: var(--accent-light);
+    border: none;
+}
+
+.nora-nav__lang:hover {
+    background: #b9e6d9;
 }
