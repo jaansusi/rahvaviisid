@@ -11,6 +11,43 @@ import { toast } from 'react-toastify';
 import BarLoader from 'react-spinners/BarLoader';
 import './EditComponent.css';
 
+const handleErrors = (t, x) => {
+    let message = x.message;
+    if (message === undefined) {
+        toast.error('Something went wrong', {
+            closeButton: true,
+            autoClose: false,
+        });
+        return;
+    }
+    message = message.replace('should be', t('notification.shouldBe'));
+    let path = x.path.split('/');
+    path.shift();
+    path = path.map(x => isNaN(x) ? t('validation.' + x) : parseInt(x) + 1).join(' > ');
+    toast.warning(path + ' ' + message, {
+        closeButton: true,
+        autoClose: false,
+    });
+};
+
+const handleApiError = (error, t) => {
+    if (error.response?.status === 422) {
+        const errors = error.response.data?.error?.details;
+        if (!errors) {
+            toast.error(t(error.response.data?.error?.message || 'notification.failed'), {
+                closeButton: true,
+                autoClose: false
+            });
+        } else if (Array.isArray(errors)) {
+            errors.forEach(x => handleErrors(t, x));
+        } else {
+            handleErrors(t, errors);
+        }
+    } else {
+        toast.error(t('notification.failed'));
+    }
+};
+
 const EditComponent = ({ model, newItem, copyItem, validateTune, noDelete }) => {
     newItem = newItem === undefined ? false : newItem;
     copyItem = copyItem === undefined ? false : copyItem;
@@ -251,41 +288,9 @@ const EditComponent = ({ model, newItem, copyItem, validateTune, noDelete }) => 
                             if (newItem)
                                 navigate('./' + resData.data.id + '/vaata');
                         })
-                        .catch((error) => {
-                            if (error.response.status === 422) {
-                                if (!error.response.data.error.details)
-                                    toast.error(t(error.response.data.error.message), {
-                                        closeButton: true,
-                                        autoClose: false
-                                    });
-                                else
-                                    error.response.data.error.details.forEach(x => handleErrors(t, x));
-                            }
-                            else
-                                toast.error(t('notification.failed'));
-                        });
+                        .catch((error) => handleApiError(error, t));
                 })
-                .catch((error) => {
-                    if (error.response.status === 422) {
-                        let errors = error.response.data.error.details;
-                        if (!errors)
-                            toast.error(t(error.response.data.error.message), {
-                                closeButton: true,
-                                autoClose: false
-                            })
-                        else {
-                            if (Array.isArray(errors))
-                                error.response.data.error.details.forEach(x => {
-                                    handleErrors(t, x);
-                                });
-                            else
-                                handleErrors(t, errors);
-                        }
-
-                    }
-                    else
-                        toast.error(t('notification.failed'));
-                });
+                .catch((error) => handleApiError(error, t));
         } else {
             let id = objToSend.id;
             objToSend = removeObjectIds(objToSend, false);
@@ -304,19 +309,7 @@ const EditComponent = ({ model, newItem, copyItem, validateTune, noDelete }) => 
                     toast.success(t('notification.saved'));
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 })
-                .catch((error) => {
-                    if (error.response.status === 422) {
-                        if (!error.response.data.error.details)
-                            toast.error(t(error.response.data.error.message), {
-                                closeButton: true,
-                                autoClose: false
-                            })
-                        else
-                            error.response.data.error.details.forEach(x => handleErrors(t, x));
-                    }
-                    else
-                        toast.error(t('notification.failed'));
-                });
+                .catch((error) => handleApiError(error, t));
         }
     };
 
@@ -394,24 +387,5 @@ const removeObjectIds = (obj, removeAll) => {
     }
     return obj;
 }
-
-const handleErrors = ((t, x) => {
-    let message = x.message;
-    if (message === undefined) {
-        toast.error('Something went wrong', {
-            closeButton: true,
-            autoClose: false,
-        });
-        return;
-    }
-    message = message.replace('should be', t('notification.shouldBe'));
-    let path = x.path.split('/');
-    path.shift();
-    path = path.map(x => isNaN(x) ? t('validation.' + x) : parseInt(x) + 1).join(' > ');
-    toast.warning(path + ' ' + message, {
-        closeButton: true,
-        autoClose: false,
-    })
-});
 
 export default EditComponent;

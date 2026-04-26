@@ -16,6 +16,7 @@ import Login from './Components/Authentication/Login';
 import UseLocalStorageState from './Components/Authentication/UseLocalStorageState';
 import SearchComponent from './Components/Search/SearchComponent';
 import PageComponent from './Components/PageComponent';
+import ErrorBoundary from './Components/ErrorBoundary';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import LocationHeader from './Components/Layout/LocationHeader';
@@ -34,6 +35,7 @@ function App() {
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <Router>
           <ThemeProvider theme={createTheme({ typography: { fontSize: 15, }, })}>
+            <ErrorBoundary>
             <Grid container direction='column'>
               <Grid item>
                 <Header authentication={authentication} setAuthentication={setAuthentication} />
@@ -71,6 +73,7 @@ function App() {
                   <Footer />
                 </Grid>
               </Grid>
+            </ErrorBoundary>
           </ThemeProvider>
         </Router>
       </LocalizationProvider>

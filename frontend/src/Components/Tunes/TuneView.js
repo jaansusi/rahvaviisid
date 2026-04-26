@@ -97,7 +97,7 @@ const TuneView = () => {
                                 <Typography variant={headerVariant}>{t('tune.verification')}</Typography>
                             </Grid>
                             <AssetPropertyDateElement title={t('tune.verified')} value={assetData.verified} />
-                            <AssetPropertyElement title={t('tune.verifiedBy')} value={assetData.users !== undefined ? assetData.users.firstName + ' ' + assetData.users.lastName : ''} />
+                            <AssetPropertyElement title={t('tune.verifiedBy')} value={assetData.users ? assetData.users?.firstName + ' ' + assetData.users?.lastName : ''} />
                             <AssetPropertyDateElement title={t('date.created')} value={assetData.created} />
                             <AssetPropertyDateElement title={t('date.modified')} value={assetData.modified} />
                         </Grid>
@@ -189,7 +189,7 @@ const TuneView = () => {
                                                 <Typography variant={headerVariant}>{t('tune.transcription')} {i + 1}</Typography>
                                             </Grid>
                                             <Grid item container direction='row'>
-                                                <AssetPropertyElement title={t('transcription.source')} value={transcription.transcriptionSources.title} />
+                                                <AssetPropertyElement title={t('transcription.source')} value={transcription.transcriptionSources?.title} />
                                                 <AssetPropertyElement title={t('transcription.fileReference')} value={transcription.fileReference} />
                                                 {
                                                     AuthService.CanAccess(['editor', 'admin']) &&
@@ -215,7 +215,7 @@ const TuneView = () => {
                                                     }} data={
                                                         transcription.transcriptionsPersonsRoles?.map((personRoles, j) => {
                                                             return {
-                                                                name: personRoles.persons?.givenName + " " + personRoles.persons?.surname,
+                                                                name: (personRoles.persons?.givenName || '') + " " + (personRoles.persons?.surname || ''),
                                                                 nameOrigin: personRoles.nameOrigin,
                                                                 actionYear: personRoles.actionYear,
                                                                 actionStartYear: personRoles.actionStartYear,

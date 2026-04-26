@@ -31,10 +31,9 @@ let Login = ({ setAuthentication }) => {
       }
       )
       .catch(err => {
-        let response = err.response.data;
         setCredentialsValid(false);
-        if (response.error.statusCode === 401)
-          setErrorMessage(response.error.message);
+        if (err.response?.data?.error?.statusCode === 401)
+          setErrorMessage(err.response.data.error.message);
         else
           setErrorMessage('authentication.invalidCredentials');
       });
