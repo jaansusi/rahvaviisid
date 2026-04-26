@@ -6,6 +6,7 @@ import EditDataFragment from '../Fragments/EditDataFragment';
 import { PlayerViewComponent } from '../NewComponents';
 import Autocomplete from '@mui/material/Autocomplete';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import { FIELD_TYPES } from '../../constants';
 import './EditFormElement.css';
 
 const EditDataElement = (({ model, elemValue, handleChange, index }) => {
@@ -15,7 +16,7 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
         elemValue = DataService.ParseDate(elemValue);
 
     const sortedDropdownValues = useMemo(() => {
-        if ((model.type !== 'dropdown' && model.type !== 'multiselect') || !model.values)
+        if ((model.type !== FIELD_TYPES.DROPDOWN && model.type !== FIELD_TYPES.MULTISELECT) || !model.values)
             return model.values;
         const fieldToCompare = (value) => model.title ?
             Array.isArray(model.title) ?
@@ -32,7 +33,7 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
     }, [model.values, model.title, model.type]);
 
     switch (model.type) {
-        case 'boolean':
+        case FIELD_TYPES.BOOLEAN:
             return (
                 <FormControlLabel
                     control={
@@ -56,7 +57,7 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                     label={t(model.headerName)}
                 />
             );
-        case 'textbox':
+        case FIELD_TYPES.TEXTBOX:
             return (
                 <Grid
                     item
@@ -69,7 +70,7 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                     </FormControl>
                 </Grid>
             );
-        case 'dropdown':
+        case FIELD_TYPES.DROPDOWN:
             let handleElementChange = ((index, newValue) => {
                 handleChange({
                     target: {
@@ -110,7 +111,7 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                     />
                 </Grid>
             );
-        case 'multiselect':
+        case FIELD_TYPES.MULTISELECT:
             let handleMultiChange = ((newValues) => {
                 handleChange({
                     target: {
@@ -165,7 +166,7 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                     />
                 </Grid>
             );
-        case 'staticMultiselect':
+        case FIELD_TYPES.STATIC_MULTISELECT:
             let handleStaticMultiChange = ((newValues) => {
                 handleChange({
                     target: {
@@ -216,7 +217,7 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                     />
                 </Grid>
             );
-        case 'view':
+        case FIELD_TYPES.VIEW:
             return (
                 <Grid
                     item
@@ -244,7 +245,7 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                     </FormControl>
                 </Grid>
             );
-        case 'table':
+        case FIELD_TYPES.TABLE:
             let addEntryToTable = () => {
                 let newValues = [...elemValue, DataService.SyncCreateEmptyDataObject(model.edit.fields)];
                 handleChange({target: {name: model.field, value: newValues}}, 0);
@@ -265,7 +266,7 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                 let currentModel = model.edit.fields.filter(x => x.field === name)[0];
                 let selector = currentModel.selector;
                 if (temp[index][name] === undefined) {
-                    if (currentModel.array || currentModel.type === 'multiselect' || currentModel.type === 'staticMultiselect')
+                    if (currentModel.array || currentModel.type === FIELD_TYPES.MULTISELECT || currentModel.type === FIELD_TYPES.STATIC_MULTISELECT)
                         temp[index][name] = [];
                     else
                         temp[index][name] = {};
@@ -329,7 +330,7 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                                                                 {
                                                                     row[field.field] !== undefined ?
                                                                         (
-                                                                            field.type === 'boolean' ?
+                                                                            field.type === FIELD_TYPES.BOOLEAN ?
                                                                                 <>{row[field.field] ? t('model.true') : t('model.false')}</>
                                                                                 :
                                                                                 DataService.GetValueWithSelector(field, row)
@@ -353,7 +354,7 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                     </TableContainer>
                 </Grid>
             );
-        case 'model':
+        case FIELD_TYPES.MODEL:
             if (model.array) {
                 if (elemValue === undefined)
                     elemValue = [];
@@ -379,7 +380,7 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                         target: {
                             name: model.field,
                             value: temp,
-                            type: 'object',
+                            type: FIELD_TYPES.OBJECT,
                         },
                     });
                 };
@@ -420,7 +421,7 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                         />
                     </>
                 );
-        case 'player':
+        case FIELD_TYPES.PLAYER:
             return (
                 <Grid item>
                     <Grid item container direction='column'>
@@ -434,13 +435,13 @@ const EditDataElement = (({ model, elemValue, handleChange, index }) => {
                     <PlayerViewComponent elementData={elemValue} index={index} edit={true} />
                 </Grid>
             );
-        case 'label':
+        case FIELD_TYPES.LABEL:
             return (
                 <Grid item xs={12}>
                     <Typography variant='h5'>{t(model.value)}</Typography>
                 </Grid>
             );
-        case 'date':
+        case FIELD_TYPES.DATE:
             let handleDateChange = (x) => {
                 var userTimezoneOffset = x.getTimezoneOffset() * 60000;
                 let date = new Date(x.getTime() - userTimezoneOffset);

@@ -13,16 +13,16 @@ import { useTranslation } from 'react-i18next';
 import { AuthService } from '../../Services';
 import { useNavigate } from 'react-router-dom';
 
-let Login = ({ setAuthentication }) => {
+const Login = ({ setAuthentication }) => {
   const { t } = useTranslation('common');
   const navigate = useNavigate();
 
-  let [email, setEmail] = useState('');
-  let [password, setPassword] = useState('');
-  let [credentialsValid, setCredentialsValid] = useState(true);
-  let [errorMessage, setErrorMessage] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [credentialsValid, setCredentialsValid] = useState(true);
+  const [errorMessage, setErrorMessage] = useState('');
 
-  let tryLogin = (e) => {
+  const tryLogin = (e) => {
     e.preventDefault();
     AuthService.Login(email, password, setAuthentication)
       .then(() => {

@@ -1,9 +1,13 @@
 import React from 'react';
 
-const UseLocalStorageState = localStorageKey => {
-    const [value, setValue] = React.useState(
-        JSON.parse(localStorage.getItem(localStorageKey)) || null
-    );
+const useLocalStorageState = localStorageKey => {
+    const [value, setValue] = React.useState(() => {
+        try {
+            return JSON.parse(localStorage.getItem(localStorageKey)) || null;
+        } catch {
+            return null;
+        }
+    });
 
     React.useEffect(() => {
         if (value === null)
@@ -15,4 +19,4 @@ const UseLocalStorageState = localStorageKey => {
     return [value, setValue];
 };
 
-export default UseLocalStorageState;
+export default useLocalStorageState;

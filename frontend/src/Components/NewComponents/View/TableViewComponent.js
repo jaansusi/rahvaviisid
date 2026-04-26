@@ -2,6 +2,7 @@ import React from 'react';
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import { useTranslation } from 'react-i18next';
 import { DataService } from '../../../Services';
+import { FIELD_TYPES } from '../../../constants';
 
 export const TableViewComponent = ({ value, model }) => {
     const { t } = useTranslation('common');
@@ -53,7 +54,7 @@ export const TableViewComponent = ({ value, model }) => {
                                                                     }
                                                                 </a>
                                                                 :
-                                                                field.type === 'dropdown' ?
+                                                                field.type === FIELD_TYPES.DROPDOWN ?
                                                                     <a
                                                                         href={field.reference + '/' + row[field.field].id + '/vaata'}
                                                                         title={field.alt ? row[field.field][field.alt] : undefined}
@@ -63,7 +64,7 @@ export const TableViewComponent = ({ value, model }) => {
                                                                         }
                                                                     </a>
                                                                     :
-                                                                    field.type === 'boolean' ?
+                                                                    field.type === FIELD_TYPES.BOOLEAN ?
                                                                         <>{row[field.field] ? t('model.true') : t('model.false')}</>
                                                                         :
                                                                         <span title={field.alt ? row[field.field][field.alt] : undefined}>

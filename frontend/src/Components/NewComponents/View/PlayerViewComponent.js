@@ -2,11 +2,8 @@ import abcjs from 'abcjs';
 import React, { useEffect } from 'react';
 import { Grid } from '@mui/material';
 import { TuneService } from '../../../Services';
-// import { useTranslation } from 'react-i18next';
 
 export const PlayerViewComponent = ({ elementData, index, edit }) => {
-	// const { t } = useTranslation('common');
-	
 	useEffect(() => {
 		let visualObj = abcjs.renderAbc('player' + index, TuneService.CombineData(elementData))[0];
 		let synthControl = new abcjs.synth.SynthController();
@@ -24,14 +21,6 @@ export const PlayerViewComponent = ({ elementData, index, edit }) => {
 				<Grid item>
 					<div id={'player' + index}></div>
 				</Grid>
-				{/* <Grid item>
-					{
-						!edit ?
-							null :
-							<Button onClick={() => alert('Varsti tuleb')} variant='outlined'>{t('melody.import')}</Button>
-					}
-
-				</Grid> */}
 			</Grid>
 			<div
 				style={{

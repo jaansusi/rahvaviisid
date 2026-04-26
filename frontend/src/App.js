@@ -13,7 +13,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { Header, Footer } from './Components/Layout';
 import AssetRouter from './AssetRouter';
 import Login from './Components/Authentication/Login';
-import UseLocalStorageState from './Components/Authentication/UseLocalStorageState';
+import useLocalStorageState from './Components/Authentication/useLocalStorageState';
 import SearchComponent from './Components/Search/SearchComponent';
 import PageComponent from './Components/PageComponent';
 import ErrorBoundary from './Components/ErrorBoundary';
@@ -23,7 +23,7 @@ import LocationHeader from './Components/Layout/LocationHeader';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 function App() {
-  const [authentication, setAuthentication] = UseLocalStorageState('user');
+  const [authentication, setAuthentication] = useLocalStorageState('user');
   return (
     <>
       <Helmet>

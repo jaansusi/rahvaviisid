@@ -13,15 +13,15 @@ const headerVariant = 'h5';
 
 const TuneView = () => {
     const { t } = useTranslation('common');
-    let { id } = useParams();
+    const { id } = useParams();
     const assetReducer = (state, event) => {
         return {
             ...state,
             [event.name]: event.value,
         };
     };
-    let [assetData, setAssetData] = useReducer(assetReducer, {});
-    let [isLoading, setIsLoading] = useState(true);
+    const [assetData, setAssetData] = useReducer(assetReducer, {});
+    const [isLoading, setIsLoading] = useState(true);
 
 
     useEffect(() => {
@@ -153,7 +153,6 @@ const TuneView = () => {
                                                                 <Grid key={melody.id || j} item container direction='column' spacing={2}>
                                                                     <Grid item container direction='row' spacing={5}>
                                                                         <Grid item xs={3}><Typography variant='h6'>{t('tune.variant')} {j + 1}</Typography></Grid>
-                                                                        {/* <Grid item xs={3}><Button onClick={() => alert('Varsti tuleb')} variant='outlined'>{t('melody.export')}</Button></Grid> */}
                                                                     </Grid>
                                                                     <Grid item>
                                                                         <PlayerViewComponent elementData={melody} index={i.toString() + j.toString()} />

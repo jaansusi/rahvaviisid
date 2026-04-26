@@ -9,12 +9,13 @@ import Actions from './Buttons/Actions';
 import { DataService, TuneService } from '../Services';
 import { toast } from 'react-toastify';
 import BarLoader from 'react-spinners/BarLoader';
+import { FIELD_TYPES, UUID_REGEX } from '../constants';
 import './EditComponent.css';
 
 const handleErrors = (t, x) => {
     let message = x.message;
     if (message === undefined) {
-        toast.error('Something went wrong', {
+        toast.error(t('notification.failed'), {
             closeButton: true,
             autoClose: false,
         });
@@ -74,7 +75,7 @@ const EditComponent = ({ model, newItem, copyItem, validateTune, noDelete }) => 
         let getDropdowns = (currentModel) => {
             return currentModel.fields
                 .map((field) => {
-                    if (field.apiPath && (field.type === 'dropdown' || field.type === 'multiselect') && !retrievedValues.includes(field.field)) {
+                    if (field.apiPath && (field.type === FIELD_TYPES.DROPDOWN || field.type === FIELD_TYPES.MULTISELECT) && !retrievedValues.includes(field.field)) {
                         retrievedValues.push(field.field);
                         let filter = {
                             where: {"isActive": true}
@@ -161,7 +162,7 @@ const EditComponent = ({ model, newItem, copyItem, validateTune, noDelete }) => 
                 // Get the DATA value
                 const value = recursedData[modelElem.field];
                 // If the value is empty and the model type is dropdown then ignore this value
-                if (modelElem.type === 'dropdown') {
+                if (modelElem.type === FIELD_TYPES.DROPDOWN) {
                     if (!value) {
                         requestObject[modelElem.field] = null;
                         continue;
@@ -171,7 +172,7 @@ const EditComponent = ({ model, newItem, copyItem, validateTune, noDelete }) => 
                 }
 
                 // Ignore values we don't need to send
-                if (modelElem.type === 'label' || modelElem.type === 'view' || modelElem.type === 'player')
+                if (modelElem.type === FIELD_TYPES.LABEL || modelElem.type === FIELD_TYPES.VIEW || modelElem.type === FIELD_TYPES.PLAYER)
                     continue;
 
                 // If the value is empty, check if there is a default in the model
@@ -217,20 +218,17 @@ const EditComponent = ({ model, newItem, copyItem, validateTune, noDelete }) => 
                     // And then modify it based on the MODEL type
                     switch (modelElem.type) {
                         // Can't send a number as a string
-                        case 'number':
+                        case FIELD_TYPES.NUMBER:
                             requestObject[modelElem.field] = parseInt(value, 10);
                             break;
                         // Most dropdowns are integers with one exception, users, hence this check.
-                        case 'dropdown':
-                            // This is a regex for an uuid
-                            const regex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-                            let arr = regex.exec(value);
-                            if (arr !== null)
+                        case FIELD_TYPES.DROPDOWN:
+                            if (UUID_REGEX.test(value))
                                 requestObject[modelElem.field] = value;
                             else
                                 requestObject[modelElem.field] = parseInt(value, 10);
                             break;
-                        case 'date':
+                        case FIELD_TYPES.DATE:
                             if (value === '')
                                 requestObject[modelElem.field] = null;
                             else
@@ -362,7 +360,7 @@ const recurseModelValues = (currentModel, options) => {
 
             if (field.edit)
                 field.edit = recurseModelValues(field.edit, options);
-            if (field.type === 'dropdown' || field.type === 'multiselect') {
+            if (field.type === FIELD_TYPES.DROPDOWN || field.type === FIELD_TYPES.MULTISELECT) {
                 if (field.apiPath)
                     field.values = options.filter((y) => y.name === field.field)[0].data;
             }
