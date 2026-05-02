@@ -23,7 +23,9 @@
         "delete": "Delete",
         "create": "Create new",
         "close": "Close",
-        "kivike": "Open with Kivike"
+        "kivike": "Open with Kivike",
+        "deleted": "Deleted",
+        "confirmDeletion": "Confirm deletion of this entry"
     },
     "date": {
         "created": "Created",
@@ -84,7 +86,8 @@
         "archive": "Archive ID",
         "rhythmType": "Rhytm type",
         "location": "Location",
-        "additionalReferences": "Additional references"
+        "additionalReferences": "Additional references",
+        "duplicate": "Duplicate"
     },
     "user": {
         "role": "Role",
@@ -179,19 +182,89 @@
         "remarks": "Remarks",
         "nameOrigin": "Original title"
     },
-    "search": {
-        "clear": "Clear",
-        "referenceOnly": "Search only by references",
-        "general": "Insert keyword",
-        "help": "Help",
-        "closeHelp": "Close search help"
+    "tuneSearch": {
+        "filters": "Filters",
+        "clearAll": "Clear all",
+        "newTune": "New tune",
+        "queryPlaceholder": "Search tunes…",
+        "selectPlaceholder": "Select",
+        "totalResults": "{{count}} results",
+        "noResults": "No results.",
+        "error": "Search failed.",
+        "pageSize": "Page size",
+        "dateFrom": "From",
+        "dateTo": "To",
+        "sort": {
+            "label": "Sort",
+            "asc": "Ascending",
+            "desc": "Descending",
+            "relevance": "Relevance",
+            "reference": "Reference",
+            "created": "Created",
+            "modified": "Modified",
+            "verified": "Verified"
+        },
+        "boolean": {
+            "any": "Any",
+            "yes": "Yes",
+            "no": "No"
+        },
+        "group": {
+            "identity": "References",
+            "classification": "Classification",
+            "geography": "Geography",
+            "origin": "Origin",
+            "flags": "Flags",
+            "dates": "Dates"
+        },
+        "tooltip": {
+            "identity": "Search inside specific reference fields.",
+            "classification": "Filter tunes by classifiers; multi-select supported.",
+            "geography": "Filter by parish, municipality or village.",
+            "origin": "Filter by nation, language or country.",
+            "flags": "Quick filters for verification and media presence.",
+            "dates": "Created or modified date ranges."
+        },
+        "flag": {
+            "verified": "Verified",
+            "hasMelody": "Has melody",
+            "hasSound": "Has sound reference",
+            "hasVideo": "Has video reference"
+        }
     },
-    "massMod": {
-        "start": "Start mass modifikation ",
-        "backToAssets": "Back to tune selection",
-        "toValues": "Go to values",
-        "backToFields": "Back to colums",
-        "fieldHeader": "Field"
+    "personSearch": {
+        "newPerson": "New person",
+        "queryPlaceholder": "Search persons…",
+        "totalResults": "{{count}} persons",
+        "tuneCount": "{{count}} tunes",
+        "yearFrom": "Year from",
+        "yearTo": "Year to",
+        "sort": {
+            "surname": "Surname"
+        },
+        "group": {
+            "identity": "Identity",
+            "life": "Lifespan",
+            "roles": "Tune roles",
+            "geography": "Geography"
+        },
+        "tooltip": {
+            "identity": "Search by name, nickname, PID or remarks; filter by gender.",
+            "life": "Filter by year of birth or year of death range.",
+            "roles": "Filter persons by their role in tunes (singer, collector, transcriber, …).",
+            "geography": "Persons appearing in tunes from a given parish."
+        }
+    },
+    "bulkEdit": {
+        "open": "Bulk edit",
+        "title": "Bulk edit tunes",
+        "scope": "Will apply to all {{count}} matching tunes.",
+        "field": "Field to update",
+        "value": "New value",
+        "warning": "All matching tunes will be updated immediately. This cannot be undone.",
+        "apply": "Apply",
+        "confirm": "Update {{count}} tunes?",
+        "done": "{{count}} tunes updated"
     },
     "login": {
         "email": "E-maili address",
@@ -204,7 +277,9 @@
     "header": {
         "login": "Log in",
         "logout": "Log out",
-        "search": "Search",
+        "searchTunes": "Search tunes",
+        "searchPersons": "Search persons",
+        "halda": "Manage",
         "users": "Users"
     },
     "melody": {
@@ -311,11 +386,16 @@
         },
         "user": {
             "password": "Min. 14 characters, with uppercase, lowercase, number, and special character (!@#$%^&*)"
+        },
+        "bulkUpdate": {
+            "invalidBody": "Invalid bulk update request",
+            "emptyPatch": "No fields supplied",
+            "fieldNotAllowed": "Field not allowed for bulk update"
         }
     },
     "location": {
         "uus": "New entry",
-        "otsing": "Search",
+        "halda": "Manage",
         "viisid": "Tunes",
         "isikud": "Persons",
         "klassifikaatorid": "Classifiers",

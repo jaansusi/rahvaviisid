@@ -4,7 +4,8 @@ import './App.css';
 import {
   BrowserRouter as Router,
   Routes,
-  Route
+  Route,
+  Navigate
 } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -12,10 +13,11 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 
 import { Header, Footer } from './Components/Layout';
 import AssetRouter from './AssetRouter';
+import HaldaRouter from './HaldaRouter';
 import Login from './Components/Authentication/Login';
 import useLocalStorageState from './Components/Authentication/useLocalStorageState';
-import SearchComponent from './Components/Search/SearchComponent';
-import HomePage from './Components/HomePage';
+import TuneSearchPage from './Components/Search/TuneSearch';
+import PersonSearchPage from './Components/Search/PersonSearch';
 import ErrorBoundary from './Components/ErrorBoundary';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -75,9 +77,11 @@ function App() {
                   <LocationHeader />
                   <Grid container item xs={12} justifyContent='center' style={{ width: '100%' }}>
                     <Routes>
-                      <Route path="/" element={<HomePage />} />
-                      <Route path="/otsing" element={<PageContainer><SearchComponent /></PageContainer>} />
-                      <Route path="/otsinguabi" element={<PageContainer><SearchComponent /></PageContainer>} />
+                      <Route path="/" element={<Navigate to="/otsi/viisid" replace />} />
+                      <Route path="/otsing" element={<Navigate to="/otsi/viisid" replace />} />
+                      <Route path="/otsi/viisid" element={<PageContainer><TuneSearchPage /></PageContainer>} />
+                      <Route path="/otsi/isikud" element={<PageContainer><PersonSearchPage /></PageContainer>} />
+                      <Route path="/halda/*" element={<PageContainer><HaldaRouter /></PageContainer>} />
                       <Route path="/login" element={<Login setAuthentication={setAuthentication} />} />
                       <Route path="/:asset/*" element={<PageContainer><AssetRouter /></PageContainer>} />
                     </Routes>

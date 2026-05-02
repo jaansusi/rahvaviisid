@@ -18,6 +18,17 @@
         "soundRange": "Heliulatus",
         "rhythmType": "Rütmitüüp"
     },
+    "bulkEdit": {
+        "open": "Massmuutmine",
+        "title": "Muuda viise hulgi",
+        "scope": "Muudatus rakendub kõigile {{count}} sobivale viisile.",
+        "field": "Muudetav väli",
+        "value": "Uus väärtus",
+        "warning": "Kõik sobivad viisid muudetakse kohe. Tegevust ei saa tagasi võtta.",
+        "apply": "Rakenda",
+        "confirm": "Kas muuta {{count}} viisi?",
+        "done": "{{count}} viisi muudetud"
+    },
     "audit": {
         "action": "Tegevus",
         "actedAt": "Aeg",
@@ -154,15 +165,10 @@
     "header": {
         "login": "Logi sisse",
         "logout": "Logi välja",
-        "search": "Otsing",
+        "searchTunes": "Otsi viise",
+        "searchPersons": "Otsi isikuid",
+        "halda": "Halda",
         "users": "Kasutajad"
-    },
-    "massMod": {
-        "start": "Alusta massimuutmist",
-        "backToAssets": "Tagasi viiside valikusse",
-        "toValues": "Edasi väärtuste juurde",
-        "backToFields": "Tagasi tulpade juurde",
-        "fieldHeader": "Väli"
     },
     "melody": {
         "abc": "ABC kuju",
@@ -198,7 +204,7 @@
     },
     "location": {
         "uus": "Uus kirje",
-        "otsing": "Otsing",
+        "halda": "Halda",
         "viisid": "Viisid",
         "isikud": "Isikud",
         "klassifikaatorid": "Klassifikaatorid",
@@ -278,12 +284,78 @@
         "description": "Kirjeldus",
         "url": "Link"
     },
-    "search": {
-        "clear": "Tühjenda",
-        "referenceOnly": "Otsi ainult viidete järgi",
-        "general": "Sisesta märksõna",
-        "help": "Otsingu abi",
-        "closeHelp": "Sulge abi"
+    "tuneSearch": {
+        "filters": "Filtrid",
+        "clearAll": "Tühjenda kõik",
+        "newTune": "Uus viis",
+        "queryPlaceholder": "Otsi viiside seast…",
+        "selectPlaceholder": "Vali",
+        "totalResults": "{{count}} tulemust",
+        "noResults": "Ühtegi tulemust ei leitud.",
+        "error": "Otsingu päring ebaõnnestus.",
+        "pageSize": "Lehe maht",
+        "dateFrom": "Alates",
+        "dateTo": "Kuni",
+        "sort": {
+            "label": "Sorteeri",
+            "asc": "Kasvavalt",
+            "desc": "Kahanevalt",
+            "relevance": "Asjakohasus",
+            "reference": "Viisiviide",
+            "created": "Loomise aeg",
+            "modified": "Muutmise aeg",
+            "verified": "Kontrollitus"
+        },
+        "boolean": {
+            "any": "Kõik",
+            "yes": "Jah",
+            "no": "Ei"
+        },
+        "group": {
+            "identity": "Viited",
+            "classification": "Klassifikatsioon",
+            "geography": "Geograafia",
+            "origin": "Päritolu",
+            "flags": "Tunnused",
+            "dates": "Kuupäevad"
+        },
+        "tooltip": {
+            "identity": "Otsi konkreetse viite numbri või osa järgi.",
+            "classification": "Filtreeri viise klassifikaatorite alusel; valikuid saab olla mitu.",
+            "geography": "Filtreeri kohatasandite (kihelkond, vald, küla) järgi.",
+            "origin": "Filtreeri viisi rahvuse, keele või riigi järgi.",
+            "flags": "Kiirfiltrid kontrollimise ja meedia olemasolu kohta.",
+            "dates": "Loomise või muutmise vahemik."
+        },
+        "flag": {
+            "verified": "Kontrollitud",
+            "hasMelody": "Meloodia olemas",
+            "hasSound": "Heliviide olemas",
+            "hasVideo": "Videoviide olemas"
+        }
+    },
+    "personSearch": {
+        "newPerson": "Uus isik",
+        "queryPlaceholder": "Otsi isikute seast…",
+        "totalResults": "{{count}} isikut",
+        "tuneCount": "{{count}} viisi",
+        "yearFrom": "Aastast",
+        "yearTo": "Aastani",
+        "sort": {
+            "surname": "Perekonnanimi"
+        },
+        "group": {
+            "identity": "Andmed",
+            "life": "Eluaastad",
+            "roles": "Rollid viisides",
+            "geography": "Geograafia"
+        },
+        "tooltip": {
+            "identity": "Otsi nime, hüüdnime, PID-i või märkuste järgi; filtreeri soo alusel.",
+            "life": "Filtreeri sünni- või surma-aasta vahemiku järgi.",
+            "roles": "Filtreeri isikuid nende rolli järgi viisides (laulja, koguja, noodistaja …).",
+            "geography": "Isikud, kes esinevad teatud kihelkonna viisides."
+        }
     },
     "song": {
         "song": "Laul",
@@ -416,6 +488,11 @@
         },
         "user": {
             "password": "Parool peab sisaldama vähemalt 14 tähemärki, sisaldama suurtähte, väiketähte, numbrit ja erimärki (!@#$%^&*)"
+        },
+        "bulkUpdate": {
+            "invalidBody": "Vigane massmuutmise päring",
+            "emptyPatch": "Ühtegi välja pole valitud",
+            "fieldNotAllowed": "Välja ei saa massmuutmisega muuta"
         }
     }
 }

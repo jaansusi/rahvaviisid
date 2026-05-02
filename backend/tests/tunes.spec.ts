@@ -220,58 +220,68 @@ test.describe('Tunes Search', () => {
     }
   });
 
-  test('GET /tunes/search/query - returns all tunes when no query', async ({
+  test('POST /tunes/search - returns paginated tunes when no query', async ({
     request,
   }) => {
-    const response = await request.get('/tunes/search/query');
+    const response = await request.post('/tunes/search', {data: {}});
     expect(response.status()).toBe(200);
     const body = await response.json();
-    expect(Array.isArray(body)).toBe(true);
+    expect(Array.isArray(body.items)).toBe(true);
+    expect(typeof body.total).toBe('number');
   });
 
-  test('GET /tunes/search/query - reference search finds tune by tuneReference', async ({
+  test('POST /tunes/search - free-text query finds tune by reference', async ({
     request,
   }) => {
-    const response = await request.get(
-      `/tunes/search/query?q=${searchRef}&type=reference`,
-    );
+    const response = await request.post('/tunes/search', {
+      data: {q: searchRef},
+    });
     expect(response.status()).toBe(200);
     const body = await response.json();
-    expect(body.length).toBeGreaterThanOrEqual(1);
-    const found = body.find((t: any) => t.tuneReference === searchRef);
+    expect(body.items.length).toBeGreaterThanOrEqual(1);
+    const found = body.items.find((t: any) => t.tuneReference === searchRef);
     expect(found).toBeDefined();
   });
 
-  test('GET /tunes/search/query - reference search is case-insensitive', async ({
+  test('POST /tunes/search - free-text query is case-insensitive', async ({
     request,
   }) => {
-    const response = await request.get(
-      `/tunes/search/query?q=${searchRef.toLowerCase()}&type=reference`,
-    );
+    const response = await request.post('/tunes/search', {
+      data: {q: searchRef.toLowerCase()},
+    });
     expect(response.status()).toBe(200);
     const body = await response.json();
-    expect(body.length).toBeGreaterThanOrEqual(1);
+    expect(body.items.length).toBeGreaterThanOrEqual(1);
   });
 
-  test('GET /tunes/search/query - reference search returns empty for no match', async ({
-    request,
-  }) => {
-    const response = await request.get(
-      '/tunes/search/query?q=NONEXISTENT_REF_12345&type=reference',
-    );
+  test('POST /tunes/search - returns empty for no match', async ({request}) => {
+    const response = await request.post('/tunes/search', {
+      data: {q: 'NONEXISTENT_REF_12345'},
+    });
     expect(response.status()).toBe(200);
     const body = await response.json();
-    expect(body.length).toBe(0);
+    expect(body.items.length).toBe(0);
+    expect(body.total).toBe(0);
   });
 
-  test('GET /tunes/search/query - full search finds tune', async ({
+  test('POST /tunes/search - tuneReference filter narrows results', async ({
     request,
   }) => {
-    const response = await request.get(
-      `/tunes/search/query?q=${searchRef}&type=full`,
-    );
+    const response = await request.post('/tunes/search', {
+      data: {filters: {tuneReference: searchRef}},
+    });
     expect(response.status()).toBe(200);
     const body = await response.json();
-    expect(body.length).toBeGreaterThanOrEqual(1);
+    const found = body.items.find((t: any) => t.tuneReference === searchRef);
+    expect(found).toBeDefined();
+  });
+
+  test('POST /tunes/search - pagination respects pageSize', async ({request}) => {
+    const response = await request.post('/tunes/search', {
+      data: {pageSize: 1, page: 1},
+    });
+    expect(response.status()).toBe(200);
+    const body = await response.json();
+    expect(body.items.length).toBeLessThanOrEqual(1);
   });
 });

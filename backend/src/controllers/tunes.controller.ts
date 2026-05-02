@@ -68,7 +68,14 @@ const groupAuditOpts: IAuditMixinOptions = {
 
 import {UniqueValidationInterceptor} from '../interceptors';
 import {intercept} from '@loopback/core';
-import {deepObjectIncludes, FullSearchFilter, stripRelations} from "../utils/search-utils";
+import {
+  buildTuneBulkUpdateQuery,
+  buildTuneSearchQuery,
+  paramsForCount,
+  TuneBulkUpdateRequest,
+  TUNE_BULK_UPDATE_COLUMNS,
+  TuneSearchRequest,
+} from '../utils/search-utils';
 
 @intercept(UniqueValidationInterceptor.BINDING_KEY)
 export class TunesController extends AuditBaseController<Tunes> {
@@ -127,15 +134,23 @@ export class TunesController extends AuditBaseController<Tunes> {
     super(groupAuditOpts);
   }
 
-  @get('/tunes/search/query', {
+  @post('/tunes/search', {
     responses: {
       '200': {
-        description: 'Search tunes recursively in all fields',
+        description: 'Postgres-FTS tune search with filters, sort, pagination',
         content: {
           'application/json': {
             schema: {
-              type: 'array',
-              items: getModelSchemaRef(Tunes, {includeRelations: true}),
+              type: 'object',
+              properties: {
+                total: {type: 'number'},
+                page: {type: 'number'},
+                pageSize: {type: 'number'},
+                items: {
+                  type: 'array',
+                  items: getModelSchemaRef(Tunes),
+                },
+              },
             },
           },
         },
@@ -143,34 +158,103 @@ export class TunesController extends AuditBaseController<Tunes> {
     },
   })
   async searchTunes(
-      @param.query.string('q') q?: string,
-      @param.query.string('type') type?: 'reference' | 'full',
-  ): Promise<Partial<Tunes>[]> {
-    
-    const query = q?.trim() ?? "";
-    if (!query) {
-      return this.tunesRepository.find(); 
-    }
-    
-    if (type === 'reference') {
-      return this.tunesRepository.find({
-        where: {
-          or: [
-            {tuneReference: {ilike: `%${query}%`}},
-            {textReference: {ilike: `%${query}%`}},
-            {soundReference: {ilike: `%${query}%`}},
-            {videoReference: {ilike: `%${query}%`}},
-          ],
+    @requestBody({
+      required: false,
+      content: {
+        'application/json': {
+          schema: {type: 'object'},
         },
-      });
+      },
+    })
+    body: TuneSearchRequest = {},
+  ): Promise<{total: number; page: number; pageSize: number; items: Partial<Tunes>[]}> {
+    const built = buildTuneSearchQuery(body);
+    const ds = this.tunesRepository.dataSource;
+
+    const [items, countRows] = await Promise.all([
+      ds.execute(built.sql, built.params) as Promise<Partial<Tunes>[]>,
+      ds.execute(built.countSql, paramsForCount(built)) as Promise<{total: number}[]>,
+    ]);
+
+    return {
+      total: countRows[0]?.total ?? 0,
+      page: body.page && body.page > 0 ? Math.floor(body.page) : 1,
+      pageSize: items.length,
+      items,
+    };
+  }
+
+  @post('/tunes/bulk-update', {
+    responses: {
+      '200': {
+        description: 'Bulk update tunes matching a search filter set',
+        content: {
+          'application/json': {
+            schema: {
+              type: 'object',
+              properties: {
+                matched: {type: 'number'},
+                updated: {type: 'number'},
+              },
+            },
+          },
+        },
+      },
+    },
+  })
+  @authenticate('jwt')
+  @authorize({
+    allowedRoles: ['admin', 'editor'],
+    voters: [basicAuthorization],
+  })
+  async bulkUpdateTunes(
+    @requestBody({
+      content: {
+        'application/json': {
+          schema: {type: 'object'},
+        },
+      },
+    })
+    body: TuneBulkUpdateRequest,
+  ): Promise<{matched: number; updated: number}> {
+    if (!body || typeof body !== 'object' || !body.patch || typeof body.patch !== 'object') {
+      let err: ValidationError = new ValidationError(
+        'validation.bulkUpdate.invalidBody',
+      );
+      err.statusCode = 422;
+      throw err;
+    }
+    const allowedKeys = Object.keys(TUNE_BULK_UPDATE_COLUMNS);
+    const patchKeys = Object.keys(body.patch);
+    if (patchKeys.length === 0) {
+      let err: ValidationError = new ValidationError(
+        'validation.bulkUpdate.emptyPatch',
+      );
+      err.statusCode = 422;
+      throw err;
+    }
+    for (const key of patchKeys) {
+      if (!allowedKeys.includes(key)) {
+        let err: ValidationError = new ValidationError(
+          'validation.bulkUpdate.fieldNotAllowed',
+        );
+        err.statusCode = 422;
+        throw err;
+      }
     }
 
-    const all = await this.tunesRepository.find(FullSearchFilter);
+    const built = buildTuneBulkUpdateQuery(body);
+    const ds = this.tunesRepository.dataSource;
 
-    // using post-filtering for now, unclear if LoopBack fully supports filtering nested fields in Postgres
-    const filtered = all.filter(tune => deepObjectIncludes(tune, query));
-
-    return filtered.map(stripRelations);
+    const countRows = (await ds.execute(built.countSql, built.countParams)) as {
+      total: number;
+    }[];
+    const matched = countRows[0]?.total ?? 0;
+    if (matched === 0) {
+      return {matched: 0, updated: 0};
+    }
+    await ds.execute(built.sql, built.params);
+    return {matched, updated: matched};
   }
 
   @post('/tunes', {

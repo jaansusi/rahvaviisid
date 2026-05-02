@@ -226,3 +226,55 @@ test.describe('Persons CRUD', () => {
     await request.delete(`/persons/${created.id}`, {headers: adminHeaders});
   });
 });
+
+test.describe('Persons Search', () => {
+  let adminHeaders: Record<string, string>;
+  let createdPersonId: number;
+  const surname = `SearchSurname-${Date.now()}`;
+
+  test.beforeAll(async ({request}) => {
+    adminHeaders = await getAuthHeaders(request, ADMIN_USER);
+    const createRes = await request.post('/persons', {
+      data: newPerson({surname}),
+      headers: adminHeaders,
+    });
+    const created = await createRes.json();
+    createdPersonId = created.id;
+  });
+
+  test.afterAll(async ({request}) => {
+    if (createdPersonId) {
+      await request.delete(`/persons/${createdPersonId}`, {headers: adminHeaders});
+    }
+  });
+
+  test('POST /persons/search - returns paginated persons when no query', async ({
+    request,
+  }) => {
+    const response = await request.post('/persons/search', {data: {}});
+    expect(response.status()).toBe(200);
+    const body = await response.json();
+    expect(Array.isArray(body.items)).toBe(true);
+    expect(typeof body.total).toBe('number');
+  });
+
+  test('POST /persons/search - free-text query finds person by surname', async ({
+    request,
+  }) => {
+    const response = await request.post('/persons/search', {data: {q: surname}});
+    expect(response.status()).toBe(200);
+    const body = await response.json();
+    const found = body.items.find((p: any) => p.surname === surname);
+    expect(found).toBeDefined();
+  });
+
+  test('POST /persons/search - returns empty for no match', async ({request}) => {
+    const response = await request.post('/persons/search', {
+      data: {q: 'NoSuchPerson_QueryXYZ'},
+    });
+    expect(response.status()).toBe(200);
+    const body = await response.json();
+    expect(body.items.length).toBe(0);
+    expect(body.total).toBe(0);
+  });
+});

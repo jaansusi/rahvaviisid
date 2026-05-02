@@ -1,6 +1,6 @@
 import React from 'react';
-import PersonsList from './PersonsList';
 import {
+  Navigate,
   Routes,
   Route
 } from 'react-router-dom';
@@ -12,7 +12,7 @@ const PersonWrapper = () => {
   return (
     <>
       <Routes>
-        <Route path="/" element={<PersonsList />} />
+        <Route path="/" element={<Navigate to="/otsi/isikud" replace />} />
         <Route path="/uus" element={<PersonEdit newItem={true} />} />
         <Route path="/:id/vaata" element={<PersonView />} />
         <Route path="/:id/muuda" element={<PersonEdit />} />

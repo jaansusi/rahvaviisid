@@ -1,7 +1,7 @@
 import React from 'react';
-import TunesList from './TunesList';
 import TuneView from './TuneView';
 import {
+    Navigate,
     Routes,
     Route
 } from 'react-router-dom';
@@ -13,7 +13,7 @@ const TuneWrapper = () => {
     return (
         <>
             <Routes>
-                <Route path="/" element={<TunesList />} />
+                <Route path="/" element={<Navigate to="/otsi/viisid" replace />} />
                 <Route path="/uus" element={<TuneEdit newItem={true} />} />
                 <Route path="/:id/kopeeri" element={<TuneEdit copyItem={true} />} />
                 <Route path="/:id/vaata" element={<TuneView />} />

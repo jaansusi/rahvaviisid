@@ -7,29 +7,46 @@ import { tokens as C } from '../../theme';
 import logo from '../../assets/logo.png';
 import './Header.css';
 
-const NavLink = ({ to, label, active }) => {
+const NavLink = ({ to, label, active, onClick, asButton }) => {
     const [hov, setHov] = useState(false);
     const color = active ? C.accent : (hov ? C.text : C.muted);
+    const sharedStyle = {
+        fontFamily: 'Inter, sans-serif',
+        fontSize: 13.5,
+        fontWeight: active ? 500 : 400,
+        color,
+        textDecoration: 'none',
+        padding: '0 14px',
+        height: 64,
+        display: 'flex',
+        alignItems: 'center',
+        borderBottom: active ? `2px solid ${C.accent}` : '2px solid transparent',
+        transition: 'color 0.15s, border-color 0.15s',
+        letterSpacing: '0.01em',
+        userSelect: 'none',
+        background: 'none',
+        border: 'none',
+        cursor: 'pointer',
+    };
+    if (asButton) {
+        return (
+            <button
+                type="button"
+                onClick={onClick}
+                onMouseEnter={() => setHov(true)}
+                onMouseLeave={() => setHov(false)}
+                style={{ ...sharedStyle, borderTop: 'none', borderLeft: 'none', borderRight: 'none' }}
+            >
+                {label}
+            </button>
+        );
+    }
     return (
         <Link
             to={to}
             onMouseEnter={() => setHov(true)}
             onMouseLeave={() => setHov(false)}
-            style={{
-                fontFamily: 'Inter, sans-serif',
-                fontSize: 13.5,
-                fontWeight: active ? 500 : 400,
-                color,
-                textDecoration: 'none',
-                padding: '0 14px',
-                height: 64,
-                display: 'flex',
-                alignItems: 'center',
-                borderBottom: active ? `2px solid ${C.accent}` : '2px solid transparent',
-                transition: 'color 0.15s, border-color 0.15s',
-                letterSpacing: '0.01em',
-                userSelect: 'none',
-            }}
+            style={sharedStyle}
         >
             {label}
         </Link>
@@ -44,16 +61,19 @@ const isActive = (pathname, target) => {
 const Header = ({ authentication, setAuthentication }) => {
     const { t, i18n } = useTranslation('common');
     const { pathname } = useLocation();
-    const [anchorEl, setAnchorEl] = useState(null);
+    const [langAnchorEl, setLangAnchorEl] = useState(null);
+    const [haldaAnchorEl, setHaldaAnchorEl] = useState(null);
     const [isAdmin, setIsAdmin] = useState(false);
+    const [isEditor, setIsEditor] = useState(false);
 
     useEffect(() => {
         setIsAdmin(AuthService.CanAccess(['admin']));
+        setIsEditor(AuthService.CanAccess(['editor', 'admin']));
     }, [authentication]);
 
-    const handleClick = (event) => setAnchorEl(event.currentTarget);
-    const handleClose = (event) => {
-        setAnchorEl(null);
+    const handleLangClick = (event) => setLangAnchorEl(event.currentTarget);
+    const handleLangClose = (event) => {
+        setLangAnchorEl(null);
         switch (event.target.textContent) {
             case t('language.est'): i18n.changeLanguage('et'); break;
             case t('language.eng'): i18n.changeLanguage('en'); break;
@@ -61,16 +81,13 @@ const Header = ({ authentication, setAuthentication }) => {
         }
     };
 
+    const handleHaldaClick = (event) => setHaldaAnchorEl(event.currentTarget);
+    const handleHaldaClose = () => setHaldaAnchorEl(null);
+
     const links = [
-        { to: '/', label: t('common.home') },
-        { to: '/otsing', label: t('header.search') },
-        { to: '/viisid', label: t('common.tunes') },
-        { to: '/isikud', label: t('common.persons') },
-        { to: '/klassifikaatorid', label: t('common.classifiers') },
+        { to: '/otsi/viisid', label: t('header.searchTunes') },
+        { to: '/otsi/isikud', label: t('header.searchPersons') },
     ];
-    if (isAdmin) {
-        links.push({ to: '/kasutajad', label: t('header.users') });
-    }
 
     return (
         <nav className="nora-nav">
@@ -82,6 +99,40 @@ const Header = ({ authentication, setAuthentication }) => {
                     {links.map((l) => (
                         <NavLink key={l.to} to={l.to} label={l.label} active={isActive(pathname, l.to)} />
                     ))}
+                    {isEditor && (
+                        <>
+                            <NavLink
+                                asButton
+                                onClick={handleHaldaClick}
+                                label={t('header.halda')}
+                                active={isActive(pathname, '/halda')}
+                            />
+                            <Menu
+                                id="halda-menu"
+                                anchorEl={haldaAnchorEl}
+                                keepMounted
+                                open={Boolean(haldaAnchorEl)}
+                                onClose={handleHaldaClose}
+                            >
+                                <MenuItem
+                                    component={Link}
+                                    to="/halda/klassifikaatorid"
+                                    onClick={handleHaldaClose}
+                                >
+                                    {t('common.classifiers')}
+                                </MenuItem>
+                                {isAdmin && (
+                                    <MenuItem
+                                        component={Link}
+                                        to="/halda/kasutajad"
+                                        onClick={handleHaldaClose}
+                                    >
+                                        {t('header.users')}
+                                    </MenuItem>
+                                )}
+                            </Menu>
+                        </>
+                    )}
                 </div>
                 <div className="nora-nav__right">
                     {authentication === null ? (
@@ -114,16 +165,16 @@ const Header = ({ authentication, setAuthentication }) => {
                     )}
                     <button
                         type="button"
-                        onClick={handleClick}
+                        onClick={handleLangClick}
                         aria-controls="language-menu"
                         aria-haspopup="true"
                         className="nora-nav__lang"
                     >
                         {t('language.current')}
                     </button>
-                    <Menu id="language-menu" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
-                        <MenuItem onClick={handleClose}>{t('language.est')}</MenuItem>
-                        <MenuItem onClick={handleClose}>{t('language.eng')}</MenuItem>
+                    <Menu id="language-menu" anchorEl={langAnchorEl} keepMounted open={Boolean(langAnchorEl)} onClose={handleLangClose}>
+                        <MenuItem onClick={handleLangClose}>{t('language.est')}</MenuItem>
+                        <MenuItem onClick={handleLangClose}>{t('language.eng')}</MenuItem>
                     </Menu>
                 </div>
             </div>

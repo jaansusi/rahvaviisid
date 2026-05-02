@@ -24,6 +24,11 @@ import {PersonsRepository, SexesRepository} from '../repositories';
 import { UniqueValidationInterceptor } from '../interceptors';
 import { intercept } from '@loopback/core';
 import {ValidationError} from '../errors';
+import {
+  buildPersonSearchQuery,
+  paramsForCount,
+  PersonSearchRequest,
+} from '../utils/search-utils';
 
 
 @intercept(UniqueValidationInterceptor.BINDING_KEY)
@@ -69,6 +74,56 @@ export class PersonsController {
       throw err;
     }
     return this.personsRepository.create(persons);
+  }
+
+  @post('/persons/search', {
+    responses: {
+      '200': {
+        description: 'Postgres-FTS person search with filters, sort, pagination',
+        content: {
+          'application/json': {
+            schema: {
+              type: 'object',
+              properties: {
+                total: {type: 'number'},
+                page: {type: 'number'},
+                pageSize: {type: 'number'},
+                items: {
+                  type: 'array',
+                  items: getModelSchemaRef(Persons),
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  })
+  async searchPersons(
+    @requestBody({
+      required: false,
+      content: {
+        'application/json': {
+          schema: {type: 'object'},
+        },
+      },
+    })
+    body: PersonSearchRequest = {},
+  ): Promise<{total: number; page: number; pageSize: number; items: Partial<Persons>[]}> {
+    const built = buildPersonSearchQuery(body);
+    const ds = this.personsRepository.dataSource;
+
+    const [items, countRows] = await Promise.all([
+      ds.execute(built.sql, built.params) as Promise<Partial<Persons>[]>,
+      ds.execute(built.countSql, paramsForCount(built)) as Promise<{total: number}[]>,
+    ]);
+
+    return {
+      total: countRows[0]?.total ?? 0,
+      page: body.page && body.page > 0 ? Math.floor(body.page) : 1,
+      pageSize: items.length,
+      items,
+    };
   }
 
   @get('/persons/count', {

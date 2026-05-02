@@ -8,7 +8,7 @@ const LocationHeader = () => {
     const location = useLocation();
     const path = location.pathname.slice(1).split('/').filter(Boolean);
 
-    if (path.length === 0 || ['login', 'otsing'].includes(path[0])) return null;
+    if (path.length === 0 || ['login', 'otsi'].includes(path[0])) return null;
 
     const crumbs = [];
     let acc = '';

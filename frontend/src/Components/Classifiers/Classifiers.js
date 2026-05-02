@@ -1,13 +1,9 @@
 import React from 'react';
-import {
-    useParams
-} from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Button, Divider, Grid, Typography } from '@mui/material';
 import { ClassifiersModel } from '../../Models';
 
 const Classifiers = () => {
-    let { asset } = useParams();
     const { t } = useTranslation('common');
     return (
         <Grid item xs>
@@ -22,7 +18,7 @@ const Classifiers = () => {
                                         group.models.map((model, j) => {
                                             return (
                                                 <Grid item key={j}>
-                                                    <Button className='classifier-link' href={`${asset}/${model.url}`} variant='outlined'>{t(model.name)}</Button>
+                                                    <Button className='classifier-link' href={`/halda/klassifikaatorid/${model.url}`} variant='outlined'>{t(model.name)}</Button>
                                                 </Grid>
                                             );
                                         })

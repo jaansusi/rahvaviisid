@@ -1,8 +1,7 @@
 import React from 'react';
 import PersonWrapper from './Components/Persons/PersonWrapper';
 import TuneWrapper from './Components/Tunes/TuneWrapper';
-import UserWrapper from './Components/Users/UserWrapper';
-import ClassifierWrapper from './Components/Classifiers/ClassifierWrapper';
+import ClassifierLegacyRedirect from './Components/Classifiers/ClassifierLegacyRedirect';
 import './App.css';
 import {
     Navigate,
@@ -12,7 +11,12 @@ import {
 
 function AssetRouter() {
     let { asset } = useParams();
-    let { pathname } = useLocation();
+    let { pathname, search } = useLocation();
+
+    if (pathname.endsWith('/') && pathname.length > 1) {
+        return <Navigate to={pathname.slice(0, -1) + search} replace />;
+    }
+
     let wrapper = null;
     switch (asset) {
         case 'isikud':
@@ -22,20 +26,16 @@ function AssetRouter() {
             wrapper = <TuneWrapper />;
             break;
         case 'klassifikaatorid':
-            wrapper = <ClassifierWrapper />;
+            wrapper = <ClassifierLegacyRedirect />;
             break;
-        case 'kasutajad':
-            wrapper = <UserWrapper />;
-            break;
+        case 'kasutajad': {
+            const target = pathname.replace(/^\/kasutajad/, '/halda/kasutajad');
+            return <Navigate to={target + search} replace />;
+        }
         default:
             break;
     }
-    return (
-        <>
-            {pathname.endsWith('/') && pathname.length > 1 && <Navigate to={pathname.slice(0, -1)} replace />}
-            { wrapper }
-        </>
-    );
+    return wrapper;
 }
 
 export default AssetRouter;
