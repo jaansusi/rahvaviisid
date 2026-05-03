@@ -11,13 +11,16 @@ WORKDIR /app
 # where available (npm@5+)
 COPY package*.json ./
 
-RUN npm ci --omit=dev
+RUN npm ci
 
 # Bundle app source code
 COPY . .
 
 # Build the application
 RUN npm run build
+
+# Drop dev dependencies for the runtime image
+RUN npm prune --omit=dev
 
 FROM node:20-alpine AS production
 

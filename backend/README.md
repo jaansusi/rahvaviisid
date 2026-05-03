@@ -85,9 +85,45 @@ npm run test:api      # API integration tests (Playwright)
 ## Docker
 
 ```sh
-npm run docker:build    # build image
+npm run docker:build    # build image (jaansusi/ekm-viisid-api)
 npm run docker:run      # run container on port 3000
+npm run docker:release  # build and push to Docker Hub
+npm run docker:release:certustec  # build and push to registry.cluster.certustec.ee
 ```
+
+The [Dockerfile](Dockerfile) is multi-stage: Node 20 Bookworm builds the TypeScript output, then `node:20-alpine` runs the app as the unprivileged `node` user on port 3000.
+
+### Building OCI-compliant images
+
+Docker BuildKit (default since Docker 23) produces images in the [OCI image format](https://github.com/opencontainers/image-spec) when you ask for it explicitly. Use `docker buildx`:
+
+```sh
+# Single-arch OCI image, loaded into the local daemon
+docker buildx build \
+  --tag jaansusi/ekm-viisid-api:latest \
+  --output type=docker \
+  .
+
+# Multi-arch OCI image pushed to a registry
+docker buildx build \
+  --platform linux/amd64,linux/arm64 \
+  --tag jaansusi/ekm-viisid-api:latest \
+  --provenance=true \
+  --sbom=true \
+  --push \
+  .
+
+# Export an OCI image tarball (no registry, no daemon)
+docker buildx build \
+  --tag jaansusi/ekm-viisid-api:latest \
+  --output type=oci,dest=ekm-viisid-api.oci.tar \
+  .
+```
+
+Notes:
+- `--platform` requires the `containerd` image store or QEMU emulation (`docker run --privileged --rm tonistiigi/binfmt --install all`).
+- `--provenance` and `--sbom` add SLSA provenance and an SPDX SBOM as OCI referrers — recommended for supply-chain hygiene.
+- Inspect the result with `docker buildx imagetools inspect jaansusi/ekm-viisid-api:latest`.
 
 ## Other commands
 

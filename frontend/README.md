@@ -1,68 +1,93 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# ekm-viisid-fe
 
-## Available Scripts
+Frontend for the Estonian Literary Museum folk tunes database. React 18 + Material UI, bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-In the project directory, you can run:
+## Quick start with Docker Compose
 
-### `npm start`
+From the project root:
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+```sh
+docker compose --profile frontend up   # database + frontend
+docker compose --profile all up        # database, backend, frontend
+```
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+The frontend is served by nginx on port 80.
 
-### `npm test`
+## Local development
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Install dependencies
 
-### `npm run build`
+```sh
+npm ci
+```
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Run the dev server
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+```sh
+npm start
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+The app runs on [http://localhost:3001](http://localhost:3001) and proxies API calls to the backend on port 3000. The page reloads on edits and lint errors are shown in the console.
 
-### `npm run eject`
+### Tests
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```sh
+npm test
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Launches the Jest test runner in interactive watch mode.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Production build
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```sh
+npm run build
+```
 
-## Learn More
+Outputs a minified, hashed bundle to `build/`. The build is served by nginx in the Docker image (see [nginx/nginx.conf](nginx/nginx.conf)).
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Docker
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```sh
+npm run docker:build    # build image (jaansusi/ekm-viisid-fe)
+npm run docker:run      # run container, host port 3001 → container 80
+npm run docker:release  # build and push
+```
 
-### Code Splitting
+The [Dockerfile](Dockerfile) is multi-stage: Node 20 Alpine builds the React bundle, then `nginx:stable-alpine` serves the static files.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+### Building OCI-compliant images
 
-### Analyzing the Bundle Size
+Docker BuildKit (default since Docker 23) produces images in the [OCI image format](https://github.com/opencontainers/image-spec) when you ask for it explicitly. Use `docker buildx`:
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+```sh
+# Single-arch OCI image, loaded into the local daemon
+docker buildx build \
+  --tag jaansusi/ekm-viisid-fe:latest \
+  --output type=docker \
+  .
 
-### Making a Progressive Web App
+# Multi-arch OCI image pushed to a registry
+docker buildx build \
+  --platform linux/amd64,linux/arm64 \
+  --tag jaansusi/ekm-viisid-fe:latest \
+  --provenance=true \
+  --sbom=true \
+  --push \
+  .
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+# Export an OCI image tarball (no registry, no daemon)
+docker buildx build \
+  --tag jaansusi/ekm-viisid-fe:latest \
+  --output type=oci,dest=ekm-viisid-fe.oci.tar \
+  .
+```
 
-### Advanced Configuration
+Notes:
+- `--platform` requires the `containerd` image store or QEMU emulation (`docker run --privileged --rm tonistiigi/binfmt --install all`).
+- `--provenance` and `--sbom` add SLSA provenance and an SPDX SBOM as OCI referrers — recommended for supply-chain hygiene.
+- Inspect the result with `docker buildx imagetools inspect jaansusi/ekm-viisid-fe:latest`.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+## Learn more
 
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+- [Create React App docs](https://facebook.github.io/create-react-app/docs/getting-started)
+- [React docs](https://reactjs.org/)

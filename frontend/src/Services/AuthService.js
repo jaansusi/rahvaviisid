@@ -1,6 +1,6 @@
 import axios from "axios";
 import config from "../config";
-import jwt_decode from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 import { toast } from 'react-toastify';
 
 export const AuthService = {
@@ -36,7 +36,7 @@ export const AuthService = {
         let userData = authToken !== undefined ? authToken : this.GetUserData();
         if (!userData)
             return false;
-        let token = jwt_decode(userData.token);
+        let token = jwtDecode(userData.token);
         if (token === undefined || !token.roles)
             return false;
             
