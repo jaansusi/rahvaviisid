@@ -15,6 +15,10 @@ FROM nginx:stable-alpine
 
 COPY --from=build /app/build /usr/share/nginx/html
 COPY --from=build /app/nginx/nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=build /app/nginx/config.js.template /config.js.template
+COPY --from=build /app/nginx/entrypoint.sh /docker-entrypoint.d/40-render-config.sh
+
+RUN chmod +x /docker-entrypoint.d/40-render-config.sh
 
 EXPOSE 80
 

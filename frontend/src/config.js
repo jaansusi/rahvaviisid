@@ -1,5 +1,7 @@
+const runtimeConfig = typeof window !== 'undefined' ? window.__CONFIG__ ?? {} : {};
+
 let config = {
-    apiUrl: import.meta.env.VITE_API_URL || 'http://localhost:3000'
+    apiUrl: runtimeConfig.apiUrl || import.meta.env.VITE_API_URL || 'http://localhost:3000'
 }
 
 export default config;

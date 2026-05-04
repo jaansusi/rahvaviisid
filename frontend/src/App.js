@@ -18,6 +18,7 @@ import Login from './Components/Authentication/Login';
 import useLocalStorageState from './Components/Authentication/useLocalStorageState';
 import TuneSearchPage from './Components/Search/TuneSearch';
 import PersonSearchPage from './Components/Search/PersonSearch';
+import HomePage from './Components/HomePage';
 import ErrorBoundary from './Components/ErrorBoundary';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -77,7 +78,7 @@ function App() {
                   <LocationHeader />
                   <Grid container item xs={12} justifyContent='center' style={{ width: '100%' }}>
                     <Routes>
-                      <Route path="/" element={<Navigate to="/otsi/viisid" replace />} />
+                      <Route path="/" element={<HomePage />} />
                       <Route path="/otsing" element={<Navigate to="/otsi/viisid" replace />} />
                       <Route path="/otsi/viisid" element={<PageContainer><TuneSearchPage /></PageContainer>} />
                       <Route path="/otsi/isikud" element={<PageContainer><PersonSearchPage /></PageContainer>} />
